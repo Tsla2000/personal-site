@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>林默｜知识与思考</title>
+    <link>https://example.github.io/personal-site/</link>
+    <description>AI、投资、产品，以及一些关于世界如何运行的思考。</description>
+    <language>zh-CN</language>
+    <item>
+      <title>当智能可以无限复制，什么才是真正稀缺？</title>
+      <link>https://example.github.io/personal-site/thinking/first-principles/scarcity</link>
+      <guid>https://example.github.io/personal-site/thinking/first-principles/scarcity</guid>
+      <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
+      <description>当智能的边际成本不断下降，稀缺性会迁移到哪里？</description>
+    </item>
+    <item>
+      <title>AI Agent 会成为下一代操作系统吗？</title>
+      <link>https://example.github.io/personal-site/ai/agents/agent-os</link>
+      <guid>https://example.github.io/personal-site/ai/agents/agent-os</guid>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>
+      <description>Agent 可能改变软件的组织方式，但它未必会复制操作系统的形态。</description>
+    </item>
+  </channel>
+</rss>
