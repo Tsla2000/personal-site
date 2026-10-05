@@ -1,7 +1,7 @@
 <div class="home-page">
   <section class="home-hero">
     <div class="eyebrow">Personal knowledge base · 2026</div>
-    <h1>林默</h1>
+    <h1>PRO的茶里芒果</h1>
     <p>AI、投资、产品，以及一些关于世界如何运行的思考。</p>
     <div class="home-links">
       <a href="/ai/">AI</a>

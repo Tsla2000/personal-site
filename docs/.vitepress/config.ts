@@ -5,7 +5,7 @@ const base = process.env.BASE_PATH ?? '/'
 export default defineConfig({
   base,
   lang: 'zh-CN',
-  title: '林默｜知识与思考',
+  title: 'PRO的茶里芒果',
   description: 'AI、投资、产品，以及一些关于世界如何运行的思考。',
   cleanUrls: true,
   appearance: true,
@@ -15,7 +15,7 @@ export default defineConfig({
   },
   themeConfig: {
     logo: undefined,
-    siteTitle: '林默',
+    siteTitle: 'PRO的茶里芒果',
     nav: [
       { text: '首页', link: '/' },
       { text: 'AI', link: '/ai/' },
@@ -51,16 +51,16 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/' }],
     footer: {
       message: '记录正在发生的事情，也记录自己如何理解它们。',
-      copyright: '© 2026 林默'
+      copyright: '© 2026 PRO的茶里芒果'
     },
     outline: { level: [2, 3] },
     editLink: { pattern: 'https://github.com/your-name/personal-site/edit/main/docs/:path' }
   },
   head: [
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: '林默｜知识与思考' }],
+    ['meta', { property: 'og:title', content: 'PRO的茶里芒果' }],
     ['meta', { property: 'og:description', content: 'AI、投资、产品，以及一些关于世界如何运行的思考。' }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
-    ['link', { rel: 'alternate', type: 'application/rss+xml', title: '林默的 RSS', href: '/rss.xml' }]
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'PRO的茶里芒果 RSS', href: '/rss.xml' }]
   ]
 })
