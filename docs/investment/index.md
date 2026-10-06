@@ -12,4 +12,5 @@ description: 投资是对未来现金流、竞争结构与人类行为的长期�
 ## 文章
 
 - [Tesla 的长期价值究竟来自汽车吗？](/investment/tesla/long-term-value)
+- [AI 进行到哪一步了？普通人如何投资美股](/investment/us-stocks/ai-stage-invest-guide)
 

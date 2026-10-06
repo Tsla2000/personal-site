@@ -42,11 +42,12 @@ export default defineConfig({
         { text: 'AI', link: '/ai/' },
         { text: '趋势', items: [{ text: 'AI 产业的下一阶段', link: '/ai/trends/next-stage' }] },
         { text: 'Agent', items: [{ text: 'AI Agent 会成为下一代操作系统吗？', link: '/ai/agents/agent-os' }] },
-        { text: 'Coding', items: [{ text: 'AI 编程的真正杠杆', link: '/ai/coding/ai-coding-leverage' }] }
+        { text: 'Coding', items: [{ text: 'AI 编程的真正杠杆', link: '/ai/coding/ai-coding-leverage' }, { text: '我是如何用 Muse 自动化部署个人网站的', link: '/ai/coding/muse-auto-deploy' }] }
       ],
       '/investment/': [
         { text: '投资', link: '/investment/' },
-        { text: '美股与长期主义', items: [{ text: 'Tesla 的长期价值究竟来自汽车吗？', link: '/investment/tesla/long-term-value' }] }
+        { text: '美股与长期主义', items: [{ text: 'Tesla 的长期价值究竟来自汽车吗？', link: '/investment/tesla/long-term-value' }] },
+        { text: '美股策略', items: [{ text: 'AI 进行到哪一步了？普通人如何投资美股', link: '/investment/us-stocks/ai-stage-invest-guide' }] }
       ],
       '/thinking/': [
         { text: '思考', link: '/thinking/' },

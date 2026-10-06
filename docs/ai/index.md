@@ -14,4 +14,5 @@ AI 不是一个孤立的技术主题。它同时改变生产工具、组织方�
 - [AI Agent 会成为下一代操作系统吗？](/ai/agents/agent-os)
 - [AI 产业的下一阶段](/ai/trends/next-stage)
 - [AI 编程的真正杠杆](/ai/coding/ai-coding-leverage)
+- [我是如何用 Muse 自动化部署个人网站的](/ai/coding/muse-auto-deploy)
 
