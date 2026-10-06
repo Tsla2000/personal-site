@@ -6,14 +6,6 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
 <!-- 注意:以下站内链接硬编码了 /personal-site 前缀(因 base 路径)。若将来绑定自定义域名(base 改为 /),需批量去掉该前缀。-->
 <div class="home-page">
   <section class="home-section">
-    <h2>Now</h2>
-    <div class="now-list">
-      <span>AI Agent</span><span>AI Coding</span><span>AI Memory</span>
-      <span>AI 基础设施</span><span>Tesla</span><span>美股长期投资</span>
-    </div>
-  </section>
-
-  <section class="home-section">
     <h2>Latest</h2>
     <div class="article-list">
       <a class="article-row" href="/personal-site/thinking/first-principles/scarcity">
