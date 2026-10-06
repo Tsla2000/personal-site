@@ -85,8 +85,11 @@ for (const file of files) {
   items.push({
     title: fm.title,
     description: fm.description || '',
+    category: fm.category || '',
     date: d,
-    link: SITE_URL + toUrlPath(file)
+    dateStr: fm.date.replace(/-/g, '.'),
+    link: SITE_URL + toUrlPath(file),
+    urlPath: '/personal-site' + toUrlPath(file)
   })
 }
 items.sort((a, b) => b.date - a.date)
@@ -118,4 +121,20 @@ ${feedItems}
 mkdirSync(PUBLIC_DIR, { recursive: true })
 writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
 writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
+
+// ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
+const latestRows = items.slice(0, 3).map((it) => {
+  const sub = it.category ? `${it.category} · ${it.description}` : it.description
+  return `      <a class="article-row" href="${it.urlPath}">
+        <time>${it.dateStr}</time><div><strong>${esc(it.title)}</strong><small>${esc(sub)}</small></div>
+      </a>`
+}).join('\n')
+const indexPath = join(DOCS_DIR, 'index.md')
+const indexSrc = readFileSync(indexPath, 'utf8')
+const latestHtml = `<!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->\n    <div class="article-list">\n${latestRows}\n    </div>\n    <!-- LATEST-END -->`
+const updated = indexSrc.replace(
+  /<!-- LATEST-START[\s\S]*?<!-- LATEST-END -->/,
+  latestHtml
+)
+if (updated !== indexSrc) writeFileSync(indexPath, updated)
 console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items`)
