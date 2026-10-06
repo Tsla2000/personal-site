@@ -54,6 +54,8 @@
 .vp-doc h2 {
   margin-top: 52px;
   letter-spacing: -.02em;
+  border-top: none;
+  padding-top: 0;
 }
 
 .vp-doc a {

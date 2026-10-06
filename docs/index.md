@@ -9,11 +9,11 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     <h2>Latest</h2>
     <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
     <div class="article-list">
-      <a class="article-row" href="/personal-site/investment/us-stocks/ai-stage-invest-guide">
-        <time>2026.10.09</time><div><strong>AI 进行到哪一步了？普通人如何投资美股</strong><small>投资 · 用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div>
-      </a>
       <a class="article-row" href="/personal-site/ai/coding/muse-auto-deploy">
-        <time>2026.10.07</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>AI · 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div>
+        <time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>AI · 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div>
+      </a>
+      <a class="article-row" href="/personal-site/investment/us-stocks/ai-stage-invest-guide">
+        <time>2026.10.06</time><div><strong>AI 进行到哪一步了？普通人如何投资美股</strong><small>投资 · 用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div>
       </a>
       <a class="article-row" href="/personal-site/thinking/first-principles/scarcity">
         <time>2026.10.05</time><div><strong>当智能可以无限复制，什么才是真正稀缺？</strong><small>思考 · 当智能的边际成本不断下降，稀缺性会迁移到哪里？</small></div>

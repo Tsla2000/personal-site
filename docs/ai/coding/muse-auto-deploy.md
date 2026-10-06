@@ -1,7 +1,7 @@
 ---
 title: 我是如何用 Muse 自动化部署个人网站的
 description: 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。
-date: 2026-10-07
+date: 2026-10-06
 category: AI
 tags: [AI, Muse, 自动化, 建站]
 draft: false
@@ -9,7 +9,7 @@ draft: false
 
 # 我是如何用 Muse 自动化部署个人网站的
 
-<div class="meta-line">2026.10.07 · AI · 阅读约 3 分钟</div>
+<div class="meta-line">2026.10.06 · AI · 阅读约 3 分钟</div>
 
 ![网站首页](/images/muse-deploy-home.png)
 

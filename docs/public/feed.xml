@@ -6,18 +6,18 @@
     <description>AI、投资、产品，以及一些关于世界如何运行的思考。</description>
     <language>zh-CN</language>
     <item>
-      <title>AI 进行到哪一步了？普通人如何投资美股</title>
-      <link>https://tsla2000.github.io/personal-site/investment/us-stocks/ai-stage-invest-guide</link>
-      <guid>https://tsla2000.github.io/personal-site/investment/us-stocks/ai-stage-invest-guide</guid>
-      <pubDate>Fri, 09 Oct 2026 00:00:00 GMT</pubDate>
-      <description>用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</description>
-    </item>
-    <item>
       <title>我是如何用 Muse 自动化部署个人网站的</title>
       <link>https://tsla2000.github.io/personal-site/ai/coding/muse-auto-deploy</link>
       <guid>https://tsla2000.github.io/personal-site/ai/coding/muse-auto-deploy</guid>
-      <pubDate>Wed, 07 Oct 2026 00:00:00 GMT</pubDate>
+      <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
       <description>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</description>
+    </item>
+    <item>
+      <title>AI 进行到哪一步了？普通人如何投资美股</title>
+      <link>https://tsla2000.github.io/personal-site/investment/us-stocks/ai-stage-invest-guide</link>
+      <guid>https://tsla2000.github.io/personal-site/investment/us-stocks/ai-stage-invest-guide</guid>
+      <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
+      <description>用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</description>
     </item>
     <item>
       <title>当智能可以无限复制，什么才是真正稀缺？</title>
