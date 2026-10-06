@@ -1,0 +1,40 @@
+name: Publish to WeChat MP
+
+# Publish a Markdown article to the WeChat Official Account (PRO的茶里芒果).
+# Manual trigger per article; default creates a DRAFT for review in mp.weixin.qq.com.
+on:
+  workflow_dispatch:
+    inputs:
+      article:
+        description: "Article path, e.g. docs/ai/coding/muse-auto-deploy.md"
+        required: true
+        type: string
+      mode:
+        description: "draft = save to draft box for review; publish = publish immediately"
+        required: true
+        default: "draft"
+        type: choice
+        options: [draft, publish]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: |
+          pip install requests markdown pillow
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: Publish to MP
+        env:
+          WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+          WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
+        run: python3 scripts/mp-publish.py --article "${{ inputs.article }}" --mode "${{ inputs.mode }}"
