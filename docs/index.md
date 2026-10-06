@@ -16,7 +16,7 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
         <time>2026.10.06</time><div><strong>AI 进行到哪一步了？普通人如何投资美股</strong><small>投资 · 用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div>
       </a>
       <a class="article-row" href="/personal-site/thinking/society/ai-labor-capital">
-        <time>2026.10.06</time><div><strong>资本在狂欢，劳动者在渡劫：AI时代最大的谎言，是「技术终将造福每个人」</strong><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div>
+        <time>2026.10.06</time><div><strong>AI 技术终将造福每个人吗？</strong><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div>
       </a>
     </div>
     <!-- LATEST-END -->

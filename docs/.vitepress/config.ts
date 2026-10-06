@@ -50,7 +50,7 @@ export default defineConfig({
       '/thinking/': [
         { text: '思考', link: '/thinking/' },
         { text: '长期思考', items: [{ text: '财富的第一性原理是什么？', link: '/thinking/wealth/first-principles' }, { text: '当智能可以无限复制，什么才是真正稀缺？', link: '/thinking/first-principles/scarcity' }] },
-        { text: 'AI 与社会', items: [{ text: '资本在狂欢，劳动者在渡劫', link: '/thinking/society/ai-labor-capital' }] }
+        { text: 'AI 与社会', items: [{ text: 'AI 技术终将造福每个人吗？', link: '/thinking/society/ai-labor-capital' }] }
       ],
       '/about/': [
         { text: '关于', link: '/about/' },
