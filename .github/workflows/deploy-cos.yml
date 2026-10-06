@@ -2,9 +2,8 @@ name: Deploy COS mirror (WeChat)
 
 # WeChat-shareable mirror on Tencent COS (*.myqcloud.com is never blocked by WeChat).
 # GitHub Pages stays the canonical site; this job syncs the same build to COS.
+# NOTE: parked 2026-10-06 (user chose 公众号 distribution first). Manual trigger only.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
