@@ -32,9 +32,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: 'AI', link: '/ai/' },
       { text: '投资', link: '/investment/' },
-      { text: '产品', link: '/products/' },
       { text: '思考', link: '/thinking/' },
-      { text: '阅读', link: '/reading/' },
       { text: '关于', link: '/about/' }
     ],
     sidebar: {
@@ -51,12 +49,10 @@ export default defineConfig({
       ],
       '/thinking/': [
         { text: '思考', link: '/thinking/' },
-        { text: '长期思考', items: [{ text: '财富的第一性原理是什么？', link: '/thinking/wealth/first-principles' }] }
+        { text: '长期思考', items: [{ text: '财富的第一性原理是什么？', link: '/thinking/wealth/first-principles' }, { text: '当智能可以无限复制，什么才是真正稀缺？', link: '/thinking/first-principles/scarcity' }] }
       ],
-      '/reading/': [{ text: '阅读', link: '/reading/' }],
       '/about/': [
         { text: '关于', link: '/about/' },
-        { text: '项目', link: '/about/projects' },
         { text: '时间线', link: '/about/timeline' }
       ]
     },
@@ -89,6 +85,10 @@ export default defineConfig({
       ['meta', { name: 'twitter:title', content: title }],
       ['meta', { name: 'twitter:description', content: desc }]
     ]
+
+    if (fm.noindex === true) {
+      head.push(['meta', { name: 'robots', content: 'noindex' }])
+    }
 
     if (isHome) {
       head.push(['meta', { property: 'og:type', content: 'website' }])

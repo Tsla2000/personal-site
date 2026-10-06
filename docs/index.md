@@ -31,15 +31,6 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
   </section>
 
   <section class="home-section">
-    <h2>Projects</h2>
-    <div class="project-list">
-      <div class="project-item"><h3>XMade</h3><p>把想法变成可以被使用的产品实验。</p><small>持续迭代 · <a href="/personal-site/about/projects">了解更多</a></small></div>
-      <div class="project-item"><h3>AI Memory</h3><p>探索如何让工具真正记住一个人的长期上下文。</p><small>研究中</small></div>
-      <div class="project-item"><h3>其他实验</h3><p>一些尚未成熟，但值得留下记录的尝试。</p><small>开放记录</small></div>
-    </div>
-  </section>
-
-  <section class="home-section">
     <h2>About</h2>
     <p class="about-note">我持续研究 AI、投资、产品与技术，也记录自己如何理解正在发生的变化。这里不是结论集，更像一张不断更新的思考地图。</p>
     <p><a href="/personal-site/about/">关于我 →</a></p>

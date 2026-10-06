@@ -1,6 +1,7 @@
 ---
 title: 时间线
 description: 记录正在发生的变化,而不是把经历包装成一条完美的故事。
+noindex: true
 ---
 
 # 时间线

@@ -145,13 +145,16 @@
   gap: 0;
 }
 
-.article-row {
+.vp-doc a.article-row,
+.vp-doc a.article-row:hover {
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);
   gap: 24px;
   padding: 19px 0;
   border-bottom: 1px solid var(--vp-c-divider);
   text-decoration: none;
+  color: inherit;
+  font-weight: inherit;
 }
 
 .article-row time {
