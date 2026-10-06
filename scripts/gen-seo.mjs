@@ -1,0 +1,121 @@
+// 构建时生成 SEO 文件:扫描 docs/**/*.md,输出
+//   - docs/public/feed.xml    (RSS,只收录带 title+date 的文章页)
+//   - docs/public/sitemap.xml  (全站页面,自带 /personal-site/ base 前缀)
+// 在 package.json 的 docs:build 中于 vitepress build 之前运行。
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
+import { join, relative, sep } from 'node:path'
+
+const DOCS_DIR = new URL('../docs/', import.meta.url).pathname
+const PUBLIC_DIR = join(DOCS_DIR, 'public')
+const SITE_URL = 'https://tsla2000.github.io/personal-site'
+const SITE_TITLE = 'PRO的茶里芒果'
+const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
+
+function walk(dir) {
+  const out = []
+  for (const name of readdirSync(dir)) {
+    if (name.startsWith('.')) continue
+    const p = join(dir, name)
+    const st = statSync(p)
+    if (st.isDirectory()) {
+      if (name === 'public' || name === 'node_modules') continue
+      out.push(...walk(p))
+    } else if (name.endsWith('.md')) {
+      out.push(p)
+    }
+  }
+  return out
+}
+
+// 极简 frontmatter 解析:只取 title / description / date / draft
+function parseFrontmatter(file) {
+  const raw = readFileSync(file, 'utf8')
+  if (!raw.startsWith('---')) return null
+  const end = raw.indexOf('\n---', 3)
+  if (end === -1) return null
+  const fm = {}
+  for (const line of raw.slice(3, end).split('\n')) {
+    const m = line.match(/^([A-Za-z_]+):\s*(.*)$/)
+    if (m) fm[m[1]] = m[2].trim().replace(/^['"]|['"]$/g, '')
+  }
+  return fm
+}
+
+function toUrlPath(file) {
+  let rel = relative(DOCS_DIR, file).split(sep).join('/')
+  rel = rel.replace(/\.md$/, '')
+  if (rel === 'index') return '/'
+  if (rel.endsWith('/index')) rel = rel.slice(0, -'/index'.length)
+  return '/' + rel
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+const files = walk(DOCS_DIR).sort()
+
+// ---- sitemap.xml:全站页面 ----
+const sitemapUrls = files
+  .map((f) => {
+    const loc = SITE_URL + toUrlPath(f)
+    const lastmod = statSync(f).mtime.toISOString()
+    return `  <url><loc>${esc(loc)}</loc><lastmod>${lastmod}</lastmod></url>`
+  })
+  .join('\n')
+
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls}
+</urlset>
+`
+
+// ---- feed.xml:只收录文章页(带 title+date,非草稿) ----
+const items = []
+for (const file of files) {
+  const fm = parseFrontmatter(file)
+  if (!fm || !fm.title || !fm.date) continue
+  if (fm.draft === 'true') continue
+  const d = new Date(fm.date)
+  if (Number.isNaN(d.getTime())) continue
+  items.push({
+    title: fm.title,
+    description: fm.description || '',
+    date: d,
+    link: SITE_URL + toUrlPath(file)
+  })
+}
+items.sort((a, b) => b.date - a.date)
+
+const feedItems = items
+  .map(
+    (it) => `    <item>
+      <title>${esc(it.title)}</title>
+      <link>${esc(it.link)}</link>
+      <guid>${esc(it.link)}</guid>
+      <pubDate>${it.date.toUTCString()}</pubDate>
+      <description>${esc(it.description)}</description>
+    </item>`
+  )
+  .join('\n')
+
+const feed = `<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>${esc(SITE_TITLE)}</title>
+    <link>${SITE_URL}/</link>
+    <description>${esc(SITE_DESC)}</description>
+    <language>zh-CN</language>
+${feedItems}
+  </channel>
+</rss>
+`
+
+mkdirSync(PUBLIC_DIR, { recursive: true })
+writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
+writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
+console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items`)

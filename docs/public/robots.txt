@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.github.io/personal-site/sitemap.xml
+Sitemap: https://tsla2000.github.io/personal-site/sitemap.xml

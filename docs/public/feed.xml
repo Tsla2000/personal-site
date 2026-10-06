@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>PRO的茶里芒果</title>
+    <link>https://tsla2000.github.io/personal-site/</link>
+    <description>AI、投资、产品，以及一些关于世界如何运行的思考。</description>
+    <language>zh-CN</language>
+    <item>
+      <title>当智能可以无限复制，什么才是真正稀缺？</title>
+      <link>https://tsla2000.github.io/personal-site/thinking/first-principles/scarcity</link>
+      <guid>https://tsla2000.github.io/personal-site/thinking/first-principles/scarcity</guid>
+      <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
+      <description>当智能的边际成本不断下降，稀缺性会迁移到哪里？</description>
+    </item>
+    <item>
+      <title>AI Agent 会成为下一代操作系统吗？</title>
+      <link>https://tsla2000.github.io/personal-site/ai/agents/agent-os</link>
+      <guid>https://tsla2000.github.io/personal-site/ai/agents/agent-os</guid>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>
+      <description>Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</description>
+    </item>
+    <item>
+      <title>Tesla 的长期价值究竟来自汽车吗？</title>
+      <link>https://tsla2000.github.io/personal-site/investment/tesla/long-term-value</link>
+      <guid>https://tsla2000.github.io/personal-site/investment/tesla/long-term-value</guid>
+      <pubDate>Thu, 24 Sep 2026 00:00:00 GMT</pubDate>
+      <description>把一家公司的价值拆成制造、软件与能源三层。</description>
+    </item>
+    <item>
+      <title>AI 产业的下一阶段</title>
+      <link>https://tsla2000.github.io/personal-site/ai/trends/next-stage</link>
+      <guid>https://tsla2000.github.io/personal-site/ai/trends/next-stage</guid>
+      <pubDate>Fri, 18 Sep 2026 00:00:00 GMT</pubDate>
+      <description>市场真正定价的不是技术是否强大，而是价值能否被捕获。</description>
+    </item>
+    <item>
+      <title>财富的第一性原理是什么？</title>
+      <link>https://tsla2000.github.io/personal-site/thinking/wealth/first-principles</link>
+      <guid>https://tsla2000.github.io/personal-site/thinking/wealth/first-principles</guid>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 GMT</pubDate>
+      <description>财富不是数字的堆积，而是对未来资源调度能力的储存。</description>
+    </item>
+    <item>
+      <title>AI 编程的真正杠杆</title>
+      <link>https://tsla2000.github.io/personal-site/ai/coding/ai-coding-leverage</link>
+      <guid>https://tsla2000.github.io/personal-site/ai/coding/ai-coding-leverage</guid>
+      <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
+      <description>AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。</description>
+    </item>
+  </channel>
+</rss>

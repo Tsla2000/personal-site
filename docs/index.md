@@ -1,3 +1,8 @@
+---
+title: PRO的茶里芒果
+description: AI、投资、产品，以及一些关于世界如何运行的思考。
+---
+
 <div class="home-page">
   <section class="home-hero">
     <div class="eyebrow">Personal knowledge base · 2026</div>
