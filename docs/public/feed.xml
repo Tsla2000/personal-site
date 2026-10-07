@@ -2,69 +2,69 @@
 <rss version="2.0">
   <channel>
     <title>PRO的茶里芒果</title>
-    <link>https://tsla2000.github.io/personal-site/</link>
+    <link>https://mangofund.pages.dev/</link>
     <description>AI、投资、产品，以及一些关于世界如何运行的思考。</description>
     <language>zh-CN</language>
     <item>
       <title>我是如何用 Muse 自动化部署个人网站的</title>
-      <link>https://tsla2000.github.io/personal-site/ai/coding/muse-auto-deploy</link>
-      <guid>https://tsla2000.github.io/personal-site/ai/coding/muse-auto-deploy</guid>
+      <link>https://mangofund.pages.dev/ai/coding/muse-auto-deploy</link>
+      <guid>https://mangofund.pages.dev/ai/coding/muse-auto-deploy</guid>
       <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
       <description>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</description>
     </item>
     <item>
       <title>AI 进行到哪一步了？普通人如何投资美股</title>
-      <link>https://tsla2000.github.io/personal-site/investment/us-stocks/ai-stage-invest-guide</link>
-      <guid>https://tsla2000.github.io/personal-site/investment/us-stocks/ai-stage-invest-guide</guid>
+      <link>https://mangofund.pages.dev/investment/us-stocks/ai-stage-invest-guide</link>
+      <guid>https://mangofund.pages.dev/investment/us-stocks/ai-stage-invest-guide</guid>
       <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
       <description>用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</description>
     </item>
     <item>
       <title>AI 技术终将造福每个人吗？</title>
-      <link>https://tsla2000.github.io/personal-site/thinking/society/ai-labor-capital</link>
-      <guid>https://tsla2000.github.io/personal-site/thinking/society/ai-labor-capital</guid>
+      <link>https://mangofund.pages.dev/thinking/society/ai-labor-capital</link>
+      <guid>https://mangofund.pages.dev/thinking/society/ai-labor-capital</guid>
       <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
       <description>AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</description>
     </item>
     <item>
       <title>当智能可以无限复制，什么才是真正稀缺？</title>
-      <link>https://tsla2000.github.io/personal-site/thinking/first-principles/scarcity</link>
-      <guid>https://tsla2000.github.io/personal-site/thinking/first-principles/scarcity</guid>
+      <link>https://mangofund.pages.dev/thinking/first-principles/scarcity</link>
+      <guid>https://mangofund.pages.dev/thinking/first-principles/scarcity</guid>
       <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
       <description>当智能的边际成本不断下降，稀缺性会迁移到哪里？</description>
     </item>
     <item>
       <title>AI Agent 会成为下一代操作系统吗？</title>
-      <link>https://tsla2000.github.io/personal-site/ai/agents/agent-os</link>
-      <guid>https://tsla2000.github.io/personal-site/ai/agents/agent-os</guid>
+      <link>https://mangofund.pages.dev/ai/agents/agent-os</link>
+      <guid>https://mangofund.pages.dev/ai/agents/agent-os</guid>
       <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>
       <description>Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</description>
     </item>
     <item>
       <title>Tesla 的长期价值究竟来自汽车吗？</title>
-      <link>https://tsla2000.github.io/personal-site/investment/tesla/long-term-value</link>
-      <guid>https://tsla2000.github.io/personal-site/investment/tesla/long-term-value</guid>
+      <link>https://mangofund.pages.dev/investment/tesla/long-term-value</link>
+      <guid>https://mangofund.pages.dev/investment/tesla/long-term-value</guid>
       <pubDate>Thu, 24 Sep 2026 00:00:00 GMT</pubDate>
       <description>把一家公司的价值拆成制造、软件与能源三层。</description>
     </item>
     <item>
       <title>AI 产业的下一阶段</title>
-      <link>https://tsla2000.github.io/personal-site/ai/trends/next-stage</link>
-      <guid>https://tsla2000.github.io/personal-site/ai/trends/next-stage</guid>
+      <link>https://mangofund.pages.dev/ai/trends/next-stage</link>
+      <guid>https://mangofund.pages.dev/ai/trends/next-stage</guid>
       <pubDate>Fri, 18 Sep 2026 00:00:00 GMT</pubDate>
       <description>市场真正定价的不是技术是否强大，而是价值能否被捕获。</description>
     </item>
     <item>
       <title>财富的第一性原理是什么？</title>
-      <link>https://tsla2000.github.io/personal-site/thinking/wealth/first-principles</link>
-      <guid>https://tsla2000.github.io/personal-site/thinking/wealth/first-principles</guid>
+      <link>https://mangofund.pages.dev/thinking/wealth/first-principles</link>
+      <guid>https://mangofund.pages.dev/thinking/wealth/first-principles</guid>
       <pubDate>Thu, 10 Sep 2026 00:00:00 GMT</pubDate>
       <description>财富不是数字的堆积，而是对未来资源调度能力的储存。</description>
     </item>
     <item>
       <title>AI 编程的真正杠杆</title>
-      <link>https://tsla2000.github.io/personal-site/ai/coding/ai-coding-leverage</link>
-      <guid>https://tsla2000.github.io/personal-site/ai/coding/ai-coding-leverage</guid>
+      <link>https://mangofund.pages.dev/ai/coding/ai-coding-leverage</link>
+      <guid>https://mangofund.pages.dev/ai/coding/ai-coding-leverage</guid>
       <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
       <description>AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。</description>
     </item>

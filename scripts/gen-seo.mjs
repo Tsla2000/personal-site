@@ -11,7 +11,9 @@ import { join, relative, sep } from 'node:path'
 
 const DOCS_DIR = new URL('../docs/', import.meta.url).pathname
 const PUBLIC_DIR = join(DOCS_DIR, 'public')
-const SITE_DOMAIN = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
+const _rawDomain = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
+// 容错:没写 https:// 时自动补上,避免 canonical 写出裸域名
+const SITE_DOMAIN = /^https?:\/\//i.test(_rawDomain) ? _rawDomain : `https://${_rawDomain}`
 const BASE_PATH = process.env.BASE_PATH ?? '/'
 const baseNoSlash = BASE_PATH.endsWith('/') && BASE_PATH.length > 1 ? BASE_PATH.slice(0, -1) : BASE_PATH === '/' ? '' : BASE_PATH
 const SITE_URL = SITE_DOMAIN + baseNoSlash
