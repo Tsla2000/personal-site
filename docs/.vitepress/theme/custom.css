@@ -127,6 +127,12 @@
   padding-bottom: 18px;
 }
 
+/* 首页的 VPDocFooter 是空的（无编辑链接/更新时间/上一篇下一篇），直接隐藏，
+   避免它 64px 的 margin-top 变成无效空白；文章页有 .prev-next 导航的不受影响 */
+footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
+  display: none;
+}
+
 .home-section h2 {
   margin: 0 0 28px;
   font-size: 13px;
