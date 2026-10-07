@@ -244,14 +244,14 @@
   }
 }
 
-/* 明暗切换按钮：图标+文字的胶囊按钮，"关灯"/"开灯"作为按钮内部元素 */
+/* 明暗切换按钮：紧凑的图标+文字胶囊，亮色模式图标左文字右，暗色模式镜像 */
 button.VPSwitch.VPSwitchAppearance {
   width: auto;
   height: auto;
-  padding: 6px 13px;
+  padding: 4px 10px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   border-radius: 999px;
 }
 button.VPSwitch.VPSwitchAppearance .check {
@@ -262,15 +262,20 @@ button.VPSwitch.VPSwitchAppearance .check {
   background: none;
   box-shadow: none;
   transform: none;
+  display: inline-flex;
+  flex-shrink: 0;
 }
 button.VPSwitch.VPSwitchAppearance::after {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.4;
   color: var(--vp-c-text-2);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 html:not(.dark) button.VPSwitch.VPSwitchAppearance::after { content: "关灯"; }
 html.dark button.VPSwitch.VPSwitchAppearance::after { content: "开灯"; }
+/* 暗色模式下图文左右互换：文字左、图标右 */
+html.dark button.VPSwitch.VPSwitchAppearance { flex-direction: row-reverse; }
 /* 开关和右侧 GitHub 图标之间留出间距，避免文字被图标蹭到 */
 .VPNavBarAppearance { margin-right: 14px; }
 
