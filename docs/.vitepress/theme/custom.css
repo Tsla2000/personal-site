@@ -276,6 +276,8 @@ html:not(.dark) button.VPSwitch.VPSwitchAppearance::after { content: "关灯"; }
 html.dark button.VPSwitch.VPSwitchAppearance::after { content: "开灯"; }
 /* 暗色模式下图文左右互换：文字左、图标右 */
 html.dark button.VPSwitch.VPSwitchAppearance { flex-direction: row-reverse; }
+/* 压住主题自带的滑块位移，避免暗色模式下图标飞出按钮 */
+html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 /* 开关和右侧 GitHub 图标之间留出间距，避免文字被图标蹭到 */
 .VPNavBarAppearance { margin-right: 14px; }
 
