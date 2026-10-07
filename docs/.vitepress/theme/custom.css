@@ -300,7 +300,7 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 }
 ::view-transition-new(root) {
   z-index: 2147483646;
-  animation: theme-fade 0.8s ease-in-out;
+  animation: theme-fade 0.4s ease-in-out;
 }
 @keyframes theme-fade {
   from { opacity: 0; }
