@@ -245,7 +245,8 @@
 }
 
 /* 明暗切换按钮：加宽容器，亮色模式显示"关灯"，暗色模式显示"开灯" */
-.VPSwitchAppearance {
+/* 注意：button.VPSwitch.VPSwitchAppearance 三重选择器是为了盖过主题 scoped 样式的 width:40px */
+button.VPSwitch.VPSwitchAppearance {
   width: 84px;
   overflow: visible;
 }
