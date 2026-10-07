@@ -5,18 +5,6 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
 
 <!-- 注意:以下站内链接硬编码了 /personal-site 前缀(因 base 路径)。若将来绑定自定义域名(base 改为 /),需批量去掉该前缀。-->
 <div class="home-page">
-  <section class="home-hero">
-    <div class="eyebrow">PRO的茶里芒果</div>
-    <h1>记录正在发生的事情，也记录自己如何理解它们。</h1>
-    <p>AI、投资、产品，以及一些关于世界如何运行的思考。</p>
-    <div class="home-links">
-      <a href="/personal-site/ai/">AI</a>
-      <a href="/personal-site/investment/">投资</a>
-      <a href="/personal-site/thinking/">思考</a>
-      <a href="/personal-site/about/">关于我</a>
-    </div>
-  </section>
-
   <section class="home-section">
     <h2>Latest</h2>
 <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
