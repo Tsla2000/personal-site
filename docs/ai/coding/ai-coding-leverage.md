@@ -1,4 +1,5 @@
 ---
+image: /images/coding-leverage-lever.webp
 title: AI 编程的真正杠杆
 description: AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。
 date: 2026-08-30

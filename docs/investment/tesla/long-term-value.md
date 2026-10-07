@@ -1,4 +1,5 @@
 ---
+image: /images/tesla-three-layers.png
 title: Tesla 的长期价值究竟来自汽车吗？
 description: 把一家公司的价值拆成制造、软件与能源三层。
 date: 2026-09-24

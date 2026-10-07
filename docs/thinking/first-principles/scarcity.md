@@ -1,4 +1,5 @@
 ---
+image: /images/scarcity-four.png
 title: 当智能可以无限复制，什么才是真正稀缺？
 description: 当智能的边际成本不断下降，稀缺性会迁移到哪里？
 date: 2026-10-05

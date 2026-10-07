@@ -1,4 +1,5 @@
 ---
+image: /images/labor-dilution.webp
 title: AI 技术终将造福每个人吗？
 description: AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。
 date: 2026-10-06

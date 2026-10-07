@@ -1,4 +1,5 @@
 ---
+image: /images/wealth-option.webp
 title: 财富的第一性原理是什么？
 description: 财富不是数字的堆积，而是对未来资源调度能力的储存。
 date: 2026-09-10

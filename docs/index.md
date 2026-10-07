@@ -5,9 +5,21 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
 
 <!-- 注意:以下站内链接硬编码了 /personal-site 前缀(因 base 路径)。若将来绑定自定义域名(base 改为 /),需批量去掉该前缀。-->
 <div class="home-page">
+  <section class="home-hero">
+    <div class="eyebrow">PRO的茶里芒果</div>
+    <h1>记录正在发生的事情，也记录自己如何理解它们。</h1>
+    <p>AI、投资、产品，以及一些关于世界如何运行的思考。</p>
+    <div class="home-links">
+      <a href="/personal-site/ai/">AI</a>
+      <a href="/personal-site/investment/">投资</a>
+      <a href="/personal-site/thinking/">思考</a>
+      <a href="/personal-site/about/">关于我</a>
+    </div>
+  </section>
+
   <section class="home-section">
     <h2>Latest</h2>
-    <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
+<!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
     <div class="article-list">
       <a class="article-row" href="/personal-site/ai/coding/muse-auto-deploy">
         <time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>AI · 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div>
@@ -25,8 +37,9 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
   <section class="home-section">
     <h2>Thinking</h2>
     <div class="article-list">
-      <a class="article-row" href="/personal-site/thinking/wealth/first-principles"><time>Essay</time><div><strong>财富的第一性原理是什么？</strong><small>财富不是数字的堆积，而是对未来资源调度能力的储存。</small></div></a>
-      <a class="article-row" href="/personal-site/ai/trends/next-stage"><time>Essay</time><div><strong>为什么投资者不担心 AI 践踏产权？</strong><small>市场真正定价的不是技术是否强大，而是价值能否被捕获。</small></div></a>
+      <a class="article-row" href="/personal-site/thinking/society/ai-labor-capital"><time>2026.10.06</time><div><strong>AI 技术终将造福每个人吗？</strong><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div></a>
+      <a class="article-row" href="/personal-site/thinking/first-principles/scarcity"><time>2026.10.05</time><div><strong>当智能可以无限复制，什么才是真正稀缺？</strong><small>思考 · 当智能的边际成本不断下降，稀缺性会迁移到哪里？</small></div></a>
+      <a class="article-row" href="/personal-site/thinking/wealth/first-principles"><time>2026.09.10</time><div><strong>财富的第一性原理是什么？</strong><small>思考 · 财富不是数字的堆积，而是对未来资源调度能力的储存。</small></div></a>
     </div>
   </section>
 

@@ -1,4 +1,5 @@
 ---
+image: /images/ai-guide-two-axes.png
 title: AI 进行到哪一步了？普通人如何投资美股
 description: 用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。
 date: 2026-10-06

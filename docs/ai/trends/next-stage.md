@@ -1,4 +1,5 @@
 ---
+image: /images/nextstage-three-shifts.png
 title: AI 产业的下一阶段
 description: 市场真正定价的不是技术是否强大，而是价值能否被捕获。
 date: 2026-09-18

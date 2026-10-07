@@ -1,4 +1,5 @@
 ---
+image: /images/agentos-compare.png
 title: AI Agent 会成为下一代操作系统吗？
 description: Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。
 date: 2026-10-01
