@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.09.18 · AI · 阅读约 3 分钟</div>
 
+<div class="article-cover">
+
+![AI 产业的三个变化](/images/nextstage-three-shifts.png)
+
+</div>
+
 AI 行业的第一阶段，是证明模型可以完成过去只有人才能完成的任务。
 我们要问的更实际：这些能力如何进入工作流，并且持续产生可度量的价值。
 

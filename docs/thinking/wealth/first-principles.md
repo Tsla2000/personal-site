@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.09.10 · 思考 · 阅读约 3 分钟</div>
 
+<div class="article-cover">
+
+![财富是未来选择权的储存](/images/wealth-option.webp)
+
+</div>
+
 账户上的数字只是记录。
 
 更底层的财富，是一个人或一个组织在未来调度资源的能力。

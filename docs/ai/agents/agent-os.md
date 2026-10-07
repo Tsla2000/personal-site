@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.10.01 · AI · 阅读约 4 分钟</div>
 
+<div class="article-cover">
+
+![操作系统 vs Agent：干的是同一类活](/images/agentos-compare.png)
+
+</div>
+
 很多人第一次理解 Agent，是把它看成一个更聪明的聊天窗口：用户提出目标，模型调用几个工具，然后返回结果。
 但这个比喻，很快会显得不够用。
 

@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.10.06 · 思考 · 阅读约 6 分钟</div>
 
+<div class="article-cover">
+
+![劳动的稀缺性被稀释](/images/labor-dilution.webp)
+
+</div>
+
 大家都在谈论AI替代人力，但很多人的视角其实看偏了。
 
 这几年，硅谷科技巨头和资本市场对AI的狂热，和普通打工人的焦虑，形成了刺眼的对比。

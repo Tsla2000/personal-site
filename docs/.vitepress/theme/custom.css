@@ -243,3 +243,21 @@
     font-size: 15px;
   }
 }
+
+/* 明暗切换按钮：亮色模式显示"关灯"，暗色模式显示"开灯" */
+.VPSwitchAppearance::after {
+  margin-left: 8px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  white-space: nowrap;
+}
+html:not(.dark) .VPSwitchAppearance::after { content: "关灯"; }
+html.dark .VPSwitchAppearance::after { content: "开灯"; }
+
+/* 文章封面图 */
+.article-cover { margin: 26px 0 10px; }
+.article-cover img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--vp-c-divider);
+}

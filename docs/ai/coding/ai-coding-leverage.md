@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.08.30 · AI · 阅读约 3 分钟</div>
 
+<div class="article-cover">
+
+![小杠杆撬动大产出](/images/coding-leverage-lever.webp)
+
+</div>
+
 AI 编程最容易被衡量的指标，是生成了多少代码。
 但这不是最重要的指标。
 代码本身从来不是稀缺品。

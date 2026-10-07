@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.10.05 · 思考 · 阅读约 4 分钟</div>
 
+<div class="article-cover">
+
+![四种正在变重要的稀缺性](/images/scarcity-four.png)
+
+</div>
+
 人类社会长期把智力当作一种稀缺资源。
 
 优秀的研究者、工程师和管理者需要经过多年训练，创作者也一样。

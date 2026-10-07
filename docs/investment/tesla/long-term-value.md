@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.09.24 · 投资 · 阅读约 4 分钟</div>
 
+<div class="article-cover">
+
+![Tesla 的三层：制造 × 软件 × 能源](/images/tesla-three-layers.png)
+
+</div>
+
 如果只把 Tesla 看成一家汽车公司，它的估值会始终陷入争论。
 
 汽车是一个成熟行业，竞争激烈，利润率也会受到周期影响。

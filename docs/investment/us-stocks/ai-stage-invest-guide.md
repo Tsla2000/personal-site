@@ -12,6 +12,12 @@ draft: false
 
 <div class="meta-line">2026.10.06 · 投资 · 阅读约 5 分钟</div>
 
+<div class="article-cover">
+
+![技术成熟度 × 商业兑现：AI 进程定位](/images/ai-guide-two-axes.png)
+
+</div>
+
 ## 一、AI 到底进行到哪一步了？
 
 要判断 AI 走到哪一步，我们先立两个坐标轴，再把三层放进去看。

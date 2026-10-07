@@ -11,9 +11,14 @@ draft: false
 
 <div class="meta-line">2026.10.06 · AI · 阅读约 3 分钟</div>
 
+<div class="article-cover">
+
 ![网站首页](/images/muse-deploy-home.png)
 
 *图：PRO的茶里芒果首页。VitePress 构建，内容全部由 Markdown 驱动。*
+
+</div>
+
 
 这个网站从搭建到上线，只用了一天。
 后面的改进，SEO、统计、写文章，几乎都是我在云端完成的。
