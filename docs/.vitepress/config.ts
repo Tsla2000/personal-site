@@ -1,7 +1,8 @@
 import { defineConfig, type HeadConfig } from 'vitepress'
 
 const base = process.env.BASE_PATH ?? '/'
-const SITE_URL = 'https://tsla2000.github.io'
+// 部署目标域名:Cloudflare Pages 构建时通过环境变量 SITE_URL 传入(如 https://xxx.pages.dev);缺省为 GitHub Pages 地址
+const SITE_URL = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
 const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
 

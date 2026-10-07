@@ -1,13 +1,20 @@
 // 构建时生成 SEO 文件:扫描 docs/**/*.md,输出
 //   - docs/public/feed.xml    (RSS,只收录带 title+date 的文章页)
-//   - docs/public/sitemap.xml  (全站页面,自带 /personal-site/ base 前缀)
+//   - docs/public/sitemap.xml  (全站页面)
+//   - docs/public/robots.txt   (sitemap 地址跟随部署目标)
+//   - 重写 docs/index.md 的 LATEST 板块(站内链接带 base 前缀)
+// 部署目标由环境变量决定:BASE_PATH(默认 '/';GitHub Pages 构建时传 '/personal-site/'),
+// SITE_URL(默认 https://tsla2000.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev)。
 // 在 package.json 的 docs:build 中于 vitepress build 之前运行。
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
 
 const DOCS_DIR = new URL('../docs/', import.meta.url).pathname
 const PUBLIC_DIR = join(DOCS_DIR, 'public')
-const SITE_URL = 'https://tsla2000.github.io/personal-site'
+const SITE_DOMAIN = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
+const BASE_PATH = process.env.BASE_PATH ?? '/'
+const baseNoSlash = BASE_PATH.endsWith('/') && BASE_PATH.length > 1 ? BASE_PATH.slice(0, -1) : BASE_PATH === '/' ? '' : BASE_PATH
+const SITE_URL = SITE_DOMAIN + baseNoSlash
 const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
 
@@ -89,7 +96,7 @@ for (const file of files) {
     date: d,
     dateStr: fm.date.replace(/-/g, '.'),
     link: SITE_URL + toUrlPath(file),
-    urlPath: '/personal-site' + toUrlPath(file)
+    urlPath: baseNoSlash + toUrlPath(file)
   })
 }
 items.sort((a, b) => b.date - a.date)
@@ -121,6 +128,7 @@ ${feedItems}
 mkdirSync(PUBLIC_DIR, { recursive: true })
 writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
 writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
+writeFileSync(join(PUBLIC_DIR, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
 
 // ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
 const latestRows = items.slice(0, 3).map((it) => {

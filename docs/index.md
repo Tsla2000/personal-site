@@ -3,7 +3,7 @@ title: PRO的茶里芒果
 description: AI、投资、产品，以及一些关于世界如何运行的思考。
 ---
 
-<!-- 注意:以下站内链接硬编码了 /personal-site 前缀(因 base 路径)。若将来绑定自定义域名(base 改为 /),需批量去掉该前缀。-->
+<!-- 注意:Thinking 板块用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。Latest 板块由构建脚本按当次部署目标自动生成。-->
 <div class="home-page">
   <section class="home-section">
     <h2>Latest</h2>
@@ -25,9 +25,9 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
   <section class="home-section">
     <h2>Thinking</h2>
     <div class="article-list">
-      <a class="article-row" href="/personal-site/thinking/society/ai-labor-capital"><time>2026.10.06</time><div><strong>AI 技术终将造福每个人吗？</strong><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div></a>
-      <a class="article-row" href="/personal-site/thinking/first-principles/scarcity"><time>2026.10.05</time><div><strong>当智能可以无限复制，什么才是真正稀缺？</strong><small>思考 · 当智能的边际成本不断下降，稀缺性会迁移到哪里？</small></div></a>
-      <a class="article-row" href="/personal-site/thinking/wealth/first-principles"><time>2026.09.10</time><div><strong>财富的第一性原理是什么？</strong><small>思考 · 财富不是数字的堆积，而是对未来资源调度能力的储存。</small></div></a>
+      <a class="article-row" href="thinking/society/ai-labor-capital"><time>2026.10.06</time><div><strong>AI 技术终将造福每个人吗？</strong><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div></a>
+      <a class="article-row" href="thinking/first-principles/scarcity"><time>2026.10.05</time><div><strong>当智能可以无限复制，什么才是真正稀缺？</strong><small>思考 · 当智能的边际成本不断下降，稀缺性会迁移到哪里？</small></div></a>
+      <a class="article-row" href="thinking/wealth/first-principles"><time>2026.09.10</time><div><strong>财富的第一性原理是什么？</strong><small>思考 · 财富不是数字的堆积，而是对未来资源调度能力的储存。</small></div></a>
     </div>
   </section>
 
