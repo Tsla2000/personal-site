@@ -93,10 +93,10 @@ function playShutterSound(toDark: boolean) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const t = ctx.currentTime + 0.01
     const bright = toDark ? 0.85 : 1.12 // 关灯稍闷，开灯稍亮
-    burst(ctx, t, 780 * bright, 0.9, 0.075, 0.55) // 反光板抬起 "咔"
-    thump(ctx, t, 165, 62, 0.095, 0.4)
-    burst(ctx, t + 0.075, 2700 * bright, 1.1, 0.05, 0.45) // 快门 "嚓"
-    thump(ctx, t + 0.075, 230, 95, 0.05, 0.22)
+    burst(ctx, t, 780 * bright, 0.9, 0.075, 0.32) // 反光板抬起 "咔"
+    thump(ctx, t, 165, 62, 0.095, 0.24)
+    burst(ctx, t + 0.075, 2700 * bright, 1.1, 0.05, 0.28) // 快门 "嚓"
+    thump(ctx, t + 0.075, 230, 95, 0.05, 0.14)
   } catch {
     /* 忽略 */
   }
@@ -178,8 +178,8 @@ function toggleAppearance(event: MouseEvent, app: App) {
             ]
           },
           {
-            duration: 600,
-            easing: 'ease-out',
+            duration: 1000,
+            easing: 'ease-in-out',
             pseudoElement: '::view-transition-new(root)'
           }
         )
