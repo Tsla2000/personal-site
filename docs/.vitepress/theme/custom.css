@@ -219,6 +219,23 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   margin-top: 12px;
 }
 
+/* Projects 板块的下载 CTA：胶囊按钮，明暗模式都用品牌色 */
+.vp-doc .project-item a.cta,
+.vp-doc .project-item a.cta:hover {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 9px 22px;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 999px;
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.vp-doc .project-item a.cta:hover {
+  background: var(--vp-c-brand-soft);
+}
+
 .about-note {
   max-width: 620px;
   color: var(--vp-c-text-2);

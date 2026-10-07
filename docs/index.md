@@ -31,4 +31,15 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     </div>
   </section>
 
+  <section class="home-section">
+    <h2>Projects</h2>
+    <div class="project-list">
+      <div class="project-item">
+        <h3>XMade</h3>
+        <p>Chrome 扩展：一键下载 X 上的推文、视频和长文，整理好直接推送到微信公众号草稿。我自己每天在用的工具。</p>
+        <a class="cta" href="https://chromewebstore.google.com/detail/xmade-twitter-video-downl/bgopfpaklpnjmjbngflljdnjnblhnbjm" target="_blank" rel="noopener">去 Chrome 应用店安装 →</a>
+      </div>
+    </div>
+  </section>
+
 </div>
