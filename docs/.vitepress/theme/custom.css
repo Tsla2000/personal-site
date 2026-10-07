@@ -33,7 +33,7 @@
 }
 
 .VPContent {
-  padding-bottom: 80px;
+  padding-bottom: 24px;
 }
 
 .vp-doc {
@@ -65,7 +65,7 @@
 .home-page {
   max-width: 1060px;
   margin: 0 auto;
-  padding: 36px 32px 40px;
+  padding: 20px 32px 24px;
 }
 
 .home-hero {
@@ -118,7 +118,13 @@
 }
 
 .home-section {
-  padding: 34px 0 76px;
+  padding: 22px 0 40px;
+}
+
+/* footer 上下留白收紧（默认 32px） */
+#app .VPFooter {
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
 
 .home-section h2 {
@@ -226,7 +232,7 @@
 
 @media (max-width: 640px) {
   .home-page {
-    padding: 28px 22px 30px;
+    padding: 16px 22px 20px;
   }
   .home-hero {
     padding-bottom: 72px;
