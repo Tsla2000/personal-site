@@ -289,7 +289,7 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   border: 1px solid var(--vp-c-divider);
 }
 
-/* 明暗切换的圆形展开过渡（View Transitions API） */
+/* 明暗切换：整页渐隐渐现（View Transitions API 快照 + CSS 淡入） */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -300,5 +300,10 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 }
 ::view-transition-new(root) {
   z-index: 2147483646;
+  animation: theme-fade 0.8s ease-in-out;
+}
+@keyframes theme-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
