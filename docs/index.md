@@ -31,13 +31,4 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     </div>
   </section>
 
-  <section class="home-section">
-    <h2>About</h2>
-    <p class="about-note">我持续研究 AI、投资、产品与技术，也记录自己如何理解正在发生的变化。这里不是结论集，更像一张不断更新的思考地图。</p>
-    <div class="now-list">
-      <span>AI：Agent、AI Coding、产业变化</span>
-      <span>投资：美股、Tesla、长期主义</span>
-      <span>思考：财富、技术与社会</span>
-    </div>
-  </section>
 </div>

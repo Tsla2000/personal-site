@@ -302,5 +302,3 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   z-index: 2147483646;
 }
 
-/* 首页 About 模块：关注领域列表 */
-.home-section .now-list { margin: 28px 0 32px; }
