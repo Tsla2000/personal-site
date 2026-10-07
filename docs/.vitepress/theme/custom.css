@@ -289,5 +289,18 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   border: 1px solid var(--vp-c-divider);
 }
 
+/* 明暗切换的圆形展开过渡（View Transitions API） */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
 /* 首页 About 模块：关注领域列表 */
 .home-section .now-list { margin: 28px 0 32px; }
