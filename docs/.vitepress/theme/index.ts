@@ -137,9 +137,10 @@ function toggleAppearance(event: MouseEvent, app: App) {
 
   let startVT: StartViewTransition | undefined
   try {
-    startVT =
-      (document as unknown as { startViewTransition?: StartViewTransition }).startViewTransition ??
-      undefined
+    const raw = (document as unknown as { startViewTransition?: StartViewTransition })
+      .startViewTransition
+    // 必须保留 document 接收者，裸调用会抛 Illegal invocation
+    startVT = typeof raw === 'function' ? (cb) => raw.call(document, cb) : undefined
   } catch {
     startVT = undefined
   }
