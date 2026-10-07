@@ -261,6 +261,8 @@
 }
 html:not(.dark) .VPSwitchAppearance::after { content: "关灯"; }
 html.dark .VPSwitchAppearance::after { content: "开灯"; }
+/* 开关和右侧 GitHub 图标之间留出间距，避免文字被图标蹭到 */
+.VPNavBarAppearance { margin-right: 14px; }
 
 /* 文章封面图 */
 .article-cover { margin: 26px 0 10px; }
