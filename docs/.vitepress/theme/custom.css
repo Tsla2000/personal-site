@@ -282,6 +282,5 @@ html.dark button.VPSwitch.VPSwitchAppearance::after { content: "开灯"; }
   border: 1px solid var(--vp-c-divider);
 }
 
-/* 首页 About 模块：关注领域列表与链接行 */
+/* 首页 About 模块：关注领域列表 */
 .home-section .now-list { margin: 28px 0 32px; }
-.about-links a { margin-right: 28px; }

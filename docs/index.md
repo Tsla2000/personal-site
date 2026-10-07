@@ -39,6 +39,5 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
       <span>投资：美股、Tesla、长期主义</span>
       <span>思考：财富、技术与社会</span>
     </div>
-    <p class="about-links"><a href="/personal-site/about/">关于我 →</a><a href="/personal-site/about/timeline">时间线 →</a></p>
   </section>
 </div>
