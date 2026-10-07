@@ -64,6 +64,8 @@ export default defineConfig({
       copyright: '© 2026 PRO的茶里芒果'
     },
     outline: { level: [2, 3] },
+    darkModeSwitchTitle: '切换到深色模式',
+    lightModeSwitchTitle: '切换到浅色模式',
     editLink: { pattern: 'https://github.com/tsla2000/personal-site/edit/main/docs/:path' }
   },
 

@@ -244,12 +244,20 @@
   }
 }
 
-/* 明暗切换按钮：亮色模式显示"关灯"，暗色模式显示"开灯" */
+/* 明暗切换按钮：加宽容器，亮色模式显示"关灯"，暗色模式显示"开灯" */
+.VPSwitchAppearance {
+  width: 84px;
+  overflow: visible;
+}
 .VPSwitchAppearance::after {
-  margin-left: 8px;
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 13px;
   color: var(--vp-c-text-2);
   white-space: nowrap;
+  pointer-events: none;
 }
 html:not(.dark) .VPSwitchAppearance::after { content: "关灯"; }
 html.dark .VPSwitchAppearance::after { content: "开灯"; }
