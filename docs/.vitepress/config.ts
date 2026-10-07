@@ -23,7 +23,6 @@ export default defineConfig({
   description: SITE_DESC,
   cleanUrls: true,
   appearance: true,
-  lastUpdated: true,
   // sitemap 由 scripts/gen-seo.mjs 自行生成到 public/(VitePress 内置 sitemap 不拼接 base 路径,故不用它)
   themeConfig: {
     logo: undefined,
@@ -65,8 +64,7 @@ export default defineConfig({
     },
     outline: { level: [2, 3] },
     darkModeSwitchTitle: '切换到深色模式',
-    lightModeSwitchTitle: '切换到浅色模式',
-    editLink: { pattern: 'https://github.com/tsla2000/personal-site/edit/main/docs/:path' }
+    lightModeSwitchTitle: '切换到浅色模式'
   },
 
   // 每页自动输出 canonical + Open Graph / Twitter Card,取值来自该页 frontmatter
