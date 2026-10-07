@@ -74,6 +74,9 @@ export default defineConfig({
     const title = typeof fm.title === 'string' && fm.title ? fm.title : SITE_TITLE
     const desc = typeof fm.description === 'string' && fm.description ? fm.description : SITE_DESC
     const isHome = pageData.relativePath === 'index.md'
+    // 默认分享卡(1200x630);文章可在 frontmatter 里用 image: /images/xxx.png 覆盖(站内相对路径)
+    const imgPath = typeof fm.image === 'string' && fm.image ? fm.image : '/images/social-card.png'
+    const imgUrl = `${SITE_URL}${baseNoSlash}${imgPath.startsWith('/') ? imgPath : '/' + imgPath}`
 
     const head: HeadConfig[] = [
       ['link', { rel: 'canonical', href: url }],
@@ -82,9 +85,13 @@ export default defineConfig({
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: desc }],
       ['meta', { property: 'og:url', content: url }],
-      ['meta', { name: 'twitter:card', content: 'summary' }],
+      ['meta', { property: 'og:image', content: imgUrl }],
+      ['meta', { property: 'og:image:width', content: '1200' }],
+      ['meta', { property: 'og:image:height', content: '630' }],
+      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
       ['meta', { name: 'twitter:title', content: title }],
-      ['meta', { name: 'twitter:description', content: desc }]
+      ['meta', { name: 'twitter:description', content: desc }],
+      ['meta', { name: 'twitter:image', content: imgUrl }]
     ]
 
     if (fm.noindex === true) {
