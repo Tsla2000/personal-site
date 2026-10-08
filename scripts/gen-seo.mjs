@@ -4,7 +4,8 @@
 //   - docs/public/robots.txt   (sitemap 地址跟随部署目标)
 //   - 重写 docs/index.md 的 LATEST 板块(站内链接带 base 前缀)
 // 部署目标由环境变量决定:BASE_PATH(默认 '/';GitHub Pages 构建时传 '/personal-site/'),
-// SITE_URL(默认 https://tsla2000.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev)。
+// SITE_URL(默认 https://tsla2000.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev),
+// CANONICAL_URL(默认=SITE_URL 去 base;GitHub Pages 镜像构建时传新域名,使 canonical/sitemap 指向新站)。
 // 在 package.json 的 docs:build 中于 vitepress build 之前运行。
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
@@ -17,6 +18,10 @@ const SITE_DOMAIN = /^https?:\/\//i.test(_rawDomain) ? _rawDomain : `https://${_
 const BASE_PATH = process.env.BASE_PATH ?? '/'
 const baseNoSlash = BASE_PATH.endsWith('/') && BASE_PATH.length > 1 ? BASE_PATH.slice(0, -1) : BASE_PATH === '/' ? '' : BASE_PATH
 const SITE_URL = SITE_DOMAIN + baseNoSlash
+// 规范域名:缺省=部署域名(去 base);GitHub Pages 镜像构建时通过 CANONICAL_URL 传入新域名,
+// 使 sitemap/feed/robots.txt 指向新站(搜索引擎只收新站)
+const _rawCanon = (process.env.CANONICAL_URL ?? SITE_DOMAIN).replace(/\/$/, '')
+const CANONICAL_URL = /^https?:\/\//i.test(_rawCanon) ? _rawCanon : `https://${_rawCanon}`
 const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
 
@@ -71,7 +76,7 @@ const files = walk(DOCS_DIR).sort()
 // ---- sitemap.xml:全站页面 ----
 const sitemapUrls = files
   .map((f) => {
-    const loc = SITE_URL + toUrlPath(f)
+    const loc = CANONICAL_URL + toUrlPath(f)
     const lastmod = statSync(f).mtime.toISOString()
     return `  <url><loc>${esc(loc)}</loc><lastmod>${lastmod}</lastmod></url>`
   })
@@ -97,7 +102,7 @@ for (const file of files) {
     category: fm.category || '',
     date: d,
     dateStr: fm.date.replace(/-/g, '.'),
-    link: SITE_URL + toUrlPath(file),
+    link: CANONICAL_URL + toUrlPath(file),
     urlPath: baseNoSlash + toUrlPath(file)
   })
 }
@@ -119,7 +124,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
   <channel>
     <title>${esc(SITE_TITLE)}</title>
-    <link>${SITE_URL}/</link>
+    <link>${CANONICAL_URL}/</link>
     <description>${esc(SITE_DESC)}</description>
     <language>zh-CN</language>
 ${feedItems}
@@ -130,7 +135,7 @@ ${feedItems}
 mkdirSync(PUBLIC_DIR, { recursive: true })
 writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
 writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
-writeFileSync(join(PUBLIC_DIR, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
+writeFileSync(join(PUBLIC_DIR, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${CANONICAL_URL}/sitemap.xml\n`)
 
 // ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
 const latestRows = items.slice(0, 3).map((it) => {

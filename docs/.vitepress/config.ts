@@ -5,6 +5,10 @@ const base = process.env.BASE_PATH ?? '/'
 // 容错:没写 https:// 时自动补上,避免 canonical 写出裸域名
 const _rawSiteUrl = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
 const SITE_URL = /^https?:\/\//i.test(_rawSiteUrl) ? _rawSiteUrl : `https://${_rawSiteUrl}`
+// 规范域名:搜索引擎认定的主域名。GitHub Pages 镜像构建时通过 CANONICAL_URL 传入新域名,
+// 使旧站每页 canonical/og:url 指向新站对应页面(去 base 前缀);缺省=本站地址
+const _rawCanon = (process.env.CANONICAL_URL ?? SITE_URL).replace(/\/$/, '')
+const CANONICAL_URL = /^https?:\/\//i.test(_rawCanon) ? _rawCanon : `https://${_rawCanon}`
 const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
 
@@ -73,7 +77,7 @@ export default defineConfig({
   // 每页自动输出 canonical + Open Graph / Twitter Card,取值来自该页 frontmatter
   transformHead({ pageData }) {
     const fm = pageData.frontmatter ?? {}
-    const url = `${SITE_URL}${baseNoSlash}${pagePath(pageData.relativePath)}`
+    const canonical = `${CANONICAL_URL}${pagePath(pageData.relativePath)}`
     const title = typeof fm.title === 'string' && fm.title ? fm.title : SITE_TITLE
     const desc = typeof fm.description === 'string' && fm.description ? fm.description : SITE_DESC
     const isHome = pageData.relativePath === 'index.md'
@@ -82,12 +86,12 @@ export default defineConfig({
     const imgUrl = `${SITE_URL}${baseNoSlash}${imgPath.startsWith('/') ? imgPath : '/' + imgPath}`
 
     const head: HeadConfig[] = [
-      ['link', { rel: 'canonical', href: url }],
+      ['link', { rel: 'canonical', href: canonical }],
       ['meta', { property: 'og:locale', content: 'zh_CN' }],
       ['meta', { property: 'og:site_name', content: SITE_TITLE }],
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: desc }],
-      ['meta', { property: 'og:url', content: url }],
+      ['meta', { property: 'og:url', content: canonical }],
       ['meta', { property: 'og:image', content: imgUrl }],
       ['meta', { property: 'og:image:width', content: '1200' }],
       ['meta', { property: 'og:image:height', content: '630' }],

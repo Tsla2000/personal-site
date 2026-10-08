@@ -33,6 +33,7 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
           SITE_URL: https://tsla2000.github.io
+          CANONICAL_URL: https://mangofund.pages.dev
         run: npm run docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
