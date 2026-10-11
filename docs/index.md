@@ -9,14 +9,14 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     <h2>Latest</h2>
 <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
     <div class="article-list">
+      <a class="article-row" href="/ai/trends/rea-software-replicability">
+        <time>2026.10.11</time><div><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><small>AI · AI 逆向工程工具正在拉低&quot;看懂一个软件&quot;的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？</small></div>
+      </a>
       <a class="article-row" href="/ai/coding/muse-auto-deploy">
         <time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>AI · 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div>
       </a>
       <a class="article-row" href="/investment/us-stocks/ai-stage-invest-guide">
         <time>2026.10.06</time><div><strong>AI 进行到哪一步了？普通人如何投资美股</strong><small>投资 · 用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div>
-      </a>
-      <a class="article-row" href="/thinking/society/ai-labor-capital">
-        <time>2026.10.06</time><div><strong>AI 技术终将造福每个人吗？</strong><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div>
       </a>
     </div>
     <!-- LATEST-END -->

@@ -44,7 +44,7 @@ export default defineConfig({
     sidebar: {
       '/ai/': [
         { text: 'AI', link: '/ai/' },
-        { text: '趋势', items: [{ text: 'AI 产业的下一阶段', link: '/ai/trends/next-stage' }] },
+        { text: '趋势', items: [{ text: 'REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段', link: '/ai/trends/rea-software-replicability' }, { text: 'AI 产业的下一阶段', link: '/ai/trends/next-stage' }] },
         { text: 'Agent', items: [{ text: 'AI Agent 会成为下一代操作系统吗？', link: '/ai/agents/agent-os' }] },
         { text: 'Coding', items: [{ text: 'AI 编程的真正杠杆', link: '/ai/coding/ai-coding-leverage' }, { text: '我是如何用 Muse 自动化部署个人网站的', link: '/ai/coding/muse-auto-deploy' }] }
       ],
