@@ -2,6 +2,7 @@
 //   - docs/public/feed.xml    (RSS,只收录带 title+date 的文章页)
 //   - docs/public/sitemap.xml  (全站页面)
 //   - docs/public/robots.txt   (sitemap 地址跟随部署目标)
+//   - docs/public/llms.txt      (给 AI 看的站点说明书:栏目+文章摘要+链接,随构建自动更新)
 //   - 重写 docs/index.md 的 LATEST 板块(站内链接带 base 前缀)
 // 部署目标由环境变量决定:BASE_PATH(默认 '/';GitHub Pages 构建时传 '/personal-site/'),
 // SITE_URL(默认 https://tsla2000.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev),
@@ -136,6 +137,38 @@ mkdirSync(PUBLIC_DIR, { recursive: true })
 writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
 writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
 writeFileSync(join(PUBLIC_DIR, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${CANONICAL_URL}/sitemap.xml\n`)
+
+// ---- llms.txt:给 AI 爬虫/问答引擎看的站点说明书(标题+一句话摘要+链接,随构建自动更新) ----
+const llmsByCat = new Map()
+for (const it of items) {
+  const cat = it.category || '未分类'
+  if (!llmsByCat.has(cat)) llmsByCat.set(cat, [])
+  llmsByCat.get(cat).push(it)
+}
+const llmsSections = [...llmsByCat.entries()]
+  .map(([cat, list]) => `## ${cat}\n\n${list.map((it) => `- [${it.title}](${it.link})：${it.description}（${it.dateStr}）`).join('\n')}`)
+  .join('\n\n')
+const llms = `# ${SITE_TITLE}
+
+> ${SITE_DESC}
+
+中文个人知识库网站，主域名 ${CANONICAL_URL}/。内容围绕 AI、投资、产品思考展开，均为原创文章。
+
+## 栏目
+
+- [AI](${CANONICAL_URL}/ai)：AI 趋势、Agent、AI 编程
+- [投资](${CANONICAL_URL}/investment)：美股与长期主义
+- [思考](${CANONICAL_URL}/thinking)：财富、技术与社会
+- [关于](${CANONICAL_URL}/about)
+
+${llmsSections}
+
+## 订阅
+
+- RSS: ${CANONICAL_URL}/feed.xml
+- Sitemap: ${CANONICAL_URL}/sitemap.xml
+`
+writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 
 // ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
 const latestRows = items.slice(0, 3).map((it) => {

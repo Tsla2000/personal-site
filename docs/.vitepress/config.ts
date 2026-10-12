@@ -116,6 +116,62 @@ export default defineConfig({
         }
       }
     }
+
+    // ---- 结构化数据 JSON-LD(供搜索引擎/AI 问答引擎摘取) ----
+    // 首页 → WebSite;带 title 的文章页 → Article;frontmatter 写 faq: [{q, a}] 的页面追加 FAQPage
+    const schemas: Record<string, unknown>[] = []
+    if (isHome) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE_TITLE,
+        url: `${CANONICAL_URL}/`,
+        description: SITE_DESC,
+        inLanguage: 'zh-CN'
+      })
+    } else if (title) {
+      const article: Record<string, unknown> = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        description: desc,
+        url: canonical,
+        mainEntityOfPage: canonical,
+        inLanguage: 'zh-CN',
+        author: { '@type': 'Person', name: 'pro', url: `${CANONICAL_URL}/about/` },
+        publisher: {
+          '@type': 'Organization',
+          name: SITE_TITLE,
+          logo: { '@type': 'ImageObject', url: `${CANONICAL_URL}/images/site-icon.png` }
+        },
+        image: imgUrl
+      }
+      if (typeof fm.date === 'string' && fm.date) {
+        const d = new Date(fm.date)
+        if (!Number.isNaN(d.getTime())) {
+          article.datePublished = d.toISOString()
+          article.dateModified = d.toISOString()
+        }
+      }
+      schemas.push(article)
+      const faqRaw = (fm as Record<string, unknown>).faq
+      if (Array.isArray(faqRaw)) {
+        const qa = faqRaw
+          .filter((e): e is { q: string; a: string } =>
+            !!e && typeof (e as { q?: unknown }).q === 'string' && typeof (e as { a?: unknown }).a === 'string')
+          .map((e) => ({
+            '@type': 'Question',
+            name: e.q,
+            acceptedAnswer: { '@type': 'Answer', text: e.a }
+          }))
+        if (qa.length > 0) {
+          schemas.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: qa })
+        }
+      }
+    }
+    for (const s of schemas) {
+      head.push(['script', { type: 'application/ld+json' }, JSON.stringify(s).replace(/<\//g, '<\\/')])
+    }
     return head
   },
 
