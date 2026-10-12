@@ -1,0 +1,3 @@
+# Cloudflare Pages 默认开启 Pretty URLs,/foo.html 会 308 跳到 /foo。
+# Google Search Console 的验证文件必须精确 URL 返回 200,用 200 rewrite 把它钉住。
+/googlea4e028c59d636e52.html /googlea4e028c59d636e52 200
