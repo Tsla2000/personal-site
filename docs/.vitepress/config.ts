@@ -123,6 +123,12 @@ export default defineConfig({
     // RSS 订阅入口
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: `${SITE_TITLE} RSS`, href: `${baseNoSlash}/feed.xml` }],
 
+    // 站点图标
+    ['link', { rel: 'icon', type: 'image/x-icon', href: `${baseNoSlash}/favicon.ico` }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${baseNoSlash}/favicon-32x32.png` }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: `${baseNoSlash}/favicon-16x16.png` }],
+    ['link', { rel: 'apple-touch-icon', href: `${baseNoSlash}/apple-touch-icon.png` }],
+
     // ---- 访问统计(Umami 已启用,见 ANALYTICS_SETUP.md) ----
     ['script', { defer: '', src: 'https://cloud.umami.is/script.js', 'data-website-id': '9be496a4-8003-46ab-9f02-de2fa19abab4' }],
     // Plausible(备用,未启用):
