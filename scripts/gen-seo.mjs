@@ -198,11 +198,14 @@ const archiveSections = [...byYear.entries()]
   .map(([year, list]) => {
     const rows = list.map((it) => {
       const sub = it.category ? `${it.category} · ${it.description}` : it.description
-      return `      <a class="article-row" href="${it.urlPath}">
-        <time>${it.dateStr}</time><div><strong>${esc(it.title)}</strong><small>${esc(sub)}</small></div>
-      </a>`
+      return `<a class="article-row" href="${it.urlPath}">
+  <time>${it.dateStr}</time><div><strong>${esc(it.title)}</strong><small>${esc(sub)}</small></div>
+</a>`
     }).join('\n')
-    return `    <h2>${year}（${list.length}）</h2>\n    <div class="article-list">\n${rows}\n    </div>`
+    return `<h2>${year}（${list.length}）</h2>
+<div class="article-list">
+${rows}
+</div>`
   }).join('\n')
 const archivePath = join(DOCS_DIR, 'archive.md')
 const archiveSrc = readFileSync(archivePath, 'utf8')
