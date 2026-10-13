@@ -40,6 +40,7 @@ export default defineConfig({
       { text: '投资', link: '/investment/' },
       { text: '思考', link: '/thinking/' },
       { text: '关于', link: '/about/' },
+      { text: '项目', link: '/#projects' },
       { text: '留言板', link: '/guestbook/' }
     ],
     sidebar: {
