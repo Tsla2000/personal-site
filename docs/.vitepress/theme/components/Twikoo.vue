@@ -2,8 +2,8 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useData, useRoute } from 'vitepress'
 
-// Twikoo 后端地址，部署完成后填入（包含 https:// 前缀）
-const ENVID = '__TWIKOO_ENVID__'
+// Twikoo 后端地址（Vercel 部署，2026-10-13）
+const ENVID = 'https://twikoo-comments-iota.vercel.app'
 
 const { page } = useData()
 const route = useRoute()
