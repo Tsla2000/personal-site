@@ -22,8 +22,12 @@ const route = useRoute()
 const container = ref<HTMLElement | null>(null)
 let stopWatch: (() => void) | null = null
 
-// 留言板页用 frontmatter: comments=false 关掉文章底部那份，避免重复
+// markdown 里 <Giscus force /> 显式放置时不受 frontmatter 影响
+const props = withDefaults(defineProps<{ force?: boolean }>(), { force: false })
+
+// 留言板页用 frontmatter: comments=false 关掉自动注入的那份，避免重复
 const show = computed(() => {
+  if (props.force) return true
   try {
     return (page.value.frontmatter as Record<string, unknown>)?.comments !== false
   } catch {
