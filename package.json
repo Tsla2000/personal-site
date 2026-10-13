@@ -9,6 +9,11 @@
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.6",
     "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "simple-icons": "^16.35.0"
   }
 }
