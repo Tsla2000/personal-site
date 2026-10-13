@@ -6,6 +6,13 @@ category: AI
 tags: [Coding, AI Agent, 博客]
 image: /images/twikoo-architecture.webp
 draft: false
+faq:
+  - q: Twikoo 需要自己搭后端吗？
+    a: 需要。Twikoo 是前后端分离的评论系统，后端可以部署在 Vercel 上，数据库用 MongoDB Atlas 的免费 M0 集群。
+  - q: 匿名留言的昵称和 IP 属地是怎么实现的？
+    a: 昵称由 Twikoo 自动分配，IP 属地通过后端配置显示，完整 IP 只在管理后台可见，不会公开。
+  - q: 和 Giscus 相比，Twikoo 有什么优势？
+    a: Twikoo 不需要 GitHub 账号就能留言，适合中文读者；Giscus 依赖 GitHub Discussions，留言门槛高。
 ---
 
 # 如何让 Muse 给个人网站接入留言板和评论功能

@@ -6,6 +6,13 @@ category: AI
 tags: [AI, Muse, 自动化, 建站]
 image: /images/muse-deploy-actions.png
 draft: false
+faq:
+  - q: 用 Muse 部署网站需要懂代码吗？
+    a: 需要基本的代码阅读能力。Muse 负责执行具体的修改和构建，但你需要能看懂它在做什么，并在关键节点确认。
+  - q: 部署流程是怎样的？
+    a: 本地改代码 → Muse 构建验证 → 推送到 GitHub → GitHub Actions 自动部署到 GitHub Pages，全程不需要手动执行命令。
+  - q: 出问题了怎么办？
+    a: 把报错信息直接贴给 Muse，它会定位问题并修复。常见问题是构建失败和部署配置错误。
 ---
 
 # 我是如何用 Muse 自动化部署个人网站的
@@ -19,6 +26,8 @@ draft: false
 *图：PRO的茶里芒果首页。VitePress 构建，内容全部由 Markdown 驱动。*
 
 </div>
+
+**这个网站从检查代码到正式上线只用了一天，全程由 Muse 执行：修复 sitemap、补充 SEO、运行构建、提交代码，最后由 GitHub Actions 自动发布。网站维护正在从"我亲自完成每一步"，变成"我提出目标，Agent 负责推进"。**
 
 这个网站从检查代码到正式上线，只用了一天。
 
