@@ -1,123 +1,50 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import QRCode from 'qrcode'
-import { siWechat, siSinaweibo, siXiaohongshu } from 'simple-icons'
+import { useShare, LINK_SVG } from './useShare'
 
-interface Platform {
-  key: string
-  name: string
-  tip: string
-  svg: string
-  color: string
-  shareUrl?: (url: string, title: string) => string
-}
-
-const platforms: Platform[] = [
-  { key: 'wechat', name: '微信', tip: '微信扫码，在微信中打开', svg: siWechat.svg, color: '#07C160' },
-  {
-    key: 'weibo', name: '微博', tip: '微博扫码分享', svg: siSinaweibo.svg, color: '#E6162D',
-    shareUrl: (url, title) =>
-      'https://service.weibo.com/share/share.php?url=' + encodeURIComponent(url) +
-      '&title=' + encodeURIComponent(title)
-  },
-  { key: 'xiaohongshu', name: '小红书', tip: '小红书扫码打开', svg: siXiaohongshu.svg, color: '#FF2442' }
-]
-
-const LINK_SVG =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+const {
+  platforms, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
+  init, show, hide, onBtnClick, copyLink, cleanup
+} = useShare()
 
 const mounted = ref(false)
-const coarse = ref(false) // 触屏：hover 不可用，改用点击切换
-const openKey = ref<string | null>(null)
-const qrCache = ref<Record<string, string>>({})
-const copied = ref(false)
+const narrow = ref(true) // 宽屏走左侧悬浮栏，这里只在窄屏显示
 const root = ref<HTMLElement | null>(null)
-let pageUrl = ''
-let pageTitle = ''
-let copyTimer: ReturnType<typeof setTimeout> | null = null
 
-function canonicalUrl(): string {
+function updateWidth(): void {
   try {
-    const el = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
-    if (el && el.href) return el.href
-  } catch { /* 忽略 */ }
-  return location.href
-}
-
-async function qrFor(key: string): Promise<void> {
-  if (qrCache.value[key] || !pageUrl) return
-  try {
-    qrCache.value[key] = await QRCode.toDataURL(pageUrl, { width: 168, margin: 1 })
-  } catch { /* 忽略 */ }
-}
-
-function show(key: string): void {
-  openKey.value = key
-  void qrFor(key)
-}
-function hide(): void {
-  openKey.value = null
-}
-function toggle(key: string): void {
-  if (openKey.value === key) hide()
-  else show(key)
-}
-
-function onPlatformClick(p: Platform): void {
-  if (p.shareUrl) {
-    window.open(p.shareUrl(pageUrl, pageTitle), '_blank', 'noopener,noreferrer')
-    return
-  }
-  if (coarse.value) toggle(p.key)
-}
-
-async function copyLink(): Promise<void> {
-  hide()
-  try {
-    await navigator.clipboard.writeText(pageUrl)
+    narrow.value = !window.matchMedia('(min-width: 1280px)').matches
   } catch {
-    try {
-      const ta = document.createElement('textarea')
-      ta.value = pageUrl
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      document.body.removeChild(ta)
-    } catch { /* 忽略 */ }
+    narrow.value = true
   }
-  copied.value = true
-  if (copyTimer) clearTimeout(copyTimer)
-  copyTimer = setTimeout(() => { copied.value = false }, 1600)
 }
 
 function onDocClick(e: MouseEvent): void {
   if (root.value && !root.value.contains(e.target as Node)) hide()
 }
-
 function onKeydown(e: KeyboardEvent): void {
   if (e.key === 'Escape') hide()
 }
 
 onMounted(() => {
   mounted.value = true
-  try {
-    coarse.value = window.matchMedia('(pointer: coarse)').matches
-  } catch { /* 忽略 */ }
-  pageUrl = canonicalUrl()
-  pageTitle = document.title
+  init()
+  updateWidth()
+  window.addEventListener('resize', updateWidth)
   document.addEventListener('click', onDocClick)
   document.addEventListener('keydown', onKeydown)
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateWidth)
   document.removeEventListener('click', onDocClick)
   document.removeEventListener('keydown', onKeydown)
-  if (copyTimer) clearTimeout(copyTimer)
+  cleanup()
 })
 </script>
 
 <template>
-  <div v-if="mounted" ref="root" class="share-bar">
+  <div v-if="mounted && narrow" ref="root" class="share-bar">
     <span class="share-label">分享到</span>
     <div
       v-for="p in platforms"
@@ -130,7 +57,7 @@ onBeforeUnmount(() => {
         class="share-btn"
         :style="{ '--brand': p.color }"
         :aria-label="'分享到' + p.name"
-        @click="onPlatformClick(p)"
+        @click="onBtnClick(p)"
         v-html="p.svg"
       ></button>
       <span class="share-name">{{ p.name }}</span>

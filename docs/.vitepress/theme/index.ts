@@ -4,6 +4,7 @@ import type { EnhanceAppContext } from 'vitepress'
 import { nextTick, h } from 'vue'
 import type { App, Ref } from 'vue'
 import ShareBar from './components/ShareBar.vue'
+import ShareRail from './components/ShareRail.vue'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -172,6 +173,7 @@ function toggleAppearance(event: MouseEvent, app: App) {
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
+    'layout-top': () => h(ShareRail),
     'doc-footer-before': () => h(ShareBar)
   }),
   enhanceApp({ app }: EnhanceAppContext) {
