@@ -11,6 +11,7 @@ description: AI 同时改变生产工具、组织方式、产品边界和人的�
 
 <!-- 注意:站内链接用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。-->
 <div class="article-list">
+  <a class="article-row" href="agents/x-auto-ops"><time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统</strong><small>从选题、写作到发布：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div></a>
   <a class="article-row" href="trends/rea-software-replicability"><time>2026.10.11</time><div><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><small>当"看懂一个软件"的成本趋近于零，软件公司的竞争优势会转移到哪里？</small></div></a>
   <a class="article-row" href="coding/muse-auto-deploy"><time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div></a>
   <a class="article-row" href="agents/agent-os"><time>2026.10.01</time><div><strong>AI Agent 会成为下一代操作系统吗？</strong><small>Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</small></div></a>

@@ -6,6 +6,13 @@
     <description>AI、投资、产品，以及一些关于世界如何运行的思考。</description>
     <language>zh-CN</language>
     <item>
+      <title>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</title>
+      <link>https://tsla2000.github.io/ai/agents/x-auto-ops</link>
+      <guid>https://tsla2000.github.io/ai/agents/x-auto-ops</guid>
+      <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+      <description>把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</description>
+    </item>
+    <item>
       <title>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</title>
       <link>https://tsla2000.github.io/ai/trends/rea-software-replicability</link>
       <guid>https://tsla2000.github.io/ai/trends/rea-software-replicability</guid>

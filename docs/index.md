@@ -9,14 +9,14 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     <h2>Latest</h2>
 <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
     <div class="article-list">
+      <a class="article-row" href="/ai/agents/x-auto-ops">
+        <time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><small>AI · 把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div>
+      </a>
       <a class="article-row" href="/ai/trends/rea-software-replicability">
         <time>2026.10.11</time><div><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><small>AI · AI 逆向工程工具正在拉低&quot;看懂一个软件&quot;的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？</small></div>
       </a>
       <a class="article-row" href="/ai/coding/muse-auto-deploy">
         <time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>AI · 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div>
-      </a>
-      <a class="article-row" href="/investment/us-stocks/ai-stage-invest-guide">
-        <time>2026.10.06</time><div><strong>AI 进行到哪一步了？普通人如何投资美股</strong><small>投资 · 用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div>
       </a>
     </div>
     <!-- LATEST-END -->
