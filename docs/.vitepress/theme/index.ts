@@ -5,6 +5,7 @@ import { nextTick, h } from 'vue'
 import type { App, Ref } from 'vue'
 import ShareBar from './components/ShareBar.vue'
 import ShareRail from './components/ShareRail.vue'
+import Giscus from './components/Giscus.vue'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -174,9 +175,11 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'layout-top': () => h(ShareRail),
-    'doc-footer-before': () => h(ShareBar)
+    'doc-footer-before': () => [h(ShareBar), h(Giscus)]
   }),
   enhanceApp({ app }: EnhanceAppContext) {
+    // 留言板页 markdown 里直接用 <Giscus />
+    app.component('Giscus', Giscus)
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）
     app.provide('toggle-appearance', (event: MouseEvent) => toggleAppearance(event, app))
   }

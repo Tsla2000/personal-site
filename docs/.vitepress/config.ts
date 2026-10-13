@@ -39,7 +39,8 @@ export default defineConfig({
       { text: 'AI', link: '/ai/' },
       { text: '投资', link: '/investment/' },
       { text: '思考', link: '/thinking/' },
-      { text: '关于', link: '/about/' }
+      { text: '关于', link: '/about/' },
+      { text: '留言板', link: '/guestbook/' }
     ],
     sidebar: {
       '/ai/': [
