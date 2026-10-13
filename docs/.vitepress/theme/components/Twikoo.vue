@@ -4,13 +4,14 @@ import { useData, useRoute } from 'vitepress'
 
 // Twikoo 后端地址（Vercel 部署，2026-10-13）
 const ENVID = 'https://twikoo-comments-iota.vercel.app'
+// 前端 bundle 本地托管，避免 CDN 和打包器互操作问题
+const TWIKOO_JS = '/js/twikoo.all.min.js'
 
 const { page } = useData()
 const route = useRoute()
 const container = ref<HTMLElement | null>(null)
 let stopWatch: (() => void) | null = null
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let twikoo: any = null
+let scriptEl: HTMLScriptElement | null = null
 
 // markdown 里 <Twikoo force /> 显式放置时不受 frontmatter 影响
 const props = withDefaults(defineProps<{ force?: boolean }>(), { force: false })
@@ -25,21 +26,42 @@ const show = computed(() => {
   }
 })
 
+function twikooReady(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') return reject(new Error('no window'))
+    const w = window as unknown as Record<string, unknown>
+    if (w.twikoo) return resolve()
+    if (scriptEl) {
+      scriptEl.addEventListener('load', () => resolve(), { once: true })
+      scriptEl.addEventListener('error', () => reject(new Error('twikoo.js load failed')), { once: true })
+      return
+    }
+    const s = document.createElement('script')
+    s.src = TWIKOO_JS
+    s.async = true
+    s.onload = () => resolve()
+    s.onerror = () => reject(new Error('twikoo.js load failed'))
+    scriptEl = s
+    document.head.appendChild(s)
+  })
+}
+
 async function load(): Promise<void> {
   const el = container.value
   if (!el || typeof document === 'undefined') return
-  if (!twikoo) {
-    // twikoo 是纯浏览器 UMD 包，只能在客户端动态加载
-    const mod = await import('twikoo')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    twikoo = (mod as any).default || mod
+  try {
+    await twikooReady()
+    const w = window as unknown as Record<string, { init: (o: object) => void }>
+    el.innerHTML = ''
+    w.twikoo.init({
+      envId: ENVID,
+      el,
+      lang: 'zh-CN'
+    })
+  } catch (e) {
+    el.innerHTML = '<p class="twikoo-error">评论区加载失败，请稍后刷新重试</p>'
+    console.error('[Twikoo]', e)
   }
-  el.innerHTML = ''
-  twikoo.init({
-    envId: ENVID,
-    el,
-    lang: 'zh-CN'
-  })
 }
 
 onMounted(() => {
@@ -78,5 +100,11 @@ onBeforeUnmount(() => {
 }
 .twikoo-container {
   min-height: 120px;
+}
+.twikoo-error {
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  padding: 24px 0;
+  text-align: center;
 }
 </style>
