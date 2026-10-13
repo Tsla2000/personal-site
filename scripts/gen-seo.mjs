@@ -185,4 +185,31 @@ const updated = indexSrc.replace(
   latestHtml
 )
 if (updated !== indexSrc) writeFileSync(indexPath, updated)
-console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items`)
+
+// ---- 归档页:按年份分组,全部文章倒序,自动写入 docs/archive.md ----
+const byYear = new Map()
+for (const it of items) {
+  const y = it.date.getFullYear()
+  if (!byYear.has(y)) byYear.set(y, [])
+  byYear.get(y).push(it)
+}
+const archiveSections = [...byYear.entries()]
+  .sort((a, b) => b[0] - a[0])
+  .map(([year, list]) => {
+    const rows = list.map((it) => {
+      const sub = it.category ? `${it.category} · ${it.description}` : it.description
+      return `      <a class="article-row" href="${it.urlPath}">
+        <time>${it.dateStr}</time><div><strong>${esc(it.title)}</strong><small>${esc(sub)}</small></div>
+      </a>`
+    }).join('\n')
+    return `    <h2>${year}（${list.length}）</h2>\n    <div class="article-list">\n${rows}\n    </div>`
+  }).join('\n')
+const archivePath = join(DOCS_DIR, 'archive.md')
+const archiveSrc = readFileSync(archivePath, 'utf8')
+const archiveHtml = `<!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->\n${archiveSections}\n<!-- ARCHIVE-END -->`
+const archiveUpdated = archiveSrc.replace(
+  /<!-- ARCHIVE-START[\s\S]*?<!-- ARCHIVE-END -->/,
+  archiveHtml
+)
+if (archiveUpdated !== archiveSrc) writeFileSync(archivePath, archiveUpdated)
+console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items, archive: ${items.length} posts`)

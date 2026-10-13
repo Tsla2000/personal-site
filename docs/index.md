@@ -20,6 +20,7 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
       </a>
     </div>
     <!-- LATEST-END -->
+    <p style="margin-top:12px;"><a href="/archive" style="font-size:14px;color:#1d9bf0;">查看全部文章 →</a></p>
   </section>
 
   <section class="home-section">
