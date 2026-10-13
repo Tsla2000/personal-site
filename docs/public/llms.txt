@@ -2,35 +2,35 @@
 
 > AI、投资、产品，以及一些关于世界如何运行的思考。
 
-中文个人知识库网站，主域名 https://mangofund.pages.dev/。内容围绕 AI、投资、产品思考展开，均为原创文章。
+中文个人知识库网站，主域名 https://tsla2000.github.io/。内容围绕 AI、投资、产品思考展开，均为原创文章。
 
 ## 栏目
 
-- [AI](https://mangofund.pages.dev/ai)：AI 趋势、Agent、AI 编程
-- [投资](https://mangofund.pages.dev/investment)：美股与长期主义
-- [思考](https://mangofund.pages.dev/thinking)：财富、技术与社会
-- [关于](https://mangofund.pages.dev/about)
+- [AI](https://tsla2000.github.io/ai)：AI 趋势、Agent、AI 编程
+- [投资](https://tsla2000.github.io/investment)：美股与长期主义
+- [思考](https://tsla2000.github.io/thinking)：财富、技术与社会
+- [关于](https://tsla2000.github.io/about)
 
 ## AI
 
-- [REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段](https://mangofund.pages.dev/ai/trends/rea-software-replicability)：AI 逆向工程工具正在拉低"看懂一个软件"的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？（2026.10.11）
-- [我是如何用 Muse 自动化部署个人网站的](https://mangofund.pages.dev/ai/coding/muse-auto-deploy)：从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。（2026.10.06）
-- [AI Agent 会成为下一代操作系统吗？](https://mangofund.pages.dev/ai/agents/agent-os)：Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。（2026.10.01）
-- [AI 产业的下一阶段](https://mangofund.pages.dev/ai/trends/next-stage)：市场真正定价的不是技术是否强大，而是价值能否被捕获。（2026.09.18）
-- [AI 编程的真正杠杆](https://mangofund.pages.dev/ai/coding/ai-coding-leverage)：AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。（2026.08.30）
+- [REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段](https://tsla2000.github.io/ai/trends/rea-software-replicability)：AI 逆向工程工具正在拉低"看懂一个软件"的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？（2026.10.11）
+- [我是如何用 Muse 自动化部署个人网站的](https://tsla2000.github.io/ai/coding/muse-auto-deploy)：从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。（2026.10.06）
+- [AI Agent 会成为下一代操作系统吗？](https://tsla2000.github.io/ai/agents/agent-os)：Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。（2026.10.01）
+- [AI 产业的下一阶段](https://tsla2000.github.io/ai/trends/next-stage)：市场真正定价的不是技术是否强大，而是价值能否被捕获。（2026.09.18）
+- [AI 编程的真正杠杆](https://tsla2000.github.io/ai/coding/ai-coding-leverage)：AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。（2026.08.30）
 
 ## 投资
 
-- [AI 进行到哪一步了？普通人如何投资美股](https://mangofund.pages.dev/investment/us-stocks/ai-stage-invest-guide)：用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。（2026.10.06）
-- [Tesla 的长期价值究竟来自汽车吗？](https://mangofund.pages.dev/investment/tesla/long-term-value)：把一家公司的价值拆成制造、软件与能源三层。（2026.09.24）
+- [AI 进行到哪一步了？普通人如何投资美股](https://tsla2000.github.io/investment/us-stocks/ai-stage-invest-guide)：用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。（2026.10.06）
+- [Tesla 的长期价值究竟来自汽车吗？](https://tsla2000.github.io/investment/tesla/long-term-value)：把一家公司的价值拆成制造、软件与能源三层。（2026.09.24）
 
 ## 思考
 
-- [AI 技术终将造福每个人吗？](https://mangofund.pages.dev/thinking/society/ai-labor-capital)：AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。（2026.10.06）
-- [当智能可以无限复制，什么才是真正稀缺？](https://mangofund.pages.dev/thinking/first-principles/scarcity)：当智能的边际成本不断下降，稀缺性会迁移到哪里？（2026.10.05）
-- [财富的第一性原理是什么？](https://mangofund.pages.dev/thinking/wealth/first-principles)：财富不是数字的堆积，而是对未来资源调度能力的储存。（2026.09.10）
+- [AI 技术终将造福每个人吗？](https://tsla2000.github.io/thinking/society/ai-labor-capital)：AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。（2026.10.06）
+- [当智能可以无限复制，什么才是真正稀缺？](https://tsla2000.github.io/thinking/first-principles/scarcity)：当智能的边际成本不断下降，稀缺性会迁移到哪里？（2026.10.05）
+- [财富的第一性原理是什么？](https://tsla2000.github.io/thinking/wealth/first-principles)：财富不是数字的堆积，而是对未来资源调度能力的储存。（2026.09.10）
 
 ## 订阅
 
-- RSS: https://mangofund.pages.dev/feed.xml
-- Sitemap: https://mangofund.pages.dev/sitemap.xml
+- RSS: https://tsla2000.github.io/feed.xml
+- Sitemap: https://tsla2000.github.io/sitemap.xml
