@@ -6,6 +6,7 @@ import type { App, Ref } from 'vue'
 import ShareBar from './components/ShareBar.vue'
 import ShareRail from './components/ShareRail.vue'
 import Twikoo from './components/Twikoo.vue'
+import UsefulButton from './components/UsefulButton.vue'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -175,7 +176,7 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'layout-top': () => h(ShareRail),
-    'doc-footer-before': () => [h(ShareBar), h(Twikoo)]
+    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)]
   }),
   enhanceApp({ app }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
