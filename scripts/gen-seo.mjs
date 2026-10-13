@@ -74,8 +74,15 @@ function esc(s) {
 
 const files = walk(DOCS_DIR).sort()
 
-// ---- sitemap.xml:全站页面 ----
+// ---- sitemap.xml:全站页面（排除草稿和 noindex）----
 const sitemapUrls = files
+  .filter((f) => {
+    const fm = parseFrontmatter(f)
+    if (!fm) return true  // 无 frontmatter 的页面（如首页）保留
+    if (fm.draft === 'true') return false
+    if (fm.noindex === 'true') return false
+    return true
+  })
   .map((f) => {
     const loc = CANONICAL_URL + toUrlPath(f)
     const lastmod = statSync(f).mtime.toISOString()
@@ -95,6 +102,7 @@ for (const file of files) {
   const fm = parseFrontmatter(file)
   if (!fm || !fm.title || !fm.date) continue
   if (fm.draft === 'true') continue
+  if (fm.noindex === 'true') continue  // noindex 页面不进 sitemap
   const d = new Date(fm.date)
   if (Number.isNaN(d.getTime())) continue
   items.push({
@@ -136,7 +144,47 @@ ${feedItems}
 mkdirSync(PUBLIC_DIR, { recursive: true })
 writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
 writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
-writeFileSync(join(PUBLIC_DIR, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${CANONICAL_URL}/sitemap.xml\n`)
+writeFileSync(join(PUBLIC_DIR, 'robots.txt'),
+`# PRO的茶里芒果 - 爬虫访问策略
+# AI 搜索与训练爬虫的官方文档：
+# - OpenAI: https://platform.openai.com/docs/bots
+# - Anthropic: https://support.claude.com/en/articles/8896518
+# - Perplexity: https://docs.perplexity.ai/guides/bots
+
+User-agent: *
+Allow: /
+
+# --- AI 搜索爬虫：明确允许 ---
+# 用于 ChatGPT / Claude / Perplexity 的搜索结果展示，不用于模型训练
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# --- AI 用户触发抓取：明确允许 ---
+# 用户在 ChatGPT / Claude 中主动要求访问页面时触发
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# --- AI 训练爬虫：当前允许（与 User-agent: * 一致）---
+# GPTBot 抓取的内容可能用于 OpenAI 模型训练
+# ClaudeBot 抓取的内容可能用于 Anthropic 模型训练
+# 如需排除，请将下方 Allow 改为 Disallow: /
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: ${CANONICAL_URL}/sitemap.xml
+`)
 
 // ---- llms.txt:给 AI 爬虫/问答引擎看的站点说明书(标题+一句话摘要+链接,随构建自动更新) ----
 const llmsByCat = new Map()
