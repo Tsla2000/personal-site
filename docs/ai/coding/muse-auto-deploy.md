@@ -4,6 +4,7 @@ description: 从改一行配置到上线，全程由 AI Agent 执行：VitePress
 date: 2026-10-06
 category: AI
 tags: [AI, Muse, 自动化, 建站]
+image: /images/muse-deploy-actions.png
 draft: false
 ---
 

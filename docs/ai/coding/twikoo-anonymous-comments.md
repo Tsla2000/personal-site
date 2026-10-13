@@ -4,6 +4,7 @@ description: 给 VitePress 个人网站增加文章评论和独立留言板，�
 date: 2026-10-13
 category: AI
 tags: [Coding, AI Agent, 博客]
+image: /images/twikoo-architecture.webp
 draft: false
 ---
 

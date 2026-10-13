@@ -32,7 +32,7 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     </div>
   </section>
 
-  <section class="home-section">
+  <section class="home-section" id="projects">
     <h2>Projects</h2>
     <div class="project-list">
       <div class="project-item">

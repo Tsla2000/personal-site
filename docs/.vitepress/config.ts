@@ -176,6 +176,22 @@ export default defineConfig({
     return head
   },
 
+  // 图片懒加载：正文图片默认 loading="lazy"
+  markdown: {
+    config: (md) => {
+      const defaultRender = md.renderer.rules.image || function (tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options)
+      }
+      md.renderer.rules.image = function (tokens, idx, options, env, self) {
+        const token = tokens[idx]
+        if (!token.attrGet('loading')) {
+          token.attrSet('loading', 'lazy')
+        }
+        return defaultRender(tokens, idx, options, env, self)
+      }
+    }
+  },
+
   head: [
     // RSS 订阅入口
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: `${SITE_TITLE} RSS`, href: `${baseNoSlash}/feed.xml` }],

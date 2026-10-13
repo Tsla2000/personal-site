@@ -2,3 +2,8 @@ node_modules/
 docs/.vitepress/dist/
 .DS_Store
 .vitepress/cache/
+# 构建产物（gen-seo.mjs 每次构建按环境变量重写）
+docs/public/sitemap.xml
+docs/public/robots.txt
+docs/public/feed.xml
+docs/public/llms.txt
