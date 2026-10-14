@@ -295,7 +295,19 @@ for (const file of files) {
     if (!Number.isNaN(ud.getTime())) updated = ud.toISOString()
   }
   if (!updated) updated = gitUpdated(file) || d.toISOString()
-  articleList.push({ key: rel, title: fm.title, date: fm.date, updated })
+  // tags: [AI, X, 自动化] 解析成数组,给每日统计的热门页面配标题用
+  let tags = []
+  if (fm.tags) {
+    const t = fm.tags.trim()
+    if (t.startsWith('[') && t.endsWith(']')) {
+      tags = t
+        .slice(1, -1)
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+    }
+  }
+  articleList.push({ key: rel, title: fm.title, date: fm.date, updated, tags })
 }
 articleList.sort((a, b) => b.date.localeCompare(a.date))
 writeFileSync(join(PUBLIC_DIR, 'articles.json'), JSON.stringify(articleList))
