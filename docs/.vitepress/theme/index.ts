@@ -1,6 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
-import { useData } from 'vitepress'
-import type { EnhanceAppContext } from 'vitepress'
+import { useData, inBrowser } from 'vitepress'
+import type { EnhanceAppContext, Router } from 'vitepress'
 import { nextTick, h } from 'vue'
 import type { App, Ref } from 'vue'
 import ShareBar from './components/ShareBar.vue'
@@ -174,18 +174,44 @@ function toggleAppearance(event: MouseEvent, app: App) {
   }
 }
 
+// 第一方统计埋点(Cloudflare Pages Function + KV,每日 cron 拉数出日报):
+// 只在主站 promangofund.com 发,GitHub Pages 镜像站跳过,避免重复计数。
+// sendBeacon 即发即忘,KV 未绑定前接口返回 204,不影响站点。
+function setupStatsBeacon(router: Router): void {
+  if (!inBrowser) return
+  const beacon = (t: string, p = ''): void => {
+    try {
+      if (window.location.hostname !== 'promangofund.com') return
+      const blob = new Blob([JSON.stringify({ t, p })], { type: 'application/json' })
+      navigator.sendBeacon('/api/hit', blob)
+    } catch {
+      /* 忽略 */
+    }
+  }
+  try {
+    ;(window as unknown as { __statBeacon?: (t: string, p?: string) => void }).__statBeacon = beacon
+    beacon('pv', window.location.pathname)
+    router.onAfterRouteChanged(() => {
+      beacon('pv', window.location.pathname)
+    })
+  } catch {
+    /* 忽略 */
+  }
+}
+
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'layout-top': () => h(ShareRail),
     'doc-footer-before': () => [h(UsefulButton), h(BookmarkButton), h(ShareBar), h(Twikoo)]
   }),
-  enhanceApp({ app }: EnhanceAppContext) {
+  enhanceApp({ app, router }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
     app.component('Twikoo', Twikoo)
     // 收藏页 markdown 里直接用 <BookmarksList />
     app.component('BookmarksList', BookmarksList)
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）
     app.provide('toggle-appearance', (event: MouseEvent) => toggleAppearance(event, app))
+    setupStatsBeacon(router)
   }
 }

@@ -49,6 +49,15 @@ function track(name: 'article-bookmark' | 'article-unbookmark'): void {
   } catch {
     /* 统计失败不影响阅读 */
   }
+  // 第一方统计(每日日报用)
+  try {
+    ;(window as unknown as { __statBeacon?: (t: string, p?: string) => void }).__statBeacon?.(
+      name === 'article-bookmark' ? 'bookmark' : 'unbookmark',
+      page.value.relativePath
+    )
+  } catch {
+    /* 忽略 */
+  }
 }
 
 function toggle(): void {
