@@ -1,6 +1,6 @@
 // 第一方统计:页面埋点 POST {t:'pv'|'follow'|'unfollow'|'useful', p:path}
 // 按北京时间日期存 KV:stats:YYYY-MM-DD -> {pv,follow,unfollow,useful,paths:{}}
-// KV 未绑定时静默 204,不影响站点(用户在 Cloudflare 后台绑好 STATS_KV 后自动开始计数)
+// KV 未绑定时静默 204,不影响站点(Cloudflare 后台绑好 STATS_KV 并重部署后自动开始计数)
 interface Env {
   STATS_KV?: KVNamespace
 }
