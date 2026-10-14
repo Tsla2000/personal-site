@@ -1,11 +1,11 @@
-// 第一方统计:页面埋点 POST {t:'pv'|'bookmark'|'unbookmark'|'useful', p:path}
-// 按北京时间日期存 KV:stats:YYYY-MM-DD -> {pv,bookmark,unbookmark,useful,paths:{}}
+// 第一方统计:页面埋点 POST {t:'pv'|'follow'|'unfollow'|'useful', p:path}
+// 按北京时间日期存 KV:stats:YYYY-MM-DD -> {pv,follow,unfollow,useful,paths:{}}
 // KV 未绑定时静默 204,不影响站点(用户在 Cloudflare 后台绑好 STATS_KV 后自动开始计数)
 interface Env {
   STATS_KV?: KVNamespace
 }
 
-const TYPES = new Set(['pv', 'bookmark', 'unbookmark', 'useful'])
+const TYPES = new Set(['pv', 'bookmark', 'unbookmark', 'useful', 'follow', 'unfollow'])
 
 function beijingDate(d: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', {

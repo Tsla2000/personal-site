@@ -7,8 +7,8 @@ import ShareBar from './components/ShareBar.vue'
 import ShareRail from './components/ShareRail.vue'
 import Twikoo from './components/Twikoo.vue'
 import UsefulButton from './components/UsefulButton.vue'
-import BookmarkButton from './components/BookmarkButton.vue'
-import BookmarksList from './components/BookmarksList.vue'
+import FollowButton from './components/FollowButton.vue'
+import UpdateBanner from './components/UpdateBanner.vue'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -202,14 +202,14 @@ function setupStatsBeacon(router: Router): void {
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
-    'layout-top': () => h(ShareRail),
-    'doc-footer-before': () => [h(UsefulButton), h(BookmarkButton), h(ShareBar), h(Twikoo)]
+    'layout-top': () => [h(UpdateBanner), h(ShareRail)],
+    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)]
   }),
   enhanceApp({ app, router }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
     app.component('Twikoo', Twikoo)
-    // 收藏页 markdown 里直接用 <BookmarksList />
-    app.component('BookmarksList', BookmarksList)
+    // 订阅页 markdown 里直接用 <FollowButton />
+    app.component('FollowButton', FollowButton)
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）
     app.provide('toggle-appearance', (event: MouseEvent) => toggleAppearance(event, app))
     setupStatsBeacon(router)

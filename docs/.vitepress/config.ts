@@ -42,7 +42,7 @@ export default defineConfig({
       { text: '关于', link: '/about/' },
       { text: '项目', link: '/#projects' },
       { text: '留言板', link: '/guestbook/' },
-      { text: '收藏', link: '/bookmarks/' }
+      { text: '订阅', link: '/subscribe/' }
     ],
     sidebar: {
       '/ai/': [
