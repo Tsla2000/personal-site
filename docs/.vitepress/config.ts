@@ -68,7 +68,7 @@ export default defineConfig({
     search: { provider: 'local' },
     socialLinks: [{ icon: 'github', link: 'https://github.com/tsla2000/personal-site' }],
     footer: {
-      message: '记录正在发生的事情，也记录自己如何理解它们。',
+      message: '每天做价值的事情，人生永远要有 Plan B。',
       copyright: '© 2026 PRO的茶里芒果'
     },
     outline: { level: [2, 3] },

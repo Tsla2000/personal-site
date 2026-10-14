@@ -124,22 +124,6 @@
   padding-top: 15px;
 }
 
-/* 首页 motto：一句话 */
-.home-motto {
-  padding: 46px 0 34px;
-}
-.home-motto p {
-  margin: 0;
-  color: var(--vp-c-text-1);
-  font-size: clamp(26px, 4.2vw, 40px);
-  font-weight: 700;
-  letter-spacing: -.02em;
-  line-height: 1.5;
-}
-.home-motto .motto-planb {
-  color: var(--vp-c-brand-1);
-}
-
 /* footer 上下留白收紧（默认 32px） */
 #app .VPFooter {
   padding-top: 10px;

@@ -5,10 +5,6 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
 
 <!-- 注意:Thinking 板块用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。Latest 板块由构建脚本按当次部署目标自动生成。-->
 <div class="home-page">
-  <section class="home-motto">
-    <p>每天做价值的事情，<br>人生永远要有 <span class="motto-planb">Plan B</span>。</p>
-  </section>
-
   <section class="home-section">
     <h2>Latest</h2>
 <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
