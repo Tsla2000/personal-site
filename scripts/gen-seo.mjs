@@ -3,6 +3,7 @@
 //   - docs/public/sitemap.xml  (全站页面)
 //   - docs/public/robots.txt   (sitemap 地址跟随部署目标)
 //   - docs/public/llms.txt      (给 AI 看的站点说明书:栏目+文章摘要+链接,随构建自动更新)
+//   - docs/public/articles.json (给「我的收藏」页:文章 key/title/date/updated,updated 取 git 最后提交时间)
 //   - 重写 docs/index.md 的 LATEST 板块(站内链接带 base 前缀)
 // 部署目标由环境变量决定:BASE_PATH(默认 '/';GitHub Pages 构建时传 '/personal-site/'),
 // SITE_URL(默认 https://tsla2000.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev),
@@ -10,6 +11,7 @@
 // 在 package.json 的 docs:build 中于 vitepress build 之前运行。
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
+import { execFileSync } from 'node:child_process'
 
 const DOCS_DIR = new URL('../docs/', import.meta.url).pathname
 const PUBLIC_DIR = join(DOCS_DIR, 'public')
@@ -263,4 +265,38 @@ const archiveUpdated = archiveSrc.replace(
   archiveHtml
 )
 if (archiveUpdated !== archiveSrc) writeFileSync(archivePath, archiveUpdated)
-console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items, archive: ${items.length} posts`)
+
+// ---- articles.json:给「我的收藏」页用的文章清单(含更新时间) ----
+// updated 取 git 最后提交时间(frontmatter 写了 updated 则优先),收藏夹用它判断"有更新"
+const REPO_DIR = new URL('../', import.meta.url).pathname
+function gitUpdated(file) {
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], {
+      cwd: REPO_DIR,
+      encoding: 'utf8'
+    }).trim()
+    return out || null
+  } catch {
+    return null
+  }
+}
+const articleList = []
+for (const file of files) {
+  const fm = parseFrontmatter(file)
+  if (!fm || !fm.title || !fm.date) continue
+  if (fm.draft === 'true') continue
+  if (fm.noindex === 'true') continue
+  const d = new Date(fm.date)
+  if (Number.isNaN(d.getTime())) continue
+  const rel = relative(DOCS_DIR, file).split(sep).join('/')
+  let updated = null
+  if (fm.updated) {
+    const ud = new Date(fm.updated)
+    if (!Number.isNaN(ud.getTime())) updated = ud.toISOString()
+  }
+  if (!updated) updated = gitUpdated(file) || d.toISOString()
+  articleList.push({ key: rel, title: fm.title, date: fm.date, updated })
+}
+articleList.sort((a, b) => b.date.localeCompare(a.date))
+writeFileSync(join(PUBLIC_DIR, 'articles.json'), JSON.stringify(articleList))
+console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items, archive: ${items.length} posts, articles.json: ${articleList.length} articles`)

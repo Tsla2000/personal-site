@@ -41,7 +41,8 @@ export default defineConfig({
       { text: '思考', link: '/thinking/' },
       { text: '关于', link: '/about/' },
       { text: '项目', link: '/#projects' },
-      { text: '留言板', link: '/guestbook/' }
+      { text: '留言板', link: '/guestbook/' },
+      { text: '收藏', link: '/bookmarks/' }
     ],
     sidebar: {
       '/ai/': [
