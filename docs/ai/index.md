@@ -1,6 +1,6 @@
 ---
 title: AI
-description: AI 同时改变生产工具、组织方式、产品边界和人的判断方式。这里记录 AI 的产业趋势、Agent、AI Coding 与基础设施。
+description: 人类创造了AI，而AI也改变人类
 ---
 
 # AI
