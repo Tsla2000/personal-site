@@ -19,8 +19,8 @@ const root = ref<HTMLElement | null>(null)
 const RAIL_W = 44
 let rafId = 0
 
-// 只在宽屏文档页显示；运行时实测文章与右侧目录栏的位置，动态找空隙落位：
-// 优先文章右侧、目录左侧的空隙，其次视口右边缘；都没空位就隐藏，避免压住目录
+// 只在宽屏文档页显示；落位在文章左侧：侧边导航栏与文章之间的空隙，
+// 运行时实测两边位置，塞不下就隐藏，避免压住导航
 function update(): void {
   if (typeof window === 'undefined') return
   let isHome = false
@@ -39,22 +39,12 @@ function update(): void {
     return
   }
   const r = article.getBoundingClientRect()
-  const vw = window.innerWidth
-  const asideEl = document.querySelector('.VPDocAside') as HTMLElement | null
-  const ar = asideEl ? asideEl.getBoundingClientRect() : null
-  const asideVisible = !!ar && ar.width > 0
-  const asideLeft = asideVisible && ar ? ar.left : vw
-  const asideRight = asideVisible && ar ? ar.right : 0
+  const sidebarEl = document.querySelector('.VPSidebar') as HTMLElement | null
+  const sr = sidebarEl ? sidebarEl.getBoundingClientRect() : null
+  const sidebarRight = sr && sr.width > 0 ? sr.right : 0
 
-  let left = -1
-  const c1 = Math.round(r.right + 20)
-  if (c1 + RAIL_W <= asideLeft - 12) {
-    left = c1
-  } else {
-    const c2 = vw - 14 - RAIL_W
-    if (c2 >= asideRight + 12) left = c2
-  }
-  if (left >= 0) {
+  const left = Math.round(r.left - RAIL_W - 20)
+  if (left >= sidebarRight + 12) {
     leftPx.value = left
     if (!visible.value) visible.value = true
   } else {
@@ -103,9 +93,10 @@ onBeforeUnmount(() => {
 <template>
   <div v-if="visible" ref="root" class="share-rail" :style="{ left: leftPx + 'px' }">
     <div
-      v-for="p in platforms"
+      v-for="(p, i) in platforms"
       :key="p.key"
       class="rail-item"
+      :style="{ animationDelay: `${i * 80}ms` }"
       @mouseenter="!coarse && show(p.key)"
       @mouseleave="!coarse && hide()"
     >
@@ -130,8 +121,8 @@ onBeforeUnmount(() => {
         >去微博分享 →</a>
       </div>
     </div>
-    <div class="rail-divider"></div>
-    <div class="rail-item">
+    <div class="rail-divider" style="animation-delay: 240ms"></div>
+    <div class="rail-item" style="animation-delay: 320ms">
       <button
         class="rail-btn"
         :class="{ copied }"
@@ -162,16 +153,31 @@ onBeforeUnmount(() => {
   backdrop-filter: blur(14px);
   border: 1px solid var(--vp-c-border);
   box-shadow: var(--vp-shadow-2);
-  animation: rail-in 0.38s cubic-bezier(0.2, 0.7, 0.25, 1.15);
+  animation: rail-in 0.4s ease-out;
 }
 @keyframes rail-in {
   from {
     opacity: 0;
-    transform: translateY(-50%) translateX(14px);
+    transform: translateY(-50%) translateX(-18px);
   }
   to {
     opacity: 1;
     transform: translateY(-50%) translateX(0);
+  }
+}
+/* 图标逐个弹簧弹出 */
+.rail-item,
+.rail-divider {
+  animation: item-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+@keyframes item-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 .rail-item {
@@ -197,10 +203,20 @@ onBeforeUnmount(() => {
 .rail-btn:hover {
   color: var(--brand, var(--vp-c-brand-1));
   background: color-mix(in srgb, var(--brand, var(--vp-c-brand-1)) 12%, transparent);
-  transform: scale(1.14);
+  transform: translateY(-2px);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--brand, var(--vp-c-brand-1)) 45%, transparent),
     0 6px 16px -6px color-mix(in srgb, var(--brand, var(--vp-c-brand-1)) 60%, transparent);
+}
+/* 悬停时图标俏皮地晃一下 */
+.rail-btn:hover :deep(svg) {
+  animation: wiggle 0.5s ease;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-14deg) scale(1.25); }
+  45% { transform: rotate(11deg) scale(1.25); }
+  70% { transform: rotate(-6deg) scale(1.18); }
 }
 .rail-btn :deep(svg) {
   width: 16px;
@@ -240,12 +256,13 @@ onBeforeUnmount(() => {
   background: var(--vp-c-border);
   margin: 3px 0;
 }
-/* 二维码浮层改朝左开（栏在右侧） */
+/* 二维码浮层朝右开（栏在左侧），带缩放淡入 */
 .rail-pop {
   position: absolute;
-  right: calc(100% + 14px);
+  left: calc(100% + 14px);
   top: 50%;
   transform: translateY(-50%);
+  transform-origin: left center;
   width: 188px;
   background: color-mix(in srgb, var(--vp-c-bg-elv) 88%, transparent);
   -webkit-backdrop-filter: blur(14px);
@@ -256,6 +273,17 @@ onBeforeUnmount(() => {
   padding: 12px 12px 10px;
   text-align: center;
   z-index: 40;
+  animation: pop-in 0.22s ease-out;
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
 }
 .rail-pop img {
   width: 160px;
@@ -290,5 +318,11 @@ onBeforeUnmount(() => {
 }
 .qr-go:hover {
   text-decoration: underline;
+}
+@media (prefers-reduced-motion: reduce) {
+  .share-rail,
+  .share-rail * {
+    animation: none !important;
+  }
 }
 </style>
