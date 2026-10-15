@@ -13,10 +13,8 @@ const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
 const GITHUB_PROFILE = 'https://github.com/tsla2000'
 const GITHUB_REPO = 'https://github.com/tsla2000/personal-site'
-// TODO(owner): 把 TODO 换成站长 X 用户名，不要带 @。
-// 仓库正文里没有可确认的 handle。文章里的「Mango.ETF」只是账号显示名，不能当作用户名。
-// 值仍是 TODO 时，不输出导航栏 X 图标、twitter:site / twitter:creator，也不把 X 放进 Person.sameAs。
-const X_HANDLE = 'TODO'
+// 站长 X 用户名，不要带 @。填 TODO 或留空时不输出 X 图标和 twitter 账号 meta。
+const X_HANDLE = 'PRO_AI_99T'
 
 function configuredXHandle(handle: string): string | null {
   const trimmed = handle.trim().replace(/^@/, '')
