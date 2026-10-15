@@ -6,8 +6,11 @@ description: 按时间倒序的所有文章。
 # 文章归档
 
 <!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
-<h2>2026（12）</h2>
+<h2>2026（13）</h2>
 <div class="article-list">
+<a class="article-row" href="/ai/products/stock-card">
+  <time>2026.10.15</time><div><strong>美股观察卡片：一个 MCP App 的网站版</strong><small>AI · 把为 Claude 做的 MCP App 股票卡片搬上网站：可切换 NVDA/AVGO/MU/NBIS/TSLA，自选股存在浏览器本地，可直接交互体验。</small></div>
+</a>
 <a class="article-row" href="/ai/agents/x-auto-ops">
   <time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><small>AI · 把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div>
 </a>
