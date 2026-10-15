@@ -9,6 +9,7 @@ description: 人类创造了AI，而AI也改变人类
 
 <!-- 注意:站内链接用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。-->
 <div class="article-list">
+  <a class="article-row" href="trends/anthropic-distillation-dispute"><time>2026.10.15</time><div><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><small>报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</small></div></a>
   <a class="article-row" href="agents/x-auto-ops"><time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统</strong><small>从选题、写作到发布：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div></a>
   <a class="article-row" href="trends/rea-software-replicability"><time>2026.10.11</time><div><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><small>当"看懂一个软件"的成本趋近于零，软件公司的竞争优势会转移到哪里？</small></div></a>
   <a class="article-row" href="coding/muse-auto-deploy"><time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div></a>
