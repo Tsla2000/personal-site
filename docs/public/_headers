@@ -55,6 +55,12 @@
 /ai/
   Cache-Control: public, max-age=0, must-revalidate
 
+/ai/trends/anthropic-distillation-dispute
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/trends/anthropic-distillation-dispute/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /ai/trends/next-stage
   Cache-Control: public, max-age=0, must-revalidate
 
