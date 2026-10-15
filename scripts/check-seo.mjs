@@ -69,7 +69,14 @@ for (const p of pages) {
   }
 }
 
-// 4. 检查 sitemap.xml 存在
+// 4. 检查 sitemap.xml 存在，并覆盖实际可访问的页面（含原先被 draft/noindex 排除的）
+const REQUIRED_SITEMAP_PATHS = [
+  '/ai/coding/muse-seo-automation',
+  '/subscribe',
+  '/guestbook',
+  '/sponsor',
+  '/about/timeline'
+]
 const sitemap = join(DIST, 'sitemap.xml')
 if (!existsSync(sitemap)) {
   errors.push('缺少 sitemap.xml')
@@ -77,6 +84,78 @@ if (!existsSync(sitemap)) {
   const sm = readFileSync(sitemap, 'utf8')
   const urls = (sm.match(/<loc>/g) || []).length
   console.log(`[check-seo] sitemap.xml: ${urls} 个 URL`)
+  for (const path of REQUIRED_SITEMAP_PATHS) {
+    if (!new RegExp(`<loc>[^<]*${path}</loc>`).test(sm)) {
+      errors.push(`sitemap 缺少 ${path}`)
+    }
+  }
+  const lastmods = [...sm.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((m) => m[1])
+  if (lastmods.length !== urls) errors.push('sitemap 有 URL 缺少 lastmod')
+  const uniqueLastmods = new Set(lastmods)
+  if (urls > 5 && uniqueLastmods.size === 1) {
+    errors.push(`sitemap lastmod 全部相同 (${[...uniqueLastmods][0]})，疑似用了构建时间`)
+  }
+  for (const value of lastmods) {
+    if (!/^\d{4}-\d{2}-\d{2}/.test(value)) errors.push(`sitemap lastmod 格式异常: ${value}`)
+  }
+}
+
+// 4b. Cloudflare Pages 缓存头：哈希资源 immutable，图片长缓存，HTML 重新验证
+const headersFile = join(DIST, '_headers')
+if (!existsSync(headersFile)) {
+  errors.push('缺少 _headers')
+} else {
+  const headers = readFileSync(headersFile, 'utf8')
+  if (!headers.includes('/assets/*') || !headers.includes('immutable')) {
+    errors.push('_headers 未给 /assets/* 设置 immutable 长缓存')
+  }
+  if (!headers.includes('/images/*') || !headers.includes('max-age=2592000')) {
+    errors.push('_headers 未给 /images/* 设置长缓存')
+  }
+  if (!headers.includes('must-revalidate')) {
+    errors.push('_headers 未让 HTML 重新验证')
+  }
+}
+
+// 4c. 首页必须有包含站名和定位的 H1
+const homeHtmlPath = join(DIST, 'index.html')
+if (!existsSync(homeHtmlPath)) {
+  errors.push('缺少首页 index.html')
+} else {
+  const homeHtml = readFileSync(homeHtmlPath, 'utf8')
+  const h1s = homeHtml.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/gi) || []
+  if (h1s.length === 0) errors.push('首页缺少 H1')
+  else if (!h1s.some((h1) => h1.includes('PRO的茶里芒果') && h1.includes('思考'))) {
+    errors.push('首页 H1 未同时包含站名和定位')
+  }
+}
+
+// 4d. 审计点名的大图必须压到 150KB 以内；多图文章除首图外应懒加载
+const MAX_IMAGE_BYTES = 150000
+const auditedImages = [
+  'images/about-map.webp',
+  'images/ai-guide-railway.webp',
+  'images/ai-guide-core-satellite.webp',
+  'images/tesla-energy.webp',
+  'images/wealth-option.webp',
+  'images/coding-leverage-distance.webp',
+  'images/liuliangzhu-seven-steps.jpg'
+]
+for (const rel of auditedImages) {
+  const imgPath = join(DIST, rel)
+  if (!existsSync(imgPath)) {
+    errors.push(`缺少图片 ${rel}`)
+    continue
+  }
+  const size = statSync(imgPath).size
+  if (size > MAX_IMAGE_BYTES) errors.push(`${rel} 仍有 ${size} 字节，超过 150KB`)
+}
+const multiImagePage = pages.find((p) => p.includes('ai-stage-invest-guide'))
+if (multiImagePage) {
+  const html = readFileSync(multiImagePage, 'utf8')
+  const imgs = html.match(/<img\b[^>]*>/g) || []
+  const lazyCount = imgs.filter((tag) => /loading="lazy"/.test(tag)).length
+  if (imgs.length > 1 && lazyCount === 0) errors.push('文章图片未懒加载')
 }
 
 // 5. 检查 robots.txt
@@ -85,7 +164,7 @@ if (!existsSync(robots)) warnings.push('缺少 robots.txt')
 
 // 6. 意外 noindex（timeline 和草稿是预期的）
 // 草稿页通过 gen-seo.mjs 已从 sitemap 排除，但 HTML 仍会生成，noindex 是正确的
-const expectedNoindex = ['timeline', 'muse-seo-automation', 'guestbook']  // timeline: 个人时间线；muse-seo-automation: 草稿；guestbook: 留言板（内容单薄）
+const expectedNoindex = ['timeline', 'muse-seo-automation', 'guestbook', 'sponsor', 'subscribe']  // timeline/guestbook/sponsor/subscribe: 主动 noindex；muse-seo-automation: 正文里出现该词
 for (const p of pages) {
   const html = readFileSync(p, 'utf8')
   if (html.includes('noindex') && !expectedNoindex.some(s => p.includes(s))) {

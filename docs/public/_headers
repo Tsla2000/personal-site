@@ -1,0 +1,173 @@
+# 由 scripts/gen-seo.mjs 生成,勿手工改。
+# 哈希静态资源长期 immutable;图片长缓存;HTML / feed / sitemap 每次重新验证。
+
+/about
+  Cache-Control: public, max-age=0, must-revalidate
+
+/about/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/about/timeline
+  Cache-Control: public, max-age=0, must-revalidate
+
+/about/timeline/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/agents/agent-os
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/agents/agent-os/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/agents/x-auto-ops
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/agents/x-auto-ops/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/ai-coding-leverage
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/ai-coding-leverage/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/muse-auto-deploy
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/muse-auto-deploy/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/muse-seo-automation
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/muse-seo-automation/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/twikoo-anonymous-comments
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/coding/twikoo-anonymous-comments/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/trends/next-stage
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/trends/next-stage/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/trends/rea-software-replicability
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/trends/rea-software-replicability/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/archive
+  Cache-Control: public, max-age=0, must-revalidate
+
+/archive/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/guestbook
+  Cache-Control: public, max-age=0, must-revalidate
+
+/guestbook/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment/tesla/long-term-value
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment/tesla/long-term-value/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment/us-stocks/ai-stage-invest-guide
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment/us-stocks/ai-stage-invest-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sponsor
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sponsor/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/subscribe
+  Cache-Control: public, max-age=0, must-revalidate
+
+/subscribe/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/first-principles/scarcity
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/first-principles/scarcity/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/society/ai-labor-capital
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/society/ai-labor-capital/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/wealth/first-principles
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thinking/wealth/first-principles/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/feed.xml
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sitemap.xml
+  Cache-Control: public, max-age=0, must-revalidate
+
+/robots.txt
+  Cache-Control: public, max-age=0, must-revalidate
+
+/llms.txt
+  Cache-Control: public, max-age=0, must-revalidate
+
+/articles.json
+  Cache-Control: public, max-age=0, must-revalidate
+
+/404.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=2592000
+
+/favicon.ico
+  Cache-Control: public, max-age=2592000
+
+/favicon-32x32.png
+  Cache-Control: public, max-age=2592000
+
+/favicon-16x16.png
+  Cache-Control: public, max-age=2592000
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=2592000

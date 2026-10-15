@@ -1,6 +1,7 @@
 // 构建时生成 SEO 文件:扫描 docs/**/*.md,输出
 //   - docs/public/feed.xml    (RSS,只收录带 title+date 的文章页)
-//   - docs/public/sitemap.xml  (全站页面)
+//   - docs/public/sitemap.xml  (全部真实页面;lastmod 用 git 提交时间,不用构建时的 mtime)
+//   - docs/public/_headers     (Cloudflare Pages 缓存:哈希资源 immutable,图片长缓存,HTML 重新验证)
 //   - docs/public/robots.txt   (sitemap 地址跟随部署目标)
 //   - docs/public/llms.txt      (给 AI 看的站点说明书:栏目+文章摘要+链接,随构建自动更新)
 //   - docs/public/articles.json (给「我的收藏」页:文章 key/title/date/updated,updated 取 git 最后提交时间)
@@ -15,6 +16,12 @@ import { execFileSync } from 'node:child_process'
 
 const DOCS_DIR = new URL('../docs/', import.meta.url).pathname
 const PUBLIC_DIR = join(DOCS_DIR, 'public')
+const REPO_DIR = new URL('../', import.meta.url).pathname
+const CONTENT_DATES_PATH = new URL('./content-dates.json', import.meta.url).pathname
+// 图片文件名不带内容哈希,缓存 30 天;替换同名文件后最多一个月生效。
+const IMAGE_CACHE_SECONDS = 60 * 60 * 24 * 30
+// Vite 内容哈希资源可以缓存一年且 immutable。
+const HASHED_ASSET_CACHE_SECONDS = 60 * 60 * 24 * 365
 const _rawDomain = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
 // 容错:没写 https:// 时自动补上,避免 canonical 写出裸域名
 const SITE_DOMAIN = /^https?:\/\//i.test(_rawDomain) ? _rawDomain : `https://${_rawDomain}`
@@ -76,19 +83,115 @@ function esc(s) {
 
 const files = walk(DOCS_DIR).sort()
 
-// ---- sitemap.xml:全站页面（排除草稿和 noindex）----
+// 浅克隆(Cloudflare Pages 默认 depth=1)里,没在最新一次提交里改过的文件没有提交时间。
+// 能连上远端时加深历史;失败也不中断构建,改走 frontmatter / scripts/content-dates.json。
+function ensureGitHistory() {
+  let shallow = false
+  try {
+    shallow = execFileSync('git', ['rev-parse', '--is-shallow-repository'], {
+      cwd: REPO_DIR,
+      encoding: 'utf8'
+    }).trim() === 'true'
+  } catch {
+    return
+  }
+  if (!shallow) return
+  try {
+    execFileSync('git', ['fetch', '--deepen=400'], {
+      cwd: REPO_DIR,
+      stdio: 'ignore',
+      timeout: 25000,
+      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' }
+    })
+  } catch {
+    console.warn('[gen-seo] 浅克隆且无法加深历史,lastmod 回退到 frontmatter / content-dates.json')
+  }
+}
+
+// 每个文件只保留最新一次提交的 committer 时间(%cI)。不用工作区 mtime:checkout/构建会把它刷成现在。
+function loadGitDates() {
+  const map = new Map()
+  try {
+    const out = execFileSync('git', ['log', '--format=%cI', '--name-only'], {
+      cwd: REPO_DIR,
+      encoding: 'utf8',
+      maxBuffer: 32 * 1024 * 1024
+    })
+    let pending = null
+    for (const line of out.split('\n')) {
+      const text = line.trim()
+      if (!text) continue
+      if (/^\d{4}-\d{2}-\d{2}T/.test(text)) {
+        pending = text
+        continue
+      }
+      if (pending && !map.has(text)) map.set(text, pending)
+    }
+  } catch {
+    console.warn('[gen-seo] 读取 git 提交时间失败,lastmod 回退到 frontmatter / content-dates.json')
+  }
+  return map
+}
+
+function loadSnapshot() {
+  try {
+    const obj = JSON.parse(readFileSync(CONTENT_DATES_PATH, 'utf8'))
+    return new Map(Object.entries(obj))
+  } catch {
+    return new Map()
+  }
+}
+
+function repoRel(file) {
+  return relative(REPO_DIR, file).split(sep).join('/')
+}
+
+// frontmatter 的 date/updated 是内容时间。纯日期原样输出,避免被解析成 UTC 午夜后跨天。
+function frontmatterInstant(fm, key) {
+  if (!fm || !fm[key]) return null
+  const raw = String(fm[key]).trim()
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw
+  const d = new Date(raw)
+  if (Number.isNaN(d.getTime())) return null
+  return d.toISOString()
+}
+
+function contentLastmod(file, fm, gitDates, snapshot) {
+  const rel = repoRel(file)
+  return gitDates.get(rel) || frontmatterInstant(fm, 'updated') || frontmatterInstant(fm, 'date') || snapshot.get(rel) || null
+}
+
+ensureGitHistory()
+const gitDates = loadGitDates()
+const snapshotDates = loadSnapshot()
+const nextSnapshot = {}
+for (const file of files) {
+  const rel = repoRel(file)
+  const instant = gitDates.get(rel) || snapshotDates.get(rel)
+  if (instant) nextSnapshot[rel] = instant
+}
+const snapshotOut = JSON.stringify(
+  Object.fromEntries(Object.keys(nextSnapshot).sort().map((key) => [key, nextSnapshot[key]])),
+  null,
+  2
+) + '\n'
+try {
+  if (readFileSync(CONTENT_DATES_PATH, 'utf8') !== snapshotOut) writeFileSync(CONTENT_DATES_PATH, snapshotOut)
+} catch {
+  writeFileSync(CONTENT_DATES_PATH, snapshotOut)
+}
+
+// ---- sitemap.xml:全部会构建出来的真实页面 ----
+// 不再按 draft/noindex 剔除。这些 URL 已经在线上可访问(导航或正文链到它们),
+// 旧逻辑把它们排除后,搜索引擎看到的 sitemap 和实际页面不一致。
+// noindex 仍由页面自己的 meta 决定是否收录;RSS 继续只收正式文章。
 const sitemapUrls = files
-  .filter((f) => {
-    const fm = parseFrontmatter(f)
-    if (!fm) return true  // 无 frontmatter 的页面（如首页）保留
-    if (fm.draft === 'true') return false
-    if (fm.noindex === 'true') return false
-    return true
-  })
   .map((f) => {
+    const fm = parseFrontmatter(f)
     const loc = CANONICAL_URL + toUrlPath(f)
-    const lastmod = statSync(f).mtime.toISOString()
-    return `  <url><loc>${esc(loc)}</loc><lastmod>${lastmod}</lastmod></url>`
+    const lastmod = contentLastmod(f, fm, gitDates, snapshotDates)
+    const lastmodTag = lastmod ? `<lastmod>${esc(lastmod)}</lastmod>` : ''
+    return `  <url><loc>${esc(loc)}</loc>${lastmodTag}</url>`
   })
   .join('\n')
 
@@ -104,7 +207,7 @@ for (const file of files) {
   const fm = parseFrontmatter(file)
   if (!fm || !fm.title || !fm.date) continue
   if (fm.draft === 'true') continue
-  if (fm.noindex === 'true') continue  // noindex 页面不进 sitemap
+  if (fm.noindex === 'true') continue  // noindex 页面不进 RSS
   const d = new Date(fm.date)
   if (Number.isNaN(d.getTime())) continue
   items.push({
@@ -146,6 +249,37 @@ ${feedItems}
 mkdirSync(PUBLIC_DIR, { recursive: true })
 writeFileSync(join(PUBLIC_DIR, 'sitemap.xml'), sitemap)
 writeFileSync(join(PUBLIC_DIR, 'feed.xml'), feed)
+
+// ---- _headers:Cloudflare Pages 按请求路径匹配。----
+// 同一个请求命中两条 Cache-Control 时,值会被逗号拼在一起,所以不要再写一条 /* 兜底。
+const htmlCache = 'public, max-age=0, must-revalidate'
+const headerBlocks = [
+  '# 由 scripts/gen-seo.mjs 生成,勿手工改。',
+  '# 哈希静态资源长期 immutable;图片长缓存;HTML / feed / sitemap 每次重新验证。',
+  ''
+]
+function pushCache(pattern, value) {
+  headerBlocks.push(`${pattern}\n  Cache-Control: ${value}\n`)
+}
+const seenHeaderPaths = new Set()
+for (const file of files) {
+  const path = toUrlPath(file)
+  const variants = path === '/' ? ['/'] : [path, `${path}/`]
+  for (const variant of variants) {
+    if (seenHeaderPaths.has(variant)) continue
+    seenHeaderPaths.add(variant)
+    pushCache(variant, htmlCache)
+  }
+}
+for (const asset of ['/feed.xml', '/sitemap.xml', '/robots.txt', '/llms.txt', '/articles.json', '/404.html']) {
+  pushCache(asset, htmlCache)
+}
+pushCache('/assets/*', `public, max-age=${HASHED_ASSET_CACHE_SECONDS}, immutable`)
+pushCache('/images/*', `public, max-age=${IMAGE_CACHE_SECONDS}`)
+for (const icon of ['/favicon.ico', '/favicon-32x32.png', '/favicon-16x16.png', '/apple-touch-icon.png']) {
+  pushCache(icon, `public, max-age=${IMAGE_CACHE_SECONDS}`)
+}
+writeFileSync(join(PUBLIC_DIR, '_headers'), headerBlocks.join('\n'))
 writeFileSync(join(PUBLIC_DIR, 'robots.txt'),
 `# PRO的茶里芒果 - 爬虫访问策略
 # AI 搜索与训练爬虫的官方文档：
@@ -268,18 +402,6 @@ if (archiveUpdated !== archiveSrc) writeFileSync(archivePath, archiveUpdated)
 
 // ---- articles.json:给「我的收藏」页用的文章清单(含更新时间) ----
 // updated 取 git 最后提交时间(frontmatter 写了 updated 则优先),收藏夹用它判断"有更新"
-const REPO_DIR = new URL('../', import.meta.url).pathname
-function gitUpdated(file) {
-  try {
-    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], {
-      cwd: REPO_DIR,
-      encoding: 'utf8'
-    }).trim()
-    return out || null
-  } catch {
-    return null
-  }
-}
 const articleList = []
 for (const file of files) {
   const fm = parseFrontmatter(file)
@@ -294,7 +416,7 @@ for (const file of files) {
     const ud = new Date(fm.updated)
     if (!Number.isNaN(ud.getTime())) updated = ud.toISOString()
   }
-  if (!updated) updated = gitUpdated(file) || d.toISOString()
+  if (!updated) updated = gitDates.get(repoRel(file)) || snapshotDates.get(repoRel(file)) || d.toISOString()
   // tags: [AI, X, 自动化] 解析成数组,给每日统计的热门页面配标题用
   let tags = []
   if (fm.tags) {
@@ -311,4 +433,5 @@ for (const file of files) {
 }
 articleList.sort((a, b) => b.date.localeCompare(a.date))
 writeFileSync(join(PUBLIC_DIR, 'articles.json'), JSON.stringify(articleList))
-console.log(`[gen-seo] sitemap.xml: ${files.length} urls, feed.xml: ${items.length} items, archive: ${items.length} posts, articles.json: ${articleList.length} articles`)
+const sitemapCount = sitemapUrls ? sitemapUrls.split('\n').length : 0
+console.log(`[gen-seo] sitemap.xml: ${sitemapCount} urls, feed.xml: ${items.length} items, archive: ${items.length} posts, articles.json: ${articleList.length} articles`)
