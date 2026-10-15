@@ -9,7 +9,7 @@ draft: false
 
 # 美股观察卡片：一个 MCP App 的网站版
 
-这张卡片最初是为 Claude 做的 [MCP App](https://modelcontextprotocol.io/docs/learn/apps)：模型调用 `stock-card` 工具，卡片在对话里内联渲染，点"加入自选"会回调服务器并同步回模型上下文。
+这张卡片最初是为 Claude 做的 [MCP App](https://modelcontextprotocol.io/extensions/apps/overview)：模型调用 `stock-card` 工具，卡片在对话里内联渲染，点"加入自选"会回调服务器并同步回模型上下文。
 
 下面是它的网站独立版：同一套卡片设计，去掉了对 MCP host 的依赖，行情为演示数据，"加入自选"只保存在你的浏览器本地。可以直接点着玩：
 
