@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
   <div v-if="visible" ref="root" class="share-rail" :style="{ left: leftPx + 'px', top: topPx + 'px' }">
     <Transition name="hint">
       <div v-if="hintVisible" class="share-hint">
-        <span>👉 觉得有点意思，戳戳它分享吧</span>
+        <span>👇 觉得有点意思，戳戳它分享吧</span>
         <button class="hint-close" aria-label="关闭提示" @click.stop="dismissHint()">×</button>
       </div>
     </Transition>
@@ -217,12 +217,12 @@ onBeforeUnmount(() => {
     transform: translateX(0);
   }
 }
-/* 手指提示气泡：胶囊右侧，手指指向组件 */
+/* 手指提示气泡：胶囊顶部，手指往下指向组件 */
 .share-hint {
   position: absolute;
-  left: calc(100% + 12px);
-  top: 27px;
-  transform: translateY(-50%);
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -242,11 +242,11 @@ onBeforeUnmount(() => {
 .share-hint::after {
   content: '';
   position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   border: 7px solid transparent;
-  border-right-color: var(--vp-c-border);
+  border-top-color: var(--vp-c-border);
 }
 .hint-close {
   width: 20px;
@@ -271,11 +271,11 @@ onBeforeUnmount(() => {
 @keyframes hint-in {
   from {
     opacity: 0;
-    transform: translateY(-50%) translateX(-12px) scale(0.95);
+    transform: translateX(-50%) translateY(-10px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(-50%) translateX(0) scale(1);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 .hint-leave-active {
@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
 }
 .hint-leave-to {
   opacity: 0;
-  transform: translateY(-50%) translateX(-8px);
+  transform: translateX(-50%) translateY(-8px);
 }
 /* 图标逐个弹簧弹出 */
 .rail-item,
