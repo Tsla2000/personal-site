@@ -5,9 +5,7 @@ description: AI 同时改变生产工具、组织方式、产品边界和人的�
 
 # AI
 
-<p class="category-intro">AI 不是一个孤立的技术主题。它同时改变生产工具、组织方式、产品边界和人的判断方式。</p>
-
-<p class="category-intro">这里记录 AI 的产业趋势、Agent、AI Coding、基础设施与一些仍在形成中的判断。</p>
+<p class="category-intro">人类创造了AI，而AI也改变人类</p>
 
 <!-- 注意:站内链接用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。-->
 <div class="article-list">
