@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useData, useRoute } from 'vitepress'
 import { useShare, LINK_SVG } from './useShare'
+import type { SharePlatform } from './useShare'
 
 const {
   platforms, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
@@ -14,14 +15,18 @@ const route = useRoute()
 const mounted = ref(false)
 const visible = ref(false)
 const leftPx = ref(0)
-const topPx = ref(120)
+const topPx = ref(160)
 const root = ref<HTMLElement | null>(null)
+const hintVisible = ref(false)
 
 const RAIL_W = 44
+const HINT_KEY = 'share-hint-dismissed-v1'
 let rafId = 0
+let hintTimer: ReturnType<typeof setTimeout> | null = null
 
 // 只在宽屏文档页显示；落位在文章左侧：侧边导航栏与文章之间的空隙，
-// 运行时实测两边位置，塞不下就隐藏，避免压住导航
+// 垂直方向与正文顶部对齐（标题 + meta 行之后的第一块正文内容）；
+// 塞不下就隐藏，避免压住导航
 function update(): void {
   if (typeof window === 'undefined') return
   let isHome = false
@@ -47,10 +52,18 @@ function update(): void {
   const left = Math.round(r.left - RAIL_W - 20)
   if (left >= sidebarRight + 12) {
     leftPx.value = left
-    // 与文章标题同高：取标题上缘，留一点视觉余量
-    const h1 = article.querySelector('h1')
-    const titleTop = h1 ? h1.getBoundingClientRect().top : r.top + 60
-    topPx.value = Math.max(104, Math.round(titleTop - 4))
+    // 正文顶部：meta 行之后的第一块正文内容
+    const metaLine = article.querySelector('.meta-line') as HTMLElement | null
+    let bodyTop: number | null = null
+    if (metaLine) {
+      const next = metaLine.nextElementSibling as HTMLElement | null
+      if (next) bodyTop = next.getBoundingClientRect().top
+    }
+    if (bodyTop == null) {
+      const h1 = article.querySelector('h1')
+      bodyTop = h1 ? h1.getBoundingClientRect().bottom + 40 : r.top + 120
+    }
+    topPx.value = Math.max(104, Math.round(bodyTop))
     if (!visible.value) visible.value = true
   } else {
     if (visible.value) visible.value = false
@@ -64,6 +77,28 @@ function scheduleUpdate(): void {
     rafId = 0
     update()
   })
+}
+
+function dismissHint(persist = true): void {
+  hintVisible.value = false
+  if (hintTimer) {
+    clearTimeout(hintTimer)
+    hintTimer = null
+  }
+  if (persist) {
+    try {
+      localStorage.setItem(HINT_KEY, '1')
+    } catch { /* 忽略 */ }
+  }
+}
+
+function onShareClick(p: SharePlatform): void {
+  dismissHint()
+  onBtnClick(p)
+}
+function onCopyClick(): void {
+  dismissHint()
+  copyLink()
 }
 
 function onDocClick(e: MouseEvent): void {
@@ -82,6 +117,15 @@ onMounted(() => {
   document.addEventListener('keydown', onKeydown)
   watch(() => route.path, () => nextTick(update))
   watch(() => page.value.relativePath, () => nextTick(update))
+  // 手指提示：等入场动画播完再冒出来，展示几秒后自动收起；点过 × 就不再打扰
+  try {
+    if (!localStorage.getItem(HINT_KEY)) {
+      hintTimer = setTimeout(() => {
+        if (visible.value) hintVisible.value = true
+        hintTimer = setTimeout(() => dismissHint(false), 6000)
+      }, 1100)
+    }
+  } catch { /* 忽略 */ }
 })
 
 onBeforeUnmount(() => {
@@ -89,12 +133,19 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', onDocClick)
   document.removeEventListener('keydown', onKeydown)
   if (rafId) cancelAnimationFrame(rafId)
+  if (hintTimer) clearTimeout(hintTimer)
   cleanup()
 })
 </script>
 
 <template>
   <div v-if="visible" ref="root" class="share-rail" :style="{ left: leftPx + 'px', top: topPx + 'px' }">
+    <Transition name="hint">
+      <div v-if="hintVisible" class="share-hint">
+        <span>👆 觉得有点意思，戳戳它分享吧</span>
+        <button class="hint-close" aria-label="关闭提示" @click.stop="dismissHint()">×</button>
+      </div>
+    </Transition>
     <div
       v-for="(p, i) in platforms"
       :key="p.key"
@@ -108,7 +159,7 @@ onBeforeUnmount(() => {
         :style="{ '--brand': p.color }"
         :data-name="p.name"
         :aria-label="'分享到' + p.name"
-        @click="onBtnClick(p)"
+        @click="onShareClick(p)"
         v-html="p.svg"
       ></button>
       <div v-show="openKey === p.key" class="rail-pop">
@@ -131,7 +182,7 @@ onBeforeUnmount(() => {
         :class="{ copied }"
         :data-name="copied ? '已复制' : '复制链接'"
         aria-label="复制链接"
-        @click="copyLink"
+        @click="onCopyClick"
         v-html="LINK_SVG"
       ></button>
     </div>
@@ -165,6 +216,74 @@ onBeforeUnmount(() => {
     opacity: 1;
     transform: translateX(0);
   }
+}
+/* 手指提示气泡：悬在胶囊上方 */
+.share-hint {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--vp-c-text-1);
+  background: color-mix(in srgb, var(--vp-c-bg-elv) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--vp-c-border);
+  box-shadow: var(--vp-shadow-3);
+  z-index: 41;
+}
+.share-hint::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: var(--vp-c-border);
+}
+.hint-close {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--vp-c-text-3);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.hint-close:hover {
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
+}
+.hint-enter-active {
+  animation: hint-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes hint-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+.hint-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.hint-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(6px);
 }
 /* 图标逐个弹簧弹出 */
 .rail-item,
