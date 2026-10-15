@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "node scripts/gen-seo.mjs && vitepress build docs && node scripts/check-seo.mjs",
+    "docs:build": "node scripts/gen-seo.mjs && vitepress build docs && node scripts/fix-logo-alt.mjs && node scripts/check-seo.mjs",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {

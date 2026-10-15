@@ -93,18 +93,23 @@ for (const p of pages) {
   }
 }
 
-// 7. 图片 alt 检查（抽查文章页；空 alt 用于装饰图是合理的，只查完全缺失）
+// 7. 图片 alt 检查（抽查文章页；完全缺失或空 alt 都算问题——Bing 会把空 alt 也判为缺失，
+//    2026-10-15 教训：导航栏 logo 的空 alt 全站被报，靠 fix-logo-alt.mjs 在构建后补）
 let imgNoAlt = 0
+const noAltPages = new Set()
 for (const p of pages) {
   if (!p.includes('/ai/') && !p.includes('/thinking/') && !p.includes('/investment/')) continue
   const html = readFileSync(p, 'utf8')
   const imgs = html.match(/<img[^>]*>/g) || []
   for (const img of imgs) {
-    // 有 alt 属性即可（包括空值，装饰图用空 alt 是正确实践）
-    if (!/\salt[=\s>]/.test(img)) imgNoAlt++
+    const m = img.match(/\salt(?:="([^"]*)")?(?=[\s>])/)
+    if (!m || (m[1] !== undefined && m[1].trim() === '')) {
+      imgNoAlt++
+      noAltPages.add(p.split('/dist/')[1])
+    }
   }
 }
-if (imgNoAlt > 0) warnings.push(`${imgNoAlt} 张图片缺 alt 属性`)
+if (imgNoAlt > 0) warnings.push(`${imgNoAlt} 张图片缺 alt 或 alt 为空（${noAltPages.size} 个页面）：${[...noAltPages].slice(0, 3).join(', ')}${noAltPages.size > 3 ? '…' : ''}`)
 
 // 输出结果
 console.log('')
