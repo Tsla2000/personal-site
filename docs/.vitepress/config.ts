@@ -49,8 +49,7 @@ export default defineConfig({
         { text: 'AI', link: '/ai/' },
         { text: '趋势', items: [{ text: 'REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段', link: '/ai/trends/rea-software-replicability' }, { text: 'AI 产业的下一阶段', link: '/ai/trends/next-stage' }] },
         { text: 'Agent', items: [{ text: '我用 Muse 搭建了一套 X 账号自动化运营系统', link: '/ai/agents/x-auto-ops' }, { text: 'AI Agent 会成为下一代操作系统吗？', link: '/ai/agents/agent-os' }] },
-        { text: 'Coding', items: [{ text: 'AI 编程的真正杠杆', link: '/ai/coding/ai-coding-leverage' }, { text: '我是如何用 Muse 自动化部署个人网站的', link: '/ai/coding/muse-auto-deploy' }] },
-        { text: '产品', items: [{ text: '美股观察卡片：一个 MCP App 的网站版', link: '/ai/products/stock-card' }] }
+        { text: 'Coding', items: [{ text: 'AI 编程的真正杠杆', link: '/ai/coding/ai-coding-leverage' }, { text: '我是如何用 Muse 自动化部署个人网站的', link: '/ai/coding/muse-auto-deploy' }] }
       ],
       '/investment/': [
         { text: '投资', link: '/investment/' },
