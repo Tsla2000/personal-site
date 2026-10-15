@@ -14,6 +14,7 @@ const route = useRoute()
 const mounted = ref(false)
 const visible = ref(false)
 const leftPx = ref(0)
+const topPx = ref(120)
 const root = ref<HTMLElement | null>(null)
 
 const RAIL_W = 44
@@ -46,6 +47,10 @@ function update(): void {
   const left = Math.round(r.left - RAIL_W - 20)
   if (left >= sidebarRight + 12) {
     leftPx.value = left
+    // 与文章标题同高：取标题上缘，留一点视觉余量
+    const h1 = article.querySelector('h1')
+    const titleTop = h1 ? h1.getBoundingClientRect().top : r.top + 60
+    topPx.value = Math.max(104, Math.round(titleTop - 4))
     if (!visible.value) visible.value = true
   } else {
     if (visible.value) visible.value = false
@@ -73,7 +78,6 @@ onMounted(() => {
   init()
   update()
   window.addEventListener('resize', scheduleUpdate)
-  window.addEventListener('scroll', scheduleUpdate, { passive: true })
   document.addEventListener('click', onDocClick)
   document.addEventListener('keydown', onKeydown)
   watch(() => route.path, () => nextTick(update))
@@ -82,7 +86,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', scheduleUpdate)
-  window.removeEventListener('scroll', scheduleUpdate)
   document.removeEventListener('click', onDocClick)
   document.removeEventListener('keydown', onKeydown)
   if (rafId) cancelAnimationFrame(rafId)
@@ -91,7 +94,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div v-if="visible" ref="root" class="share-rail" :style="{ left: leftPx + 'px' }">
+  <div v-if="visible" ref="root" class="share-rail" :style="{ left: leftPx + 'px', top: topPx + 'px' }">
     <div
       v-for="(p, i) in platforms"
       :key="p.key"
@@ -138,8 +141,6 @@ onBeforeUnmount(() => {
 <style scoped>
 .share-rail {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -158,11 +159,11 @@ onBeforeUnmount(() => {
 @keyframes rail-in {
   from {
     opacity: 0;
-    transform: translateY(-50%) translateX(-18px);
+    transform: translateX(-18px);
   }
   to {
     opacity: 1;
-    transform: translateY(-50%) translateX(0);
+    transform: translateX(0);
   }
 }
 /* 图标逐个弹簧弹出 */
