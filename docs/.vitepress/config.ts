@@ -11,6 +11,21 @@ const _rawCanon = (process.env.CANONICAL_URL ?? SITE_URL).replace(/\/$/, '')
 const CANONICAL_URL = /^https?:\/\//i.test(_rawCanon) ? _rawCanon : `https://${_rawCanon}`
 const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
+const GITHUB_PROFILE = 'https://github.com/tsla2000'
+const GITHUB_REPO = 'https://github.com/tsla2000/personal-site'
+// 站长 X 用户名，不要带 @。填 TODO 或留空时不输出 X 图标和 twitter 账号 meta。
+const X_HANDLE = 'PRO_AI_99T'
+
+function configuredXHandle(handle: string): string | null {
+  const trimmed = handle.trim().replace(/^@/, '')
+  if (!trimmed || /todo/i.test(trimmed)) return null
+  if (!/^[A-Za-z0-9_]{1,15}$/.test(trimmed)) return null
+  return trimmed
+}
+
+const xHandle = configuredXHandle(X_HANDLE)
+const xProfile = xHandle ? `https://x.com/${xHandle}` : ''
+const authorSameAs = [GITHUB_PROFILE, ...(xProfile ? [xProfile] : [])]
 
 // 把 base 尾斜杠统一去掉,避免拼接出双斜杠
 const baseNoSlash = base.endsWith('/') && base.length > 1 ? base.slice(0, -1) : base === '/' ? '' : base
@@ -67,7 +82,10 @@ export default defineConfig({
       ]
     },
     search: { provider: 'local' },
-    socialLinks: [{ icon: 'github', link: 'https://github.com/tsla2000/personal-site' }],
+    socialLinks: [
+      { icon: 'github', link: GITHUB_REPO },
+      ...(xProfile ? [{ icon: 'x' as const, link: xProfile }] : [])
+    ],
     footer: {
       message: '每天做有价值的事情，人生永远要有 Plan B。',
       copyright: '© 2026 PRO的茶里芒果'
@@ -103,6 +121,10 @@ export default defineConfig({
       ['meta', { name: 'twitter:description', content: desc }],
       ['meta', { name: 'twitter:image', content: imgUrl }]
     ]
+    if (xHandle) {
+      head.push(['meta', { name: 'twitter:site', content: `@${xHandle}` }])
+      head.push(['meta', { name: 'twitter:creator', content: `@${xHandle}` }])
+    }
 
     if (fm.noindex === true) {
       head.push(['meta', { name: 'robots', content: 'noindex' }])
@@ -123,6 +145,12 @@ export default defineConfig({
     // ---- 结构化数据 JSON-LD(供搜索引擎/AI 问答引擎摘取) ----
     // 首页 → WebSite;带 title 的文章页 → Article;frontmatter 写 faq: [{q, a}] 的页面追加 FAQPage
     const schemas: Record<string, unknown>[] = []
+    const author = {
+      '@type': 'Person',
+      name: 'pro',
+      url: `${CANONICAL_URL}/about/`,
+      sameAs: authorSameAs
+    }
     if (isHome) {
       schemas.push({
         '@context': 'https://schema.org',
@@ -130,8 +158,10 @@ export default defineConfig({
         name: SITE_TITLE,
         url: `${CANONICAL_URL}/`,
         description: SITE_DESC,
-        inLanguage: 'zh-CN'
+        inLanguage: 'zh-CN',
+        author
       })
+      schemas.push({ '@context': 'https://schema.org', ...author })
     } else if (title) {
       const article: Record<string, unknown> = {
         '@context': 'https://schema.org',
@@ -141,7 +171,7 @@ export default defineConfig({
         url: canonical,
         mainEntityOfPage: canonical,
         inLanguage: 'zh-CN',
-        author: { '@type': 'Person', name: 'pro', url: `${CANONICAL_URL}/about/` },
+        author,
         publisher: {
           '@type': 'Organization',
           name: SITE_TITLE,
@@ -186,8 +216,18 @@ export default defineConfig({
       }
       md.renderer.rules.image = function (tokens, idx, options, env, self) {
         const token = tokens[idx]
-        if (!token.attrGet('loading')) {
+        const pageKey = String(env.relativePath || env.path || '')
+        if (env.lazyImagePage !== pageKey) {
+          env.lazyImagePage = pageKey
+          env.lazyImageCount = 0
+        }
+        env.lazyImageCount += 1
+        // 每页首图可能在首屏，不懒加载；其余图片懒加载。
+        if (!token.attrGet('loading') && env.lazyImageCount > 1) {
           token.attrSet('loading', 'lazy')
+        }
+        if (!token.attrGet('decoding')) {
+          token.attrSet('decoding', 'async')
         }
         return defaultRender(tokens, idx, options, env, self)
       }
