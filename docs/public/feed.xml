@@ -6,6 +6,13 @@
     <description>AI、投资、产品，以及一些关于世界如何运行的思考。</description>
     <language>zh-CN</language>
     <item>
+      <title>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</title>
+      <link>https://tsla2000.github.io/ai/trends/anthropic-distillation-dispute</link>
+      <guid>https://tsla2000.github.io/ai/trends/anthropic-distillation-dispute</guid>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
+      <description>报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</description>
+    </item>
+    <item>
       <title>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</title>
       <link>https://tsla2000.github.io/ai/agents/x-auto-ops</link>
       <guid>https://tsla2000.github.io/ai/agents/x-auto-ops</guid>

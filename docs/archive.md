@@ -6,8 +6,11 @@ description: 按时间倒序的所有文章。
 # 文章归档
 
 <!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
-<h2>2026（12）</h2>
+<h2>2026（13）</h2>
 <div class="article-list">
+<a class="article-row" href="/ai/trends/anthropic-distillation-dispute">
+  <time>2026.10.15</time><div><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><small>AI · 报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</small></div>
+</a>
 <a class="article-row" href="/ai/agents/x-auto-ops">
   <time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><small>AI · 把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div>
 </a>
