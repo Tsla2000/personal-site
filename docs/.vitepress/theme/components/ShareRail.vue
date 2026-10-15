@@ -13,10 +13,14 @@ const route = useRoute()
 
 const mounted = ref(false)
 const visible = ref(false)
-const leftPx = ref(16)
+const leftPx = ref(0)
 const root = ref<HTMLElement | null>(null)
 
-// 只在宽屏文档页显示；left 用 JS 实测文章左边缘，保证贴在文章左侧
+const RAIL_W = 44
+let rafId = 0
+
+// 只在宽屏文档页显示；运行时实测文章与右侧目录栏的位置，动态找空隙落位：
+// 优先文章右侧、目录左侧的空隙，其次视口右边缘；都没空位就隐藏，避免压住目录
 function update(): void {
   if (typeof window === 'undefined') return
   let isHome = false
@@ -29,12 +33,42 @@ function update(): void {
     wide = window.matchMedia('(min-width: 1280px)').matches
   } catch { /* 忽略 */ }
   const article = document.querySelector('.VPDoc .vp-doc') as HTMLElement | null
-  visible.value = mounted.value && !isHome && wide && !!article
-  if (article) {
-    const r = article.getBoundingClientRect()
-    leftPx.value = Math.max(12, Math.round(r.left - 78))
+  if (!mounted.value || isHome || !wide || !article) {
+    if (visible.value) visible.value = false
+    hide()
+    return
   }
-  if (!visible.value) hide()
+  const r = article.getBoundingClientRect()
+  const vw = window.innerWidth
+  const asideEl = document.querySelector('.VPDocAside') as HTMLElement | null
+  const ar = asideEl ? asideEl.getBoundingClientRect() : null
+  const asideVisible = !!ar && ar.width > 0
+  const asideLeft = asideVisible && ar ? ar.left : vw
+  const asideRight = asideVisible && ar ? ar.right : 0
+
+  let left = -1
+  const c1 = Math.round(r.right + 20)
+  if (c1 + RAIL_W <= asideLeft - 12) {
+    left = c1
+  } else {
+    const c2 = vw - 14 - RAIL_W
+    if (c2 >= asideRight + 12) left = c2
+  }
+  if (left >= 0) {
+    leftPx.value = left
+    if (!visible.value) visible.value = true
+  } else {
+    if (visible.value) visible.value = false
+    hide()
+  }
+}
+
+function scheduleUpdate(): void {
+  if (rafId) cancelAnimationFrame(rafId)
+  rafId = requestAnimationFrame(() => {
+    rafId = 0
+    update()
+  })
 }
 
 function onDocClick(e: MouseEvent): void {
@@ -48,7 +82,8 @@ onMounted(() => {
   mounted.value = true
   init()
   update()
-  window.addEventListener('resize', update)
+  window.addEventListener('resize', scheduleUpdate)
+  window.addEventListener('scroll', scheduleUpdate, { passive: true })
   document.addEventListener('click', onDocClick)
   document.addEventListener('keydown', onKeydown)
   watch(() => route.path, () => nextTick(update))
@@ -56,9 +91,11 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', update)
+  window.removeEventListener('resize', scheduleUpdate)
+  window.removeEventListener('scroll', scheduleUpdate)
   document.removeEventListener('click', onDocClick)
   document.removeEventListener('keydown', onKeydown)
+  if (rafId) cancelAnimationFrame(rafId)
   cleanup()
 })
 </script>
@@ -75,11 +112,11 @@ onBeforeUnmount(() => {
       <button
         class="rail-btn"
         :style="{ '--brand': p.color }"
+        :data-name="p.name"
         :aria-label="'分享到' + p.name"
         @click="onBtnClick(p)"
         v-html="p.svg"
       ></button>
-      <span class="rail-name">{{ p.name }}</span>
       <div v-show="openKey === p.key" class="rail-pop">
         <img v-if="qrCache[p.key]" :src="qrCache[p.key]" alt="分享二维码" />
         <div v-else class="qr-loading">生成中…</div>
@@ -93,9 +130,16 @@ onBeforeUnmount(() => {
         >去微博分享 →</a>
       </div>
     </div>
+    <div class="rail-divider"></div>
     <div class="rail-item">
-      <button class="rail-btn" aria-label="复制链接" @click="copyLink" v-html="LINK_SVG"></button>
-      <span class="rail-name">{{ copied ? '已复制' : '复制链接' }}</span>
+      <button
+        class="rail-btn"
+        :class="{ copied }"
+        :data-name="copied ? '已复制' : '复制链接'"
+        aria-label="复制链接"
+        @click="copyLink"
+        v-html="LINK_SVG"
+      ></button>
     </div>
   </div>
 </template>
@@ -103,75 +147,127 @@ onBeforeUnmount(() => {
 <style scoped>
 .share-rail {
   position: fixed;
-  top: 168px;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 30;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 4px;
+  width: 44px;
+  padding: 10px 0;
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--vp-c-bg-elv) 72%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--vp-c-border);
+  box-shadow: var(--vp-shadow-2);
+  animation: rail-in 0.38s cubic-bezier(0.2, 0.7, 0.25, 1.15);
+}
+@keyframes rail-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
 }
 .rail-item {
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  justify-content: center;
 }
 .rail-btn {
-  width: 44px;
-  height: 44px;
+  position: relative;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  box-shadow: var(--vp-shadow-2);
+  background: transparent;
+  border: none;
   color: var(--vp-c-text-2);
   cursor: pointer;
   padding: 0;
-  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+  transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 .rail-btn:hover {
   color: var(--brand, var(--vp-c-brand-1));
-  border-color: var(--brand, var(--vp-c-brand-1));
-  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--brand, var(--vp-c-brand-1)) 12%, transparent);
+  transform: scale(1.14);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--brand, var(--vp-c-brand-1)) 45%, transparent),
+    0 6px 16px -6px color-mix(in srgb, var(--brand, var(--vp-c-brand-1)) 60%, transparent);
 }
 .rail-btn :deep(svg) {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   fill: currentColor;
 }
-.rail-name {
-  font-size: 11px;
-  color: var(--vp-c-text-2);
-  white-space: nowrap;
-}
-.rail-pop {
+/* 悬停 tooltip，替代常驻文字标签 */
+.rail-btn::after {
+  content: attr(data-name);
   position: absolute;
-  left: calc(100% + 14px);
+  right: calc(100% + 10px);
   top: 50%;
-  transform: translateY(-50%);
-  width: 196px;
+  transform: translateY(-50%) translateX(6px);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: var(--vp-c-text-1);
   background: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
-  border-radius: 12px;
+  box-shadow: var(--vp-shadow-2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.rail-btn:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+.rail-btn.copied {
+  color: var(--vp-c-brand-1);
+}
+.rail-divider {
+  width: 20px;
+  height: 1px;
+  background: var(--vp-c-border);
+  margin: 3px 0;
+}
+/* 二维码浮层改朝左开（栏在右侧） */
+.rail-pop {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 188px;
+  background: color-mix(in srgb, var(--vp-c-bg-elv) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 14px;
   box-shadow: var(--vp-shadow-3);
   padding: 12px 12px 10px;
   text-align: center;
   z-index: 40;
 }
 .rail-pop img {
-  width: 168px;
-  height: 168px;
-  border-radius: 6px;
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
   display: block;
   margin: 0 auto;
   background: #fff;
 }
 .qr-loading {
-  width: 168px;
-  height: 168px;
+  width: 160px;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
