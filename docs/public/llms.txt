@@ -11,14 +11,9 @@
 - [思考](https://tsla2000.github.io/thinking)：财富、技术与社会
 - [关于](https://tsla2000.github.io/about)
 
-## 投资
-
-- [特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么](https://tsla2000.github.io/investment/tesla/q3-earnings-preview)：Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。（2026.10.16）
-- [AI 进行到哪一步了？普通人如何投资美股](https://tsla2000.github.io/investment/us-stocks/ai-stage-invest-guide)：用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。（2026.10.06）
-- [Tesla 的长期价值究竟来自汽车吗？](https://tsla2000.github.io/investment/tesla/long-term-value)：把一家公司的价值拆成制造、软件与能源三层。（2026.09.24）
-
 ## AI
 
+- [Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude](https://tsla2000.github.io/ai/trends/claude-search-surge)：Google Trends 上 Claude 的相对指数近三天达到 94–100，OpenAI 只有 7–8。数据怎么读、Opus 5/5.5 和 Fable 5.1 做对了什么，以及中文用户的使用门槛和替代方案。（2026.10.16）
 - [Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了](https://tsla2000.github.io/ai/trends/anthropic-distillation-dispute)：报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。（2026.10.15）
 - [我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布](https://tsla2000.github.io/ai/agents/x-auto-ops)：把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。（2026.10.13）
 - [如何让 Muse 给个人网站接入留言板和评论功能](https://tsla2000.github.io/ai/coding/twikoo-anonymous-comments)：给 VitePress 个人网站增加文章评论和独立留言板，记录使用 Muse 接入 Twikoo，以及配置 Vercel 和 MongoDB 时遇到的问题。（2026.10.13）
@@ -27,6 +22,12 @@
 - [AI Agent 会成为下一代操作系统吗？](https://tsla2000.github.io/ai/agents/agent-os)：Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。（2026.10.01）
 - [AI 产业的下一阶段](https://tsla2000.github.io/ai/trends/next-stage)：市场真正定价的不是技术是否强大，而是价值能否被捕获。（2026.09.18）
 - [AI 编程的真正杠杆](https://tsla2000.github.io/ai/coding/ai-coding-leverage)：AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。（2026.08.30）
+
+## 投资
+
+- [特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么](https://tsla2000.github.io/investment/tesla/q3-earnings-preview)：Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。（2026.10.16）
+- [AI 进行到哪一步了？普通人如何投资美股](https://tsla2000.github.io/investment/us-stocks/ai-stage-invest-guide)：用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。（2026.10.06）
+- [Tesla 的长期价值究竟来自汽车吗？](https://tsla2000.github.io/investment/tesla/long-term-value)：把一家公司的价值拆成制造、软件与能源三层。（2026.09.24）
 
 ## 思考
 
