@@ -10,6 +10,7 @@ import UsefulButton from './components/UsefulButton.vue'
 import FollowButton from './components/FollowButton.vue'
 import UpdateBanner from './components/UpdateBanner.vue'
 import LangSwitch from './components/LangSwitch.vue'
+import { setupNavPill } from './navPill'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -215,5 +216,6 @@ export default {
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）
     app.provide('toggle-appearance', (event: MouseEvent) => toggleAppearance(event, app))
     setupStatsBeacon(router)
+    setupNavPill()
   }
 }
