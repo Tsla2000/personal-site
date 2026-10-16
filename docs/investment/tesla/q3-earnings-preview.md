@@ -1,5 +1,5 @@
 ---
-image: /images/tesla-q3/fig01_deliveries.png
+image: /images/tesla-q3/cover.webp
 title: 特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么
 description: Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。
 date: 2026-10-16
@@ -12,9 +12,15 @@ draft: false
 
 <div class="meta-line">2026.10.16 · 投资 · 阅读约 8 分钟</div>
 
+<div class="article-cover">
+
+![特斯拉 Roadster 喷射飞越收费站](/images/tesla-q3/cover.webp)
+
+</div>
+
 10 月 15 日，特斯拉在德州麦格雷戈的 SpaceX 试验场揭晓了新一代 Roadster：冷气推进器、倒驶爬坡、空中翻转，官方说法是 0–60 mph 可到 1 秒以内，量产目标指向 2028 年。
 
-场面很够看。可五天后，也就是北京时间 10 月 22 日凌晨前后，特斯拉要公布的是 Q3 财务结果——那才是市场真正定价的东西。
+五天后，也就是北京时间 10 月 22 日凌晨前后，特斯拉要公布的是 Q3 财务结果——那才是市场真正定价的东西。
 
 Roadster 能点燃情绪，很难立刻改写利润表。本文将跳过「会不会飞」的讨论，只谈 Q3 财报里，长期持有者更该盯的几条线索；它不重复站内已经写过的长期价值三层框架，只给你一份临场观察清单。
 
