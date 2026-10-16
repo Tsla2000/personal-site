@@ -9,22 +9,19 @@ comments: false
 import { ref } from 'vue'
 import { withBase } from 'vitepress'
 
-const amounts = [18, 36, 66, 188]
-const selected = ref(36)
-const customAmount = ref('')
+const selectedMethod = ref('wechat')
+const paypalSponsorUrl = 'https://www.paypal.com/ncp/payment/Y7FQDYNC3MP2L'
 const wechatPaySrc = withBase('/images/sponsor-wechat-qr.png')
 const alipaySrc = withBase('/images/sponsor-alipay-qr.png')
 
-function selectAmount(n) {
-  selected.value = n
-  customAmount.value = ''
-}
+const paymentMethods = [
+  { id: 'wechat', label: '微信支付' },
+  { id: 'alipay', label: '支付宝' },
+  { id: 'paypal', label: 'PayPal' },
+]
 
-function useCustom() {
-  const v = parseInt(customAmount.value, 10)
-  if (v > 0) {
-    selected.value = v
-  }
+function selectMethod(methodId) {
+  selectedMethod.value = methodId
 }
 </script>
 
@@ -34,10 +31,33 @@ function useCustom() {
   <p class="sponsor-sub">每一杯咖啡，都是对独立创作的支持</p>
 </div>
 
-<p class="qr-lead">用微信或支付宝扫下面的码。金额在付款页填写，也可以先选一个参考金额。</p>
+<p class="qr-lead">用微信或支付宝扫码，或点 PayPal 链接赞助。</p>
 
-<div class="qr-grid">
-  <figure class="qr-card">
+<div class="pay-switch-wrap">
+  <div class="pay-switch" role="tablist" aria-label="赞助方式">
+    <button
+      v-for="paymentMethod in paymentMethods"
+      :key="paymentMethod.id"
+      type="button"
+      role="tab"
+      class="pay-switch-btn"
+      :id="'pay-tab-' + paymentMethod.id"
+      :class="{ active: selectedMethod === paymentMethod.id }"
+      :aria-selected="selectedMethod === paymentMethod.id"
+      @click="selectMethod(paymentMethod.id)"
+    >
+      {{ paymentMethod.label }}
+    </button>
+  </div>
+</div>
+
+<div
+  v-if="selectedMethod !== 'paypal'"
+  class="qr-grid"
+  role="tabpanel"
+  :aria-labelledby="selectedMethod === 'alipay' ? 'pay-tab-alipay' : 'pay-tab-wechat'"
+>
+  <figure class="qr-card" :class="{ active: selectedMethod === 'wechat' }">
     <figcaption>微信支付</figcaption>
     <img
       :src="wechatPaySrc"
@@ -46,7 +66,7 @@ function useCustom() {
       height="600"
     />
   </figure>
-  <figure class="qr-card">
+  <figure class="qr-card" :class="{ active: selectedMethod === 'alipay' }">
     <figcaption>支付宝</figcaption>
     <img
       :src="alipaySrc"
@@ -57,33 +77,18 @@ function useCustom() {
   </figure>
 </div>
 
-## 选择金额
-
-<p class="amount-note">扫码后输入 <strong>¥{{ selected }}</strong>。</p>
-
-<div class="amount-grid">
-  <button
-    v-for="n in amounts"
-    :key="n"
-    class="amount-btn"
-    :class="{ active: selected === n && !customAmount }"
-    @click="selectAmount(n)"
-  >
-    <span class="amount-num">¥{{ n }}</span>
-    <span class="amount-label">{{ n >= 100 ? '豪华大杯' : n >= 50 ? '大杯' : '中杯' }}</span>
-  </button>
-</div>
-
-<div class="custom-amount">
-  <input
-    v-model="customAmount"
-    type="number"
-    min="1"
-    inputmode="numeric"
-    placeholder="自定义金额"
-    @keyup.enter="useCustom"
-  />
-  <button type="button" @click="useCustom">确定</button>
+<div
+  v-else
+  class="paypal-panel"
+  role="tabpanel"
+  aria-labelledby="pay-tab-paypal"
+>
+  <a
+    class="paypal-btn"
+    :href="paypalSponsorUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+  >用 PayPal 赞助</a>
 </div>
 
 ## 为什么赞助
@@ -119,76 +124,49 @@ function useCustom() {
   font-size: 16px;
   margin-bottom: 0;
 }
-.amount-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin: 0 0 16px;
-}
-.amount-btn {
-  padding: 20px 12px;
-  border: 2px solid var(--vp-c-border);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  transition: all 0.15s ease;
-}
-.amount-btn:hover {
-  border-color: var(--vp-c-brand-1);
-}
-.amount-btn.active {
-  border-color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-soft);
-}
-.amount-num {
-  font-size: 24px;
-  font-weight: 700;
-}
-.amount-label {
-  font-size: 12px;
-  color: var(--vp-c-text-2);
-}
-.custom-amount {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.custom-amount input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px 16px;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  font-size: 15px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-}
-.custom-amount button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  background: var(--vp-c-brand-1);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.qr-lead,
-.amount-note {
+.qr-lead {
   margin: 8px 0 16px;
   color: var(--vp-c-text-2);
   font-size: 15px;
   text-align: center;
 }
-.amount-note {
-  margin-top: 0;
+.pay-switch-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 20px;
 }
-.qr-lead strong,
-.amount-note strong {
+.pay-switch {
+  display: inline-flex;
+  gap: 4px;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+}
+.pay-switch-btn {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.pay-switch-btn:hover {
   color: var(--vp-c-text-1);
+}
+.pay-switch-btn.active {
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+.pay-switch-btn:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 .qr-grid {
   --qr-size: 200px;
@@ -209,6 +187,9 @@ function useCustom() {
   height: auto;
   border-radius: 12px;
 }
+.qr-card.active img {
+  box-shadow: 0 0 0 2px var(--vp-c-brand-1);
+}
 .qr-card figcaption {
   margin: 0 0 8px;
   color: var(--vp-c-text-1);
@@ -218,6 +199,37 @@ function useCustom() {
   letter-spacing: 0.06em;
   line-height: 1.4;
   text-align: center;
+}
+.qr-card.active figcaption {
+  color: var(--vp-c-brand-1);
+}
+.paypal-panel {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 16px;
+}
+.paypal-btn,
+.paypal-btn:hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  padding: 12px 28px;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vp-c-brand-1);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.paypal-btn:hover {
+  background: var(--vp-c-brand-soft);
+}
+.paypal-btn:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 @media (max-width: 640px) {
   .sponsor-hero {
@@ -234,8 +246,9 @@ function useCustom() {
   .qr-lead {
     margin-bottom: 10px;
   }
-  .amount-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .pay-switch-btn {
+    padding: 8px 12px;
+    font-size: 13px;
   }
   .qr-grid {
     grid-template-columns: var(--qr-size);
