@@ -6,11 +6,15 @@ comments: false
 ---
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
 
+const PAYPAL_ME_PROFILE_URL = 'https://paypal.me/promangofund'
+const paypalPresetAmounts = [3, 6, 9]
+
 const selectedMethod = ref('wechat')
-const paypalSponsorUrl = 'https://www.paypal.com/ncp/payment/Y7FQDYNC3MP2L'
+const customPaypalAmount = ref('')
+const customPaypalLink = ref(null)
 const wechatPaySrc = withBase('/images/sponsor-wechat-qr.png')
 const alipaySrc = withBase('/images/sponsor-alipay-qr.png')
 
@@ -20,8 +24,37 @@ const paymentMethods = [
   { id: 'paypal', label: 'PayPal' },
 ]
 
+const customPaypalHref = computed(() => paypalMeUrl(customPaypalAmount.value))
+
 function selectMethod(methodId) {
   selectedMethod.value = methodId
+}
+
+function paypalPresetUrl(amount) {
+  return `${PAYPAL_ME_PROFILE_URL}/${amount}USD`
+}
+
+function paypalMeUrl(rawAmount) {
+  const amount = normalizePaypalAmount(rawAmount)
+  if (!amount) return PAYPAL_ME_PROFILE_URL
+  return `${PAYPAL_ME_PROFILE_URL}/${amount}USD`
+}
+
+function normalizePaypalAmount(rawAmount) {
+  const trimmed = String(rawAmount ?? '').trim()
+  if (!/^\d{1,7}(\.\d*)?$/.test(trimmed)) return ''
+  const numericAmount = Number(trimmed)
+  if (!Number.isFinite(numericAmount) || numericAmount <= 0) return ''
+  const cents = Math.round(numericAmount * 100)
+  if (cents <= 0) return ''
+  const wholeDollars = Math.floor(cents / 100)
+  const remainderCents = cents % 100
+  if (remainderCents === 0) return String(wholeDollars)
+  return `${wholeDollars}.${String(remainderCents).padStart(2, '0')}`
+}
+
+function openCustomPaypal() {
+  customPaypalLink.value?.click()
 }
 </script>
 
@@ -31,7 +64,7 @@ function selectMethod(methodId) {
   <p class="sponsor-sub">每一杯咖啡，都是对独立创作的支持</p>
 </div>
 
-<p class="qr-lead">用微信或支付宝扫码，或点 PayPal 链接赞助。</p>
+<p class="qr-lead">用微信或支付宝扫码，或用 PayPal 选择金额赞助。</p>
 
 <div class="pay-switch-wrap">
   <div class="pay-switch" role="tablist" aria-label="赞助方式">
@@ -87,12 +120,38 @@ function selectMethod(methodId) {
   role="tabpanel"
   aria-labelledby="pay-tab-paypal"
 >
-  <a
-    class="paypal-btn"
-    :href="paypalSponsorUrl"
-    target="_blank"
-    rel="noopener noreferrer"
-  >用 PayPal 赞助</a>
+  <p class="paypal-note">点金额直接打开 PayPal。自定义金额留空时，在 PayPal 页面自行填写。</p>
+  <div class="amount-grid">
+    <a
+      v-for="amount in paypalPresetAmounts"
+      :key="amount"
+      class="amount-btn"
+      :href="paypalPresetUrl(amount)"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="amount-num">${{ amount }}</span>
+    </a>
+  </div>
+  <div class="custom-amount">
+    <input
+      v-model="customPaypalAmount"
+      type="number"
+      min="0.01"
+      step="0.01"
+      inputmode="decimal"
+      placeholder="自定义金额（USD）"
+      aria-label="自定义 PayPal 金额（美元）"
+      @keyup.enter="openCustomPaypal"
+    />
+    <a
+      ref="customPaypalLink"
+      class="paypal-go"
+      :href="customPaypalHref"
+      target="_blank"
+      rel="noopener noreferrer"
+    >跳转</a>
+  </div>
 </div>
 
 ## 为什么赞助
@@ -194,30 +253,78 @@ function selectMethod(methodId) {
   text-align: center;
 }
 .paypal-panel {
-  display: flex;
-  justify-content: center;
-  margin: 8px 0 16px;
+  max-width: 420px;
+  margin: 0 auto 16px;
 }
-.paypal-btn,
-.paypal-btn:hover {
+.paypal-note {
+  margin: 0 0 14px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+.amount-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 0 0 12px;
+}
+.amount-btn {
+  padding: 16px 8px;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.amount-btn:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-text-1);
+}
+.amount-btn:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+.amount-num {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.custom-amount {
+  display: flex;
+  gap: 8px;
+}
+.custom-amount input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  font-size: 15px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+}
+.paypal-go,
+.paypal-go:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 200px;
-  padding: 12px 28px;
-  border: 1px solid var(--vp-c-brand-1);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--vp-c-brand-1);
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: var(--vp-c-brand-1);
+  color: #fff;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
   text-decoration: none;
+  white-space: nowrap;
 }
-.paypal-btn:hover {
-  background: var(--vp-c-brand-soft);
-}
-.paypal-btn:focus-visible {
+.paypal-go:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
 }
