@@ -13,14 +13,14 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
     <h2>Latest</h2>
 <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
     <div class="article-list">
+      <a class="article-row" href="/investment/tesla/q3-earnings-preview">
+        <time>2026.10.16</time><div><strong>特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么</strong><small>投资 · Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。</small></div>
+      </a>
       <a class="article-row" href="/ai/trends/anthropic-distillation-dispute">
         <time>2026.10.15</time><div><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><small>AI · 报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</small></div>
       </a>
       <a class="article-row" href="/ai/agents/x-auto-ops">
         <time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><small>AI · 把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div>
-      </a>
-      <a class="article-row" href="/ai/coding/twikoo-anonymous-comments">
-        <time>2026.10.13</time><div><strong>如何让 Muse 给个人网站接入留言板和评论功能</strong><small>AI · 给 VitePress 个人网站增加文章评论和独立留言板，记录使用 Muse 接入 Twikoo，以及配置 Vercel 和 MongoDB 时遇到的问题。</small></div>
       </a>
     </div>
     <!-- LATEST-END -->

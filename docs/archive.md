@@ -6,8 +6,11 @@ description: 按时间倒序的所有文章。
 # 文章归档
 
 <!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
-<h2>2026（13）</h2>
+<h2>2026（14）</h2>
 <div class="article-list">
+<a class="article-row" href="/investment/tesla/q3-earnings-preview">
+  <time>2026.10.16</time><div><strong>特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么</strong><small>投资 · Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。</small></div>
+</a>
 <a class="article-row" href="/ai/trends/anthropic-distillation-dispute">
   <time>2026.10.15</time><div><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><small>AI · 报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</small></div>
 </a>
