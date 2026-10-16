@@ -289,8 +289,12 @@ if (existsSync(articlesJson)) {
 }
 if (existsSync(homeHtmlPath)) {
   const homeHtml = readFileSync(homeHtmlPath, 'utf8')
-  if (homeHtml.includes('/en/ai/') || homeHtml.includes('/en/investment/')) {
+  const articleRows = homeHtml.match(/<a class="article-row"[^>]*>/g) || []
+  if (articleRows.some((row) => /href="\/en\//.test(row))) {
     errors.push('中文首页列表出现了英文 URL')
+  }
+  if (!articleRows.some((row) => row.includes('href="/ai/trends/claude-search-surge"'))) {
+    errors.push('中文首页丢失了 Claude 搜索热度')
   }
 }
 
