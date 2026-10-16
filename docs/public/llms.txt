@@ -35,6 +35,10 @@
 - [当智能可以无限复制，什么才是真正稀缺？](https://tsla2000.github.io/thinking/first-principles/scarcity)：当智能的边际成本不断下降，稀缺性会迁移到哪里？（2026.10.05）
 - [财富的第一性原理是什么？](https://tsla2000.github.io/thinking/wealth/first-principles)：财富不是数字的堆积，而是对未来资源调度能力的储存。（2026.09.10）
 
+## English
+
+- [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](https://tsla2000.github.io/en/investment/tesla/q3-earnings-preview): Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins. (2026.10.16)
+
 ## 订阅
 
 - RSS: https://tsla2000.github.io/feed.xml

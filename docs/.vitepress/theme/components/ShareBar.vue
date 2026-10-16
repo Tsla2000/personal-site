@@ -3,7 +3,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useShare, LINK_SVG } from './useShare'
 
 const {
-  platforms, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
+  platforms, labels, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
   init, show, hide, onBtnClick, copyLink, cleanup
 } = useShare()
 
@@ -45,7 +45,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div v-if="mounted && narrow" ref="root" class="share-bar">
-    <span class="share-label">分享到</span>
+    <span class="share-label">{{ labels.share }}</span>
     <div
       v-for="p in platforms"
       :key="p.key"
@@ -56,14 +56,14 @@ onBeforeUnmount(() => {
       <button
         class="share-btn"
         :style="{ '--brand': p.color }"
-        :aria-label="'分享到' + p.name"
+        :aria-label="labels.shareTo(p.name)"
         @click="onBtnClick(p)"
         v-html="p.svg"
       ></button>
       <span class="share-name">{{ p.name }}</span>
       <div v-show="openKey === p.key" class="qr-pop">
-        <img v-if="qrCache[p.key]" :src="qrCache[p.key]" alt="分享二维码" />
-        <div v-else class="qr-loading">生成中…</div>
+        <img v-if="qrCache[p.key]" :src="qrCache[p.key]" :alt="labels.qrAlt" />
+        <div v-else class="qr-loading">{{ labels.generating }}</div>
         <p class="qr-tip">{{ p.tip }}</p>
         <a
           v-if="p.shareUrl"
@@ -71,12 +71,12 @@ onBeforeUnmount(() => {
           target="_blank"
           rel="noopener noreferrer"
           class="qr-go"
-        >去微博分享 →</a>
+        >{{ labels.weibo }}</a>
       </div>
     </div>
     <div class="share-item">
-      <button class="share-btn" aria-label="复制链接" @click="copyLink" v-html="LINK_SVG"></button>
-      <span class="share-name">{{ copied ? '已复制' : '复制链接' }}</span>
+      <button class="share-btn" :aria-label="labels.copy" @click="copyLink" v-html="LINK_SVG"></button>
+      <span class="share-name">{{ copied ? labels.copied : labels.copy }}</span>
     </div>
   </div>
 </template>

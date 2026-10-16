@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { withBase } from 'vitepress'
+import { useIsEnglish } from '../useLocale'
 
 // 回访更新提醒:只对点了「收藏本站」的用户生效。
 // 每次加载记录访问时间,用构建时生成的 articles.json 比对:
@@ -11,6 +12,7 @@ const LS_DISMISS = 'update-banner-dismissed'
 
 const count = ref(0)
 const visible = ref(false)
+const isEnglish = useIsEnglish()
 
 onMounted(async () => {
   let followed = false
@@ -63,8 +65,8 @@ function dismiss(): void {
 
 <template>
   <div v-if="visible" class="update-banner">
-    <a :href="withBase('/archive')">上次来之后更新了 {{ count }} 篇 →</a>
-    <button class="ub-close" aria-label="关闭" @click="dismiss">×</button>
+    <a :href="withBase('/archive')">{{ isEnglish ? `${count} updated since your last visit →` : `上次来之后更新了 ${count} 篇 →` }}</a>
+    <button class="ub-close" :aria-label="isEnglish ? 'Close' : '关闭'" @click="dismiss">×</button>
   </div>
 </template>
 

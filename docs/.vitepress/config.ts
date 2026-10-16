@@ -1,3 +1,6 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig, type HeadConfig } from 'vitepress'
 
 const base = process.env.BASE_PATH ?? '/'
@@ -11,6 +14,9 @@ const _rawCanon = (process.env.CANONICAL_URL ?? SITE_URL).replace(/\/$/, '')
 const CANONICAL_URL = /^https?:\/\//i.test(_rawCanon) ? _rawCanon : `https://${_rawCanon}`
 const SITE_TITLE = 'PRO的茶里芒果'
 const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行的思考。'
+const EN_TITLE = "Pro's MangoFund"
+const EN_DESC = 'Notes on AI products, side hustles, investing, and digital products.'
+const DOCS_DIR = fileURLToPath(new URL('..', import.meta.url))
 const GITHUB_PROFILE = 'https://github.com/tsla2000'
 const GITHUB_REPO = 'https://github.com/tsla2000/personal-site'
 // 站长 X 用户名，不要带 @。填 TODO 或留空时不输出 X 图标和 twitter 账号 meta。
@@ -38,6 +44,29 @@ function pagePath(relativePath: string): string {
   return '/' + p
 }
 
+/** 去掉 locale 前缀后的 slug。首页为 index。 */
+function localeSlug(relativePath: string): { english: boolean; slug: string } {
+  let slug = relativePath.replace(/\.md$/, '')
+  const english = slug === 'en' || slug.startsWith('en/')
+  if (english) slug = slug === 'en' ? 'index' : slug.slice('en/'.length)
+  return { english, slug }
+}
+
+function markdownPath(slug: string, english: boolean): string {
+  if (english) return slug === 'index' ? 'en/index.md' : `en/${slug}.md`
+  return `${slug}.md`
+}
+
+/** 两种语言都有的页面才输出 hreflang。x-default 指向中文。 */
+function hreflangAlternates(relativePath: string): { zh: string; en: string } | null {
+  const { slug } = localeSlug(relativePath)
+  if (!existsSync(join(DOCS_DIR, markdownPath(slug, false)))) return null
+  if (!existsSync(join(DOCS_DIR, markdownPath(slug, true)))) return null
+  const zhPath = pagePath(markdownPath(slug, false))
+  const enPath = pagePath(markdownPath(slug, true))
+  return { zh: `${CANONICAL_URL}${zhPath}`, en: `${CANONICAL_URL}${enPath}` }
+}
+
 export default defineConfig({
   base,
   lang: 'zh-CN',
@@ -57,7 +86,8 @@ export default defineConfig({
       { text: '项目', link: '/#projects' },
       { text: '留言板', link: '/guestbook/' },
       { text: '订阅', link: '/subscribe/' },
-      { text: '关于', link: '/about/' }
+      { text: '关于', link: '/about/' },
+      { component: 'LangSwitch' }
     ],
     sidebar: {
       '/ai/': [
@@ -95,21 +125,82 @@ export default defineConfig({
     lightModeSwitchTitle: '切换到浅色模式'
   },
 
+  locales: {
+    root: {
+      label: '中文',
+      lang: 'zh-CN',
+      title: SITE_TITLE,
+      description: SITE_DESC
+    },
+    en: {
+      label: 'English',
+      lang: 'en',
+      title: EN_TITLE,
+      description: EN_DESC,
+      themeConfig: {
+        siteTitle: EN_TITLE,
+        logoLink: '/en/',
+        nav: [
+          { text: 'Home', link: '/en/', activeMatch: '^/en/?$' },
+          { text: 'AI', link: '/ai/' },
+          { text: 'Investing', link: '/en/investment/tesla/q3-earnings-preview', activeMatch: '^/en/investment/' },
+          { text: 'Thinking', link: '/thinking/' },
+          { text: 'Projects', link: '/#projects' },
+          { text: 'Guestbook', link: '/guestbook/' },
+          { text: 'Subscribe', link: '/subscribe/' },
+          { text: 'About', link: '/about/' },
+          { component: 'LangSwitch' }
+        ],
+        sidebar: {
+          '/en/investment/': [
+            {
+              text: 'US stocks',
+              items: [
+                {
+                  text: 'Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock',
+                  link: '/en/investment/tesla/q3-earnings-preview'
+                }
+              ]
+            }
+          ]
+        },
+        footer: {
+          message: 'Do something valuable every day, and always keep a Plan B.',
+          copyright: "© 2026 Pro's MangoFund"
+        },
+        outline: { label: 'On this page', level: [2, 3] },
+        docFooter: { prev: 'Previous page', next: 'Next page' },
+        darkModeSwitchLabel: 'Appearance',
+        darkModeSwitchTitle: 'Switch to dark mode',
+        lightModeSwitchTitle: 'Switch to light mode',
+        sidebarMenuLabel: 'Menu',
+        returnToTopLabel: 'Return to top',
+        langMenuLabel: 'Language',
+        skipToContentLabel: 'Skip to content'
+      }
+    }
+  },
+
   // 每页自动输出 canonical + Open Graph / Twitter Card,取值来自该页 frontmatter
   transformHead({ pageData }) {
     const fm = pageData.frontmatter ?? {}
+    const isEn = pageData.relativePath.startsWith('en/')
+    const siteTitle = isEn ? EN_TITLE : SITE_TITLE
+    const siteDesc = isEn ? EN_DESC : SITE_DESC
+    const localeLang = isEn ? 'en' : 'zh-CN'
+    const ogLocale = isEn ? 'en_US' : 'zh_CN'
     const canonical = `${CANONICAL_URL}${pagePath(pageData.relativePath)}`
-    const title = typeof fm.title === 'string' && fm.title ? fm.title : SITE_TITLE
-    const desc = typeof fm.description === 'string' && fm.description ? fm.description : SITE_DESC
-    const isHome = pageData.relativePath === 'index.md'
+    const title = typeof fm.title === 'string' && fm.title ? fm.title : siteTitle
+    const desc = typeof fm.description === 'string' && fm.description ? fm.description : siteDesc
+    const isHome = pageData.relativePath === 'index.md' || pageData.relativePath === 'en/index.md'
     // 默认分享卡(1200x630);文章可在 frontmatter 里用 image: /images/xxx.png 覆盖(站内相对路径)
     const imgPath = typeof fm.image === 'string' && fm.image ? fm.image : '/images/social-card.png'
     const imgUrl = `${SITE_URL}${baseNoSlash}${imgPath.startsWith('/') ? imgPath : '/' + imgPath}`
 
     const head: HeadConfig[] = [
       ['link', { rel: 'canonical', href: canonical }],
-      ['meta', { property: 'og:locale', content: 'zh_CN' }],
-      ['meta', { property: 'og:site_name', content: SITE_TITLE }],
+      ['meta', { property: 'og:locale', content: ogLocale }],
+      ['meta', { property: 'og:site_name', content: siteTitle }],
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: desc }],
       ['meta', { property: 'og:url', content: canonical }],
@@ -124,6 +215,15 @@ export default defineConfig({
     if (xHandle) {
       head.push(['meta', { name: 'twitter:site', content: `@${xHandle}` }])
       head.push(['meta', { name: 'twitter:creator', content: `@${xHandle}` }])
+    }
+    if (typeof fm.keywords === 'string' && fm.keywords.trim()) {
+      head.push(['meta', { name: 'keywords', content: fm.keywords.trim() }])
+    }
+    const alternates = hreflangAlternates(pageData.relativePath)
+    if (alternates) {
+      head.push(['link', { rel: 'alternate', hreflang: 'zh-CN', href: alternates.zh }])
+      head.push(['link', { rel: 'alternate', hreflang: 'en', href: alternates.en }])
+      head.push(['link', { rel: 'alternate', hreflang: 'x-default', href: alternates.zh }])
     }
 
     if (fm.noindex === true) {
@@ -155,10 +255,10 @@ export default defineConfig({
       schemas.push({
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: SITE_TITLE,
-        url: `${CANONICAL_URL}/`,
-        description: SITE_DESC,
-        inLanguage: 'zh-CN',
+        name: siteTitle,
+        url: canonical,
+        description: desc,
+        inLanguage: localeLang,
         author
       })
       schemas.push({ '@context': 'https://schema.org', ...author })
@@ -170,11 +270,11 @@ export default defineConfig({
         description: desc,
         url: canonical,
         mainEntityOfPage: canonical,
-        inLanguage: 'zh-CN',
+        inLanguage: localeLang,
         author,
         publisher: {
           '@type': 'Organization',
-          name: SITE_TITLE,
+          name: siteTitle,
           logo: { '@type': 'ImageObject', url: `${CANONICAL_URL}/images/site-icon.png` }
         },
         image: imgUrl

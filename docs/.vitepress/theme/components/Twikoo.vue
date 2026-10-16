@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useData, useRoute } from 'vitepress'
+import { useIsEnglish } from '../useLocale'
 
 // Twikoo 后端地址（Vercel 部署，2026-10-13）
 const ENVID = 'https://twikoo-comments-iota.vercel.app'
@@ -9,6 +10,7 @@ const TWIKOO_JS = '/js/twikoo.all.min.js'
 
 const { page } = useData()
 const route = useRoute()
+const isEnglish = useIsEnglish()
 const container = ref<HTMLElement | null>(null)
 let stopWatch: (() => void) | null = null
 let scriptEl: HTMLScriptElement | null = null
@@ -53,13 +55,17 @@ async function load(): Promise<void> {
     await twikooReady()
     const w = window as unknown as Record<string, { init: (o: object) => void }>
     el.innerHTML = ''
+    const english = isEnglish.value
     w.twikoo.init({
       envId: ENVID,
       el,
-      lang: 'zh-CN'
+      lang: english ? 'en' : 'zh-CN'
     })
   } catch (e) {
-    el.innerHTML = '<p class="twikoo-error">评论区加载失败，请稍后刷新重试</p>'
+    const fail = isEnglish.value
+      ? 'Comments failed to load. Refresh and try again.'
+      : '评论区加载失败，请稍后刷新重试'
+    el.innerHTML = `<p class="twikoo-error">${fail}</p>`
     console.error('[Twikoo]', e)
   }
 }
@@ -76,8 +82,8 @@ onBeforeUnmount(() => {
 
 <template>
   <div v-if="show" class="twikoo-block">
-    <h2 class="twikoo-heading">评论</h2>
-    <p class="twikoo-desc">无需登录，匿名即可留言（昵称自动生成，显示 IP 属地）</p>
+    <h2 class="twikoo-heading">{{ isEnglish ? 'Comments' : '评论' }}</h2>
+    <p class="twikoo-desc">{{ isEnglish ? 'No account needed. Comments are anonymous (a nickname is generated, and a rough location is shown).' : '无需登录，匿名即可留言（昵称自动生成，显示 IP 属地）' }}</p>
     <div ref="container" class="twikoo-container"></div>
   </div>
 </template>

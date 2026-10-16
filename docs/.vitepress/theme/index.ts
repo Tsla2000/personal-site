@@ -9,6 +9,7 @@ import Twikoo from './components/Twikoo.vue'
 import UsefulButton from './components/UsefulButton.vue'
 import FollowButton from './components/FollowButton.vue'
 import UpdateBanner from './components/UpdateBanner.vue'
+import LangSwitch from './components/LangSwitch.vue'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -208,6 +209,7 @@ export default {
   enhanceApp({ app, router }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
     app.component('Twikoo', Twikoo)
+    app.component('LangSwitch', LangSwitch)
     // 订阅页 markdown 里直接用 <FollowButton />
     app.component('FollowButton', FollowButton)
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）

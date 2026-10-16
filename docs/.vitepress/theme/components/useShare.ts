@@ -1,7 +1,8 @@
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vitepress'
 import QRCode from 'qrcode'
 import { siWechat, siSinaweibo, siXiaohongshu } from 'simple-icons'
+import { useIsEnglish } from '../useLocale'
 
 export interface SharePlatform {
   key: string
@@ -15,17 +16,53 @@ export interface SharePlatform {
 export const LINK_SVG =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
 
-export function useShare() {
-  const platforms: SharePlatform[] = [
+function weiboShareUrl(url: string, title: string): string {
+  return 'https://service.weibo.com/share/share.php?url=' + encodeURIComponent(url) +
+    '&title=' + encodeURIComponent(title)
+}
+
+function platformSet(english: boolean): SharePlatform[] {
+  if (english) {
+    return [
+      { key: 'wechat', name: 'WeChat', tip: 'Scan with WeChat to open', svg: siWechat.svg, color: '#07C160' },
+      { key: 'weibo', name: 'Weibo', tip: 'Scan with Weibo to share', svg: siSinaweibo.svg, color: '#E6162D', shareUrl: weiboShareUrl },
+      { key: 'xiaohongshu', name: 'Xiaohongshu', tip: 'Scan with Xiaohongshu to open', svg: siXiaohongshu.svg, color: '#FF2442' }
+    ]
+  }
+  return [
     { key: 'wechat', name: '微信', tip: '微信扫码，在微信中打开', svg: siWechat.svg, color: '#07C160' },
-    {
-      key: 'weibo', name: '微博', tip: '微博扫码分享', svg: siSinaweibo.svg, color: '#E6162D',
-      shareUrl: (url: string, title: string) =>
-        'https://service.weibo.com/share/share.php?url=' + encodeURIComponent(url) +
-        '&title=' + encodeURIComponent(title)
-    },
+    { key: 'weibo', name: '微博', tip: '微博扫码分享', svg: siSinaweibo.svg, color: '#E6162D', shareUrl: weiboShareUrl },
     { key: 'xiaohongshu', name: '小红书', tip: '小红书扫码打开', svg: siXiaohongshu.svg, color: '#FF2442' }
   ]
+}
+
+export function useShare() {
+  const isEnglish = useIsEnglish()
+  const platforms = computed(() => platformSet(isEnglish.value))
+  const labels = computed(() => isEnglish.value
+    ? {
+        share: 'Share',
+        copy: 'Copy link',
+        copied: 'Copied',
+        qrAlt: 'QR code for sharing',
+        generating: 'Generating…',
+        weibo: 'Share on Weibo →',
+        shareTo: (name: string) => `Share to ${name}`,
+        hint: '👇 Worth a look? Tap to share',
+        closeHint: 'Dismiss'
+      }
+    : {
+        share: '分享到',
+        copy: '复制链接',
+        copied: '已复制',
+        qrAlt: '分享二维码',
+        generating: '生成中…',
+        weibo: '去微博分享 →',
+        shareTo: (name: string) => `分享到${name}`,
+        hint: '👇 觉得有点意思，戳戳它分享吧',
+        closeHint: '关闭提示'
+      }
+  )
 
   const pageUrl = ref('')
   const pageTitle = ref('')
@@ -120,7 +157,7 @@ export function useShare() {
   }
 
   return {
-    platforms, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
+    platforms, labels, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
     init, show, hide, toggle, onBtnClick, copyLink, cleanup
   }
 }

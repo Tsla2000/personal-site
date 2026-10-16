@@ -1,6 +1,8 @@
 // 构建时生成 SEO 文件:扫描 docs/**/*.md,输出
 //   - docs/public/feed.xml    (RSS,只收录带 title+date 的文章页)
-//   - docs/public/sitemap.xml  (全部真实页面;lastmod 用 git 提交时间,不用构建时的 mtime)
+//   - docs/public/sitemap.xml  (全部真实页面,含 /en/;lastmod 用 git 提交时间,不用构建时的 mtime)
+//   - docs/.vitepress/i18n-pairs.json (中英都有的路径,给导航语言切换)
+// 英文文章不写入中文 RSS、首页 Latest、归档和 articles.json,避免中文站列表被英文稿挤掉。
 //   - docs/public/_headers     (Cloudflare Pages 缓存:哈希资源 immutable,图片长缓存,HTML 重新验证)
 //   - docs/public/robots.txt   (sitemap 地址跟随部署目标)
 //   - docs/public/llms.txt      (给 AI 看的站点说明书:栏目+文章摘要+链接,随构建自动更新)
@@ -71,6 +73,20 @@ function toUrlPath(file) {
   if (rel === 'index') return '/'
   if (rel.endsWith('/index')) rel = rel.slice(0, -'/index'.length)
   return '/' + rel
+}
+
+function isEnglishDoc(file) {
+  const rel = relative(DOCS_DIR, file).split(sep).join('/')
+  return rel === 'en.md' || rel.startsWith('en/')
+}
+
+// 中英都存在的 slug（首页用空字符串）。给导航语言切换用。
+function localeSlug(relNoExt) {
+  const english = relNoExt === 'en' || relNoExt.startsWith('en/')
+  let slug = english ? (relNoExt === 'en' ? 'index' : relNoExt.slice('en/'.length)) : relNoExt
+  if (slug === 'index') slug = ''
+  else if (slug.endsWith('/index')) slug = slug.slice(0, -'/index'.length)
+  return { english, slug }
 }
 
 function esc(s) {
@@ -204,6 +220,7 @@ ${sitemapUrls}
 // ---- feed.xml:只收录文章页(带 title+date,非草稿) ----
 const items = []
 for (const file of files) {
+  if (isEnglishDoc(file)) continue  // 英文页不进中文 RSS / 首页 Latest / 归档
   const fm = parseFrontmatter(file)
   if (!fm || !fm.title || !fm.date) continue
   if (fm.draft === 'true') continue
@@ -332,6 +349,25 @@ for (const it of items) {
 const llmsSections = [...llmsByCat.entries()]
   .map(([cat, list]) => `## ${cat}\n\n${list.map((it) => `- [${it.title}](${it.link})：${it.description}（${it.dateStr}）`).join('\n')}`)
   .join('\n\n')
+const enLlmsItems = []
+for (const file of files) {
+  if (!isEnglishDoc(file)) continue
+  const fm = parseFrontmatter(file)
+  if (!fm || !fm.title || !fm.date) continue
+  if (fm.draft === 'true' || fm.noindex === 'true') continue
+  const d = new Date(fm.date)
+  if (Number.isNaN(d.getTime())) continue
+  enLlmsItems.push({
+    title: fm.title,
+    description: fm.description || '',
+    dateStr: fm.date.replace(/-/g, '.'),
+    link: CANONICAL_URL + toUrlPath(file)
+  })
+}
+enLlmsItems.sort((a, b) => b.dateStr.localeCompare(a.dateStr))
+const enLlmsSection = enLlmsItems.length
+  ? `\n## English\n\n${enLlmsItems.map((it) => `- [${it.title}](${it.link}): ${it.description} (${it.dateStr})`).join('\n')}\n`
+  : ''
 const llms = `# ${SITE_TITLE}
 
 > ${SITE_DESC}
@@ -346,7 +382,7 @@ const llms = `# ${SITE_TITLE}
 - [关于](${CANONICAL_URL}/about)
 
 ${llmsSections}
-
+${enLlmsSection}
 ## 订阅
 
 - RSS: ${CANONICAL_URL}/feed.xml
@@ -404,6 +440,7 @@ if (archiveUpdated !== archiveSrc) writeFileSync(archivePath, archiveUpdated)
 // updated 取 git 最后提交时间(frontmatter 写了 updated 则优先),收藏夹用它判断"有更新"
 const articleList = []
 for (const file of files) {
+  if (isEnglishDoc(file)) continue
   const fm = parseFrontmatter(file)
   if (!fm || !fm.title || !fm.date) continue
   if (fm.draft === 'true') continue
@@ -433,5 +470,23 @@ for (const file of files) {
 }
 articleList.sort((a, b) => b.date.localeCompare(a.date))
 writeFileSync(join(PUBLIC_DIR, 'articles.json'), JSON.stringify(articleList))
+
+const zhSlugs = new Set()
+const enSlugs = new Set()
+for (const file of files) {
+  const relNoExt = relative(DOCS_DIR, file).split(sep).join('/').replace(/\.md$/, '')
+  const { english, slug } = localeSlug(relNoExt)
+  if (english) enSlugs.add(slug)
+  else zhSlugs.add(slug)
+}
+const pairs = [...zhSlugs].filter((slug) => enSlugs.has(slug)).sort()
+const pairsPath = join(DOCS_DIR, '.vitepress', 'i18n-pairs.json')
+const pairsOut = JSON.stringify(pairs, null, 2) + '\n'
+try {
+  if (readFileSync(pairsPath, 'utf8') !== pairsOut) writeFileSync(pairsPath, pairsOut)
+} catch {
+  writeFileSync(pairsPath, pairsOut)
+}
+
 const sitemapCount = sitemapUrls ? sitemapUrls.split('\n').length : 0
-console.log(`[gen-seo] sitemap.xml: ${sitemapCount} urls, feed.xml: ${items.length} items, archive: ${items.length} posts, articles.json: ${articleList.length} articles`)
+console.log(`[gen-seo] sitemap.xml: ${sitemapCount} urls, feed.xml: ${items.length} items, archive: ${items.length} posts, articles.json: ${articleList.length} articles, i18n pairs: ${pairs.length}`)
