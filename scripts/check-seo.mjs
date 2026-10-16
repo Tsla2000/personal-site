@@ -404,8 +404,13 @@ if (existsSync(articlesJson)) {
 const archiveHtmlPath = join(DIST, 'archive.html')
 if (existsSync(archiveHtmlPath)) {
   const archiveHtml = readFileSync(archiveHtmlPath, 'utf8')
-  if (archiveHtml.includes('/en/ai/coding/muse-auto-deploy')) errors.push('中文归档收录了英文 Muse 文章')
-  if (!archiveHtml.includes('/ai/coding/muse-auto-deploy')) errors.push('中文归档丢失了 Muse 自动部署')
+  const archiveRows = archiveHtml.match(/<a class="article-row"[^>]*>/g) || []
+  if (archiveRows.some((row) => /href="\/en\//.test(row))) {
+    errors.push('中文归档收录了英文文章')
+  }
+  if (!archiveRows.some((row) => row.includes('href="/ai/coding/muse-auto-deploy"'))) {
+    errors.push('中文归档丢失了 Muse 自动部署')
+  }
 }
 
 // 5. 检查 robots.txt
