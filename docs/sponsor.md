@@ -42,8 +42,8 @@ function useCustom() {
     <img
       :src="wechatPaySrc"
       alt="微信支付收款码"
-      width="1206"
-      height="1638"
+      width="600"
+      height="600"
     />
   </figure>
   <figure class="qr-card">
@@ -51,8 +51,8 @@ function useCustom() {
     <img
       :src="alipaySrc"
       alt="支付宝收款码"
-      width="1206"
-      height="1808"
+      width="720"
+      height="720"
     />
   </figure>
 </div>
@@ -191,29 +191,27 @@ function useCustom() {
   color: var(--vp-c-text-1);
 }
 .qr-grid {
+  --qr-size: 200px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, var(--qr-size));
+  justify-content: center;
+  gap: 28px;
   align-items: start;
   margin: 0 0 8px;
 }
 .qr-card {
   margin: 0;
   min-width: 0;
-  padding: 10px 10px 14px;
-  background: #fff;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 16px;
 }
 .qr-card img {
   display: block;
-  width: 100%;
+  width: var(--qr-size);
   height: auto;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 .qr-card figcaption {
-  margin: 2px 0 10px;
-  color: #26332d;
+  margin: 0 0 8px;
+  color: var(--vp-c-text-1);
   font-size: 15px;
   font-style: normal;
   font-weight: 650;
@@ -240,15 +238,8 @@ function useCustom() {
     grid-template-columns: repeat(2, 1fr);
   }
   .qr-grid {
-    grid-template-columns: minmax(0, 360px);
-    justify-content: center;
-    gap: 16px;
-  }
-  .qr-card {
-    padding: 8px 8px 10px;
-  }
-  .qr-card figcaption {
-    margin: 2px 0 8px;
+    grid-template-columns: var(--qr-size);
+    gap: 20px;
   }
 }
 </style>
