@@ -148,7 +148,7 @@ export default defineConfig({
           { text: 'Projects', link: '/#projects' },
           { text: 'Guestbook', link: '/guestbook/' },
           { text: 'Subscribe', link: '/subscribe/' },
-          { text: 'About', link: '/about/' },
+          { text: 'About', link: '/en/about/', activeMatch: '^/en/about' },
           { component: 'LangSwitch' }
         ],
         sidebar: {
@@ -182,6 +182,9 @@ export default defineConfig({
                 }
               ]
             }
+          ],
+          '/en/about/': [
+            { text: 'About', link: '/en/about/' }
           ]
         },
         footer: {
@@ -213,9 +216,11 @@ export default defineConfig({
     const title = typeof fm.title === 'string' && fm.title ? fm.title : siteTitle
     const desc = typeof fm.description === 'string' && fm.description ? fm.description : siteDesc
     const isHome = pageData.relativePath === 'index.md' || pageData.relativePath === 'en/index.md'
+    const isAbout = pageData.relativePath === 'about/index.md' || pageData.relativePath === 'en/about/index.md'
     // 默认分享卡(1200x630);文章可在 frontmatter 里用 image: /images/xxx.png 覆盖(站内相对路径)
     const imgPath = typeof fm.image === 'string' && fm.image ? fm.image : '/images/social-card.png'
     const imgUrl = `${SITE_URL}${baseNoSlash}${imgPath.startsWith('/') ? imgPath : '/' + imgPath}`
+    const hasArticleCover = typeof fm.image === 'string' && fm.image.length > 0
 
     const head: HeadConfig[] = [
       ['link', { rel: 'canonical', href: canonical }],
@@ -225,13 +230,18 @@ export default defineConfig({
       ['meta', { property: 'og:description', content: desc }],
       ['meta', { property: 'og:url', content: canonical }],
       ['meta', { property: 'og:image', content: imgUrl }],
-      ['meta', { property: 'og:image:width', content: '1200' }],
-      ['meta', { property: 'og:image:height', content: '630' }],
+    ]
+    // 尺寸只标在默认分享卡上。文章封面尺寸不固定，不写死 1200×630。
+    if (!hasArticleCover) {
+      head.push(['meta', { property: 'og:image:width', content: '1200' }])
+      head.push(['meta', { property: 'og:image:height', content: '630' }])
+    }
+    head.push(
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
       ['meta', { name: 'twitter:title', content: title }],
       ['meta', { name: 'twitter:description', content: desc }],
       ['meta', { name: 'twitter:image', content: imgUrl }]
-    ]
+    )
     if (xHandle) {
       head.push(['meta', { name: 'twitter:site', content: `@${xHandle}` }])
       head.push(['meta', { name: 'twitter:creator', content: `@${xHandle}` }])
@@ -241,6 +251,7 @@ export default defineConfig({
     }
     const alternates = hreflangAlternates(pageData.relativePath)
     if (alternates) {
+      head.push(['meta', { property: 'og:locale:alternate', content: isEn ? 'zh_CN' : 'en_US' }])
       head.push(['link', { rel: 'alternate', hreflang: 'zh-CN', href: alternates.zh }])
       head.push(['link', { rel: 'alternate', hreflang: 'en', href: alternates.en }])
       head.push(['link', { rel: 'alternate', hreflang: 'x-default', href: alternates.zh }])
@@ -250,7 +261,7 @@ export default defineConfig({
       head.push(['meta', { name: 'robots', content: 'noindex' }])
     }
 
-    if (isHome) {
+    if (isHome || isAbout) {
       head.push(['meta', { property: 'og:type', content: 'website' }])
     } else {
       head.push(['meta', { property: 'og:type', content: 'article' }])
@@ -263,12 +274,15 @@ export default defineConfig({
     }
 
     // ---- 结构化数据 JSON-LD(供搜索引擎/AI 问答引擎摘取) ----
-    // 首页 → WebSite;带 title 的文章页 → Article;frontmatter 写 faq: [{q, a}] 的页面追加 FAQPage
+    // 首页 → WebSite;关于页 → AboutPage;带 title 的文章页 → Article;frontmatter 写 faq: [{q, a}] 的页面追加 FAQPage
+    // author 只保留站上既有的 name / url / sameAs，不补职务、邮箱等未公开字段。
     const schemas: Record<string, unknown>[] = []
     const author = {
       '@type': 'Person',
       name: 'pro',
-      url: `${CANONICAL_URL}/about/`,
+      url: isEn && existsSync(join(DOCS_DIR, 'en/about/index.md'))
+        ? `${CANONICAL_URL}/en/about/`
+        : `${CANONICAL_URL}/about/`,
       sameAs: authorSameAs
     }
     if (isHome) {
@@ -282,6 +296,22 @@ export default defineConfig({
         author
       })
       schemas.push({ '@context': 'https://schema.org', ...author })
+    } else if (isAbout) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: title,
+        description: desc,
+        url: canonical,
+        inLanguage: localeLang,
+        image: imgUrl,
+        isPartOf: {
+          '@type': 'WebSite',
+          name: siteTitle,
+          url: `${CANONICAL_URL}${isEn ? '/en/' : '/'}`
+        },
+        mainEntity: author
+      })
     } else if (title) {
       const article: Record<string, unknown> = {
         '@context': 'https://schema.org',

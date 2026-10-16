@@ -111,3 +111,10 @@ Models will keep changing. The workflow is the part that keeps its value.
 **Sources:** Google Trends, pulled 2026-10-16; Anthropic's release posts and model docs; Reuters on the Opus 5 launch. Benchmark numbers are the vendor's own tests.
 
 This is a personal note, not investment advice.
+
+## More notes
+
+- [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](/en/investment/tesla/q3-earnings-preview)
+- [How to Automate a Personal Website Deploy with Muse](/en/ai/coding/muse-auto-deploy)
+
+[All English notes](/en/)

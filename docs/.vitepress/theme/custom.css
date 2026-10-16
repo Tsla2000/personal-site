@@ -236,6 +236,18 @@ html:root header.VPNav {
   line-height: 1.65;
 }
 
+.vp-doc .home-intro .home-lead {
+  margin: 16px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.vp-doc .home-more {
+  margin: 16px 0 0;
+  font-size: 14px;
+}
+
 .home-hero {
   max-width: 760px;
   padding: 30px 0 110px;

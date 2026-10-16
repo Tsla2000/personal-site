@@ -365,8 +365,25 @@ for (const file of files) {
   })
 }
 enLlmsItems.sort((a, b) => b.dateStr.localeCompare(a.dateStr))
-const enLlmsSection = enLlmsItems.length
-  ? `\n## English\n\n${enLlmsItems.map((it) => `- [${it.title}](${it.link}): ${it.description} (${it.dateStr})`).join('\n')}\n`
+const enPageItems = []
+for (const file of files) {
+  if (!isEnglishDoc(file)) continue
+  const fm = parseFrontmatter(file)
+  if (!fm || !fm.title || !fm.description || fm.date) continue
+  if (fm.draft === 'true' || fm.noindex === 'true') continue
+  enPageItems.push({
+    title: fm.title,
+    description: fm.description,
+    link: CANONICAL_URL + toUrlPath(file)
+  })
+}
+enPageItems.sort((a, b) => a.title.localeCompare(b.title))
+const enLlmsLines = [
+  ...enLlmsItems.map((it) => `- [${it.title}](${it.link}): ${it.description} (${it.dateStr})`),
+  ...enPageItems.map((it) => `- [${it.title}](${it.link}): ${it.description}`)
+]
+const enLlmsSection = enLlmsLines.length
+  ? `\n## English\n\n${enLlmsLines.join('\n')}\n`
   : ''
 const llms = `# ${SITE_TITLE}
 
