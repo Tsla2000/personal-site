@@ -34,7 +34,32 @@ function useCustom() {
   <p class="sponsor-sub">每一杯咖啡，都是对独立创作的支持</p>
 </div>
 
+<p class="qr-lead">用微信或支付宝扫下面的码。金额在付款页填写，也可以先选一个参考金额。</p>
+
+<div class="qr-grid">
+  <figure class="qr-card">
+    <figcaption>微信支付</figcaption>
+    <img
+      :src="wechatPaySrc"
+      alt="微信支付收款码"
+      width="1206"
+      height="1638"
+    />
+  </figure>
+  <figure class="qr-card">
+    <figcaption>支付宝</figcaption>
+    <img
+      :src="alipaySrc"
+      alt="支付宝收款码"
+      width="1206"
+      height="1808"
+    />
+  </figure>
+</div>
+
 ## 选择金额
+
+<p class="amount-note">扫码后输入 <strong>¥{{ selected }}</strong>。</p>
 
 <div class="amount-grid">
   <button
@@ -61,29 +86,6 @@ function useCustom() {
   <button type="button" @click="useCustom">确定</button>
 </div>
 
-<p class="qr-lead">请使用微信或支付宝扫码赞助，付款时输入 <strong>¥{{ selected }}</strong>。</p>
-
-<div class="qr-grid">
-  <figure class="qr-card">
-    <img
-      :src="wechatPaySrc"
-      alt="微信支付收款码"
-      width="1206"
-      height="1638"
-    />
-    <figcaption>微信支付</figcaption>
-  </figure>
-  <figure class="qr-card">
-    <img
-      :src="alipaySrc"
-      alt="支付宝收款码"
-      width="1206"
-      height="1808"
-    />
-    <figcaption>支付宝</figcaption>
-  </figure>
-</div>
-
 ## 为什么赞助
 
 本站所有内容免费开放。你的赞助将用于：
@@ -101,7 +103,7 @@ function useCustom() {
 <style scoped>
 .sponsor-hero {
   text-align: center;
-  padding: 32px 0 8px;
+  padding: 28px 0 4px;
 }
 .sponsor-emoji {
   font-size: 64px;
@@ -121,7 +123,7 @@ function useCustom() {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin: 24px 0;
+  margin: 0 0 16px;
 }
 .amount-btn {
   padding: 20px 12px;
@@ -174,13 +176,18 @@ function useCustom() {
   font-weight: 600;
   cursor: pointer;
 }
-.qr-lead {
-  margin: 20px 0 16px;
+.qr-lead,
+.amount-note {
+  margin: 8px 0 16px;
   color: var(--vp-c-text-2);
   font-size: 15px;
   text-align: center;
 }
-.qr-lead strong {
+.amount-note {
+  margin-top: 0;
+}
+.qr-lead strong,
+.amount-note strong {
   color: var(--vp-c-text-1);
 }
 .qr-grid {
@@ -205,7 +212,7 @@ function useCustom() {
   border-radius: 10px;
 }
 .qr-card figcaption {
-  margin: 12px 0 0;
+  margin: 2px 0 10px;
   color: #26332d;
   font-size: 15px;
   font-style: normal;
@@ -216,10 +223,18 @@ function useCustom() {
 }
 @media (max-width: 640px) {
   .sponsor-hero {
-    padding-top: 16px;
+    padding-top: 8px;
+  }
+  .sponsor-emoji {
+    font-size: 48px;
+    margin-bottom: 8px;
   }
   .sponsor-hero h1 {
     font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .qr-lead {
+    margin-bottom: 10px;
   }
   .amount-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -227,7 +242,13 @@ function useCustom() {
   .qr-grid {
     grid-template-columns: minmax(0, 360px);
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
+  }
+  .qr-card {
+    padding: 8px 8px 10px;
+  }
+  .qr-card figcaption {
+    margin: 2px 0 8px;
   }
 }
 </style>
