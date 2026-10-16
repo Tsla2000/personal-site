@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useData } from 'vitepress'
+import { useIsEnglish } from '../useLocale'
 
 // 「觉得有用」按钮：不显示任何数字，只往 Umami 发自定义事件，
 // 数字只有站长在 Umami 后台看得到。呼应 @songsong 的结论：
 // 收藏才是干货指标，但公开计数器在冷启动期是负向证明。
 const { page } = useData()
+const isEnglish = useIsEnglish()
 const clicked = ref(false)
 const mounted = ref(false)
 
@@ -77,7 +79,7 @@ onMounted(() => {
           stroke-linejoin="round"
         />
       </svg>
-      <span>{{ clicked ? '已记录，谢谢！' : '觉得有用' }}</span>
+      <span>{{ clicked ? (isEnglish ? 'Noted. Thank you.' : '已记录，谢谢！') : (isEnglish ? 'Useful' : '觉得有用') }}</span>
     </button>
   </div>
 </template>

@@ -330,6 +330,12 @@ button.VPSwitch.VPSwitchAppearance::after {
 }
 html:not(.dark) button.VPSwitch.VPSwitchAppearance::after { content: "关灯"; }
 html.dark button.VPSwitch.VPSwitchAppearance::after { content: "开灯"; }
+html[lang="en"]:not(.dark) button.VPSwitch.VPSwitchAppearance::after { content: "Lights off"; }
+html[lang="en"].dark button.VPSwitch.VPSwitchAppearance::after { content: "Lights on"; }
+.VPNavBarTranslations,
+.VPNavScreenTranslations {
+  display: none !important;
+}
 /* 暗色模式下图文左右互换：文字左、图标右 */
 html.dark button.VPSwitch.VPSwitchAppearance { flex-direction: row-reverse; }
 /* 压住主题自带的滑块位移，避免暗色模式下图标飞出按钮 */

@@ -158,6 +158,60 @@ if (multiImagePage) {
   if (imgs.length > 1 && lazyCount === 0) errors.push('文章图片未懒加载')
 }
 
+// 4e. 英文站：sitemap 收录 /en/，双语文章互指 hreflang，html lang 与 og:locale 按语言分开
+const enHome = join(DIST, 'en', 'index.html')
+const enTesla = join(DIST, 'en', 'investment', 'tesla', 'q3-earnings-preview.html')
+const zhTesla = join(DIST, 'investment', 'tesla', 'q3-earnings-preview.html')
+if (!existsSync(enHome)) errors.push('缺少英文首页 /en/')
+if (!existsSync(enTesla)) errors.push('缺少英文 Tesla Q3 文章')
+if (existsSync(sitemap)) {
+  const sm = readFileSync(sitemap, 'utf8')
+  if (!/<loc>[^<]*\/en\/investment\/tesla\/q3-earnings-preview<\/loc>/.test(sm)) {
+    errors.push('sitemap 缺少 /en/investment/tesla/q3-earnings-preview')
+  }
+  if (!/<loc>[^<]*\/en<\/loc>/.test(sm)) errors.push('sitemap 缺少 /en')
+}
+function hreflangTag(html, lang) {
+  const tags = html.match(/<link\b[^>]*>/gi) || []
+  return tags.find((tag) => tag.includes('rel="alternate"') && tag.includes(`hreflang="${lang}"`)) || ''
+}
+for (const file of [zhTesla, enTesla]) {
+  if (!existsSync(file)) continue
+  const html = readFileSync(file, 'utf8')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`${file}: 缺少 hreflang=${lang}`)
+  }
+  const xDefault = hreflangTag(html, 'x-default')
+  if (xDefault && (xDefault.includes('/en/investment/') || !xDefault.includes('/investment/tesla/q3-earnings-preview'))) {
+    errors.push(`${file}: x-default 未指向中文 Tesla 文章`)
+  }
+}
+if (existsSync(enTesla)) {
+  const html = readFileSync(enTesla, 'utf8')
+  if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文 Tesla 文章 html lang 不是 en')
+  if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文 Tesla 文章 og:locale 不是 en_US')
+  const keywords = getMeta(html, 'keywords')
+  if (!keywords || !/Tesla Q3 2026/i.test(keywords)) errors.push('英文 Tesla 文章缺少英文 keywords')
+  const title = (html.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!title.includes('Tesla Q3 2026')) errors.push('英文 Tesla 文章 title 未包含 Tesla Q3 2026')
+  const desc = getMeta(html, 'description') || ''
+  if (!/Tesla Q3 2026/i.test(desc)) errors.push('英文 Tesla 文章 description 不是英文检索向描述')
+  if (!html.includes('This is a personal note, not investment advice.')) {
+    errors.push('英文 Tesla 文章缺少指定免责声明')
+  }
+}
+if (existsSync(zhTesla)) {
+  const html = readFileSync(zhTesla, 'utf8')
+  if (!/<html[^>]*\blang="zh-CN"/.test(html)) errors.push('中文 Tesla 文章 html lang 不是 zh-CN')
+  if (getMeta(html, 'og:locale') !== 'zh_CN') errors.push('中文 Tesla 文章 og:locale 不是 zh_CN')
+}
+if (existsSync(enHome)) {
+  const html = readFileSync(enHome, 'utf8')
+  if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文首页 html lang 不是 en')
+  if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文首页 og:locale 不是 en_US')
+  if (!html.includes("Pro's MangoFund")) errors.push('英文首页未出现 Pro\'s MangoFund')
+}
+
 // 5. 检查 robots.txt
 const robots = join(DIST, 'robots.txt')
 if (!existsSync(robots)) warnings.push('缺少 robots.txt')

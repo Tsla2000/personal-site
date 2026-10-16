@@ -5,7 +5,7 @@ import { useShare, LINK_SVG } from './useShare'
 import type { SharePlatform } from './useShare'
 
 const {
-  platforms, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
+  platforms, labels, pageUrl, pageTitle, openKey, qrCache, copied, coarse,
   init, show, hide, onBtnClick, copyLink, cleanup
 } = useShare()
 
@@ -142,8 +142,8 @@ onBeforeUnmount(() => {
   <div v-if="visible" ref="root" class="share-rail" :style="{ left: leftPx + 'px', top: topPx + 'px' }">
     <Transition name="hint">
       <div v-if="hintVisible" class="share-hint">
-        <span>👇 觉得有点意思，戳戳它分享吧</span>
-        <button class="hint-close" aria-label="关闭提示" @click.stop="dismissHint()">×</button>
+        <span>{{ labels.hint }}</span>
+        <button class="hint-close" :aria-label="labels.closeHint" @click.stop="dismissHint()">×</button>
       </div>
     </Transition>
     <div
@@ -158,13 +158,13 @@ onBeforeUnmount(() => {
         class="rail-btn"
         :style="{ '--brand': p.color }"
         :data-name="p.name"
-        :aria-label="'分享到' + p.name"
+        :aria-label="labels.shareTo(p.name)"
         @click="onShareClick(p)"
         v-html="p.svg"
       ></button>
       <div v-show="openKey === p.key" class="rail-pop">
-        <img v-if="qrCache[p.key]" :src="qrCache[p.key]" alt="分享二维码" />
-        <div v-else class="qr-loading">生成中…</div>
+        <img v-if="qrCache[p.key]" :src="qrCache[p.key]" :alt="labels.qrAlt" />
+        <div v-else class="qr-loading">{{ labels.generating }}</div>
         <p class="qr-tip">{{ p.tip }}</p>
         <a
           v-if="p.shareUrl"
@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
           target="_blank"
           rel="noopener noreferrer"
           class="qr-go"
-        >去微博分享 →</a>
+        >{{ labels.weibo }}</a>
       </div>
     </div>
     <div class="rail-divider" style="animation-delay: 240ms"></div>
@@ -180,8 +180,8 @@ onBeforeUnmount(() => {
       <button
         class="rail-btn"
         :class="{ copied }"
-        :data-name="copied ? '已复制' : '复制链接'"
-        aria-label="复制链接"
+        :data-name="copied ? labels.copied : labels.copy"
+        :aria-label="labels.copy"
         @click="onCopyClick"
         v-html="LINK_SVG"
       ></button>

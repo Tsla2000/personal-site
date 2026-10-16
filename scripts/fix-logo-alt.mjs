@@ -3,10 +3,11 @@
 // 本脚本在 vitepress build 之后遍历 dist HTML，给 logo img 补上 alt。
 // 用法：node scripts/fix-logo-alt.mjs
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, sep } from 'node:path'
 
 const DIST = new URL('../docs/.vitepress/dist/', import.meta.url).pathname
-const ALT = 'PRO的茶里芒果'
+const ZH_ALT = 'PRO的茶里芒果'
+const EN_ALT = "Pro's MangoFund"
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -25,7 +26,10 @@ for (const p of walk(DIST)) {
   // 已有实质 alt 的不动
   const next = html.replace(
     /<img(?=[^>]*class="VPImage logo")[^>]*>/g,
-    (tag) => tag.replace(/\salt(?="")?(?=[\s>])/, ` alt="${ALT}"`)
+    (tag) => {
+      const alt = p.includes(`${sep}en${sep}`) ? EN_ALT : ZH_ALT
+      return tag.replace(/\salt(?="")?(?=[\s>])/, ` alt="${alt}"`)
+    }
   )
   if (next !== html) {
     writeFileSync(p, next)

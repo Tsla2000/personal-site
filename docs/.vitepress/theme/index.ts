@@ -9,6 +9,7 @@ import Twikoo from './components/Twikoo.vue'
 import UsefulButton from './components/UsefulButton.vue'
 import FollowButton from './components/FollowButton.vue'
 import UpdateBanner from './components/UpdateBanner.vue'
+import LangSwitch from './components/LangSwitch.vue'
 import './custom.css'
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
@@ -203,7 +204,9 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'layout-top': () => [h(UpdateBanner), h(ShareRail)],
-    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)]
+    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)],
+    'nav-bar-content-after': () => h(LangSwitch),
+    'nav-screen-content-after': () => h(LangSwitch)
   }),
   enhanceApp({ app, router }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
