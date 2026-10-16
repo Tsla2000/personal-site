@@ -23,6 +23,43 @@ function getMeta(html, name) {
   return m ? m[1] : null
 }
 
+function getMetaAll(html, name) {
+  const tags = html.match(/<meta\b[^>]*>/gi) || []
+  const values = []
+  const prop = new RegExp(`(?:name|property)="${name}"`)
+  for (const tag of tags) {
+    if (!prop.test(tag)) continue
+    const content = tag.match(/content="([^"]*)"/)
+    if (content) values.push(content[1])
+  }
+  return values
+}
+
+function readJsonLd(html, file) {
+  const blocks = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)]
+  const nodes = []
+  for (const block of blocks) {
+    try {
+      nodes.push(JSON.parse(block[1].trim()))
+    } catch {
+      errors.push(`${file}: JSON-LD 无法解析`)
+    }
+  }
+  return nodes
+}
+
+const AUTHOR_KEYS = ['@type', 'name', 'url', 'sameAs']
+
+function assertKnownAuthor(file, author) {
+  if (!author || author['@type'] !== 'Person' || author.name !== 'pro') {
+    errors.push(`${file}: JSON-LD author 不是既有的 pro`)
+    return
+  }
+  for (const key of Object.keys(author)) {
+    if (!AUTHOR_KEYS.includes(key)) errors.push(`${file}: JSON-LD author 多了字段 ${key}`)
+  }
+}
+
 const pages = walk(DIST)
 console.log(`[check-seo] 检查 ${pages.length} 个页面...`)
 
@@ -411,6 +448,245 @@ if (existsSync(archiveHtmlPath)) {
   if (!archiveRows.some((row) => row.includes('href="/ai/coding/muse-auto-deploy"'))) {
     errors.push('中文归档丢失了 Muse 自动部署')
   }
+}
+
+// 4f. 英文 SEO：Article JSON-LD、Open Graph、三篇互链、/en/about
+const EN_POSTS = {
+  tesla: {
+    file: enTesla,
+    zhFile: zhTesla,
+    headline: 'Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock',
+    zhHeadline: '特斯拉 Q3 财报前瞻',
+    urlPath: '/en/investment/tesla/q3-earnings-preview',
+    zhUrlPath: '/investment/tesla/q3-earnings-preview',
+    datePrefix: '2026-10-16',
+    imagePath: '/images/tesla-q3/cover.webp',
+    descriptionPattern: /Tesla Q3 2026/i
+  },
+  claude: {
+    file: enClaude,
+    zhFile: zhClaude,
+    headline: 'Claude vs OpenAI on Google Trends',
+    zhHeadline: 'Claude 搜索热度是 OpenAI 的 13 倍',
+    urlPath: '/en/ai/trends/claude-search-surge',
+    zhUrlPath: '/ai/trends/claude-search-surge',
+    datePrefix: '2026-10-16',
+    imagePath: '/images/claude-search-surge/fig01_gt_compare.png',
+    descriptionPattern: /Google Trends/i
+  },
+  muse: {
+    file: enMuse,
+    zhFile: zhMuse,
+    headline: 'How to Automate a Personal Website Deploy with Muse',
+    zhHeadline: '我是如何用 Muse 自动化部署个人网站的',
+    urlPath: '/en/ai/coding/muse-auto-deploy',
+    zhUrlPath: '/ai/coding/muse-auto-deploy',
+    datePrefix: '2026-10-06',
+    imagePath: '/images/muse-deploy-actions.png',
+    descriptionPattern: /AI coding agent/i
+  }
+}
+
+function assertOg(file, html, { locale, alternate, titleIncludes, urlPath, urlExcludes, imagePath, descriptionPattern }) {
+  if (getMeta(html, 'og:locale') !== locale) errors.push(`${file}: og:locale 不是 ${locale}`)
+  if (alternate && !getMetaAll(html, 'og:locale:alternate').includes(alternate)) {
+    errors.push(`${file}: 缺少 og:locale:alternate=${alternate}`)
+  }
+  const ogTitle = getMeta(html, 'og:title') || ''
+  if (titleIncludes && !ogTitle.includes(titleIncludes)) errors.push(`${file}: og:title 不匹配`)
+  const ogUrl = getMeta(html, 'og:url') || ''
+  if (urlPath && !ogUrl.includes(urlPath)) errors.push(`${file}: og:url 不正确`)
+  if (urlExcludes && ogUrl.includes(urlExcludes)) errors.push(`${file}: og:url 不应包含 ${urlExcludes}`)
+  const canonical = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1] || ''
+  if (canonical && ogUrl && ogUrl !== canonical) errors.push(`${file}: og:url 与 canonical 不一致`)
+  const ogDesc = getMeta(html, 'og:description') || ''
+  if (descriptionPattern && !descriptionPattern.test(ogDesc)) errors.push(`${file}: og:description 不匹配`)
+  if (getMeta(html, 'twitter:card') !== 'summary_large_image') errors.push(`${file}: twitter:card 不是 summary_large_image`)
+  if (imagePath && !(getMeta(html, 'og:image') || '').includes(imagePath)) {
+    errors.push(`${file}: og:image 未使用 ${imagePath}`)
+  }
+}
+
+function assertArticleLd(file, html, { inLanguage, headline, urlPath, urlExcludes, datePrefix, imagePath, descriptionPattern, authorUrlIncludes, authorUrlExcludes }) {
+  const article = readJsonLd(html, file).find((node) => node['@type'] === 'Article' || node['@type'] === 'BlogPosting')
+  if (!article) {
+    errors.push(`${file}: 缺少 Article JSON-LD`)
+    return
+  }
+  if (article.inLanguage !== inLanguage) errors.push(`${file}: JSON-LD inLanguage 不是 ${inLanguage}`)
+  if (!String(article.headline || '').includes(headline)) errors.push(`${file}: JSON-LD headline 不匹配`)
+  if (descriptionPattern && !descriptionPattern.test(String(article.description || ''))) {
+    errors.push(`${file}: JSON-LD description 不匹配`)
+  }
+  if (!String(article.url || '').includes(urlPath)) errors.push(`${file}: JSON-LD url 不正确`)
+  if (urlExcludes && String(article.url || '').includes(urlExcludes)) errors.push(`${file}: JSON-LD url 不应包含 ${urlExcludes}`)
+  if (!String(article.datePublished || '').startsWith(datePrefix)) errors.push(`${file}: JSON-LD datePublished 不正确`)
+  if (imagePath && !String(article.image || '').includes(imagePath)) errors.push(`${file}: JSON-LD image 未使用文章封面`)
+  assertKnownAuthor(file, article.author)
+  const authorUrl = String(article.author?.url || '')
+  if (authorUrlIncludes && !authorUrl.includes(authorUrlIncludes)) errors.push(`${file}: author url 未包含 ${authorUrlIncludes}`)
+  if (authorUrlExcludes && authorUrl.includes(authorUrlExcludes)) errors.push(`${file}: author url 不应包含 ${authorUrlExcludes}`)
+}
+
+for (const [key, post] of Object.entries(EN_POSTS)) {
+  if (!existsSync(post.file)) continue
+  const html = readFileSync(post.file, 'utf8')
+  assertArticleLd(post.file, html, {
+    inLanguage: 'en',
+    headline: post.headline,
+    urlPath: post.urlPath,
+    datePrefix: post.datePrefix,
+    imagePath: post.imagePath,
+    descriptionPattern: post.descriptionPattern,
+    authorUrlIncludes: '/en/about',
+    authorUrlExcludes: null
+  })
+  assertOg(post.file, html, {
+    locale: 'en_US',
+    alternate: 'zh_CN',
+    titleIncludes: post.headline,
+    urlPath: post.urlPath,
+    imagePath: post.imagePath,
+    descriptionPattern: post.descriptionPattern
+  })
+  if (!html.includes('More notes')) errors.push(`${post.file}: 缺少 More notes 内链`)
+  for (const [otherKey, other] of Object.entries(EN_POSTS)) {
+    if (otherKey === key) continue
+    if (!html.includes(other.urlPath)) errors.push(`${post.file}: 缺少相关文章 ${other.urlPath}`)
+  }
+  if (!/href="\/en\/"/.test(html)) errors.push(`${post.file}: 缺少回到 /en/ 的链接`)
+  if (existsSync(post.zhFile)) {
+    const zhHtml = readFileSync(post.zhFile, 'utf8')
+    assertArticleLd(post.zhFile, zhHtml, {
+      inLanguage: 'zh-CN',
+      headline: post.zhHeadline,
+      urlPath: post.zhUrlPath,
+      urlExcludes: '/en/',
+      datePrefix: post.datePrefix,
+      imagePath: post.imagePath,
+      descriptionPattern: null,
+      authorUrlIncludes: '/about',
+      authorUrlExcludes: '/en/about'
+    })
+    assertOg(post.zhFile, zhHtml, {
+      locale: 'zh_CN',
+      alternate: 'en_US',
+      titleIncludes: post.zhHeadline,
+      urlPath: post.zhUrlPath,
+      urlExcludes: '/en/',
+      imagePath: post.imagePath,
+      descriptionPattern: null
+    })
+    if (zhHtml.includes('More notes')) errors.push(`${post.zhFile}: 中文正文被写入了英文内链标题`)
+    if (!zhHtml.includes(post.zhHeadline)) errors.push(`${post.zhFile}: 中文标题被改动`)
+  }
+}
+
+const enAbout = join(DIST, 'en', 'about', 'index.html')
+const zhAbout = join(DIST, 'about', 'index.html')
+if (!existsSync(enAbout)) errors.push('缺少英文关于页 /en/about')
+if (existsSync(sitemap)) {
+  const sm = readFileSync(sitemap, 'utf8')
+  if (!/<loc>[^<]*\/en\/about<\/loc>/.test(sm)) errors.push('sitemap 缺少 /en/about')
+  if (!/<loc>[^<]*\/about<\/loc>/.test(sm)) errors.push('sitemap 缺少 /about')
+}
+if (existsSync(enAbout)) {
+  const html = readFileSync(enAbout, 'utf8')
+  if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文关于页 html lang 不是 en')
+  if (!html.includes("Pro's MangoFund")) errors.push('英文关于页未出现 Pro\'s MangoFund')
+  if (!html.includes('/about/') && !html.includes('href="/about"')) errors.push('英文关于页缺少中文关于链接')
+  for (const post of Object.values(EN_POSTS)) {
+    if (!html.includes(post.urlPath)) errors.push(`英文关于页缺少 ${post.urlPath}`)
+  }
+  if (!/href="\/en\/"/.test(html)) errors.push('英文关于页缺少回到 /en/ 的链接')
+  if (!html.includes('>中<') || !html.includes('>EN<')) errors.push('英文关于页语言切换标签不是 中/EN')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`英文关于页缺少 hreflang=${lang}`)
+  }
+  const xDefault = hreflangHref(html, 'x-default')
+  if (!xDefault.includes('/about') || xDefault.includes('/en/about')) {
+    errors.push('英文关于页 x-default 未指向中文关于页')
+  }
+  const aboutLd = readJsonLd(html, enAbout).find((node) => node['@type'] === 'AboutPage')
+  if (!aboutLd) errors.push('英文关于页缺少 AboutPage JSON-LD')
+  else {
+    if (aboutLd.inLanguage !== 'en') errors.push('英文关于页 JSON-LD inLanguage 不是 en')
+    if (!String(aboutLd.name || '').includes("Pro's MangoFund")) errors.push('英文关于页 JSON-LD name 不是英文')
+    if (!String(aboutLd.url || '').includes('/en/about')) errors.push('英文关于页 JSON-LD url 不正确')
+    if (!String(aboutLd.description || '').includes("Pro's MangoFund")) errors.push('英文关于页 JSON-LD description 不是英文')
+    assertKnownAuthor(enAbout, aboutLd.mainEntity)
+  }
+  assertOg(enAbout, html, {
+    locale: 'en_US',
+    alternate: 'zh_CN',
+    titleIncludes: "Pro's MangoFund",
+    urlPath: '/en/about',
+    imagePath: '/images/social-card.png',
+    descriptionPattern: /Pro's MangoFund/
+  })
+  if (getMeta(html, 'og:type') !== 'website') errors.push('英文关于页 og:type 不是 website')
+}
+if (existsSync(zhAbout)) {
+  const html = readFileSync(zhAbout, 'utf8')
+  if (!/<html[^>]*\blang="zh-CN"/.test(html)) errors.push('中文关于页 html lang 不是 zh-CN')
+  if (!html.includes('我持续研究 AI、投资、产品与技术')) errors.push('中文关于页正文被改动')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`中文关于页缺少 hreflang=${lang}`)
+  }
+  const enAlt = hreflangHref(html, 'en')
+  if (!enAlt.includes('/en/about')) errors.push('中文关于页 hreflang=en 未指向 /en/about')
+  const aboutLd = readJsonLd(html, zhAbout).find((node) => node['@type'] === 'AboutPage')
+  if (!aboutLd) errors.push('中文关于页缺少 AboutPage JSON-LD')
+  else {
+    if (aboutLd.inLanguage !== 'zh-CN') errors.push('中文关于页 JSON-LD inLanguage 不是 zh-CN')
+    if (!String(aboutLd.name || '').includes('关于')) errors.push('中文关于页 JSON-LD name 不是中文')
+    if (String(aboutLd.url || '').includes('/en/about')) errors.push('中文关于页 JSON-LD url 指向了英文')
+    assertKnownAuthor(zhAbout, aboutLd.mainEntity)
+    if (String(aboutLd.mainEntity?.url || '').includes('/en/about')) {
+      errors.push('中文关于页 author url 指向了英文关于页')
+    }
+  }
+  assertOg(zhAbout, html, {
+    locale: 'zh_CN',
+    alternate: 'en_US',
+    titleIncludes: '关于',
+    urlPath: '/about',
+    urlExcludes: '/en/',
+    imagePath: '/images/social-card.png',
+    descriptionPattern: null
+  })
+}
+if (existsSync(enHome)) {
+  const html = readFileSync(enHome, 'utf8')
+  if (!html.includes('English home of a personal site')) errors.push('英文首页缺少可索引的简介')
+  if (!html.includes('/en/about')) errors.push('英文首页缺少关于页链接')
+  const website = readJsonLd(html, enHome).find((node) => node['@type'] === 'WebSite')
+  if (!website) errors.push('英文首页缺少 WebSite JSON-LD')
+  else {
+    if (website.inLanguage !== 'en') errors.push('英文首页 JSON-LD inLanguage 不是 en')
+    if (website.name !== "Pro's MangoFund") errors.push('英文首页 JSON-LD name 不是 Pro\'s MangoFund')
+    if (!String(website.url || '').includes('/en')) errors.push('英文首页 JSON-LD url 不正确')
+    assertKnownAuthor(enHome, website.author)
+  }
+  assertOg(enHome, html, {
+    locale: 'en_US',
+    alternate: 'zh_CN',
+    titleIncludes: "Pro's MangoFund",
+    urlPath: '/en',
+    imagePath: '/images/social-card.png',
+    descriptionPattern: /Pro's MangoFund/
+  })
+  if (!html.includes('>中<') || !html.includes('>EN<')) errors.push('英文首页语言切换标签不是 中/EN')
+}
+if (existsSync(homeHtmlPath)) {
+  const html = readFileSync(homeHtmlPath, 'utf8')
+  const website = readJsonLd(html, homeHtmlPath).find((node) => node['@type'] === 'WebSite')
+  if (!website) errors.push('中文首页缺少 WebSite JSON-LD')
+  else if (website.inLanguage !== 'zh-CN' || website.name !== 'PRO的茶里芒果') {
+    errors.push('中文首页 WebSite JSON-LD 语言或站名不正确')
+  }
+  if (getMeta(html, 'og:locale') !== 'zh_CN') errors.push('中文首页 og:locale 不是 zh_CN')
+  if (!getMetaAll(html, 'og:locale:alternate').includes('en_US')) errors.push('中文首页缺少 og:locale:alternate=en_US')
 }
 
 // 5. 检查 robots.txt

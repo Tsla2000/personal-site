@@ -1,12 +1,13 @@
 ---
 title: Pro's MangoFund
-description: Notes on AI products, side hustles, investing, and digital products.
-keywords: MangoFund, AI products, side hustles, investing, digital products
+description: English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
+keywords: Pro's MangoFund, MangoFund, AI products, Tesla Q3 2026, Claude vs OpenAI, AI coding agent
 ---
 
 <div class="home-page">
   <header class="home-intro">
     <h1>Pro's MangoFund<span class="home-pos">Notes on AI products, side hustles, investing, and digital products.</span></h1>
+    <p class="home-lead">Pro's MangoFund is the English home of a personal site about AI products, investing, and building software. The three notes below are in English. The longer archive, covering agents, markets, and longer questions, is in Chinese.</p>
   </header>
 
   <section class="home-section">
@@ -22,5 +23,6 @@ keywords: MangoFund, AI products, side hustles, investing, digital products
         <time>2026.10.06</time><div><strong>How to Automate a Personal Website Deploy with Muse</strong><small>AI · Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages.</small></div>
       </a>
     </div>
+    <p class="home-more"><a href="/en/about">About Pro's MangoFund</a></p>
   </section>
 </div>

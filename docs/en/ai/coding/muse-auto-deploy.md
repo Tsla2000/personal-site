@@ -145,3 +145,10 @@ The next thing I want to measure is growth. If the agent keeps publishing, readi
 **Sources:** the deploy recorded in the GitHub repository Tsla2000/personal-site; GitHub's 2023 Copilot experiment on a JavaScript task (about 55.8% faster).
 
 This is a personal note, not investment advice.
+
+## More notes
+
+- [Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher](/en/ai/trends/claude-search-surge)
+- [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](/en/investment/tesla/q3-earnings-preview)
+
+[All English notes](/en/)

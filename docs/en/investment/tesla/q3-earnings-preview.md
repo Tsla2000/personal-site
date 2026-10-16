@@ -104,3 +104,10 @@ The Roadster can keep trending. For a position, the October 21 update PDF and th
 **Sources:** Tesla IR, "Third Quarter 2026 Production, Deliveries & Deployments" (2026-10-02), and the same series for prior quarters; Tesla's Q3 2026 earnings schedule; Not a Tesla App and Teslascope on FSD v14.3 Lite and the HW3 / v15 boundary; Reuters, CNBC, TechCrunch, and The Verge on the October 15, 2026 Roadster event.
 
 This is a personal note, not investment advice.
+
+## More notes
+
+- [Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher](/en/ai/trends/claude-search-surge)
+- [How to Automate a Personal Website Deploy with Muse](/en/ai/coding/muse-auto-deploy)
+
+[All English notes](/en/)
