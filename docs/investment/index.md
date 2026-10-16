@@ -11,6 +11,7 @@ description: 投资是对未来现金流、竞争结构与人类行为的长期�
 
 <!-- 注意:站内链接用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。-->
 <div class="article-list">
+  <a class="article-row" href="tesla/q3-earnings-preview"><time>2026.10.16</time><div><strong>特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么</strong><small>Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。</small></div></a>
   <a class="article-row" href="us-stocks/ai-stage-invest-guide"><time>2026.10.06</time><div><strong>AI 进行到哪一步了？普通人如何投资美股</strong><small>用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div></a>
   <a class="article-row" href="tesla/long-term-value"><time>2026.09.24</time><div><strong>Tesla 的长期价值究竟来自汽车吗？</strong><small>把一家公司的价值拆成制造、软件与能源三层。</small></div></a>
 </div>
