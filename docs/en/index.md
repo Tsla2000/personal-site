@@ -12,6 +12,9 @@ keywords: MangoFund, AI products, side hustles, investing, digital products
   <section class="home-section">
     <h2>Articles</h2>
     <div class="article-list">
+      <a class="article-row" href="ai/trends/claude-search-surge">
+        <time>2026.10.16</time><div><strong>Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher</strong><small>AI · Google Trends shows Claude at 94–100 versus OpenAI at 7–8. Why that is not a Claude vs ChatGPT user count, and what Opus 5.5 changed for developers.</small></div>
+      </a>
       <a class="article-row" href="investment/tesla/q3-earnings-preview">
         <time>2026.10.16</time><div><strong>Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock</strong><small>Investing · Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins.</small></div>
       </a>
