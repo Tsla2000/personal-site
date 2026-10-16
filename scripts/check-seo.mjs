@@ -210,6 +210,92 @@ if (existsSync(enHome)) {
   if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文首页 html lang 不是 en')
   if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文首页 og:locale 不是 en_US')
   if (!html.includes("Pro's MangoFund")) errors.push('英文首页未出现 Pro\'s MangoFund')
+  if (!html.includes('/en/ai/trends/claude-search-surge') && !html.includes('ai/trends/claude-search-surge')) {
+    errors.push('英文首页文章列表缺少 Claude 搜索热度')
+  }
+}
+
+const enClaude = join(DIST, 'en', 'ai', 'trends', 'claude-search-surge.html')
+const zhClaude = join(DIST, 'ai', 'trends', 'claude-search-surge.html')
+if (!existsSync(enClaude)) errors.push('缺少英文 Claude 搜索热度文章')
+if (existsSync(sitemap)) {
+  const sm = readFileSync(sitemap, 'utf8')
+  if (!/<loc>[^<]*\/en\/ai\/trends\/claude-search-surge<\/loc>/.test(sm)) {
+    errors.push('sitemap 缺少 /en/ai/trends/claude-search-surge')
+  }
+  const claudeEntry = sm.match(/<url><loc>[^<]*\/en\/ai\/trends\/claude-search-surge<\/loc><lastmod>([^<]*)<\/lastmod><\/url>/)
+  if (!claudeEntry) errors.push('sitemap 英文 Claude 文章缺少 lastmod')
+  else if (!/^\d{4}-\d{2}-\d{2}/.test(claudeEntry[1])) errors.push('sitemap 英文 Claude lastmod 格式异常')
+}
+for (const file of [zhClaude, enClaude]) {
+  if (!existsSync(file)) continue
+  const html = readFileSync(file, 'utf8')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`${file}: 缺少 hreflang=${lang}`)
+  }
+  const xDefault = hreflangTag(html, 'x-default')
+  if (xDefault && (xDefault.includes('/en/ai/') || !xDefault.includes('/ai/trends/claude-search-surge'))) {
+    errors.push(`${file}: x-default 未指向中文 Claude 文章`)
+  }
+  const published = getMeta(html, 'article:published_time') || ''
+  if (!published.startsWith('2026-10-16')) {
+    errors.push(`${file}: article:published_time 不是 2026-10-16`)
+  }
+}
+if (existsSync(enClaude)) {
+  const html = readFileSync(enClaude, 'utf8')
+  if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文 Claude 文章 html lang 不是 en')
+  if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文 Claude 文章 og:locale 不是 en_US')
+  const keywords = getMeta(html, 'keywords') || ''
+  if (!/Claude vs (OpenAI|ChatGPT)/i.test(keywords) || !/Google Trends/i.test(keywords)) {
+    errors.push('英文 Claude 文章缺少英文 keywords')
+  }
+  const title = (html.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!title.includes('Claude vs OpenAI on Google Trends')) errors.push('英文 Claude 文章 title 未对准搜索意图')
+  const desc = getMeta(html, 'description') || ''
+  if (!/Google Trends/i.test(desc) || !/94/.test(desc) || !/ChatGPT/i.test(desc)) {
+    errors.push('英文 Claude 文章 description 不是英文检索向描述')
+  }
+  if (!html.includes('/images/claude-search-surge/fig01_gt_compare.png')) {
+    errors.push('英文 Claude 文章未复用 Google Trends 原图')
+  }
+  if (!html.includes('Google Trends worldwide relative search interest')) {
+    errors.push('英文 Claude 文章图片 alt 不是英文')
+  }
+  if (!html.includes('This is a personal note, not investment advice.')) {
+    errors.push('英文 Claude 文章缺少免责声明')
+  }
+}
+if (existsSync(zhClaude)) {
+  const html = readFileSync(zhClaude, 'utf8')
+  if (!/<html[^>]*\blang="zh-CN"/.test(html)) errors.push('中文 Claude 文章 html lang 不是 zh-CN')
+  if (getMeta(html, 'og:locale') !== 'zh_CN') errors.push('中文 Claude 文章 og:locale 不是 zh_CN')
+  if (!html.includes('Claude 搜索热度是 OpenAI 的 13 倍')) errors.push('中文 Claude 文章标题被改动')
+}
+const feedFile = join(DIST, 'feed.xml')
+if (existsSync(feedFile)) {
+  const feedXml = readFileSync(feedFile, 'utf8')
+  if (feedXml.includes('/en/ai/trends/claude-search-surge') || feedXml.includes('/en/investment/')) {
+    errors.push('中文 RSS 收录了英文文章')
+  }
+  if (!feedXml.includes('/ai/trends/claude-search-surge')) errors.push('中文 RSS 丢失了 Claude 搜索热度')
+}
+const articlesJson = join(DIST, 'articles.json')
+if (existsSync(articlesJson)) {
+  const articles = readFileSync(articlesJson, 'utf8')
+  if (articles.includes('en/ai/trends/claude-search-surge') || articles.includes('en/investment/')) {
+    errors.push('articles.json 收录了英文文章')
+  }
+}
+if (existsSync(homeHtmlPath)) {
+  const homeHtml = readFileSync(homeHtmlPath, 'utf8')
+  const articleRows = homeHtml.match(/<a class="article-row"[^>]*>/g) || []
+  if (articleRows.some((row) => /href="\/en\//.test(row))) {
+    errors.push('中文首页列表出现了英文 URL')
+  }
+  if (!articleRows.some((row) => row.includes('href="/ai/trends/claude-search-surge"'))) {
+    errors.push('中文首页丢失了 Claude 搜索热度')
+  }
 }
 
 // 5. 检查 robots.txt

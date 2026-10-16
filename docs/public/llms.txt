@@ -37,6 +37,7 @@
 
 ## English
 
+- [Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher](https://tsla2000.github.io/en/ai/trends/claude-search-surge): Google Trends shows Claude at 94–100 versus OpenAI at 7–8. Why that is not a Claude vs ChatGPT user count, and what Opus 5.5 changed for developers. (2026.10.16)
 - [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](https://tsla2000.github.io/en/investment/tesla/q3-earnings-preview): Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins. (2026.10.16)
 
 ## 订阅

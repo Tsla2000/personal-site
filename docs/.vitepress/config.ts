@@ -142,7 +142,7 @@ export default defineConfig({
         logoLink: '/en/',
         nav: [
           { text: 'Home', link: '/en/', activeMatch: '^/en/?$' },
-          { text: 'AI', link: '/ai/' },
+          { text: 'AI', link: '/en/ai/trends/claude-search-surge', activeMatch: '^/en/ai/' },
           { text: 'Investing', link: '/en/investment/tesla/q3-earnings-preview', activeMatch: '^/en/investment/' },
           { text: 'Thinking', link: '/thinking/' },
           { text: 'Projects', link: '/#projects' },
@@ -152,6 +152,17 @@ export default defineConfig({
           { component: 'LangSwitch' }
         ],
         sidebar: {
+          '/en/ai/': [
+            {
+              text: 'Trends',
+              items: [
+                {
+                  text: 'Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher',
+                  link: '/en/ai/trends/claude-search-surge'
+                }
+              ]
+            }
+          ],
           '/en/investment/': [
             {
               text: 'US stocks',

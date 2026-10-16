@@ -29,13 +29,13 @@ function hrefFor(english: boolean): string {
       :href="hrefFor(false)"
       :class="{ active: !current.english }"
       :aria-current="current.english ? undefined : 'page'"
-    >中文</a>
+    >中</a>
     <span class="sep" aria-hidden="true">/</span>
     <a
       :href="hrefFor(true)"
       :class="{ active: current.english }"
       :aria-current="current.english ? 'page' : undefined"
-    >English</a>
+    >EN</a>
   </nav>
 </template>
 
@@ -43,7 +43,7 @@ function hrefFor(english: boolean): string {
 .lang-switch {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0;
   margin-right: 4px;
   font-size: 13px;
   font-weight: 650;
