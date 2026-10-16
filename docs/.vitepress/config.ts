@@ -86,7 +86,8 @@ export default defineConfig({
       { text: '项目', link: '/#projects' },
       { text: '留言板', link: '/guestbook/' },
       { text: '订阅', link: '/subscribe/' },
-      { text: '关于', link: '/about/' }
+      { text: '关于', link: '/about/' },
+      { component: 'LangSwitch' }
     ],
     sidebar: {
       '/ai/': [
@@ -147,7 +148,8 @@ export default defineConfig({
           { text: 'Projects', link: '/#projects' },
           { text: 'Guestbook', link: '/guestbook/' },
           { text: 'Subscribe', link: '/subscribe/' },
-          { text: 'About', link: '/about/' }
+          { text: 'About', link: '/about/' },
+          { component: 'LangSwitch' }
         ],
         sidebar: {
           '/en/investment/': [

@@ -85,6 +85,18 @@
 /archive/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/investment/tesla/q3-earnings-preview
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/investment/tesla/q3-earnings-preview/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /guestbook
   Cache-Control: public, max-age=0, must-revalidate
 

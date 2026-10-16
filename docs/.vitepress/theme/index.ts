@@ -204,13 +204,12 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'layout-top': () => [h(UpdateBanner), h(ShareRail)],
-    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)],
-    'nav-bar-content-after': () => h(LangSwitch),
-    'nav-screen-content-after': () => h(LangSwitch)
+    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)]
   }),
   enhanceApp({ app, router }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
     app.component('Twikoo', Twikoo)
+    app.component('LangSwitch', LangSwitch)
     // 订阅页 markdown 里直接用 <FollowButton />
     app.component('FollowButton', FollowButton)
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）
