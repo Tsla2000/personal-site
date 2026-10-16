@@ -161,6 +161,15 @@ export default defineConfig({
                   link: '/en/ai/trends/claude-search-surge'
                 }
               ]
+            },
+            {
+              text: 'Coding',
+              items: [
+                {
+                  text: 'How to Automate a Personal Website Deploy with Muse',
+                  link: '/en/ai/coding/muse-auto-deploy'
+                }
+              ]
             }
           ],
           '/en/investment/': [

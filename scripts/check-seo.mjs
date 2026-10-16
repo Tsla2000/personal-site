@@ -213,6 +213,9 @@ if (existsSync(enHome)) {
   if (!html.includes('/en/ai/trends/claude-search-surge') && !html.includes('ai/trends/claude-search-surge')) {
     errors.push('英文首页文章列表缺少 Claude 搜索热度')
   }
+  if (!html.includes('ai/coding/muse-auto-deploy')) {
+    errors.push('英文首页文章列表缺少 Muse 自动部署')
+  }
 }
 
 const enClaude = join(DIST, 'en', 'ai', 'trends', 'claude-search-surge.html')
@@ -296,6 +299,113 @@ if (existsSync(homeHtmlPath)) {
   if (!articleRows.some((row) => row.includes('href="/ai/trends/claude-search-surge"'))) {
     errors.push('中文首页丢失了 Claude 搜索热度')
   }
+}
+
+const enMuse = join(DIST, 'en', 'ai', 'coding', 'muse-auto-deploy.html')
+const zhMuse = join(DIST, 'ai', 'coding', 'muse-auto-deploy.html')
+if (!existsSync(enMuse)) errors.push('缺少英文 Muse 自动部署文章')
+if (existsSync(sitemap)) {
+  const sm = readFileSync(sitemap, 'utf8')
+  if (!/<loc>[^<]*\/en\/ai\/coding\/muse-auto-deploy<\/loc>/.test(sm)) {
+    errors.push('sitemap 缺少 /en/ai/coding/muse-auto-deploy')
+  }
+  const museEntry = sm.match(/<url><loc>[^<]*\/en\/ai\/coding\/muse-auto-deploy<\/loc><lastmod>([^<]*)<\/lastmod><\/url>/)
+  if (!museEntry) errors.push('sitemap 英文 Muse 文章缺少 lastmod')
+  else if (!/^\d{4}-\d{2}-\d{2}/.test(museEntry[1])) errors.push('sitemap 英文 Muse lastmod 格式异常')
+}
+function hreflangHref(html, lang) {
+  const tag = hreflangTag(html, lang)
+  const match = tag.match(/href="([^"]+)"/)
+  return match ? match[1] : ''
+}
+const museHreflang = {}
+for (const file of [zhMuse, enMuse]) {
+  if (!existsSync(file)) continue
+  const html = readFileSync(file, 'utf8')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`${file}: 缺少 hreflang=${lang}`)
+  }
+  const xDefault = hreflangTag(html, 'x-default')
+  if (xDefault && (xDefault.includes('/en/ai/') || !xDefault.includes('/ai/coding/muse-auto-deploy'))) {
+    errors.push(`${file}: x-default 未指向中文 Muse 文章`)
+  }
+  const zhAlt = hreflangHref(html, 'zh-CN')
+  const enAlt = hreflangHref(html, 'en')
+  if (!zhAlt.includes('/ai/coding/muse-auto-deploy') || zhAlt.includes('/en/ai/coding/')) {
+    errors.push(`${file}: hreflang=zh-CN 未指向中文 Muse 文章`)
+  }
+  if (!enAlt.includes('/en/ai/coding/muse-auto-deploy')) {
+    errors.push(`${file}: hreflang=en 未指向英文 Muse 文章`)
+  }
+  museHreflang[file] = { zhAlt, enAlt, xDefault: hreflangHref(html, 'x-default') }
+  const published = getMeta(html, 'article:published_time') || ''
+  if (!published.startsWith('2026-10-06')) {
+    errors.push(`${file}: article:published_time 不是 2026-10-06`)
+  }
+  if (!html.includes('>中<') || !html.includes('>EN<')) {
+    errors.push(`${file}: 语言切换标签不是 中/EN`)
+  }
+}
+if (museHreflang[zhMuse] && museHreflang[enMuse]) {
+  for (const key of ['zhAlt', 'enAlt', 'xDefault']) {
+    if (museHreflang[zhMuse][key] !== museHreflang[enMuse][key]) {
+      errors.push(`中英文 Muse 文章的 hreflang ${key} 不一致`)
+    }
+  }
+}
+if (existsSync(enMuse)) {
+  const html = readFileSync(enMuse, 'utf8')
+  if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文 Muse 文章 html lang 不是 en')
+  if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文 Muse 文章 og:locale 不是 en_US')
+  const keywords = getMeta(html, 'keywords') || ''
+  if (!/Muse/i.test(keywords) || !/personal website/i.test(keywords) || !/AI coding agent/i.test(keywords)) {
+    errors.push('英文 Muse 文章缺少英文 keywords')
+  }
+  const title = (html.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!title.includes('How to Automate a Personal Website Deploy with Muse')) {
+    errors.push('英文 Muse 文章 title 未对准搜索意图')
+  }
+  const desc = getMeta(html, 'description') || ''
+  if (!/AI coding agent/i.test(desc) || !/VitePress/i.test(desc) || !/GitHub Actions/i.test(desc) || !/personal website/i.test(desc)) {
+    errors.push('英文 Muse 文章 description 不是英文检索向描述')
+  }
+  for (const image of ['/images/muse-deploy-home.png', '/images/muse-deploy-actions.png', '/images/muse-deploy-commits.png']) {
+    if (!html.includes(image)) errors.push(`英文 Muse 文章未复用图片 ${image}`)
+  }
+  if (!html.includes('Homepage of the personal site, built with VitePress from Markdown')) {
+    errors.push('英文 Muse 文章图片 alt 不是英文')
+  }
+  if (!html.includes('This is a personal note, not investment advice.')) {
+    errors.push('英文 Muse 文章缺少免责声明')
+  }
+  if (!html.includes('vp-doc')) errors.push('英文 Muse 文章不是文档布局，有用按钮和访问统计可能不挂载')
+  if (html.includes('<h2') && /<h2[^>]*>\s*(Preface|前言)/i.test(html)) {
+    errors.push('英文 Muse 文章出现了前言小节')
+  }
+}
+if (existsSync(zhMuse)) {
+  const html = readFileSync(zhMuse, 'utf8')
+  if (!/<html[^>]*\blang="zh-CN"/.test(html)) errors.push('中文 Muse 文章 html lang 不是 zh-CN')
+  if (getMeta(html, 'og:locale') !== 'zh_CN') errors.push('中文 Muse 文章 og:locale 不是 zh_CN')
+  if (!html.includes('我是如何用 Muse 自动化部署个人网站的')) errors.push('中文 Muse 文章标题被改动')
+  const published = getMeta(html, 'article:published_time') || ''
+  if (!published.startsWith('2026-10-06')) errors.push('中文 Muse 文章 article:published_time 不是 2026-10-06')
+}
+if (existsSync(feedFile)) {
+  const feedXml = readFileSync(feedFile, 'utf8')
+  if (feedXml.includes('/en/ai/coding/muse-auto-deploy')) errors.push('中文 RSS 收录了英文 Muse 文章')
+  if (!feedXml.includes('/ai/coding/muse-auto-deploy')) errors.push('中文 RSS 丢失了 Muse 自动部署')
+}
+if (existsSync(articlesJson)) {
+  const articles = readFileSync(articlesJson, 'utf8')
+  if (articles.includes('en/ai/coding/muse-auto-deploy')) errors.push('articles.json 收录了英文 Muse 文章')
+  if (!articles.includes('ai/coding/muse-auto-deploy.md')) errors.push('articles.json 丢失了中文 Muse 文章')
+}
+const archiveHtmlPath = join(DIST, 'archive.html')
+if (existsSync(archiveHtmlPath)) {
+  const archiveHtml = readFileSync(archiveHtmlPath, 'utf8')
+  if (archiveHtml.includes('/en/ai/coding/muse-auto-deploy')) errors.push('中文归档收录了英文 Muse 文章')
+  if (!archiveHtml.includes('/ai/coding/muse-auto-deploy')) errors.push('中文归档丢失了 Muse 自动部署')
 }
 
 // 5. 检查 robots.txt
