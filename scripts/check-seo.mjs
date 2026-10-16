@@ -154,16 +154,27 @@ if (!existsSync(headersFile)) {
   }
 }
 
-// 4c. 首页必须有包含站名和定位的 H1
+// 4c. 首页不再渲染站名+定位的 hero；站名和定位仍留在 title / description / 导航
 const homeHtmlPath = join(DIST, 'index.html')
 if (!existsSync(homeHtmlPath)) {
   errors.push('缺少首页 index.html')
 } else {
   const homeHtml = readFileSync(homeHtmlPath, 'utf8')
+  const title = (homeHtml.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!title.includes('PRO的茶里芒果')) errors.push('首页 title 丢失了站名')
+  const desc = getMeta(homeHtml, 'description') || ''
+  if (!desc.includes('AI、投资、产品，以及一些关于世界如何运行的思考。')) {
+    errors.push('首页 description 丢失了定位')
+  }
+  if (/class="home-intro"|class="home-pos"/.test(homeHtml)) {
+    errors.push('首页仍渲染 home-intro hero')
+  }
   const h1s = homeHtml.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/gi) || []
-  if (h1s.length === 0) errors.push('首页缺少 H1')
-  else if (!h1s.some((h1) => h1.includes('PRO的茶里芒果') && h1.includes('思考'))) {
-    errors.push('首页 H1 未同时包含站名和定位')
+  if (h1s.some((h1) => h1.includes('PRO的茶里芒果') && h1.includes('思考'))) {
+    errors.push('首页 H1 仍同时包含站名和定位')
+  }
+  if (!/class="[^"]*\btitle\b[^"]*"[^>]*>[\s\S]*PRO的茶里芒果/.test(homeHtml) && !/>PRO的茶里芒果</.test(homeHtml)) {
+    errors.push('首页导航未显示站名')
   }
 }
 
@@ -247,6 +258,15 @@ if (existsSync(enHome)) {
   if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文首页 html lang 不是 en')
   if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文首页 og:locale 不是 en_US')
   if (!html.includes("Pro's MangoFund")) errors.push('英文首页未出现 Pro\'s MangoFund')
+  const enTitle = (html.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!enTitle.includes("Pro's MangoFund")) errors.push('英文首页 title 丢失了站名')
+  const enDesc = getMeta(html, 'description') || ''
+  if (!enDesc.includes('English notes from Pro\'s MangoFund on AI products, investing, and building software with AI coding agents.')) {
+    errors.push('英文首页 description 丢失了定位')
+  }
+  if (/class="home-intro"|class="home-pos"/.test(html)) {
+    errors.push('英文首页仍渲染 home-intro hero')
+  }
   if (!html.includes('/en/ai/trends/claude-search-surge') && !html.includes('ai/trends/claude-search-surge')) {
     errors.push('英文首页文章列表缺少 Claude 搜索热度')
   }

@@ -5,10 +5,7 @@ keywords: Pro's MangoFund, MangoFund, AI products, Tesla Q3 2026, Claude vs Open
 ---
 
 <div class="home-page">
-  <header class="home-intro">
-    <h1>Pro's MangoFund<span class="home-pos">Notes on AI products, side hustles, investing, and digital products.</span></h1>
-    <p class="home-lead">Pro's MangoFund is the English home of a personal site about AI products, investing, and building software. The three notes below are in English. The longer archive, covering agents, markets, and longer questions, is in Chinese.</p>
-  </header>
+  <p class="home-lead">Pro's MangoFund is the English home of a personal site about AI products, investing, and building software. The three notes below are in English. The longer archive, covering agents, markets, and longer questions, is in Chinese.</p>
 
   <section class="home-section">
     <h2>Articles</h2>
