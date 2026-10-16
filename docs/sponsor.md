@@ -7,23 +7,23 @@ comments: false
 
 <script setup>
 import { ref } from 'vue'
+import { withBase } from 'vitepress'
 
 const amounts = [18, 36, 66, 188]
 const selected = ref(36)
 const customAmount = ref('')
-const showQR = ref(false)
+const wechatPaySrc = withBase('/images/wechat-pay.png')
+const alipaySrc = withBase('/images/alipay.png')
 
 function selectAmount(n) {
   selected.value = n
   customAmount.value = ''
-  showQR.value = true
 }
 
 function useCustom() {
   const v = parseInt(customAmount.value, 10)
   if (v > 0) {
     selected.value = v
-    showQR.value = true
   }
 }
 </script>
@@ -34,7 +34,32 @@ function useCustom() {
   <p class="sponsor-sub">每一杯咖啡，都是对独立创作的支持</p>
 </div>
 
+<p class="qr-lead">用微信或支付宝扫下面的码。金额在付款页填写，也可以先选一个参考金额。</p>
+
+<div class="qr-grid">
+  <figure class="qr-card">
+    <figcaption>微信支付</figcaption>
+    <img
+      :src="wechatPaySrc"
+      alt="微信支付收款码"
+      width="1206"
+      height="1638"
+    />
+  </figure>
+  <figure class="qr-card">
+    <figcaption>支付宝</figcaption>
+    <img
+      :src="alipaySrc"
+      alt="支付宝收款码"
+      width="1206"
+      height="1808"
+    />
+  </figure>
+</div>
+
 ## 选择金额
+
+<p class="amount-note">扫码后输入 <strong>¥{{ selected }}</strong>。</p>
 
 <div class="amount-grid">
   <button
@@ -54,18 +79,11 @@ function useCustom() {
     v-model="customAmount"
     type="number"
     min="1"
+    inputmode="numeric"
     placeholder="自定义金额"
     @keyup.enter="useCustom"
   />
-  <button @click="useCustom">确定</button>
-</div>
-
-<div v-if="showQR" class="qr-section">
-  <p class="qr-amount">赞助金额：<strong>¥{{ selected }}</strong></p>
-  <p class="qr-tip">请使用微信或支付宝扫码赞助（二维码待补充）</p>
-  <div class="qr-placeholder">
-    <span>赞助二维码<br/>即将上线</span>
-  </div>
+  <button type="button" @click="useCustom">确定</button>
 </div>
 
 ## 为什么赞助
@@ -85,7 +103,7 @@ function useCustom() {
 <style scoped>
 .sponsor-hero {
   text-align: center;
-  padding: 48px 0 32px;
+  padding: 28px 0 4px;
 }
 .sponsor-emoji {
   font-size: 64px;
@@ -99,12 +117,13 @@ function useCustom() {
 .sponsor-sub {
   color: var(--vp-c-text-2);
   font-size: 16px;
+  margin-bottom: 0;
 }
 .amount-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin: 24px 0;
+  margin: 0 0 16px;
 }
 .amount-btn {
   padding: 20px 12px;
@@ -135,10 +154,11 @@ function useCustom() {
 .custom-amount {
   display: flex;
   gap: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 .custom-amount input {
   flex: 1;
+  min-width: 0;
   padding: 12px 16px;
   border: 1px solid var(--vp-c-border);
   border-radius: 8px;
@@ -156,38 +176,79 @@ function useCustom() {
   font-weight: 600;
   cursor: pointer;
 }
-.qr-section {
-  text-align: center;
-  padding: 24px;
-  border: 1px dashed var(--vp-c-border);
-  border-radius: 12px;
-  margin: 24px 0;
-}
-.qr-amount {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-.qr-tip {
+.qr-lead,
+.amount-note {
+  margin: 8px 0 16px;
   color: var(--vp-c-text-2);
-  font-size: 14px;
-  margin-bottom: 16px;
+  font-size: 15px;
+  text-align: center;
 }
-.qr-placeholder {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  border: 2px dashed var(--vp-c-border);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--vp-c-text-3);
-  font-size: 14px;
+.amount-note {
+  margin-top: 0;
+}
+.qr-lead strong,
+.amount-note strong {
+  color: var(--vp-c-text-1);
+}
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+  margin: 0 0 8px;
+}
+.qr-card {
+  margin: 0;
+  min-width: 0;
+  padding: 10px 10px 14px;
+  background: #fff;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 16px;
+}
+.qr-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.qr-card figcaption {
+  margin: 2px 0 10px;
+  color: #26332d;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
   text-align: center;
 }
 @media (max-width: 640px) {
+  .sponsor-hero {
+    padding-top: 8px;
+  }
+  .sponsor-emoji {
+    font-size: 48px;
+    margin-bottom: 8px;
+  }
+  .sponsor-hero h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .qr-lead {
+    margin-bottom: 10px;
+  }
   .amount-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .qr-grid {
+    grid-template-columns: minmax(0, 360px);
+    justify-content: center;
+    gap: 16px;
+  }
+  .qr-card {
+    padding: 8px 8px 10px;
+  }
+  .qr-card figcaption {
+    margin: 2px 0 8px;
   }
 }
 </style>
