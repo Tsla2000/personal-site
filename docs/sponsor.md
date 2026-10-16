@@ -51,31 +51,35 @@ function selectMethod(methodId) {
   </div>
 </div>
 
-<div
-  v-if="selectedMethod !== 'paypal'"
-  class="qr-grid"
+<figure
+  v-if="selectedMethod === 'wechat'"
+  class="qr-card"
   role="tabpanel"
-  :aria-labelledby="selectedMethod === 'alipay' ? 'pay-tab-alipay' : 'pay-tab-wechat'"
+  aria-labelledby="pay-tab-wechat"
 >
-  <figure class="qr-card" :class="{ active: selectedMethod === 'wechat' }">
-    <figcaption>微信支付</figcaption>
-    <img
-      :src="wechatPaySrc"
-      alt="微信支付收款码"
-      width="600"
-      height="600"
-    />
-  </figure>
-  <figure class="qr-card" :class="{ active: selectedMethod === 'alipay' }">
-    <figcaption>支付宝</figcaption>
-    <img
-      :src="alipaySrc"
-      alt="支付宝收款码"
-      width="720"
-      height="720"
-    />
-  </figure>
-</div>
+  <figcaption>微信支付</figcaption>
+  <img
+    :src="wechatPaySrc"
+    alt="微信支付收款码"
+    width="600"
+    height="600"
+  />
+</figure>
+
+<figure
+  v-else-if="selectedMethod === 'alipay'"
+  class="qr-card"
+  role="tabpanel"
+  aria-labelledby="pay-tab-alipay"
+>
+  <figcaption>支付宝</figcaption>
+  <img
+    :src="alipaySrc"
+    alt="支付宝收款码"
+    width="720"
+    height="720"
+  />
+</figure>
 
 <div
   v-else
@@ -168,27 +172,16 @@ function selectMethod(methodId) {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
 }
-.qr-grid {
-  --qr-size: 200px;
-  display: grid;
-  grid-template-columns: repeat(2, var(--qr-size));
-  justify-content: center;
-  gap: 28px;
-  align-items: start;
-  margin: 0 0 8px;
-}
 .qr-card {
-  margin: 0;
-  min-width: 0;
+  --qr-size: 200px;
+  width: var(--qr-size);
+  margin: 0 auto 8px;
 }
 .qr-card img {
   display: block;
   width: var(--qr-size);
   height: auto;
   border-radius: 12px;
-}
-.qr-card.active img {
-  box-shadow: 0 0 0 2px var(--vp-c-brand-1);
 }
 .qr-card figcaption {
   margin: 0 0 8px;
@@ -199,9 +192,6 @@ function selectMethod(methodId) {
   letter-spacing: 0.06em;
   line-height: 1.4;
   text-align: center;
-}
-.qr-card.active figcaption {
-  color: var(--vp-c-brand-1);
 }
 .paypal-panel {
   display: flex;
@@ -249,10 +239,6 @@ function selectMethod(methodId) {
   .pay-switch-btn {
     padding: 8px 12px;
     font-size: 13px;
-  }
-  .qr-grid {
-    grid-template-columns: var(--qr-size);
-    gap: 20px;
   }
 }
 </style>
