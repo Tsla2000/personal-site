@@ -18,6 +18,9 @@ keywords: MangoFund, AI products, side hustles, investing, digital products
       <a class="article-row" href="investment/tesla/q3-earnings-preview">
         <time>2026.10.16</time><div><strong>Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock</strong><small>Investing · Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins.</small></div>
       </a>
+      <a class="article-row" href="ai/coding/muse-auto-deploy">
+        <time>2026.10.06</time><div><strong>How to Automate a Personal Website Deploy with Muse</strong><small>AI · Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages.</small></div>
+      </a>
     </div>
   </section>
 </div>
