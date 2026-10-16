@@ -85,6 +85,12 @@
 /archive/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/about
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/about/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /en/ai/coding/muse-auto-deploy
   Cache-Control: public, max-age=0, must-revalidate
 

@@ -40,6 +40,8 @@
 - [Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher](https://tsla2000.github.io/en/ai/trends/claude-search-surge): Google Trends shows Claude at 94–100 versus OpenAI at 7–8. Why that is not a Claude vs ChatGPT user count, and what Opus 5.5 changed for developers. (2026.10.16)
 - [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](https://tsla2000.github.io/en/investment/tesla/q3-earnings-preview): Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins. (2026.10.16)
 - [How to Automate a Personal Website Deploy with Muse](https://tsla2000.github.io/en/ai/coding/muse-auto-deploy): Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages. (2026.10.06)
+- [About Pro's MangoFund](https://tsla2000.github.io/en/about): Pro's MangoFund is a personal site of notes on AI, investing, products, and technology, with a short English selection and a longer Chinese archive.
+- [Pro's MangoFund](https://tsla2000.github.io/en): English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
 
 ## 订阅
 
