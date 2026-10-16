@@ -12,8 +12,8 @@ import { withBase } from 'vitepress'
 const amounts = [18, 36, 66, 188]
 const selected = ref(36)
 const customAmount = ref('')
-const wechatPaySrc = withBase('/images/wechat-pay.png')
-const alipaySrc = withBase('/images/alipay.png')
+const wechatPaySrc = withBase('/images/sponsor-wechat-qr.png')
+const alipaySrc = withBase('/images/sponsor-alipay-qr.png')
 
 function selectAmount(n) {
   selected.value = n
