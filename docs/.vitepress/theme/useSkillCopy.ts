@@ -78,7 +78,7 @@ export function useSkillCopy() {
     const response = await fetch(withBase(skill.promptPath))
     if (!response.ok) throw new Error(`skill prompt ${response.status}`)
     const text = await response.text()
-    if (!text.startsWith('---\n') || !text.includes(`name: ${skill.id}`) || !text.includes('# ')) {
+    if (!text.startsWith('---\n') || !text.includes(`name: ${skill.promptName}`) || !text.includes('# ')) {
       throw new Error(`skill prompt ${skill.id} is not the full SKILL.md`)
     }
     skillPromptCache.set(skill.id, text)

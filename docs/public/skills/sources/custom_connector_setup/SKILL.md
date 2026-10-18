@@ -1,47 +1,110 @@
 ---
 name: custom_connector_setup
-description: 为官网或助手接入尚未内置的第三方服务。先找现成路线，再隔离凭证，做无害读验证，最后写成 CONNECTOR.md。触发：自定义连接器、MCP、接 API、接 SaaS。
+description: >-
+  Connect a service that has no bundled connector via its API or MCP server:
+  prefer existing routes (official MCP, Zapier/Composio), then scaffold docs,
+  verify with a harmless read, and save reusable connector/skill docs. Use when
+  adding a custom connector, MCP client, or third-party API integration.
 ---
+# Custom Connectors and MCPs
 
-# custom_connector_setup 自定义连接器 / MCP
+## Grok Bot 适配（必读）
 
-这是一份可安装的技能正文。把它放到助手的 `workflows/custom-connector-setup/SKILL.md`。完整安装还应带上同目录的 `templates/`、`bin/` 和 `references/`。用户粘贴全文时，按下面的顺序接入，不要收成一段简介。
+- Muse 专有：`credentials.request_api_access`、`dynamic_credentials.py` surrogate、`muse.connector_search` —— 方法论保留，实现改用本环境的 SearchPlugins / AuthenticateMcpServer / secret-request / 已批准连接器。
+- 脚手架路径：把 `/opt/muse/...`、`~/workspace/custom-connectors/...` 换成 `/home/box/agent-data/workflows/custom-connector-setup/` 与 `/workspace/custom-connectors/`。
+- 部署覆盖说明见 `references/amendments.md`；本环境无 Muse 部署模型时可忽略。
+- 详见同目录 `README-GROKBOT.md`。
 
-## 何时使用
 
-- 新的 SaaS API，官网或助手还没有内置。
-- 官方 MCP server。
-- 通过 Zapier 或 Composio 中转。
-- 自建 MCP 客户端脚手架。
+## Look for an existing route
 
-## 何时不用
+- Search with `muse.connector_search` for a system or custom connector that already covers the service or the action, and read its docs.
 
-只管连接和凭证安全流程。接好之后：
+- Check whether Zapier or Composio already reaches the app through the user's account there. One hub connection can cover many apps.
 
-- 业务文案用「去AI味写作」（`de-ai-writing`）。
-- 产品 UI 用「AI界面设计规范」（`ai-ui-design`）。
-- 对外封面用 `cover_image_gen`。
-- 概念图解用 `diagram-design` 或 `anatomy`。
+- Find the provider's official API reference and authentication guide, and look for an official MCP server in its developer docs or GitHub organization. Use `browser.search` to find the pages and `browser.open` to read them.
 
-## 硬规则
+- Prefer the provider's maintained client or a reputable open-source integration to writing your own. Check its source, permissions, dependencies and recent releases, then pin the version and keep it under `~/workspace/custom-connectors/custom.<provider>/`. Installing a package grants it no credentials or permissions.
 
-1. 密钥不进文件/日志，也不进对话摘录。凭证只放在运行环境已经提供的密钥位。发现用户把密钥贴进仓库文件时，先停下，要求移走，再继续。
-2. 先做无害读验证。第一次调用必须是读取，不创建、不修改、不删除、不对外发送。
-3. MCP 只白名单已经审核过的工具。未审核的工具不放进可用列表。
-4. 先找现成路线，再写新脚手架。官方 API、官方 MCP、Zapier / Composio 中有能用的，就不从零写客户端。
+## Connect the credential
 
-## 步骤
+- Call `credentials.request_api_access` instead of asking for a key, client ID, secret or token in chat. Take its inputs from the provider's docs, not memory. It needs the `provider` slug, the bare `api_hosts`, the `auth_scheme`, and either the `placement` of an API key or the OAuth authorize and token endpoints.
 
-1. 写下要接的服务、用户要完成的一个读操作，以及是否已有官方 API 或官方 MCP。
-2. 按这个顺序选路线：助手已内置的连接、官方 MCP、官方 API、Zapier 或 Composio 中转、最后才是自建 MCP 客户端。
-3. 把凭证放进密钥位。仓库里的示例只用占位名，不写真实值。
-4. 做一次无害读，核对返回里有没有用户预期的字段。失败就停在这一步，不继续写业务调用。
-5. 若走 MCP，列出已审核工具的白名单。白名单之外的工具保持关闭。
-6. 沉淀 `CONNECTOR.md`：服务名、选定路线、无害读怎么调用、白名单、凭证放在哪一类密钥位（不写值）。需要给助手复用时，再补一份只描述这条连接的技能说明。
+- Report the scheme the docs describe. Muse supports API keys and the OAuth 2.0 authorization code flow, and declines a password login, session cookie, signed request or multi-secret scheme with a reason to pass on. Choose `api_key` when the provider offers both.
 
-## 输出
+- Get the hosts, scheme and placement right the first time. A call to an unlisted host is refused, and the scheme and placement cannot change after setup, so a mistake means a fresh link and the user entering the key again.
 
-- 选定路线和原因。
-- 无害读的结果说明（去掉响应里的密钥和私人数据）。
-- `CONNECTOR.md` 正文。
-- 不把密钥写进任何交付文件。
+- For OAuth, request the least scope the task needs. Supply `registration_url` when the provider supports dynamic client registration, so the user does not have to register an app.
+
+- Every OAuth endpoint must sit on the provider's `issuer_domain` or a subdomain of it. When a provider's endpoints span domains, explain that it cannot be connected this way instead of inventing a workaround.
+
+- Follow the `guidance` the tool returns. It says how to present the link, then you end the reply. The conversation resumes on its own when the user finishes the hosted page.
+
+- A service that only offers a website sign-in is a browser task, not a custom connector.
+
+## Build the helper
+
+- Once connected, run `/opt/muse/skills/custom-connector-setup/bin/scaffold-connector-docs --provider <provider>`. It copies the [connector template](templates/connector/CONNECTOR.md) to `~/workspace/custom-connectors/custom.<provider>/CONNECTOR.md` with the slug, scheme and hosts filled in, and creates `~/workspace/custom-connectors/custom.<provider>/bin/` for helpers. It never replaces an existing doc.
+
+- The credential lives in the registered connection `custom.<provider>`, never in a file. Helpers get a surrogate from `dynamic_credentials.py`, which places it where the provider reads the key. Muse swaps in the real credential only on an approved request to a registered host.
+
+```python
+import json, sys, urllib.request
+sys.path.insert(0, "/opt/muse/skills/custom-connector-setup/bin")
+from dynamic_credentials import add_surrogate_to_request, read_json_response
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args):
+        raise RuntimeError("redirect refused, verify the endpoint")
+
+request = urllib.request.Request("https://api.example.com/v1/items")
+add_surrogate_to_request(request, "custom.example", allowed_hosts=["api.example.com"])
+with urllib.request.build_opener(NoRedirect()).open(request, timeout=30) as response:
+    print(json.dumps(read_json_response(response)))
+```
+
+- For a key read from a query parameter or the URL path, build the URL with `url_with_surrogate_query_param` or `url_with_surrogate_path_segment` before creating the request.
+
+- Keep keys, tokens, passwords and cookies out of helpers, docs, command arguments, environment variables and logs. Keep redirects disabled on authenticated requests.
+
+- Compile Python helpers with `python3 -m py_compile` before saying they work.
+
+- To reach an MCP server, follow [MCP-backed CLIs](references/mcp-cli.md). Start from the [MCP client template](templates/mcp_client.py), which turns the server's operations into `list-tools` and `call-tool` commands.
+
+## Verify before saving
+
+- Nothing checks the credential when the user saves it, so the first real call is the proof. Run a harmless read against the intended account, then the exact operation the user asked for, and check its result.
+
+- On a 401 or 403, first check that the request carried the credential, that the host is registered and that the placement and scopes match. Call `credentials.request_api_access` again with `reconnect: true` and the same details only when a request that carried the credential is still rejected.
+
+- After an uncertain write, inspect the current state before retrying. The first request may have completed.
+
+## Save what you learned
+
+- Complete the connector doc from its template with the setup details, verified commands, inputs, outputs, pagination and recovery. Label an operation you have not run as untested, and delete the template comments.
+
+- When the lesson is how to do a task, save it as a skill from the [skill template](templates/skill/SKILL.md) at `~/workspace/custom-skills/<name>/SKILL.md`. Improve the closest custom skill instead of adding a duplicate.
+
+- Link the connector doc under the skill's Available connectors and the skill under the connector's Related skills.
+
+- To correct a system skill or connector doc, write an amendment as [amendments](references/amendments.md) explains. Deployments replace system files and keep custom ones.
+
+- Never store a secret in a connector doc or a skill.
+
+## Available connectors
+
+- [Zapier](/opt/hatch/connectors/zapier/CONNECTOR.md) for running actions in apps the user already connected to Zapier.
+
+- Use `muse.connector_search` to find other connectors and `muse.skill_search` to find related skills.
+
+### When available
+
+- These connectors depend on the user's channel or devices. `muse.connector_search` shows which ones this session has.
+
+- [Composio](/opt/hatch/connectors/composio_mcp/CONNECTOR.md) for running actions in apps the user connected to Composio.
+
+## Alternatives for better results
+
+- Compare an existing connector, a hub, an official API, an MCP server and a browser route on capability, access, reliability and cost. Use the simplest route that does the work well.
+
+- For a one-off task, finish it with `browser.browse` on the provider's website or with a file the user supplies. Offer to build a connector when the user will repeat the work.

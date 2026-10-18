@@ -34,6 +34,8 @@ export interface HomeSkill {
   imageAltEn: string
   /** 复制时拉取的完整 SKILL.md，相对站点根路径 */
   promptPath: string
+  /** SKILL.md frontmatter 里的 name，用来确认拉到的是这份正文 */
+  promptName: string
   /** 技能包 ZIP，相对站点根路径 */
   zipPath: string
   zipFile: string
@@ -45,16 +47,22 @@ export interface HomeSkill {
 interface SkillPackageRef {
   id: string
   promptPath: string
+  promptName: string
   zipPath: string
   zipFile: string
 }
 
 const packages = skillPackages as SkillPackageRef[]
 
-function skillFiles(id: string): Pick<HomeSkill, 'promptPath' | 'zipPath' | 'zipFile'> {
+function skillFiles(id: string): Pick<HomeSkill, 'promptPath' | 'promptName' | 'zipPath' | 'zipFile'> {
   const item = packages.find((entry) => entry.id === id)
   if (!item) throw new Error(`missing skill package: ${id}`)
-  return { promptPath: item.promptPath, zipPath: item.zipPath, zipFile: item.zipFile }
+  return {
+    promptPath: item.promptPath,
+    promptName: item.promptName,
+    zipPath: item.zipPath,
+    zipFile: item.zipFile
+  }
 }
 
 const SKILL_IMAGE_WIDTH = 800

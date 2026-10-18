@@ -1,56 +1,44 @@
 ---
 name: cover_image_gen
-description: 为网站、公众号和 X 推文做封面。固定 3D 纸雕与黏土风，中文大标题，同一题出 3 版构图，逐字验收后再把 WebP 转成 JPG（quality 92）。触发：封面、头图、推文大图、封面图生成。
+description: >-
+  Use when the user wants a website or WeChat/公众号 cover image, or an X post
+  cover in 3D paper-craft / clay style with Chinese title typography. Generate
+  3 composition variants, verify every Chinese character, deliver JPG.
+license: MIT
 ---
 
-# cover_image_gen 封面图生成
+# Cover Image Generator（Grok Bot 适配）
 
-这是一份可安装的技能正文。把它放到助手的 `workflows/cover_image_gen/SKILL.md`。用户把全文粘贴进 Cursor 或 Grok Bot 时，按下面的流程做封面，不要收成一段简介。
+为 @PRO_AI_99T / 「PRO的茶里芒果」锁定风格：3D 纸雕与黏土渲染，鲜亮活泼，中文标题大字排版。
 
-## 何时使用
+## 写提示词（三段，按顺序）
 
-- 网站、公众号、X 推文需要一张头图。
-- 标题已经定了，用户要直接出图。
-- 文章头图或技能卡片要统一的主视觉。
+1. **风格锚点**：3D paper craft and clay render, bright and playful, WeChat article cover composition.
+2. **完整中文标题**（单引号包裹）+ 写明哪个词黄底高亮、哪个词黑色加粗。
+3. **场景一句**：谁从哪侧撕开纸，露出的卡片上有什么英文短标签（如 Markdown / HTML / GitHub）。
 
-## 何时不用
+副标题尽量短或不要；太长会挤掉主标题。
 
-- 正文里的静态结构图：交给 `diagram-design`。
-- 可交互的等轴测拆解：交给 `anatomy`。
-- 改文案口吻：交给「去AI味写作」（`de-ai-writing`）。
-- 主标题是英文。这套流程按中文大标题逐字验收，不接英文主标题的封面。
+## 出图
 
-## 风格
+- 用 Cursor `GenerateImage`（不要用 Muse 的 `media.generate_image`）。
+- 同一标题出 **3 版**不同构图：人物在右 / 无人物标题大 / 人物在左。
+- 单次响应最多 4 次生图。
+- 用户要延续上次风格时，把上一张图作为参考图一起传入（若工具支持）。
 
-固定为 3D 纸雕与黏土渲染，鲜亮、活泼，中文大标题。不换成扁平插画、照片或另一套写实风格。用户要求换风格时，说明本技能不改风格锚点；若仍要这张封面，就按纸雕黏土风做。
+## 验收（必做）
 
-## 提示词三段
+- 用 `Read` 打开每张生成图，**逐字**核对中文标题；错字或乱码 → 重生，不交付。
+- 检查高亮是否落在指定词，版面是否拥挤。
 
-每一版的提示词都分成三段，顺序不换：
+## 交付
 
-1. 风格锚点：3D 纸雕与黏土渲染，鲜亮活泼，中文大标题。
-2. 单引号里的中文标题，并指定黄底高亮的词。例如标题 `'封面图生成'`，黄底高亮 `'封面'`。
-3. 场景一句。只写一个具体场景，不堆第二套风格。
+- WebP 转 JPG 再交（微信 uploadimg / add_material 不认 WebP）：
+  `python3 -c "from PIL import Image; im = Image.open('in.webp').convert('RGB'); im.save('out.jpg', quality=92)"`
+- 文件名区分版本；用 SendToUser attachment 发图，不要塞进列表。
 
-标题里的每一个汉字都要出现在提示词的引号里，不改字、不漏字、不用同义字替换。
+## 和 diagram-design / anatomy 的分工
 
-## 步骤
-
-1. 向用户确认：中文标题、黄底高亮的词、封面用在网站、公众号还是 X。标题未定就先停，不先出图。
-2. 用三段提示词，为同一标题做 3 版构图。三版构图要能分清，标题文字保持同一字符串。
-3. 逐字验收中文。把成图上的标题和用户给出的标题对齐，多一字、少一字、错一字都退回重做，不交付。
-4. 用户选定一版后，若原文件是 WebP，转成 JPG，quality 92，再交付。已经是合格 JPG 时不要反复压质量。
-5. 交付物是图，以及这一版用过的三段提示词。不另写文章正文。
-
-## 示例
-
-用户可以说：
-
-做网站封面。风格用 3D 纸雕黏土风。标题 '封面图生成'，黄底高亮 '封面'。场景：暖色桌面上的黏土字。出 3 版，中文逐字验收。
-
-## 输出
-
-- 同一中文标题的 3 版构图。
-- 验收通过后的 JPG（quality 92）。
-- 选定版的三段提示词。
-- 不输出正文图解，不改写文章。
+- 封面、推文大图、公众号头图 → 本 skill
+- 架构/流程等图解 → diagram-design
+- 等轴测交互解剖图 → anatomy

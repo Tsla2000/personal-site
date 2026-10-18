@@ -350,11 +350,22 @@ const deAiSkill = readDistSkill('de-ai-writing')
 if (deAiSkill && !deAiSkill.includes('永远读最新版')) errors.push('去AI味写作技能正文缺少永远读最新版')
 if (deAiSkill && deAiSkill.length < 800) errors.push('去AI味写作技能正文仍是短摘要')
 const connectorSkill = readDistSkill('custom_connector_setup')
-if (connectorSkill && !connectorSkill.includes('密钥不进文件/日志')) {
-  errors.push('自定义连接器技能正文缺少密钥不进文件/日志')
+if (connectorSkill && !connectorSkill.includes('Never store a secret')) {
+  errors.push('自定义连接器技能正文缺少 Never store a secret')
 }
 const coverSkill = readDistSkill('cover_image_gen')
-if (coverSkill && !coverSkill.includes('quality 92')) errors.push('封面技能正文缺少 quality 92')
+if (coverSkill && !coverSkill.includes('quality=92')) errors.push('封面技能正文缺少 quality=92')
+if (coverSkill && !coverSkill.includes('黄底高亮')) errors.push('封面技能正文缺少黄底高亮')
+const uiSkill = readDistSkill('ai-ui-design')
+if (uiSkill && !uiSkill.includes('禁止出现裸 HEX')) errors.push('AI界面设计规范正文缺少禁止出现裸 HEX')
+const MIN_ZIP_BYTES = {
+  'de-ai-writing.zip': 20000,
+  'ai-ui-design.zip': 10000,
+  'diagram-design.zip': 200000,
+  'anatomy.zip': 100000,
+  'cover-image-gen.zip': 2000,
+  'custom-connector-setup.zip': 20000
+}
 for (const zipName of [
   'de-ai-writing.zip',
   'ai-ui-design.zip',
@@ -364,7 +375,12 @@ for (const zipName of [
   'custom-connector-setup.zip'
 ]) {
   const zipPath = join(DIST, 'skills', 'zips', zipName)
-  if (!existsSync(zipPath)) errors.push(`缺少技能压缩包 ${zipName}`)
+  if (!existsSync(zipPath)) {
+    errors.push(`缺少技能压缩包 ${zipName}`)
+    continue
+  }
+  const zipBytes = statSync(zipPath).size
+  if (zipBytes < MIN_ZIP_BYTES[zipName]) errors.push(`${zipName} 只有 ${zipBytes} 字节，不是完整技能包`)
 }
 const zhSkills = join(DIST, 'skills', 'index.html')
 const enSkills = join(DIST, 'en', 'skills', 'index.html')

@@ -1,22 +1,30 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { existsSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildStoredZip, readStoredZip } from './skill-zip.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const PUBLIC_SKILLS = join(ROOT, 'docs', 'public', 'skills')
 const SOURCE_ROOT = join(PUBLIC_SKILLS, 'sources')
 const ZIP_ROOT = join(PUBLIC_SKILLS, 'zips')
 const MANIFEST_PATH = join(ROOT, 'docs', '.vitepress', 'theme', 'data', 'skill-packages.json')
-const MIN_SKILL_CHARS = 800
 
 const REQUIRED_PHRASES = {
-  'de-ai-writing': ['永远读最新版', '风格档案优先', '最小改动'],
-  'ai-ui-design': ['禁止裸 HEX', 'tokens.css'],
-  'diagram-design': ['#f8f8f5', '#26332d', '#355c4b'],
-  anatomy: ['Node 20.10+', 'diagram-design'],
-  cover_image_gen: ['quality 92', '黄底高亮'],
-  custom_connector_setup: ['密钥不进文件/日志', '已审核工具']
+  'de-ai-writing': ['永远读最新版', 'name: 去AI味写作'],
+  'ai-ui-design': ['禁止出现裸 HEX', 'name: AI界面设计规范'],
+  'diagram-design': ['Forty-five visual types', 'name: diagram-design'],
+  anatomy: ['Node.js 20.10+', 'name: anatomy'],
+  cover_image_gen: ['quality=92', '黄底高亮', 'name: cover_image_gen'],
+  custom_connector_setup: ['Never store a secret', 'name: custom_connector_setup']
+}
+
+const MIN_ZIP_BYTES = {
+  'de-ai-writing.zip': 20000,
+  'ai-ui-design.zip': 10000,
+  'diagram-design.zip': 200000,
+  'anatomy.zip': 100000,
+  'cover-image-gen.zip': 2000,
+  'custom-connector-setup.zip': 20000
 }
 
 const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'))
@@ -24,43 +32,43 @@ if (!Array.isArray(manifest) || manifest.length !== 6) {
   throw new Error('技能包清单必须正好包含 6 个技能')
 }
 
-mkdirSync(ZIP_ROOT, { recursive: true })
-
 for (const item of manifest) {
-  const packageDir = join(SOURCE_ROOT, item.dir)
-  const skillPath = join(packageDir, 'SKILL.md')
-  const readmePath = join(packageDir, 'README.md')
+  const skillPath = join(SOURCE_ROOT, item.dir, 'SKILL.md')
+  const zipPath = join(ZIP_ROOT, item.zipFile)
   if (!existsSync(skillPath)) throw new Error(`缺少 ${skillPath}`)
-  if (!existsSync(readmePath)) throw new Error(`缺少 ${readmePath}`)
+  if (!existsSync(zipPath)) throw new Error(`缺少 ${zipPath}`)
   if (item.promptPath !== `/skills/sources/${item.dir}/SKILL.md`) {
     throw new Error(`${item.id} 的 promptPath 与目录不一致`)
   }
   if (item.zipPath !== `/skills/zips/${item.zipFile}`) {
     throw new Error(`${item.id} 的 zipPath 与文件名不一致`)
   }
+  if (item.promptName == null || item.promptName === '') {
+    throw new Error(`${item.id} 缺少 promptName`)
+  }
 
-  const skillText = readFileSync(skillPath, 'utf8')
-  if (!skillText.startsWith('---\n') || !skillText.includes(`name: ${item.id}`) || skillText.length < MIN_SKILL_CHARS) {
-    throw new Error(`${item.id} 的 SKILL.md 不是可安装的完整技能正文`)
+  const served = readFileSync(skillPath)
+  const packed = execFileSync('unzip', ['-p', zipPath, item.zipSkillEntry], { maxBuffer: 8 * 1024 * 1024 })
+  if (!served.equals(packed)) {
+    throw new Error(`${item.zipFile} 里的 SKILL.md 与站点复制正文不一致`)
+  }
+  const listing = execFileSync('unzip', ['-Z1', zipPath], { encoding: 'utf8' })
+  const entries = listing.split('\n').map((line) => line.trim()).filter(Boolean)
+  if (entries.length < 2) throw new Error(`${item.zipFile} 不是完整技能包`)
+  if (!entries.includes(item.zipSkillEntry)) throw new Error(`${item.zipFile} 缺少 ${item.zipSkillEntry}`)
+
+  const zipBytes = statSync(zipPath).size
+  const minimum = MIN_ZIP_BYTES[item.zipFile]
+  if (!minimum || zipBytes < minimum) {
+    throw new Error(`${item.zipFile} 只有 ${zipBytes} 字节，不像上传的完整技能包`)
+  }
+
+  const text = served.toString('utf8')
+  if (!text.startsWith('---\n') || text.length < 800) {
+    throw new Error(`${item.id} 的 SKILL.md 不是完整技能正文`)
   }
   for (const phrase of REQUIRED_PHRASES[item.id] || []) {
-    if (!skillText.includes(phrase)) throw new Error(`${item.id} 的 SKILL.md 缺少「${phrase}」`)
+    if (!text.includes(phrase)) throw new Error(`${item.id} 的 SKILL.md 缺少「${phrase}」`)
   }
-
-  const readmeText = readFileSync(readmePath, 'utf8')
-  const zip = buildStoredZip([
-    { name: `${item.dir}/SKILL.md`, data: skillText },
-    { name: `${item.dir}/README.md`, data: readmeText }
-  ])
-  const packed = readStoredZip(zip)
-  const packedSkill = packed.find((entry) => entry.name === `${item.dir}/SKILL.md`)
-  const packedReadme = packed.find((entry) => entry.name === `${item.dir}/README.md`)
-  if (!packedSkill || packedSkill.data.toString('utf8') !== skillText) {
-    throw new Error(`${item.zipFile} 里的 SKILL.md 与源文件不一致`)
-  }
-  if (!packedReadme || packedReadme.data.toString('utf8') !== readmeText) {
-    throw new Error(`${item.zipFile} 里的 README.md 与源文件不一致`)
-  }
-  writeFileSync(join(ZIP_ROOT, item.zipFile), zip)
-  console.log(`packed ${item.zipFile} (${zip.length} bytes)`)
+  console.log(`verified ${item.zipFile} (${zipBytes} bytes, ${entries.length} files)`)
 }

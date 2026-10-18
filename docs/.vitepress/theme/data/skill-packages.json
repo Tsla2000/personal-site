@@ -2,6 +2,8 @@
   {
     "id": "de-ai-writing",
     "dir": "de-ai-writing",
+    "promptName": "去AI味写作",
+    "zipSkillEntry": "de-ai-writing/SKILL.md",
     "zipFile": "de-ai-writing.zip",
     "promptPath": "/skills/sources/de-ai-writing/SKILL.md",
     "zipPath": "/skills/zips/de-ai-writing.zip"
@@ -9,6 +11,8 @@
   {
     "id": "ai-ui-design",
     "dir": "ai-ui-design",
+    "promptName": "AI界面设计规范",
+    "zipSkillEntry": "ai-ui-design/SKILL.md",
     "zipFile": "ai-ui-design.zip",
     "promptPath": "/skills/sources/ai-ui-design/SKILL.md",
     "zipPath": "/skills/zips/ai-ui-design.zip"
@@ -16,6 +20,8 @@
   {
     "id": "diagram-design",
     "dir": "diagram-design",
+    "promptName": "diagram-design",
+    "zipSkillEntry": "diagram-design/SKILL.md",
     "zipFile": "diagram-design.zip",
     "promptPath": "/skills/sources/diagram-design/SKILL.md",
     "zipPath": "/skills/zips/diagram-design.zip"
@@ -23,6 +29,8 @@
   {
     "id": "anatomy",
     "dir": "anatomy",
+    "promptName": "anatomy",
+    "zipSkillEntry": "anatomy/SKILL.md",
     "zipFile": "anatomy.zip",
     "promptPath": "/skills/sources/anatomy/SKILL.md",
     "zipPath": "/skills/zips/anatomy.zip"
@@ -30,6 +38,8 @@
   {
     "id": "cover_image_gen",
     "dir": "cover_image_gen",
+    "promptName": "cover_image_gen",
+    "zipSkillEntry": "cover-image-gen/SKILL.md",
     "zipFile": "cover-image-gen.zip",
     "promptPath": "/skills/sources/cover_image_gen/SKILL.md",
     "zipPath": "/skills/zips/cover-image-gen.zip"
@@ -37,6 +47,8 @@
   {
     "id": "custom_connector_setup",
     "dir": "custom_connector_setup",
+    "promptName": "custom_connector_setup",
+    "zipSkillEntry": "custom-connector-setup/SKILL.md",
     "zipFile": "custom-connector-setup.zip",
     "promptPath": "/skills/sources/custom_connector_setup/SKILL.md",
     "zipPath": "/skills/zips/custom-connector-setup.zip"
