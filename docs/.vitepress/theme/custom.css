@@ -272,7 +272,75 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   background: var(--vp-c-brand-soft);
 }
 
-/* 技能目录：缩略图优先。列表页加宽后三列，首页沿用较窄内容宽度时两列。 */
+/* 技能目录：缩略图优先。列表页左侧筛选，首页不加侧栏。 */
+.skill-browse-layout {
+  display: block;
+}
+
+.skill-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 22px;
+}
+
+.skill-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.vp-doc p.skill-filter-label,
+.vp-doc p.skill-filter-empty {
+  margin: 0;
+  max-width: none;
+}
+
+.skill-filter-label {
+  width: 100%;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.vp-doc p.skill-filter-empty {
+  grid-column: 1 / -1;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+
+.vp-doc button.skill-filter {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  margin: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vp-c-text-1);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.vp-doc button.skill-filter:hover,
+.vp-doc button.skill-filter.is-active {
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+
+.vp-doc button.skill-filter:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+
 .skill-catalog {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -529,9 +597,41 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
     max-width: 1080px;
   }
 
-  .Layout.skill-browse .skill-catalog,
   .Layout:has(.home-page) .skill-catalog {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 18px;
+  }
+
+  .skill-browse-layout {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    gap: 8px 36px;
+    align-items: start;
+  }
+
+  .skill-filters {
+    position: sticky;
+    top: calc(var(--vp-nav-height, 64px) + 18px);
+    gap: 22px;
+    margin: 4px 0 0;
+  }
+
+  .skill-filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .vp-doc button.skill-filter {
+    width: 100%;
+    padding: 7px 10px;
+    border-color: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .Layout.skill-browse .skill-browse-layout .skill-catalog {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 32px 18px;
   }
 }

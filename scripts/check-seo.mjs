@@ -198,6 +198,7 @@ if (!existsSync(homeHtmlPath)) {
   if (homeHtml.includes('限时免费') || homeHtml.includes('Free for now')) errors.push('中文首页仍出现限时免费')
   if (!homeHtml.includes('下载 ZIP')) errors.push('中文首页缺少下载 ZIP')
   if (!homeHtml.includes('/skills/zips/cover-image-gen.zip')) errors.push('中文首页缺少封面技能 ZIP')
+  if (homeHtml.includes('skill-filters')) errors.push('中文首页不应出现技能分类筛选')
   if (!homeHtml.includes('id="projects"')) errors.push('中文首页丢失了 #projects')
   if (!homeHtml.includes('href="skills/"') && !homeHtml.includes('href="/skills/')) {
     errors.push('中文首页技能板块没有链到 /skills/')
@@ -313,6 +314,7 @@ if (existsSync(enHome)) {
   }
   if (!html.includes('Download ZIP')) errors.push('英文首页缺少 Download ZIP')
   if (!html.includes('/skills/zips/cover-image-gen.zip')) errors.push('英文首页缺少封面技能 ZIP')
+  if (html.includes('skill-filters')) errors.push('英文首页不应出现技能分类筛选')
 }
 
 function distHasText(needle) {
@@ -392,6 +394,10 @@ if (existsSync(zhSkills)) {
   if (zhSkillsHtml.includes('限时免费') || zhSkillsHtml.includes('Free for now')) errors.push('中文技能页仍出现限时免费')
   if (!zhSkillsHtml.includes('下载 ZIP')) errors.push('中文技能页缺少下载 ZIP')
   if (!zhSkillsHtml.includes('/skills/zips/de-ai-writing.zip')) errors.push('中文技能页缺少去AI味写作 ZIP')
+  if (!zhSkillsHtml.includes('skill-filters')) errors.push('中文技能页缺少分类筛选')
+  for (const text of ['全部', '类型', '写作', '图解', '场景', '官网内容', '插图']) {
+    if (!zhSkillsHtml.includes(text)) errors.push(`中文技能页筛选缺少 ${text}`)
+  }
   if (zhSkillsHtml.includes('立即购买') || zhSkillsHtml.includes('US$')) errors.push('中文技能页出现了付费文案')
 }
 if (existsSync(enSkills)) {
@@ -402,6 +408,10 @@ if (existsSync(enSkills)) {
     errors.push('英文技能页仍出现 Free for now')
   }
   if (!enSkillsHtml.includes('Download ZIP')) errors.push('英文技能页缺少 Download ZIP')
+  if (!enSkillsHtml.includes('skill-filters')) errors.push('英文技能页缺少分类筛选')
+  for (const text of ['All', 'Type', 'Writing', 'Diagram', 'Scenario', 'Site content', 'Figures']) {
+    if (!enSkillsHtml.includes(text)) errors.push(`英文技能页筛选缺少 ${text}`)
+  }
   if (enSkillsHtml.includes('立即购买') || enSkillsHtml.includes('US$')) errors.push('英文技能页出现了付费文案')
 }
 

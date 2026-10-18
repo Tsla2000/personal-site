@@ -19,12 +19,47 @@ export interface SkillDetailCopy {
   stepsEn: string[]
 }
 
+export interface SkillFilterOption {
+  id: string
+  labelZh: string
+  labelEn: string
+  skillIds: readonly string[]
+}
+
+export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
+  { id: 'writing', labelZh: '写作', labelEn: 'Writing', skillIds: ['de-ai-writing'] },
+  { id: 'ui', labelZh: 'UI', labelEn: 'UI', skillIds: ['ai-ui-design'] },
+  { id: 'diagram', labelZh: '图解', labelEn: 'Diagram', skillIds: ['diagram-design'] },
+  { id: 'anatomy', labelZh: '解剖', labelEn: 'Anatomy', skillIds: ['anatomy'] },
+  { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
+  { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] }
+]
+
+/** 只保留和类型筛选结果不同的场景。产品前端等于 UI，接入服务等于连接。 */
+export const SKILL_SCENE_FILTERS: readonly SkillFilterOption[] = [
+  {
+    id: 'site',
+    labelZh: '官网内容',
+    labelEn: 'Site content',
+    skillIds: ['de-ai-writing', 'diagram-design', 'cover_image_gen']
+  },
+  {
+    id: 'figures',
+    labelZh: '插图',
+    labelEn: 'Figures',
+    skillIds: ['diagram-design', 'anatomy']
+  }
+]
+
+export const SKILL_FILTER_ALL = 'all'
+
 export interface HomeSkill {
   id: string
   nameZh: string
   nameEn: string
   pitchZh: string
   pitchEn: string
+  typeId: string
   chipZh: string
   chipEn: string
   image: string
@@ -54,6 +89,12 @@ interface SkillPackageRef {
 
 const packages = skillPackages as SkillPackageRef[]
 
+function skillType(typeId: string): Pick<HomeSkill, 'typeId' | 'chipZh' | 'chipEn'> {
+  const type = SKILL_TYPE_FILTERS.find((item) => item.id === typeId)
+  if (!type) throw new Error(`missing skill type: ${typeId}`)
+  return { typeId, chipZh: type.labelZh, chipEn: type.labelEn }
+}
+
 function skillFiles(id: string): Pick<HomeSkill, 'promptPath' | 'promptName' | 'zipPath' | 'zipFile'> {
   const item = packages.find((entry) => entry.id === id)
   if (!item) throw new Error(`missing skill package: ${id}`)
@@ -75,8 +116,7 @@ export const homeSkills: HomeSkill[] = [
     nameEn: 'De-AI Writing',
     pitchZh: '按你的口吻写，或把成稿里的机器味清掉。',
     pitchEn: 'Write in your voice, or strip the machine tone from a draft.',
-    chipZh: '写作',
-    chipEn: 'Writing',
+    ...skillType('writing'),
     image: '/images/skills/de-ai-writing.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -90,8 +130,7 @@ export const homeSkills: HomeSkill[] = [
     nameEn: 'AI Interface Design Rules',
     pitchZh: 'AI 聊天和 Agent 前端的界面与交互规范。',
     pitchEn: 'Interface rules for AI chat and agent front ends.',
-    chipZh: 'UI',
-    chipEn: 'UI',
+    ...skillType('ui'),
     image: '/images/skills/ai-ui-design.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -105,8 +144,7 @@ export const homeSkills: HomeSkill[] = [
     nameEn: 'Diagram Design',
     pitchZh: '45 种静态图解，输出一份自包含 HTML。',
     pitchEn: 'Forty-five static diagrams, each a self-contained HTML file.',
-    chipZh: '图解',
-    chipEn: 'Diagram',
+    ...skillType('diagram'),
     image: '/images/skills/diagram-design.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -120,8 +158,7 @@ export const homeSkills: HomeSkill[] = [
     nameEn: 'Isometric Anatomy',
     pitchZh: '把技术概念画成可交互的等轴测小仪器。',
     pitchEn: 'Draw a technical idea as an interactive isometric instrument.',
-    chipZh: '解剖',
-    chipEn: 'Anatomy',
+    ...skillType('anatomy'),
     image: '/images/skills/anatomy.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -135,8 +172,7 @@ export const homeSkills: HomeSkill[] = [
     nameEn: 'Cover Image Generation',
     pitchZh: '3D 纸雕黏土风封面，同题三版，逐字验过再交付。',
     pitchEn: 'Paper-craft clay covers, three versions, Chinese title checked.',
-    chipZh: '封面',
-    chipEn: 'Cover',
+    ...skillType('cover'),
     image: '/images/skills/cover_image_gen.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -204,8 +240,7 @@ export const homeSkills: HomeSkill[] = [
     nameEn: 'Custom Connectors & MCPs',
     pitchZh: '把还没内置的第三方服务接到官网或助手。',
     pitchEn: 'Connect a third-party service the site or assistant does not include yet.',
-    chipZh: '连接',
-    chipEn: 'Connector',
+    ...skillType('connector'),
     image: '/images/skills/custom_connector_setup.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -214,6 +249,14 @@ export const homeSkills: HomeSkill[] = [
     ...skillFiles('custom_connector_setup')
   }
 ]
+
+export function skillsForFilter(filterId: string): HomeSkill[] {
+  if (filterId === SKILL_FILTER_ALL) return homeSkills
+  const selected = [...SKILL_TYPE_FILTERS, ...SKILL_SCENE_FILTERS].find((item) => item.id === filterId)
+  if (!selected) return homeSkills
+  const allowed = new Set(selected.skillIds)
+  return homeSkills.filter((skill) => allowed.has(skill.id))
+}
 
 export function findSkill(skillId: string): HomeSkill | undefined {
   return homeSkills.find((skill) => skill.id === skillId)
