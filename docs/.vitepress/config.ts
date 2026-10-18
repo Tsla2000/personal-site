@@ -80,13 +80,19 @@ export default defineConfig({
     siteTitle: SITE_TITLE,
     nav: [
       { text: '首页', link: '/' },
-      { text: 'AI', link: '/ai/' },
-      { text: '投资', link: '/investment/' },
-      { text: '思考', link: '/thinking/' },
-      { text: '项目', link: '/#projects' },
-      { text: '留言板', link: '/guestbook/' },
-      { text: '订阅', link: '/subscribe/' },
-      { text: '关于', link: '/about/' },
+      { text: 'AI', link: '/ai/', activeMatch: '^/ai/' },
+      { text: '技能', link: '/skills/', activeMatch: '^/skills/' },
+      { text: '项目', link: '/projects/', activeMatch: '^/projects/' },
+      {
+        text: '关于',
+        activeMatch: '^/(thinking|investment|subscribe|guestbook)(/|$)',
+        items: [
+          { text: '思考', link: '/thinking/' },
+          { text: '投资', link: '/investment/' },
+          { text: '订阅', link: '/subscribe/' },
+          { text: '留言板', link: '/guestbook/' }
+        ]
+      },
       { component: 'LangSwitch' }
     ],
     sidebar: {
@@ -143,12 +149,22 @@ export default defineConfig({
         nav: [
           { text: 'Home', link: '/en/', activeMatch: '^/en/?$' },
           { text: 'AI', link: '/en/ai/trends/claude-search-surge', activeMatch: '^/en/ai/' },
-          { text: 'Investing', link: '/en/investment/tesla/q3-earnings-preview', activeMatch: '^/en/investment/' },
-          { text: 'Thinking', link: '/thinking/' },
-          { text: 'Projects', link: '/#projects' },
-          { text: 'Guestbook', link: '/guestbook/' },
-          { text: 'Subscribe', link: '/subscribe/' },
-          { text: 'About', link: '/en/about/', activeMatch: '^/en/about' },
+          { text: 'Skills', link: '/en/skills/', activeMatch: '^/en/skills/' },
+          { text: 'Projects', link: '/en/projects/', activeMatch: '^/en/projects/' },
+          {
+            text: 'About',
+            activeMatch: '^(/thinking|/en/investment|/subscribe|/guestbook)',
+            items: [
+              { text: 'Thinking', link: '/thinking/' },
+              {
+                text: 'Investing',
+                link: '/en/investment/tesla/q3-earnings-preview',
+                activeMatch: '^/en/investment/'
+              },
+              { text: 'Subscribe', link: '/subscribe/' },
+              { text: 'Guestbook', link: '/guestbook/' }
+            ]
+          },
           { component: 'LangSwitch' }
         ],
         sidebar: {

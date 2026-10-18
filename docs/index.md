@@ -41,6 +41,7 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
         <a class="cta" href="https://chromewebstore.google.com/detail/xmade-twitter-video-downl/bgopfpaklpnjmjbngflljdnjnblhnbjm" target="_blank" rel="noopener">去 Chrome 应用店安装 →</a>
       </div>
     </div>
+    <p style="margin-top:12px;"><a href="projects/" style="font-size:14px;color:#1d9bf0;">查看全部项目 →</a></p>
   </section>
 
 </div>
