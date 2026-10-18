@@ -1,10 +1,12 @@
 ---
 title: 技能
-description: 给商家浏览的技能与效果展示。先看能解决什么、跑出来是什么样。
+description: 这些是可以直接试的 Agent 技能，目前限时免费。
+aside: false
+pageClass: skill-browse
 ---
 
 # 技能
 
-这里收集可以直接看效果的技能与演示，方便商家按场景浏览：能解决什么问题、跑起来是什么样。
+这些是可以直接试的 Agent 技能，目前限时免费。
 
 <SkillShowcase />

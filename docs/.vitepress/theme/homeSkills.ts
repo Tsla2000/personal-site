@@ -2,22 +2,40 @@ import skillClipboard from './data/skill-clipboard.json'
 
 export const SKILL_COPY_FEEDBACK_MS = 1600
 
+export interface SkillDetailCopy {
+  metaZh: string
+  metaEn: string
+  leadZh: string
+  leadEn: string
+  gainsZh: string[]
+  gainsEn: string[]
+  fitZh: string[]
+  fitEn: string[]
+  unfitZh: string[]
+  unfitEn: string[]
+  sampleZh: string
+  sampleEn: string
+  stepsZh: string[]
+  stepsEn: string[]
+}
+
 export interface HomeSkill {
   id: string
   nameZh: string
   nameEn: string
-  purposeZh: string
-  purposeEn: string
-  scenariosZh: string
-  scenariosEn: string
-  splitZh: string
-  splitEn: string
+  pitchZh: string
+  pitchEn: string
+  chipZh: string
+  chipEn: string
   image: string
   imageWidth: number
   imageHeight: number
   imageAltZh: string
   imageAltEn: string
   prompt: string
+  /** 有详情页时为站内 slug，不含语言前缀，例如 skills/cover-image-gen */
+  detailSlug?: string
+  detail?: SkillDetailCopy
 }
 
 const clipboard = skillClipboard as Record<string, string>
@@ -36,14 +54,10 @@ export const homeSkills: HomeSkill[] = [
     id: 'de-ai-writing',
     nameZh: '去AI味写作',
     nameEn: 'De-AI Writing',
-    purposeZh: '从你本人文章提炼写作风格档案，再按档案写作；或对成稿做「最小改动」的去机器味清理。',
-    purposeEn:
-      'Build a writing-style profile from your own articles and write to that profile, or clean a finished draft with the smallest edits that remove the machine tone.',
-    scenariosZh: '公众号长文、投资简报、X/社媒文案润色、按个人口吻重写。',
-    scenariosEn: 'Long WeChat posts, investment briefs, polishing X and social copy, and rewrites in a personal voice.',
-    splitZh: '只管文字语气与信息守恒；不做封面（cover_image_gen）、不做图解（diagram-design / anatomy）、不做产品 UI（AI界面设计规范）。',
-    splitEn:
-      'It only handles tone and keeping the information intact. It does not make covers (cover_image_gen), diagrams (diagram-design / anatomy), or product UI (AI interface design rules).',
+    pitchZh: '按你的口吻写，或把成稿里的机器味清掉。',
+    pitchEn: 'Write in your voice, or strip the machine tone from a draft.',
+    chipZh: '写作',
+    chipEn: 'Writing',
     image: '/images/skills/de-ai-writing.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -55,14 +69,10 @@ export const homeSkills: HomeSkill[] = [
     id: 'ai-ui-design',
     nameZh: 'AI界面设计规范',
     nameEn: 'AI Interface Design Rules',
-    purposeZh: '做 AI 聊天 / Agent 产品前端时的设计令牌、动效、输入法守卫、流式滚动、工具确认卡与验收清单。',
-    purposeEn:
-      'Design tokens, motion, input-method guards, streaming scroll, tool confirmation cards, and a review checklist for AI chat and agent product front ends.',
-    scenariosZh: '对话框、工具调用卡片、预览面板、设置弹层（默认 React + Tailwind）。',
-    scenariosEn: 'Chat threads, tool-call cards, preview panels, and settings dialogs (React and Tailwind by default).',
-    splitZh: '只管界面与交互规范；文案口吻用「去AI味写作」；配图/封面用 cover_image_gen；概念图解用 diagram-design 或 anatomy。',
-    splitEn:
-      'It only covers interface and interaction rules. Voice and wording use De-AI Writing. Illustrations and covers use cover_image_gen. Concept diagrams use diagram-design or anatomy.',
+    pitchZh: 'AI 聊天和 Agent 前端的界面与交互规范。',
+    pitchEn: 'Interface rules for AI chat and agent front ends.',
+    chipZh: 'UI',
+    chipEn: 'UI',
     image: '/images/skills/ai-ui-design.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -72,17 +82,12 @@ export const homeSkills: HomeSkill[] = [
   },
   {
     id: 'diagram-design',
-    nameZh: '图解设计（diagram-design）',
+    nameZh: '图解设计',
     nameEn: 'Diagram Design',
-    purposeZh: '45 种出版级静态图解（架构、时序、流程、飞轮、四象限、Sankey、甘特等），输出自包含 HTML（内联 SVG）。',
-    purposeEn:
-      '45 publication-grade static diagrams (architecture, sequence, flow, flywheel, quadrant, Sankey, Gantt, and more), exported as self-contained HTML with inline SVG.',
-    scenariosZh: '官网文章插图、方案汇报、技术说明里的静态结构图。品牌配色已按 promangofund.com 定制。',
-    scenariosEn:
-      'Article figures, proposal decks, and static structure diagrams in technical notes. Brand colors are already set for promangofund.com.',
-    splitZh: '静态图解用本技能；需要「像小机器一样可交互拆解」的等轴测图用 anatomy；文章封面用 cover_image_gen。',
-    splitEn:
-      'Use this skill for static diagrams. Use anatomy for an interactive isometric breakdown that works like a small machine. Use cover_image_gen for article covers.',
+    pitchZh: '45 种静态图解，输出一份自包含 HTML。',
+    pitchEn: 'Forty-five static diagrams, each a self-contained HTML file.',
+    chipZh: '图解',
+    chipEn: 'Diagram',
     image: '/images/skills/diagram-design.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -92,17 +97,12 @@ export const homeSkills: HomeSkill[] = [
   },
   {
     id: 'anatomy',
-    nameZh: '等轴测解剖图（anatomy）',
+    nameZh: '等轴测解剖图',
     nameEn: 'Isometric Anatomy',
-    purposeZh: '把技术概念画成高精度、可交互的等轴测 SVG「小仪器」，零件与数字由同一模型驱动。',
-    purposeEn:
-      'Draw a technical idea as a precise, interactive isometric SVG instrument, with parts and numbers driven by the same model.',
-    scenariosZh: '原理拆解、落地页/文档里的精品技术插画、需要动效与读数的说明图。',
-    scenariosEn:
-      'Principle breakdowns, featured technical illustrations on landing pages and docs, and figures that need motion and readouts.',
-    splitZh: '交互解剖与动效用本技能；45 种静态业务图解用 diagram-design；社交/文章封面用 cover_image_gen。',
-    splitEn:
-      'Use this skill for interactive cutaways and motion. Use diagram-design for the 45 static business diagrams. Use cover_image_gen for social and article covers.',
+    pitchZh: '把技术概念画成可交互的等轴测小仪器。',
+    pitchEn: 'Draw a technical idea as an interactive isometric instrument.',
+    chipZh: '解剖',
+    chipEn: 'Anatomy',
     image: '/images/skills/anatomy.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -112,35 +112,81 @@ export const homeSkills: HomeSkill[] = [
   },
   {
     id: 'cover_image_gen',
-    nameZh: '封面图生成（cover_image_gen）',
+    nameZh: '封面图生成',
     nameEn: 'Cover Image Generation',
-    purposeZh: '网站 / 公众号 / X 推文封面。固定 3D 纸雕与黏土风，中文大标题，同题出 3 版构图并逐字验字。',
-    purposeEn:
-      'Covers for the site, WeChat, and X posts. Fixed 3D paper-craft and clay style, large Chinese titles, three compositions of the same title, and a character-by-character check.',
-    scenariosZh: '文章头图、推文大图、技能卡片主视觉。',
-    scenariosEn: 'Article headers, large post images, and the main visual on a skill card.',
-    splitZh: '只管封面大图；正文插图的静态图解 → diagram-design；交互解剖 → anatomy；文案 → 去AI味写作。',
-    splitEn:
-      'This skill only makes cover images. Static body diagrams go to diagram-design. Interactive cutaways go to anatomy. Copy goes to De-AI Writing.',
+    pitchZh: '3D 纸雕黏土风封面，同题三版，逐字验过再交付。',
+    pitchEn: 'Paper-craft clay covers, three versions, Chinese title checked.',
+    chipZh: '封面',
+    chipEn: 'Cover',
     image: '/images/skills/cover_image_gen.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: '封面图生成示意：3D 纸雕黏土风，中文标题是封面图生成',
     imageAltEn: 'Paper-craft clay cover with the Chinese title 封面图生成',
-    prompt: promptFor('cover_image_gen')
+    prompt: promptFor('cover_image_gen'),
+    detailSlug: 'skills/cover-image-gen',
+    detail: {
+      metaZh: 'cover_image_gen · 个人演示',
+      metaEn: 'cover_image_gen · personal demo',
+      leadZh: '把定好的中文标题做成网站、公众号或 X 的封面。固定 3D 纸雕黏土风，同一题出三版构图，标题逐字验过再交付。',
+      leadEn:
+        'Turn a finished Chinese title into a cover for the site, WeChat, or X. The look stays 3D paper-craft and clay: three compositions, then a character-by-character check.',
+      gainsZh: [
+        '固定的 3D 纸雕与黏土风封面',
+        '同一中文标题的 3 版构图',
+        '标题逐字验收后，再交付 JPG'
+      ],
+      gainsEn: [
+        'A cover locked to the 3D paper-craft and clay style',
+        'Three compositions of the same Chinese title',
+        'A character-by-character check, then a JPG'
+      ],
+      fitZh: [
+        '网站、公众号、X 推文需要一张头图',
+        '标题已经定了，想直接出图',
+        '文章头图或技能卡片要统一的主视觉'
+      ],
+      fitEn: [
+        'You need a header for the site, a WeChat post, or an X post',
+        'The title is already set and you want the image',
+        'An article or a skill card needs one consistent main visual'
+      ],
+      unfitZh: [
+        '正文里的静态结构图。用 diagram-design',
+        '可交互的等轴测拆解。用 anatomy',
+        '改文案口吻。用去AI味写作',
+        '主标题是英文。这套流程按中文大标题逐字验收'
+      ],
+      unfitEn: [
+        'Static diagrams in the body. Use diagram-design',
+        'Interactive isometric cutaways. Use anatomy',
+        'Rewriting the voice of the copy. Use De-AI Writing',
+        'A cover whose main title is English. This flow checks Chinese characters one by one'
+      ],
+      sampleZh:
+        "做网站封面。风格用 3D 纸雕黏土风。标题 '封面图生成'，黄底高亮 '封面'。场景：暖色桌面上的黏土字。出 3 版，中文逐字验收。",
+      sampleEn:
+        "Make a site cover in the 3D paper-craft clay style. Title '封面图生成', highlight '封面' on yellow. Scene: clay letters on a warm desk. Three compositions, then check every Chinese character.",
+      stepsZh: [
+        '点「复制技能」，把整段技能文本交给 Grok Bot 或 Cursor。',
+        '用上面这句话说明标题、黄底高亮的词，以及封面用在哪。',
+        '收回三版构图，对一下标题每一个字，再选一张用。'
+      ],
+      stepsEn: [
+        'Choose Copy skill, then paste the text into Grok Bot or Cursor.',
+        'Use the line above for the title, the words highlighted on yellow, and where the cover will go.',
+        'Check every character on the three compositions, then pick one.'
+      ]
+    }
   },
   {
     id: 'custom_connector_setup',
     nameZh: '自定义连接器 / MCP',
     nameEn: 'Custom Connectors & MCPs',
-    purposeZh: '为官网/助手接入尚未内置的第三方服务（官方 API 或 MCP），按「现成路线 → 凭证隔离 → 验证 → 沉淀文档」落地。',
-    purposeEn:
-      'Connect a third-party service that is not built in yet, through an official API or MCP, in this order: an existing route, isolated credentials, verification, then a written record.',
-    scenariosZh: '新 SaaS API、官方 MCP server、Zapier/Composio 中转、自建 MCP 客户端脚手架。',
-    scenariosEn: 'A new SaaS API, an official MCP server, a Zapier or Composio bridge, or a custom MCP client scaffold.',
-    splitZh: '只管连接与凭证安全流程；接好后的业务文案用「去AI味写作」；产品 UI 用「AI界面设计规范」；对外封面用 cover_image_gen；概念图解用 diagram-design / anatomy。',
-    splitEn:
-      'It only covers the connection and credential-safety flow. After it is connected, business copy uses De-AI Writing, product UI uses the AI interface design rules, public covers use cover_image_gen, and concept diagrams use diagram-design or anatomy.',
+    pitchZh: '把还没内置的第三方服务接到官网或助手。',
+    pitchEn: 'Connect a third-party service the site or assistant does not include yet.',
+    chipZh: '连接',
+    chipEn: 'Connector',
     image: '/images/skills/custom_connector_setup.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
@@ -150,7 +196,21 @@ export const homeSkills: HomeSkill[] = [
   }
 ]
 
+export function findSkill(skillId: string): HomeSkill | undefined {
+  return homeSkills.find((skill) => skill.id === skillId)
+}
+
 export function skillCatalogHash(skillId: string, english: boolean): string {
   const catalogPath = english ? '/en/skills/' : '/skills/'
   return `${catalogPath}#${skillId}`
+}
+
+export function skillPagePath(skill: HomeSkill, english: boolean, onCatalog: boolean): string | null {
+  if (skill.detailSlug) return english ? `/en/${skill.detailSlug}` : `/${skill.detailSlug}`
+  if (onCatalog) return null
+  return skillCatalogHash(skill.id, english)
+}
+
+export function freeBadgeLabel(english: boolean): string {
+  return english ? 'Free for now' : '限时免费'
 }

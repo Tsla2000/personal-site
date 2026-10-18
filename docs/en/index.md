@@ -2,6 +2,7 @@
 title: Pro's MangoFund
 description: English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
 keywords: Pro's MangoFund, MangoFund, AI products, Tesla Q3 2026, Claude vs OpenAI, AI coding agent
+aside: false
 ---
 
 <div class="home-page">

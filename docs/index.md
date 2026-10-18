@@ -1,6 +1,7 @@
 ---
 title: PRO的茶里芒果
 description: AI、投资、产品，以及一些关于世界如何运行的思考。
+aside: false
 ---
 
 <!-- Latest 板块由构建脚本按当次部署目标自动生成。技能卡链到 /skills/，相对路径兼容 GitHub Pages 与 Cloudflare Pages。-->
