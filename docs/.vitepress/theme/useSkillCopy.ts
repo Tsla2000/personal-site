@@ -1,6 +1,9 @@
 import { onBeforeUnmount, ref } from 'vue'
+import { withBase } from 'vitepress'
 import { SKILL_COPY_FEEDBACK_MS, type HomeSkill } from './homeSkills'
 import { useIsEnglish } from './useLocale'
+
+const skillPromptCache = new Map<string, string>()
 
 type CopyFeedback = '' | 'copied' | 'failed'
 
@@ -14,6 +17,14 @@ export function useSkillCopy() {
     if (feedback === 'copied') return isEnglish.value ? 'Copied' : '已复制'
     if (feedback === 'failed') return isEnglish.value ? 'Copy failed' : '复制失败'
     return isEnglish.value ? 'Copy skill' : '复制技能'
+  }
+
+  function zipLabel(): string {
+    return isEnglish.value ? 'Download ZIP' : '下载 ZIP'
+  }
+
+  function zipAriaLabel(title: string): string {
+    return isEnglish.value ? `Download ${title} ZIP` : `下载 ${title} ZIP`
   }
 
   function buttonAriaLabel(skill: HomeSkill, title: string): string {
@@ -61,8 +72,26 @@ export function useSkillCopy() {
     }
   }
 
+  async function loadSkillPrompt(skill: HomeSkill): Promise<string> {
+    const cached = skillPromptCache.get(skill.id)
+    if (cached) return cached
+    const response = await fetch(withBase(skill.promptPath))
+    if (!response.ok) throw new Error(`skill prompt ${response.status}`)
+    const text = await response.text()
+    if (!text.startsWith('---\n') || !text.includes(`name: ${skill.promptName}`) || !text.includes('# ')) {
+      throw new Error(`skill prompt ${skill.id} is not the full SKILL.md`)
+    }
+    skillPromptCache.set(skill.id, text)
+    return text
+  }
+
   async function copySkill(skill: HomeSkill): Promise<void> {
-    const copied = await writeClipboard(skill.prompt)
+    let copied = false
+    try {
+      copied = await writeClipboard(await loadSkillPrompt(skill))
+    } catch {
+      copied = false
+    }
     feedbackBySkillId.value = {
       ...feedbackBySkillId.value,
       [skill.id]: copied ? 'copied' : 'failed'
@@ -76,5 +105,5 @@ export function useSkillCopy() {
     resetTimerBySkillId.clear()
   })
 
-  return { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, copySkill }
+  return { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill }
 }

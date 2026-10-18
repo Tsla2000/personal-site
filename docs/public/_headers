@@ -244,6 +244,12 @@
 /images/*
   Cache-Control: public, max-age=2592000
 
+/skills/sources/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/zips/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /favicon.ico
   Cache-Control: public, max-age=2592000
 

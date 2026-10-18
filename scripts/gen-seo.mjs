@@ -293,6 +293,8 @@ for (const asset of ['/feed.xml', '/sitemap.xml', '/robots.txt', '/llms.txt', '/
 }
 pushCache('/assets/*', `public, max-age=${HASHED_ASSET_CACHE_SECONDS}, immutable`)
 pushCache('/images/*', `public, max-age=${IMAGE_CACHE_SECONDS}`)
+pushCache('/skills/sources/*', htmlCache)
+pushCache('/skills/zips/*', htmlCache)
 for (const icon of ['/favicon.ico', '/favicon-32x32.png', '/favicon-16x16.png', '/apple-touch-icon.png']) {
   pushCache(icon, `public, max-age=${IMAGE_CACHE_SECONDS}`)
 }

@@ -41,10 +41,10 @@
 - [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](https://tsla2000.github.io/en/investment/tesla/q3-earnings-preview): Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins. (2026.10.16)
 - [How to Automate a Personal Website Deploy with Muse](https://tsla2000.github.io/en/ai/coding/muse-auto-deploy): Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages. (2026.10.06)
 - [About Pro's MangoFund](https://tsla2000.github.io/en/about): Pro's MangoFund is a personal site of notes on AI, investing, products, and technology, with a short English selection and a longer Chinese archive.
-- [Cover Image Generation](https://tsla2000.github.io/en/skills/cover-image-gen): Turn a finished Chinese title into a 3D paper-craft clay cover. Three compositions, then a character-by-character check. Free for a limited time.
+- [Cover Image Generation](https://tsla2000.github.io/en/skills/cover-image-gen): Turn a finished Chinese title into a 3D paper-craft clay cover. Three compositions, then a character-by-character check.
 - [Pro's MangoFund](https://tsla2000.github.io/en): English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
 - [Projects](https://tsla2000.github.io/en/projects): Products on this site. XMade is a Chrome extension for saving posts from X.
-- [Skills](https://tsla2000.github.io/en/skills): These are agent skills you can try. They are free for a limited time.
+- [Skills](https://tsla2000.github.io/en/skills): These are agent skills you can try.
 
 ## 订阅
 

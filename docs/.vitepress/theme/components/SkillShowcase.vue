@@ -1,17 +1,38 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, withBase } from 'vitepress'
-import { homeSkills, skillPagePath, freeBadgeLabel, type HomeSkill } from '../homeSkills'
+import {
+  SKILL_FILTER_ALL,
+  SKILL_SCENE_FILTERS,
+  SKILL_TYPE_FILTERS,
+  skillsForFilter,
+  skillPagePath,
+  type HomeSkill,
+  type SkillFilterOption
+} from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
 
 const route = useRoute()
-const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, copySkill } = useSkillCopy()
+const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
+const activeFilterId = ref(SKILL_FILTER_ALL)
 
 const onCatalog = computed(() => {
   const path = (route.path || '/').replace(/\/$/, '') || '/'
   return path === '/skills' || path === '/en/skills'
 })
-const freeLabel = computed(() => freeBadgeLabel(isEnglish.value))
+
+const visibleSkills = computed(() => {
+  if (!onCatalog.value) return skillsForFilter(SKILL_FILTER_ALL)
+  return skillsForFilter(activeFilterId.value)
+})
+
+function filterLabel(filter: SkillFilterOption): string {
+  return isEnglish.value ? filter.labelEn : filter.labelZh
+}
+
+function selectFilter(filterId: string): void {
+  activeFilterId.value = filterId
+}
 
 function titleFor(skill: HomeSkill): string {
   return isEnglish.value ? skill.nameEn : skill.nameZh
@@ -36,8 +57,51 @@ function hrefFor(skill: HomeSkill): string | null {
 </script>
 
 <template>
-  <div class="skill-catalog">
-    <article v-for="(skill, index) in homeSkills" :id="skill.id" :key="skill.id" class="skill-tile">
+  <div :class="{ 'skill-browse-layout': onCatalog }">
+    <nav v-if="onCatalog" class="skill-filters" :aria-label="isEnglish ? 'Filter skills' : '筛选技能'">
+      <div class="skill-filter-group">
+        <p class="skill-filter-label">{{ isEnglish ? 'Type' : '类型' }}</p>
+        <button
+          type="button"
+          class="skill-filter"
+          :class="{ 'is-active': activeFilterId === SKILL_FILTER_ALL }"
+          :aria-pressed="activeFilterId === SKILL_FILTER_ALL"
+          @click="selectFilter(SKILL_FILTER_ALL)"
+        >
+          {{ isEnglish ? 'All' : '全部' }}
+        </button>
+        <button
+          v-for="filter in SKILL_TYPE_FILTERS"
+          :key="filter.id"
+          type="button"
+          class="skill-filter"
+          :class="{ 'is-active': activeFilterId === filter.id }"
+          :aria-pressed="activeFilterId === filter.id"
+          @click="selectFilter(filter.id)"
+        >
+          {{ filterLabel(filter) }}
+        </button>
+      </div>
+      <div class="skill-filter-group">
+        <p class="skill-filter-label">{{ isEnglish ? 'Scenario' : '场景' }}</p>
+        <button
+          v-for="filter in SKILL_SCENE_FILTERS"
+          :key="filter.id"
+          type="button"
+          class="skill-filter"
+          :class="{ 'is-active': activeFilterId === filter.id }"
+          :aria-pressed="activeFilterId === filter.id"
+          @click="selectFilter(filter.id)"
+        >
+          {{ filterLabel(filter) }}
+        </button>
+      </div>
+    </nav>
+    <div class="skill-catalog">
+    <p v-if="onCatalog && visibleSkills.length === 0" class="skill-filter-empty">
+      {{ isEnglish ? 'No skills match this filter.' : '没有符合这个筛选的技能。' }}
+    </p>
+    <article v-for="(skill, index) in visibleSkills" :id="skill.id" :key="skill.id" class="skill-tile">
       <a v-if="hrefFor(skill)" class="skill-thumb" :href="hrefFor(skill) || undefined">
         <img
           :src="withBase(skill.image)"
@@ -47,7 +111,6 @@ function hrefFor(skill: HomeSkill): string | null {
           :loading="index === 0 ? 'eager' : 'lazy'"
           decoding="async"
         />
-        <span class="skill-free">{{ freeLabel }}</span>
       </a>
       <div v-else class="skill-thumb">
         <img
@@ -58,7 +121,6 @@ function hrefFor(skill: HomeSkill): string | null {
           :loading="index === 0 ? 'eager' : 'lazy'"
           decoding="async"
         />
-        <span class="skill-free">{{ freeLabel }}</span>
       </div>
       <h3>
         <a v-if="hrefFor(skill)" :href="hrefFor(skill) || undefined">{{ titleFor(skill) }}</a>
@@ -67,16 +129,25 @@ function hrefFor(skill: HomeSkill): string | null {
       <p class="skill-pitch">{{ pitchFor(skill) }}</p>
       <div class="skill-foot">
         <span class="skill-chip">{{ chipFor(skill) }}</span>
-        <button
-          type="button"
-          class="skill-copy"
-          :class="{ 'is-copied': feedbackBySkillId[skill.id] === 'copied' }"
-          :aria-label="buttonAriaLabel(skill, titleFor(skill))"
-          @click="copySkill(skill)"
-        >
-          <span aria-live="polite">{{ buttonLabel(skill.id) }}</span>
-        </button>
+        <div class="skill-controls">
+          <button
+            type="button"
+            class="skill-copy"
+            :class="{ 'is-copied': feedbackBySkillId[skill.id] === 'copied' }"
+            :aria-label="buttonAriaLabel(skill, titleFor(skill))"
+            @click="copySkill(skill)"
+          >
+            <span aria-live="polite">{{ buttonLabel(skill.id) }}</span>
+          </button>
+          <a
+            class="skill-zip"
+            :href="withBase(skill.zipPath)"
+            :download="skill.zipFile"
+            :aria-label="zipAriaLabel(titleFor(skill))"
+          >{{ zipLabel() }}</a>
+        </div>
       </div>
     </article>
+    </div>
   </div>
 </template>

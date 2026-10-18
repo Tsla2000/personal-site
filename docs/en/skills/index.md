@@ -1,12 +1,12 @@
 ---
 title: Skills
-description: These are agent skills you can try. They are free for a limited time.
+description: These are agent skills you can try.
 aside: false
 pageClass: skill-browse
 ---
 
 # Skills
 
-These are agent skills you can try. They are free for a limited time.
+These are agent skills you can try.
 
 <SkillShowcase />
