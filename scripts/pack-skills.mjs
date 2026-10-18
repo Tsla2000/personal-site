@@ -18,7 +18,9 @@ const REQUIRED_PHRASES = {
   custom_connector_setup: ['Never store a secret', 'name: custom_connector_setup'],
   'personal-site-build': ['name: 个人网站搭建', '飞书'],
   'frontend-design': ['name: frontend-design', 'LICENSE.txt'],
-  'ui-design-refs': ['name: UI设计参考清单', 'ui-catalog.md']
+  'ui-design-refs': ['name: UI设计参考清单', 'ui-catalog.md'],
+  'haiwai-new-keyword-launch': ['name: 出海新词上站', 'Google Trends 词根法'],
+  'haiwai-monetize-convert': ['name: 出海变现转化', '假生成']
 }
 
 const MIN_ZIP_BYTES = {
@@ -30,7 +32,9 @@ const MIN_ZIP_BYTES = {
   'custom-connector-setup.zip': 20000,
   'personal-site-build.zip': 6000,
   'frontend-design.zip': 7000,
-  'ui-design-refs.zip': 4500
+  'ui-design-refs.zip': 4500,
+  'haiwai-new-keyword-launch.zip': 4000,
+  'haiwai-monetize-convert.zip': 4000
 }
 
 const MINIMUM_PACKAGE_COUNT = 6
