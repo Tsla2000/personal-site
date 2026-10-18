@@ -52,5 +52,32 @@
     "zipFile": "custom-connector-setup.zip",
     "promptPath": "/skills/sources/custom_connector_setup/SKILL.md",
     "zipPath": "/skills/zips/custom-connector-setup.zip"
+  },
+  {
+    "id": "personal-site-build",
+    "dir": "personal-site-build",
+    "promptName": "个人网站搭建",
+    "zipSkillEntry": "personal-site-build/SKILL.md",
+    "zipFile": "personal-site-build.zip",
+    "promptPath": "/skills/sources/personal-site-build/SKILL.md",
+    "zipPath": "/skills/zips/personal-site-build.zip"
+  },
+  {
+    "id": "frontend-design",
+    "dir": "frontend-design",
+    "promptName": "frontend-design",
+    "zipSkillEntry": "frontend-design/SKILL.md",
+    "zipFile": "frontend-design.zip",
+    "promptPath": "/skills/sources/frontend-design/SKILL.md",
+    "zipPath": "/skills/zips/frontend-design.zip"
+  },
+  {
+    "id": "ui-design-refs",
+    "dir": "ui-design-refs",
+    "promptName": "UI设计参考清单",
+    "zipSkillEntry": "ui-design-refs/SKILL.md",
+    "zipFile": "ui-design-refs.zip",
+    "promptPath": "/skills/sources/ui-design-refs/SKILL.md",
+    "zipPath": "/skills/zips/ui-design-refs.zip"
   }
 ]

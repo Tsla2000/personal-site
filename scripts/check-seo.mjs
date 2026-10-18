@@ -190,7 +190,7 @@ if (!existsSync(homeHtmlPath)) {
   if (!/<h2[^>]*>\s*技能商店\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
   if (/<h2[^>]*>\s*Thinking\s*<\/h2>/.test(homeHtml)) errors.push('中文首页仍保留 Thinking 板块')
   if (!homeHtml.includes('复制技能')) errors.push('中文首页缺少复制技能按钮')
-  for (const title of ['去AI味写作', 'AI界面设计规范', '图解设计', '等轴测解剖图', '封面图生成', '自定义连接器 / MCP']) {
+  for (const title of ['去AI味写作', 'AI界面设计规范', '图解设计', '等轴测解剖图', '封面图生成', '自定义连接器 / MCP', '个人网站搭建', '前端设计', 'UI设计参考清单']) {
     if (!homeHtml.includes(title)) errors.push(`中文首页缺少技能：${title}`)
   }
   for (const image of [
@@ -199,7 +199,10 @@ if (!existsSync(homeHtmlPath)) {
     '/images/skills/diagram-design.jpg',
     '/images/skills/anatomy.jpg',
     '/images/skills/cover_image_gen.jpg',
-    '/images/skills/custom_connector_setup.jpg'
+    '/images/skills/custom_connector_setup.jpg',
+    '/images/skills/personal-site-build.jpg',
+    '/images/skills/frontend-design.jpg',
+    '/images/skills/ui-design-refs.jpg'
   ]) {
     if (!homeHtml.includes(image)) errors.push(`中文首页缺少技能图 ${image}`)
   }
@@ -314,7 +317,7 @@ if (existsSync(enHome)) {
   }
   if (!/<h2[^>]*>\s*Skills Store\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
   if (!html.includes('Copy skill')) errors.push('英文首页缺少 Copy skill 按钮')
-  for (const title of ['De-AI Writing', 'AI Interface Design Rules', 'Diagram Design', 'Isometric Anatomy', 'Cover Image Generation', 'Custom Connectors']) {
+  for (const title of ['De-AI Writing', 'AI Interface Design Rules', 'Diagram Design', 'Isometric Anatomy', 'Cover Image Generation', 'Custom Connectors', 'Personal Site Builder', 'Frontend Design', 'UI Design Refs']) {
     if (!html.includes(title)) errors.push(`英文首页缺少技能：${title}`)
   }
   if (!html.includes('/images/skills/custom_connector_setup.jpg')) errors.push('英文首页缺少自定义连接器预览图')
@@ -379,7 +382,10 @@ const MIN_ZIP_BYTES = {
   'diagram-design.zip': 200000,
   'anatomy.zip': 100000,
   'cover-image-gen.zip': 2000,
-  'custom-connector-setup.zip': 20000
+  'custom-connector-setup.zip': 20000,
+  'personal-site-build.zip': 6000,
+  'frontend-design.zip': 7000,
+  'ui-design-refs.zip': 4500
 }
 for (const zipName of [
   'de-ai-writing.zip',
@@ -387,7 +393,10 @@ for (const zipName of [
   'diagram-design.zip',
   'anatomy.zip',
   'cover-image-gen.zip',
-  'custom-connector-setup.zip'
+  'custom-connector-setup.zip',
+  'personal-site-build.zip',
+  'frontend-design.zip',
+  'ui-design-refs.zip'
 ]) {
   const zipPath = join(DIST, 'skills', 'zips', zipName)
   if (!existsSync(zipPath)) {
@@ -435,9 +444,12 @@ if (existsSync(zhSkills)) {
   if (!zhSkillsHtml.includes('下载 ZIP')) errors.push('中文技能页缺少下载 ZIP')
   if (!zhSkillsHtml.includes('/skills/zips/de-ai-writing.zip')) errors.push('中文技能页缺少去AI味写作 ZIP')
   if (!zhSkillsHtml.includes('skill-filters')) errors.push('中文技能页缺少分类筛选')
-  for (const text of ['全部', '类型', '写作', '图解', '场景', '官网内容', '插图']) {
+  for (const text of ['全部', '类型', '写作', '图解', '场景', '官网内容', '插图', '建站']) {
     if (!zhSkillsHtml.includes(text)) errors.push(`中文技能页筛选缺少 ${text}`)
   }
+  if (!zhSkillsHtml.includes('/skills/zips/personal-site-build.zip')) errors.push('中文技能页缺少个人网站搭建 ZIP')
+  if (!zhSkillsHtml.includes('/skills/zips/frontend-design.zip')) errors.push('中文技能页缺少前端设计 ZIP')
+  if (!zhSkillsHtml.includes('/skills/zips/ui-design-refs.zip')) errors.push('中文技能页缺少 UI 设计参考 ZIP')
   if (zhSkillsHtml.includes('立即购买') || zhSkillsHtml.includes('US$')) errors.push('中文技能页出现了付费文案')
 }
 if (existsSync(enSkills)) {
@@ -467,7 +479,7 @@ if (existsSync(enSkills)) {
   }
   if (!enSkillsHtml.includes('Download ZIP')) errors.push('英文技能页缺少 Download ZIP')
   if (!enSkillsHtml.includes('skill-filters')) errors.push('英文技能页缺少分类筛选')
-  for (const text of ['All', 'Type', 'Writing', 'Diagram', 'Scenario', 'Site content', 'Figures']) {
+  for (const text of ['All', 'Type', 'Writing', 'Diagram', 'Scenario', 'Site content', 'Figures', 'Site build']) {
     if (!enSkillsHtml.includes(text)) errors.push(`英文技能页筛选缺少 ${text}`)
   }
   if (enSkillsHtml.includes('立即购买') || enSkillsHtml.includes('US$')) errors.push('英文技能页出现了付费文案')

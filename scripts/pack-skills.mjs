@@ -15,7 +15,10 @@ const REQUIRED_PHRASES = {
   'diagram-design': ['Forty-five visual types', 'name: diagram-design'],
   anatomy: ['Node.js 20.10+', 'name: anatomy'],
   cover_image_gen: ['quality=92', '黄底高亮', 'name: cover_image_gen'],
-  custom_connector_setup: ['Never store a secret', 'name: custom_connector_setup']
+  custom_connector_setup: ['Never store a secret', 'name: custom_connector_setup'],
+  'personal-site-build': ['name: 个人网站搭建', '飞书'],
+  'frontend-design': ['name: frontend-design', 'LICENSE.txt'],
+  'ui-design-refs': ['name: UI设计参考清单', 'ui-catalog.md']
 }
 
 const MIN_ZIP_BYTES = {
@@ -24,12 +27,18 @@ const MIN_ZIP_BYTES = {
   'diagram-design.zip': 200000,
   'anatomy.zip': 100000,
   'cover-image-gen.zip': 2000,
-  'custom-connector-setup.zip': 20000
+  'custom-connector-setup.zip': 20000,
+  'personal-site-build.zip': 6000,
+  'frontend-design.zip': 7000,
+  'ui-design-refs.zip': 4500
 }
 
-const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'))
-if (!Array.isArray(manifest) || manifest.length !== 6) {
-  throw new Error('技能包清单必须正好包含 6 个技能')
+const MINIMUM_PACKAGE_COUNT = 6
+const packages = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'))
+const manifest = packages
+if (!Array.isArray(packages) || packages.length < MINIMUM_PACKAGE_COUNT || manifest.length !== packages.length) {
+  const actualCount = Array.isArray(packages) ? packages.length : 0
+  throw new Error(`技能包清单必须与 packages 等长，且至少 ${MINIMUM_PACKAGE_COUNT} 个，当前是 ${actualCount} 个`)
 }
 
 for (const item of manifest) {
