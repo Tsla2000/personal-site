@@ -1,0 +1,44 @@
+[
+  {
+    "id": "de-ai-writing",
+    "dir": "de-ai-writing",
+    "zipFile": "de-ai-writing.zip",
+    "promptPath": "/skills/sources/de-ai-writing/SKILL.md",
+    "zipPath": "/skills/zips/de-ai-writing.zip"
+  },
+  {
+    "id": "ai-ui-design",
+    "dir": "ai-ui-design",
+    "zipFile": "ai-ui-design.zip",
+    "promptPath": "/skills/sources/ai-ui-design/SKILL.md",
+    "zipPath": "/skills/zips/ai-ui-design.zip"
+  },
+  {
+    "id": "diagram-design",
+    "dir": "diagram-design",
+    "zipFile": "diagram-design.zip",
+    "promptPath": "/skills/sources/diagram-design/SKILL.md",
+    "zipPath": "/skills/zips/diagram-design.zip"
+  },
+  {
+    "id": "anatomy",
+    "dir": "anatomy",
+    "zipFile": "anatomy.zip",
+    "promptPath": "/skills/sources/anatomy/SKILL.md",
+    "zipPath": "/skills/zips/anatomy.zip"
+  },
+  {
+    "id": "cover_image_gen",
+    "dir": "cover_image_gen",
+    "zipFile": "cover-image-gen.zip",
+    "promptPath": "/skills/sources/cover_image_gen/SKILL.md",
+    "zipPath": "/skills/zips/cover-image-gen.zip"
+  },
+  {
+    "id": "custom_connector_setup",
+    "dir": "custom_connector_setup",
+    "zipFile": "custom-connector-setup.zip",
+    "promptPath": "/skills/sources/custom_connector_setup/SKILL.md",
+    "zipPath": "/skills/zips/custom-connector-setup.zip"
+  }
+]

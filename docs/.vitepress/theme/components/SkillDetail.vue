@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
-import { findSkill, freeBadgeLabel } from '../homeSkills'
+import { findSkill } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
 
 const props = defineProps<{ skillId: string }>()
-const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, copySkill } = useSkillCopy()
+const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
 
 const skill = computed(() => findSkill(props.skillId))
 const detail = computed(() => skill.value?.detail)
 const listHref = computed(() => withBase(isEnglish.value ? '/en/skills/' : '/skills/'))
-const freeLabel = computed(() => freeBadgeLabel(isEnglish.value))
 
 function pick(zh: string, en: string): string {
   return isEnglish.value ? en : zh
@@ -31,7 +30,6 @@ function pick(zh: string, en: string): string {
       </div>
       <div class="skill-hero-copy">
         <p class="skill-kicker">
-          <span class="skill-free">{{ freeLabel }}</span>
           <span class="skill-chip">{{ pick(skill.chipZh, skill.chipEn) }}</span>
           <span class="skill-meta">{{ pick(detail.metaZh, detail.metaEn) }}</span>
         </p>
@@ -47,6 +45,12 @@ function pick(zh: string, en: string): string {
           >
             <span aria-live="polite">{{ buttonLabel(skill.id) }}</span>
           </button>
+          <a
+            class="skill-zip is-detail"
+            :href="withBase(skill.zipPath)"
+            :download="skill.zipFile"
+            :aria-label="zipAriaLabel(pick(skill.nameZh, skill.nameEn))"
+          >{{ zipLabel() }}</a>
           <a class="skill-back" :href="listHref">{{ pick('返回技能列表', 'Back to skills') }}</a>
         </div>
       </div>

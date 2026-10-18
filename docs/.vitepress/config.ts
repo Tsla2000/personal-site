@@ -74,6 +74,8 @@ export default defineConfig({
   description: SITE_DESC,
   cleanUrls: true,
   appearance: true,
+  // public/skills 里的 SKILL.md 是复制和 ZIP 的源文件，不做成站内页面。
+  srcExclude: ['public/skills/**'],
   // sitemap 由 scripts/gen-seo.mjs 自行生成到 public/(VitePress 内置 sitemap 不拼接 base 路径,故不用它)
   themeConfig: {
     logo: `${baseNoSlash}/images/mango-logo.png`,

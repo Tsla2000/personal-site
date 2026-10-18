@@ -1,4 +1,4 @@
-import skillClipboard from './data/skill-clipboard.json'
+import skillPackages from './data/skill-packages.json'
 
 export const SKILL_COPY_FEEDBACK_MS = 1600
 
@@ -32,18 +32,29 @@ export interface HomeSkill {
   imageHeight: number
   imageAltZh: string
   imageAltEn: string
-  prompt: string
+  /** 复制时拉取的完整 SKILL.md，相对站点根路径 */
+  promptPath: string
+  /** 技能包 ZIP，相对站点根路径 */
+  zipPath: string
+  zipFile: string
   /** 有详情页时为站内 slug，不含语言前缀，例如 skills/cover-image-gen */
   detailSlug?: string
   detail?: SkillDetailCopy
 }
 
-const clipboard = skillClipboard as Record<string, string>
+interface SkillPackageRef {
+  id: string
+  promptPath: string
+  zipPath: string
+  zipFile: string
+}
 
-function promptFor(id: string): string {
-  const text = clipboard[id]
-  if (!text) throw new Error(`missing skill clipboard: ${id}`)
-  return text
+const packages = skillPackages as SkillPackageRef[]
+
+function skillFiles(id: string): Pick<HomeSkill, 'promptPath' | 'zipPath' | 'zipFile'> {
+  const item = packages.find((entry) => entry.id === id)
+  if (!item) throw new Error(`missing skill package: ${id}`)
+  return { promptPath: item.promptPath, zipPath: item.zipPath, zipFile: item.zipFile }
 }
 
 const SKILL_IMAGE_WIDTH = 800
@@ -63,7 +74,7 @@ export const homeSkills: HomeSkill[] = [
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: '去AI味写作封面：纸上的手写中文，旁边一支红笔',
     imageAltEn: 'Cover for De-AI Writing: handwritten Chinese on paper beside a red pen',
-    prompt: promptFor('de-ai-writing')
+    ...skillFiles('de-ai-writing')
   },
   {
     id: 'ai-ui-design',
@@ -78,7 +89,7 @@ export const homeSkills: HomeSkill[] = [
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: 'AI 聊天界面示意：左侧深色边栏，右侧是一段对话',
     imageAltEn: 'AI chat demo: a dark sidebar and a conversation on the right',
-    prompt: promptFor('ai-ui-design')
+    ...skillFiles('ai-ui-design')
   },
   {
     id: 'diagram-design',
@@ -93,7 +104,7 @@ export const homeSkills: HomeSkill[] = [
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: '内容飞轮图：创造、分发、互动，再把数据反馈回来',
     imageAltEn: 'Content flywheel: create, distribute, engage, then feed data back',
-    prompt: promptFor('diagram-design')
+    ...skillFiles('diagram-design')
   },
   {
     id: 'anatomy',
@@ -108,7 +119,7 @@ export const homeSkills: HomeSkill[] = [
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: '等轴测解剖图：分层几何结构，侧面有标注线',
     imageAltEn: 'Isometric cutaway of a layered geometric structure with callout lines',
-    prompt: promptFor('anatomy')
+    ...skillFiles('anatomy')
   },
   {
     id: 'cover_image_gen',
@@ -123,7 +134,7 @@ export const homeSkills: HomeSkill[] = [
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: '封面图生成示意：3D 纸雕黏土风，中文标题是封面图生成',
     imageAltEn: 'Paper-craft clay cover with the Chinese title 封面图生成',
-    prompt: promptFor('cover_image_gen'),
+    ...skillFiles('cover_image_gen'),
     detailSlug: 'skills/cover-image-gen',
     detail: {
       metaZh: 'cover_image_gen · 个人演示',
@@ -192,7 +203,7 @@ export const homeSkills: HomeSkill[] = [
     imageHeight: SKILL_IMAGE_HEIGHT,
     imageAltZh: '自定义连接器示意：中心是 AI Agent，周围连着 GitHub、数据库和 Slack',
     imageAltEn: 'Custom connector diagram: an AI agent in the center, linked to GitHub, a database, and Slack',
-    prompt: promptFor('custom_connector_setup')
+    ...skillFiles('custom_connector_setup')
   }
 ]
 
@@ -209,8 +220,4 @@ export function skillPagePath(skill: HomeSkill, english: boolean, onCatalog: boo
   if (skill.detailSlug) return english ? `/en/${skill.detailSlug}` : `/${skill.detailSlug}`
   if (onCatalog) return null
   return skillCatalogHash(skill.id, english)
-}
-
-export function freeBadgeLabel(english: boolean): string {
-  return english ? 'Free for now' : '限时免费'
 }

@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "docs:dev": "node scripts/patch-vitepress-locale.mjs && vitepress dev docs",
-    "docs:build": "node scripts/patch-vitepress-locale.mjs && node scripts/gen-seo.mjs && vitepress build docs && node scripts/fix-logo-alt.mjs && node scripts/check-seo.mjs",
+    "docs:dev": "node scripts/patch-vitepress-locale.mjs && node scripts/pack-skills.mjs && vitepress dev docs",
+    "docs:build": "node scripts/patch-vitepress-locale.mjs && node scripts/pack-skills.mjs && node scripts/gen-seo.mjs && vitepress build docs && node scripts/fix-logo-alt.mjs && node scripts/check-seo.mjs",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
