@@ -15,14 +15,15 @@ import {
   type SkillSortId
 } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
+import { useBarePath } from '../useLocale'
 
-const route = useRoute()
+const barePath = useBarePath()
 const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
 const activeFilterId = ref(SKILL_FILTER_ALL)
 const activeSortId = ref<SkillSortId>(SKILL_SORT_RECOMMENDED)
 
 const onCatalog = computed(() => {
-  const path = (route.path || '/').replace(/\/$/, '') || '/'
+  const path = barePath.value.replace(/\/$/, '') || '/'
   return path === '/skills' || path === '/en/skills'
 })
 

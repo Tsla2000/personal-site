@@ -8,6 +8,17 @@ const DIST = new URL('../docs/.vitepress/dist/', import.meta.url).pathname
 const errors = []  // P0: 阻止发布
 const warnings = [] // P1: 需要关注
 
+// 构建时的 base 前缀（镜像站 BASE_PATH=/personal-site/，主站为空）。
+// dist 里的站内 href 会带上它，断言时要兼容两种写法。
+const SITE_BASE = (process.env.BASE_PATH || '').replace(/\/$/, '')
+const baseEsc = SITE_BASE.replace(/\//g, '\\/')
+/** 断言站内链接存在，兼容有/无 base 前缀的构建产物 */
+function hasHref(html, path) {
+  return html.includes(`href="${SITE_BASE}${path}"`)
+}
+/** 匹配指向 /en/ 区（任一语言版本）的站内链接 */
+const EN_HREF_RE = new RegExp(`href="${baseEsc}\\/en\\/`)
+
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
     if (name.startsWith('.')) continue
@@ -566,10 +577,10 @@ if (existsSync(articlesJson)) {
 if (existsSync(homeHtmlPath)) {
   const homeHtml = readFileSync(homeHtmlPath, 'utf8')
   const articleRows = homeHtml.match(/<a class="article-row"[^>]*>/g) || []
-  if (articleRows.some((row) => /href="\/en\//.test(row))) {
+  if (articleRows.some((row) => EN_HREF_RE.test(row))) {
     errors.push('中文首页列表出现了英文 URL')
   }
-  if (!articleRows.some((row) => row.includes('href="/ai/trends/claude-search-surge"'))) {
+  if (!articleRows.some((row) => hasHref(row, '/ai/trends/claude-search-surge'))) {
     errors.push('中文首页丢失了 Claude 搜索热度')
   }
 }
@@ -678,10 +689,10 @@ const archiveHtmlPath = join(DIST, 'archive.html')
 if (existsSync(archiveHtmlPath)) {
   const archiveHtml = readFileSync(archiveHtmlPath, 'utf8')
   const archiveRows = archiveHtml.match(/<a class="article-row"[^>]*>/g) || []
-  if (archiveRows.some((row) => /href="\/en\//.test(row))) {
+  if (archiveRows.some((row) => EN_HREF_RE.test(row))) {
     errors.push('中文归档收录了英文文章')
   }
-  if (!archiveRows.some((row) => row.includes('href="/ai/coding/muse-auto-deploy"'))) {
+  if (!archiveRows.some((row) => hasHref(row, '/ai/coding/muse-auto-deploy'))) {
     errors.push('中文归档丢失了 Muse 自动部署')
   }
 }
@@ -790,7 +801,7 @@ for (const [key, post] of Object.entries(EN_POSTS)) {
     if (otherKey === key) continue
     if (!html.includes(other.urlPath)) errors.push(`${post.file}: 缺少相关文章 ${other.urlPath}`)
   }
-  if (!/href="\/en\/"/.test(html)) errors.push(`${post.file}: 缺少回到 /en/ 的链接`)
+  if (!EN_HREF_RE.test(html)) errors.push(`${post.file}: 缺少回到 /en/ 的链接`)
   if (existsSync(post.zhFile)) {
     const zhHtml = readFileSync(post.zhFile, 'utf8')
     assertArticleLd(post.zhFile, zhHtml, {
@@ -834,7 +845,7 @@ if (existsSync(enAbout)) {
   for (const post of Object.values(EN_POSTS)) {
     if (!html.includes(post.urlPath)) errors.push(`英文关于页缺少 ${post.urlPath}`)
   }
-  if (!/href="\/en\/"/.test(html)) errors.push('英文关于页缺少回到 /en/ 的链接')
+  if (!EN_HREF_RE.test(html)) errors.push('英文关于页缺少回到 /en/ 的链接')
   if (!html.includes('>中<') || !html.includes('>EN<')) errors.push('英文关于页语言切换标签不是 中/EN')
   for (const lang of ['zh-CN', 'en', 'x-default']) {
     if (!hreflangTag(html, lang)) errors.push(`英文关于页缺少 hreflang=${lang}`)

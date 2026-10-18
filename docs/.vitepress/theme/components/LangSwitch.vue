@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute, withBase } from 'vitepress'
+import { withBase } from 'vitepress'
 import pairList from '../../i18n-pairs.json'
+import { useBarePath } from '../useLocale'
 
-const route = useRoute()
 const pairs = new Set(pairList)
+const barePath = useBarePath()
 
-const current = computed(() => normalizeRoute(route.path))
+const current = computed(() => normalizeRoute(barePath.value))
 
 function normalizeRoute(path: string): { english: boolean; slug: string } {
   const trimmed = (path || '/').replace(/\/$/, '') || '/'
