@@ -42,6 +42,8 @@
 - [How to Automate a Personal Website Deploy with Muse](https://tsla2000.github.io/en/ai/coding/muse-auto-deploy): Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages. (2026.10.06)
 - [About Pro's MangoFund](https://tsla2000.github.io/en/about): Pro's MangoFund is a personal site of notes on AI, investing, products, and technology, with a short English selection and a longer Chinese archive.
 - [Pro's MangoFund](https://tsla2000.github.io/en): English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
+- [Projects](https://tsla2000.github.io/en/projects): Products on this site. XMade is a Chrome extension for saving posts from X.
+- [Skills](https://tsla2000.github.io/en/skills): Skills and demos merchants can browse before deciding what to use.
 
 ## 订阅
 
