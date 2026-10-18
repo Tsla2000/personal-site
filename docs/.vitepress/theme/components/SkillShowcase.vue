@@ -51,6 +51,10 @@ function sortLabel(sort: (typeof SKILL_SORTS)[number]): string {
   return isEnglish.value ? sort.labelEn : sort.labelZh
 }
 
+function selectSort(sortId: SkillSortId): void {
+  activeSortId.value = sortId
+}
+
 function titleFor(skill: HomeSkill): string {
   return isEnglish.value ? skill.nameEn : skill.nameZh
 }
@@ -117,18 +121,21 @@ function hrefFor(skill: HomeSkill): string | null {
     <div class="skill-catalog-main">
       <div v-if="onCatalog" class="skill-catalog-bar">
         <p class="skill-count">{{ skillCountText }}</p>
-        <label class="skill-sort">
-          <span class="skill-sort-name">{{ isEnglish ? 'Sort' : '排序' }}</span>
-          <select
-            v-model="activeSortId"
-            class="skill-sort-select"
-            :aria-label="isEnglish ? 'Sort skills' : '排序技能'"
-          >
-            <option v-for="sort in SKILL_SORTS" :key="sort.id" :value="sort.id">
-              {{ sortLabel(sort) }}
-            </option>
-          </select>
-        </label>
+        <div
+          class="skill-sort"
+          role="group"
+          :aria-label="isEnglish ? 'Sort skills' : '排序技能'"
+        >
+          <button
+            v-for="sort in SKILL_SORTS"
+            :key="sort.id"
+            type="button"
+            class="skill-sort-option"
+            :class="{ 'is-active': activeSortId === sort.id }"
+            :aria-pressed="activeSortId === sort.id"
+            @click="selectSort(sort.id)"
+          >{{ sortLabel(sort) }}</button>
+        </div>
       </div>
       <div class="skill-catalog">
     <p v-if="onCatalog && visibleSkills.length === 0" class="skill-filter-empty">

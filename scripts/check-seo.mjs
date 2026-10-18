@@ -419,8 +419,9 @@ if (existsSync(zhSkills)) {
   if (!/class="skill-count"[^>]*>\s*\d+ 个 Skills\s*</.test(zhSkillsHtml)) {
     errors.push('中文技能页缺少「N 个 Skills」')
   }
+  if (zhSkillsHtml.includes('skill-sort-select')) errors.push('中文技能页排序仍是下拉框')
   for (const sortLabel of ['推荐', '热门', '最新']) {
-    if (!zhSkillsHtml.includes(`>${sortLabel}</option>`)) errors.push(`中文技能页排序缺少 ${sortLabel}`)
+    if (!zhSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`中文技能页排序缺少 ${sortLabel}`)
   }
   const recommendedWritingAt = zhSkillsHtml.indexOf('去AI味写作')
   const recommendedConnectorAt = zhSkillsHtml.indexOf('自定义连接器 / MCP')
@@ -450,8 +451,9 @@ if (existsSync(enSkills)) {
   if (!/class="skill-count"[^>]*>\s*\d+ Skills?\s*</.test(enSkillsHtml)) {
     errors.push('英文技能页缺少技能数量')
   }
+  if (enSkillsHtml.includes('skill-sort-select')) errors.push('英文技能页排序仍是下拉框')
   for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
-    if (!enSkillsHtml.includes(`>${sortLabel}</option>`)) errors.push(`英文技能页排序缺少 ${sortLabel}`)
+    if (!enSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`英文技能页排序缺少 ${sortLabel}`)
   }
   const recommendedWritingAt = enSkillsHtml.indexOf('De-AI Writing')
   const recommendedConnectorAt = enSkillsHtml.indexOf('Custom Connectors')
