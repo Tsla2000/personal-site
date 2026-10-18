@@ -176,6 +176,15 @@ if (!existsSync(homeHtmlPath)) {
   if (!/class="[^"]*\btitle\b[^"]*"[^>]*>[\s\S]*PRO的茶里芒果/.test(homeHtml) && !/>PRO的茶里芒果</.test(homeHtml)) {
     errors.push('首页导航未显示站名')
   }
+  if (!/<h2[^>]*>\s*技能\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
+  if (/<h2[^>]*>\s*Thinking\s*<\/h2>/.test(homeHtml)) errors.push('中文首页仍保留 Thinking 板块')
+  if (!homeHtml.includes('复制技能')) errors.push('中文首页缺少复制技能按钮')
+  if (!homeHtml.includes('x-ops-automation')) errors.push('中文首页未展示 x-ops-automation')
+  if (!homeHtml.includes('/images/x-ops/x-ops-cover.webp')) errors.push('中文首页技能卡缺少预览图')
+  if (!homeHtml.includes('id="projects"')) errors.push('中文首页丢失了 #projects')
+  if (!homeHtml.includes('href="skills/"') && !homeHtml.includes('href="/skills/')) {
+    errors.push('中文首页技能板块没有链到 /skills/')
+  }
 }
 
 // 4d. 审计点名的大图必须压到 150KB 以内；多图文章除首图外应懒加载
@@ -273,6 +282,39 @@ if (existsSync(enHome)) {
   if (!html.includes('ai/coding/muse-auto-deploy')) {
     errors.push('英文首页文章列表缺少 Muse 自动部署')
   }
+  if (!/<h2[^>]*>\s*Skills\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
+  if (!html.includes('Copy skill')) errors.push('英文首页缺少 Copy skill 按钮')
+  if (!html.includes('x-ops-automation')) errors.push('英文首页未展示 x-ops-automation')
+  if (!html.includes('/images/x-ops/x-ops-cover.webp')) errors.push('英文首页技能卡缺少预览图')
+}
+
+function distHasText(needle) {
+  const pending = [DIST]
+  while (pending.length) {
+    const dir = pending.pop()
+    for (const name of readdirSync(dir)) {
+      if (name.startsWith('.')) continue
+      const filePath = join(dir, name)
+      if (statSync(filePath).isDirectory()) {
+        pending.push(filePath)
+        continue
+      }
+      if (!/\.(html|js|mjs|json)$/.test(name)) continue
+      if (readFileSync(filePath, 'utf8').includes(needle)) return true
+    }
+  }
+  return false
+}
+if (existsSync(DIST) && !distHasText('发帖数量不设上限')) {
+  errors.push('构建产物缺少可复制的 x-ops-automation 技能正文')
+}
+const zhSkills = join(DIST, 'skills', 'index.html')
+const enSkills = join(DIST, 'en', 'skills', 'index.html')
+if (existsSync(zhSkills) && !readFileSync(zhSkills, 'utf8').includes('复制技能')) {
+  errors.push('中文技能页缺少复制技能按钮')
+}
+if (existsSync(enSkills) && !readFileSync(enSkills, 'utf8').includes('Copy skill')) {
+  errors.push('英文技能页缺少 Copy skill 按钮')
 }
 
 const enClaude = join(DIST, 'en', 'ai', 'trends', 'claude-search-surge.html')
