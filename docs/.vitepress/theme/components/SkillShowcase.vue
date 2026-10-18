@@ -10,8 +10,20 @@ const isEnglish = useIsEnglish()
 const feedbackBySkillId = ref<Record<string, CopyFeedback>>({})
 const resetTimerBySkillId = new Map<string, number>()
 
-function descriptionFor(skill: HomeSkill): string {
-  return isEnglish.value ? skill.descriptionEn : skill.descriptionZh
+function titleFor(skill: HomeSkill): string {
+  return isEnglish.value ? skill.nameEn : skill.nameZh
+}
+
+function purposeFor(skill: HomeSkill): string {
+  return isEnglish.value ? skill.purposeEn : skill.purposeZh
+}
+
+function scenariosFor(skill: HomeSkill): string {
+  return isEnglish.value ? skill.scenariosEn : skill.scenariosZh
+}
+
+function splitFor(skill: HomeSkill): string {
+  return isEnglish.value ? skill.splitEn : skill.splitZh
 }
 
 function imageAltFor(skill: HomeSkill): string {
@@ -32,12 +44,12 @@ function buttonLabel(skillId: string): string {
 function buttonAriaLabel(skill: HomeSkill): string {
   const feedback = feedbackBySkillId.value[skill.id] || ''
   if (feedback === 'copied') {
-    return isEnglish.value ? `Copied ${skill.name}` : `已复制 ${skill.name}`
+    return isEnglish.value ? `Copied ${titleFor(skill)}` : `已复制 ${titleFor(skill)}`
   }
   if (feedback === 'failed') {
-    return isEnglish.value ? `Could not copy ${skill.name}` : `未能复制 ${skill.name}`
+    return isEnglish.value ? `Could not copy ${titleFor(skill)}` : `未能复制 ${titleFor(skill)}`
   }
-  return isEnglish.value ? `Copy skill ${skill.name}` : `复制技能 ${skill.name}`
+  return isEnglish.value ? `Copy skill ${titleFor(skill)}` : `复制技能 ${titleFor(skill)}`
 }
 
 function clearFeedbackLater(skillId: string): void {
@@ -108,9 +120,22 @@ onBeforeUnmount(() => {
         />
       </a>
       <h3>
-        <a :href="detailHref(skill)">{{ skill.name }}</a>
+        <a :href="detailHref(skill)">{{ titleFor(skill) }}</a>
       </h3>
-      <p>{{ descriptionFor(skill) }}</p>
+      <dl class="skill-intro">
+        <div>
+          <dt>{{ isEnglish ? 'Use' : '用途' }}</dt>
+          <dd>{{ purposeFor(skill) }}</dd>
+        </div>
+        <div>
+          <dt>{{ isEnglish ? 'Scenarios' : '适用场景' }}</dt>
+          <dd>{{ scenariosFor(skill) }}</dd>
+        </div>
+        <div>
+          <dt>{{ isEnglish ? 'Division of work' : '分工' }}</dt>
+          <dd>{{ splitFor(skill) }}</dd>
+        </div>
+      </dl>
       <button
         type="button"
         class="skill-copy"

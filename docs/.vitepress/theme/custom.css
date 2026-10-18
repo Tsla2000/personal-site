@@ -283,9 +283,25 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   font-size: 19px;
 }
 
-.skill-card p {
-  color: var(--vp-c-text-2);
+.vp-doc .skill-intro {
   margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.vp-doc .skill-intro dt {
+  margin: 0;
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.4;
+}
+
+.vp-doc .skill-intro dd {
+  margin: 2px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
   line-height: 1.7;
 }
 
