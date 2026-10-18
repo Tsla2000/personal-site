@@ -25,9 +25,9 @@ aside: false
   </section>
 
   <section class="home-section">
-    <h2>技能</h2>
+    <h2>技能商店</h2>
     <SkillShowcase />
-    <p style="margin-top:12px;"><a href="skills/" style="font-size:14px;color:#1d9bf0;">查看全部技能 →</a></p>
+    <p style="margin-top:12px;"><a href="skills/" style="font-size:14px;color:#1d9bf0;">进入技能商店 →</a></p>
   </section>
 
   <section class="home-section" id="projects">
