@@ -25,8 +25,8 @@ aside: false
   </section>
 
   <section class="home-section">
-    <h2>Skills</h2>
+    <h2>Skills Store</h2>
     <SkillShowcase />
-    <p class="home-more"><a href="skills/">All skills</a></p>
+    <p class="home-more"><a href="skills/">Enter Skills Store</a></p>
   </section>
 </div>
