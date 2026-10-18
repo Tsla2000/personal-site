@@ -1,12 +1,12 @@
 ---
-title: Skills
-description: These are agent skills you can try.
+title: Skills Store
+description: Works with Claude Code, Codex, Cursor, Antigravity, and any Agent that can read SKILL.md.
 aside: false
 pageClass: skill-browse
 ---
 
-# Skills
+# Skills Store
 
-These are agent skills you can try.
+Works with Claude Code, Codex, Cursor, Antigravity, and any Agent that can read SKILL.md.
 
 <SkillShowcase />

@@ -258,6 +258,63 @@ export function skillsForFilter(filterId: string): HomeSkill[] {
   return homeSkills.filter((skill) => allowed.has(skill.id))
 }
 
+export const SKILL_SORT_RECOMMENDED = 'recommended'
+export const SKILL_SORT_POPULAR = 'popular'
+export const SKILL_SORT_NEWEST = 'newest'
+
+export const SKILL_SORTS = [
+  { id: SKILL_SORT_RECOMMENDED, labelZh: '推荐', labelEn: 'Recommended' },
+  { id: SKILL_SORT_POPULAR, labelZh: '热门', labelEn: 'Popular' },
+  { id: SKILL_SORT_NEWEST, labelZh: '最新', labelEn: 'Newest' }
+] as const
+
+export type SkillSortId = (typeof SKILL_SORTS)[number]['id']
+
+/**
+ * 没有浏览量或下载量。热门是固定展示顺序：有详情页的封面图生成在前。
+ * 这不是实时热度。
+ */
+const SKILL_POPULAR_IDS = [
+  'cover_image_gen',
+  'de-ai-writing',
+  'diagram-design',
+  'ai-ui-design',
+  'anatomy',
+  'custom_connector_setup'
+] as const
+
+function assertPopularOrder(): void {
+  const catalogIds = homeSkills.map((skill) => skill.id)
+  const uniquePopularIds = new Set(SKILL_POPULAR_IDS)
+  if (SKILL_POPULAR_IDS.length !== catalogIds.length || uniquePopularIds.size !== SKILL_POPULAR_IDS.length) {
+    throw new Error('热门排序必须不重复地列出全部技能')
+  }
+  for (const skillId of SKILL_POPULAR_IDS) {
+    if (!catalogIds.includes(skillId)) throw new Error(`热门排序含有未知技能 ${skillId}`)
+  }
+}
+
+assertPopularOrder()
+
+const popularRank = new Map<string, number>(SKILL_POPULAR_IDS.map((skillId, index) => [skillId, index]))
+
+/**
+ * 推荐：目录数组的现有顺序，也是页面默认顺序。
+ * 热门：SKILL_POPULAR_IDS。没有真实指标。
+ * 最新：没有发布日期，按目录顺序倒序，后写入的技能靠前。
+ */
+export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): HomeSkill[] {
+  if (sortId === SKILL_SORT_NEWEST) return [...skills].reverse()
+  if (sortId === SKILL_SORT_POPULAR) {
+    return [...skills].sort((leftSkill, rightSkill) => {
+      const leftRank = popularRank.get(leftSkill.id) ?? Number.MAX_SAFE_INTEGER
+      const rightRank = popularRank.get(rightSkill.id) ?? Number.MAX_SAFE_INTEGER
+      return leftRank - rightRank
+    })
+  }
+  return [...skills]
+}
+
 export function findSkill(skillId: string): HomeSkill | undefined {
   return homeSkills.find((skill) => skill.id === skillId)
 }

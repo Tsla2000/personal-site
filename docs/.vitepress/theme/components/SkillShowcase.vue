@@ -4,17 +4,22 @@ import { useRoute, withBase } from 'vitepress'
 import {
   SKILL_FILTER_ALL,
   SKILL_SCENE_FILTERS,
+  SKILL_SORTS,
+  SKILL_SORT_RECOMMENDED,
   SKILL_TYPE_FILTERS,
   skillsForFilter,
   skillPagePath,
+  sortSkills,
   type HomeSkill,
-  type SkillFilterOption
+  type SkillFilterOption,
+  type SkillSortId
 } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
 
 const route = useRoute()
 const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
 const activeFilterId = ref(SKILL_FILTER_ALL)
+const activeSortId = ref<SkillSortId>(SKILL_SORT_RECOMMENDED)
 
 const onCatalog = computed(() => {
   const path = (route.path || '/').replace(/\/$/, '') || '/'
@@ -22,8 +27,15 @@ const onCatalog = computed(() => {
 })
 
 const visibleSkills = computed(() => {
-  if (!onCatalog.value) return skillsForFilter(SKILL_FILTER_ALL)
-  return skillsForFilter(activeFilterId.value)
+  const filtered = skillsForFilter(onCatalog.value ? activeFilterId.value : SKILL_FILTER_ALL)
+  if (!onCatalog.value) return filtered
+  return sortSkills(filtered, activeSortId.value)
+})
+
+const skillCountText = computed(() => {
+  const count = visibleSkills.value.length
+  if (!isEnglish.value) return `${count} 个 Skills`
+  return count === 1 ? '1 Skill' : `${count} Skills`
 })
 
 function filterLabel(filter: SkillFilterOption): string {
@@ -32,6 +44,10 @@ function filterLabel(filter: SkillFilterOption): string {
 
 function selectFilter(filterId: string): void {
   activeFilterId.value = filterId
+}
+
+function sortLabel(sort: (typeof SKILL_SORTS)[number]): string {
+  return isEnglish.value ? sort.labelEn : sort.labelZh
 }
 
 function titleFor(skill: HomeSkill): string {
@@ -97,7 +113,23 @@ function hrefFor(skill: HomeSkill): string | null {
         </button>
       </div>
     </nav>
-    <div class="skill-catalog">
+    <div class="skill-catalog-main">
+      <div v-if="onCatalog" class="skill-catalog-bar">
+        <p class="skill-count">{{ skillCountText }}</p>
+        <label class="skill-sort">
+          <span class="skill-sort-name">{{ isEnglish ? 'Sort' : '排序' }}</span>
+          <select
+            v-model="activeSortId"
+            class="skill-sort-select"
+            :aria-label="isEnglish ? 'Sort skills' : '排序技能'"
+          >
+            <option v-for="sort in SKILL_SORTS" :key="sort.id" :value="sort.id">
+              {{ sortLabel(sort) }}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="skill-catalog">
     <p v-if="onCatalog && visibleSkills.length === 0" class="skill-filter-empty">
       {{ isEnglish ? 'No skills match this filter.' : '没有符合这个筛选的技能。' }}
     </p>
@@ -148,6 +180,7 @@ function hrefFor(skill: HomeSkill): string | null {
         </div>
       </div>
     </article>
+      </div>
     </div>
   </div>
 </template>
