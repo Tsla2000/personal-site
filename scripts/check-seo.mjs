@@ -394,7 +394,7 @@ const EN_SKILL_LEAD = 'Works with Claude Code, Codex, Cursor, Antigravity, and a
 function headingText(html, level) {
   const match = html.match(new RegExp(`<h${level}\\b[^>]*>([\\s\\S]*?)<\\/h${level}>`, 'i'))
   if (!match) return ''
-  return match[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  return match[1].replace(/<[^>]+>/g, '').replace(/[\u200b\ufeff]/g, '').replace(/\s+/g, ' ').trim()
 }
 
 if (existsSync(zhSkills)) {
