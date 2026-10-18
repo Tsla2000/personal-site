@@ -192,9 +192,10 @@ if (!existsSync(homeHtmlPath)) {
   ]) {
     if (!homeHtml.includes(image)) errors.push(`中文首页缺少技能图 ${image}`)
   }
-  if (!homeHtml.includes('用途') || !homeHtml.includes('适用场景') || !homeHtml.includes('分工')) {
-    errors.push('中文首页技能卡缺少用途、适用场景或分工')
+  if (/<dt>\s*用途\s*<\/dt>/.test(homeHtml) || /<dt>\s*适用场景\s*<\/dt>/.test(homeHtml) || /<dt>\s*分工\s*<\/dt>/.test(homeHtml)) {
+    errors.push('中文首页技能卡仍展示用途、适用场景、分工')
   }
+  if (!homeHtml.includes('限时免费')) errors.push('中文首页缺少限时免费')
   if (!homeHtml.includes('id="projects"')) errors.push('中文首页丢失了 #projects')
   if (!homeHtml.includes('href="skills/"') && !homeHtml.includes('href="/skills/')) {
     errors.push('中文首页技能板块没有链到 /skills/')
@@ -302,9 +303,10 @@ if (existsSync(enHome)) {
     if (!html.includes(title)) errors.push(`英文首页缺少技能：${title}`)
   }
   if (!html.includes('/images/skills/custom_connector_setup.jpg')) errors.push('英文首页缺少自定义连接器预览图')
-  if (!html.includes('>Use<') || !html.includes('Scenarios') || !html.includes('Division of work')) {
-    errors.push('英文首页技能卡缺少用途、适用场景或分工')
+  if (/<dt>\s*Use\s*<\/dt>/.test(html) || /<dt>\s*Scenarios\s*<\/dt>/.test(html) || html.includes('Division of work')) {
+    errors.push('英文首页技能卡仍展示 Use、Scenarios、Division of work')
   }
+  if (!html.includes('Free for now')) errors.push('英文首页缺少 Free for now')
 }
 
 function distHasText(needle) {
@@ -337,11 +339,42 @@ if (existsSync(zhSkills)) {
   if (!zhSkillsHtml.includes('复制技能')) errors.push('中文技能页缺少复制技能按钮')
   if (!zhSkillsHtml.includes('自定义连接器 / MCP')) errors.push('中文技能页缺少自定义连接器')
   if (!zhSkillsHtml.includes('/images/skills/diagram-design.jpg')) errors.push('中文技能页缺少图解缩略图')
+  if (!zhSkillsHtml.includes('限时免费')) errors.push('中文技能页缺少限时免费')
+  if (zhSkillsHtml.includes('立即购买') || zhSkillsHtml.includes('US$')) errors.push('中文技能页出现了付费文案')
 }
 if (existsSync(enSkills)) {
   const enSkillsHtml = readFileSync(enSkills, 'utf8')
   if (!enSkillsHtml.includes('Copy skill')) errors.push('英文技能页缺少 Copy skill 按钮')
   if (!enSkillsHtml.includes('Custom Connectors')) errors.push('英文技能页缺少 Custom Connectors')
+  if (!enSkillsHtml.includes('Free for now')) errors.push('英文技能页缺少 Free for now')
+  if (enSkillsHtml.includes('立即购买') || enSkillsHtml.includes('US$')) errors.push('英文技能页出现了付费文案')
+}
+
+const zhCover = join(DIST, 'skills', 'cover-image-gen.html')
+const enCover = join(DIST, 'en', 'skills', 'cover-image-gen.html')
+if (!existsSync(zhCover)) errors.push('缺少中文封面图生成详情页')
+if (!existsSync(enCover)) errors.push('缺少英文封面图生成详情页')
+if (existsSync(zhCover)) {
+  const html = readFileSync(zhCover, 'utf8')
+  for (const text of ['限时免费', '复制技能', '你将获得', '>适合<', '>不适合<', '关于此 Skill', '返回技能列表', 'Grok Bot', '黄底高亮']) {
+    if (!html.includes(text)) errors.push(`中文封面详情缺少 ${text}`)
+  }
+  if (!html.includes('/images/skills/cover_image_gen.jpg')) errors.push('中文封面详情缺少预览图')
+  if (html.includes('立即购买') || html.includes('US$') || html.includes('$12')) errors.push('中文封面详情出现了付费文案')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`${zhCover}: 缺少 hreflang=${lang}`)
+  }
+}
+if (existsSync(enCover)) {
+  const html = readFileSync(enCover, 'utf8')
+  for (const text of ['Free for now', 'Copy skill', 'What you get', '>Good for<', '>Not a fit<', 'About this skill', 'Back to skills', 'Grok Bot']) {
+    if (!html.includes(text)) errors.push(`英文封面详情缺少 ${text}`)
+  }
+  if (!html.includes('/images/skills/cover_image_gen.jpg')) errors.push('英文封面详情缺少预览图')
+  if (html.includes('立即购买') || html.includes('US$') || html.includes('$12')) errors.push('英文封面详情出现了付费文案')
+  for (const lang of ['zh-CN', 'en', 'x-default']) {
+    if (!hreflangTag(html, lang)) errors.push(`${enCover}: 缺少 hreflang=${lang}`)
+  }
 }
 
 const enClaude = join(DIST, 'en', 'ai', 'trends', 'claude-search-surge.html')

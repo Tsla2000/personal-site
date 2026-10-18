@@ -1,10 +1,12 @@
 ---
 title: Skills
-description: Skills and demos merchants can browse before deciding what to use.
+description: These are agent skills you can try. They are free for a limited time.
+aside: false
+pageClass: skill-browse
 ---
 
 # Skills
 
-A place to browse skills and demos: what each one does, and what the result looks like.
+These are agent skills you can try. They are free for a limited time.
 
 <SkillShowcase />
