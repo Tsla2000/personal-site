@@ -1,12 +1,12 @@
 ---
-title: 技能
-description: 这些是可以直接试的 Agent 技能。
+title: 技能商店
+description: 适用于 Claude Code、Codex、Cursor、Antigravity，以及所有能读取 SKILL.md 的 Agent。
 aside: false
 pageClass: skill-browse
 ---
 
-# 技能
+# 技能商店
 
-这些是可以直接试的 Agent 技能。
+适用于 Claude Code、Codex、Cursor、Antigravity，以及所有能读取 SKILL.md 的 Agent。
 
 <SkillShowcase />

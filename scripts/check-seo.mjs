@@ -199,6 +199,7 @@ if (!existsSync(homeHtmlPath)) {
   if (!homeHtml.includes('下载 ZIP')) errors.push('中文首页缺少下载 ZIP')
   if (!homeHtml.includes('/skills/zips/cover-image-gen.zip')) errors.push('中文首页缺少封面技能 ZIP')
   if (homeHtml.includes('skill-filters')) errors.push('中文首页不应出现技能分类筛选')
+  if (homeHtml.includes('skill-catalog-bar')) errors.push('中文首页不应出现技能排序条')
   if (!homeHtml.includes('id="projects"')) errors.push('中文首页丢失了 #projects')
   if (!homeHtml.includes('href="skills/"') && !homeHtml.includes('href="/skills/')) {
     errors.push('中文首页技能板块没有链到 /skills/')
@@ -315,6 +316,7 @@ if (existsSync(enHome)) {
   if (!html.includes('Download ZIP')) errors.push('英文首页缺少 Download ZIP')
   if (!html.includes('/skills/zips/cover-image-gen.zip')) errors.push('英文首页缺少封面技能 ZIP')
   if (html.includes('skill-filters')) errors.push('英文首页不应出现技能分类筛选')
+  if (html.includes('skill-catalog-bar')) errors.push('英文首页不应出现技能排序条')
 }
 
 function distHasText(needle) {
@@ -386,8 +388,34 @@ for (const zipName of [
 }
 const zhSkills = join(DIST, 'skills', 'index.html')
 const enSkills = join(DIST, 'en', 'skills', 'index.html')
+const ZH_SKILL_LEAD = '适用于 Claude Code、Codex、Cursor、Antigravity，以及所有能读取 SKILL.md 的 Agent。'
+const EN_SKILL_LEAD = 'Works with Claude Code, Codex, Cursor, Antigravity, and any Agent that can read SKILL.md.'
+
+function headingText(html, level) {
+  const match = html.match(new RegExp(`<h${level}\\b[^>]*>([\\s\\S]*?)<\\/h${level}>`, 'i'))
+  if (!match) return ''
+  return match[1].replace(/<[^>]+>/g, '').replace(/[\u200b\ufeff]/g, '').replace(/\s+/g, ' ').trim()
+}
+
 if (existsSync(zhSkills)) {
   const zhSkillsHtml = readFileSync(zhSkills, 'utf8')
+  const zhSkillTitle = (zhSkillsHtml.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!zhSkillTitle.startsWith('技能商店')) errors.push(`中文技能页 title 不是技能商店：${zhSkillTitle}`)
+  if (headingText(zhSkillsHtml, 1) !== '技能商店') errors.push('中文技能页 H1 不是技能商店')
+  if (zhSkillsHtml.split(ZH_SKILL_LEAD).length - 1 < 2) errors.push('中文技能页说明不是约定文案')
+  if (zhSkillsHtml.includes('这些是可以直接试的 Agent 技能')) errors.push('中文技能页仍使用旧说明')
+  if (!zhSkillsHtml.includes('skill-catalog-bar')) errors.push('中文技能页缺少数量与排序条')
+  if (!/class="skill-count"[^>]*>\s*\d+ 个 Skills\s*</.test(zhSkillsHtml)) {
+    errors.push('中文技能页缺少「N 个 Skills」')
+  }
+  for (const sortLabel of ['推荐', '热门', '最新']) {
+    if (!zhSkillsHtml.includes(`>${sortLabel}</option>`)) errors.push(`中文技能页排序缺少 ${sortLabel}`)
+  }
+  const recommendedWritingAt = zhSkillsHtml.indexOf('去AI味写作')
+  const recommendedConnectorAt = zhSkillsHtml.indexOf('自定义连接器 / MCP')
+  if (recommendedWritingAt < 0 || recommendedConnectorAt < recommendedWritingAt) {
+    errors.push('中文技能页默认顺序不是推荐顺序')
+  }
   if (!zhSkillsHtml.includes('复制技能')) errors.push('中文技能页缺少复制技能按钮')
   if (!zhSkillsHtml.includes('自定义连接器 / MCP')) errors.push('中文技能页缺少自定义连接器')
   if (!zhSkillsHtml.includes('/images/skills/diagram-design.jpg')) errors.push('中文技能页缺少图解缩略图')
@@ -402,6 +430,23 @@ if (existsSync(zhSkills)) {
 }
 if (existsSync(enSkills)) {
   const enSkillsHtml = readFileSync(enSkills, 'utf8')
+  const enSkillTitle = (enSkillsHtml.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
+  if (!enSkillTitle.startsWith('Skills Store')) errors.push(`英文技能页 title 不是 Skills Store：${enSkillTitle}`)
+  if (headingText(enSkillsHtml, 1) !== 'Skills Store') errors.push('英文技能页 H1 不是 Skills Store')
+  if (enSkillsHtml.split(EN_SKILL_LEAD).length - 1 < 2) errors.push('英文技能页说明不是约定文案')
+  if (enSkillsHtml.includes('These are agent skills you can try')) errors.push('英文技能页仍使用旧说明')
+  if (!enSkillsHtml.includes('skill-catalog-bar')) errors.push('英文技能页缺少数量与排序条')
+  if (!/class="skill-count"[^>]*>\s*\d+ Skills?\s*</.test(enSkillsHtml)) {
+    errors.push('英文技能页缺少技能数量')
+  }
+  for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
+    if (!enSkillsHtml.includes(`>${sortLabel}</option>`)) errors.push(`英文技能页排序缺少 ${sortLabel}`)
+  }
+  const recommendedWritingAt = enSkillsHtml.indexOf('De-AI Writing')
+  const recommendedConnectorAt = enSkillsHtml.indexOf('Custom Connectors')
+  if (recommendedWritingAt < 0 || recommendedConnectorAt < recommendedWritingAt) {
+    errors.push('英文技能页默认顺序不是推荐顺序')
+  }
   if (!enSkillsHtml.includes('Copy skill')) errors.push('英文技能页缺少 Copy skill 按钮')
   if (!enSkillsHtml.includes('Custom Connectors')) errors.push('英文技能页缺少 Custom Connectors')
   if (enSkillsHtml.includes('Free for now') || /free for a limited time/i.test(enSkillsHtml)) {
