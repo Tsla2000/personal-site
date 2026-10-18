@@ -28,7 +28,8 @@ export interface SkillFilterOption {
 
 export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
   { id: 'writing', labelZh: '写作', labelEn: 'Writing', skillIds: ['de-ai-writing'] },
-  { id: 'ui', labelZh: 'UI', labelEn: 'UI', skillIds: ['ai-ui-design'] },
+  { id: 'ui', labelZh: 'UI', labelEn: 'UI', skillIds: ['ai-ui-design', 'frontend-design', 'ui-design-refs'] },
+  { id: 'site-build', labelZh: '建站', labelEn: 'Site build', skillIds: ['personal-site-build'] },
   { id: 'diagram', labelZh: '图解', labelEn: 'Diagram', skillIds: ['diagram-design'] },
   { id: 'anatomy', labelZh: '解剖', labelEn: 'Anatomy', skillIds: ['anatomy'] },
   { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
@@ -41,7 +42,7 @@ export const SKILL_SCENE_FILTERS: readonly SkillFilterOption[] = [
     id: 'site',
     labelZh: '官网内容',
     labelEn: 'Site content',
-    skillIds: ['de-ai-writing', 'diagram-design', 'cover_image_gen']
+    skillIds: ['de-ai-writing', 'diagram-design', 'cover_image_gen', 'personal-site-build', 'frontend-design', 'ui-design-refs']
   },
   {
     id: 'figures',
@@ -247,6 +248,48 @@ export const homeSkills: HomeSkill[] = [
     imageAltZh: '自定义连接器示意：中心是 AI Agent，周围连着 GitHub、数据库和 Slack',
     imageAltEn: 'Custom connector diagram: an AI agent in the center, linked to GitHub, a database, and Slack',
     ...skillFiles('custom_connector_setup')
+  },
+  {
+    id: 'personal-site-build',
+    nameZh: '个人网站搭建',
+    nameEn: 'Personal Site Builder',
+    pitchZh: '飞书底稿 + UI 参考站，从 0 搭个人/品牌站。',
+    pitchEn: 'Feishu brief plus UI refs to build a personal or brand site from scratch.',
+    ...skillType('site-build'),
+    image: '/images/skills/personal-site-build.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '个人网站搭建封面：浏览器里的个人站，旁边是飞书文档和参考站卡片',
+    imageAltEn: 'Cover for Personal Site Builder: a browser site beside a Feishu doc and reference cards',
+    ...skillFiles('personal-site-build')
+  },
+  {
+    id: 'frontend-design',
+    nameZh: '前端设计',
+    nameEn: 'Frontend Design',
+    pitchZh: 'Anthropic 官方前端设计 Skill，做出有辨识度、不像 AI 默认审美的页面。',
+    pitchEn: 'Anthropic’s frontend-design skill for distinctive UI that avoids generic AI looks.',
+    ...skillType('ui'),
+    image: '/images/skills/frontend-design.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '前端设计封面：深色代码编辑器，旁边是一张暖色的独特网页',
+    imageAltEn: 'Cover for Frontend Design: a dark code editor beside a warm, distinctive webpage',
+    ...skillFiles('frontend-design')
+  },
+  {
+    id: 'ui-design-refs',
+    nameZh: 'UI设计参考清单',
+    nameEn: 'UI Design Refs',
+    pitchZh: '8 大类 60+ UI 参考站，按场景挑链接再交给 AI。',
+    pitchEn: 'Sixty-plus UI reference sites in eight buckets for agent-assisted builds.',
+    ...skillType('ui'),
+    image: '/images/skills/ui-design-refs.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: 'UI设计参考清单封面：浅色桌面上的参考站拼贴与设计卡片',
+    imageAltEn: 'Cover for UI Design Refs: a light desk collage of reference sites and design cards',
+    ...skillFiles('ui-design-refs')
   }
 ]
 
@@ -276,6 +319,9 @@ export type SkillSortId = (typeof SKILL_SORTS)[number]['id']
  */
 const SKILL_POPULAR_IDS = [
   'cover_image_gen',
+  'personal-site-build',
+  'frontend-design',
+  'ui-design-refs',
   'de-ai-writing',
   'diagram-design',
   'ai-ui-design',
