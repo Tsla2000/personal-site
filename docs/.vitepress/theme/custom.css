@@ -272,6 +272,99 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   background: var(--vp-c-brand-soft);
 }
 
+.skill-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 56px;
+}
+
+.skill-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+
+.vp-doc .skill-intro {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.vp-doc .skill-intro dt {
+  margin: 0;
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.4;
+}
+
+.vp-doc .skill-intro dd {
+  margin: 2px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.skill-media {
+  display: block;
+  margin: 0 0 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc a.skill-media,
+.vp-doc a.skill-media:hover {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.skill-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vp-doc .skill-card h3 a,
+.vp-doc .skill-card h3 a:hover {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vp-doc .skill-card h3 a {
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc .skill-card h3 a:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.vp-doc button.skill-copy {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 9px 22px;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vp-c-brand-1);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.vp-doc button.skill-copy:hover,
+.vp-doc button.skill-copy.is-copied {
+  background: var(--vp-c-brand-soft);
+}
+
+.vp-doc button.skill-copy:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+
 .about-note {
   max-width: 620px;
   color: var(--vp-c-text-2);
@@ -303,7 +396,8 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
     grid-template-columns: 1fr;
     gap: 5px;
   }
-  .project-list {
+  .project-list,
+  .skill-list {
     grid-template-columns: 1fr;
     gap: 28px;
   }

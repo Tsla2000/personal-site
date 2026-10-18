@@ -176,6 +176,29 @@ if (!existsSync(homeHtmlPath)) {
   if (!/class="[^"]*\btitle\b[^"]*"[^>]*>[\s\S]*PRO的茶里芒果/.test(homeHtml) && !/>PRO的茶里芒果</.test(homeHtml)) {
     errors.push('首页导航未显示站名')
   }
+  if (!/<h2[^>]*>\s*技能\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
+  if (/<h2[^>]*>\s*Thinking\s*<\/h2>/.test(homeHtml)) errors.push('中文首页仍保留 Thinking 板块')
+  if (!homeHtml.includes('复制技能')) errors.push('中文首页缺少复制技能按钮')
+  for (const title of ['去AI味写作', 'AI界面设计规范', '图解设计', '等轴测解剖图', '封面图生成', '自定义连接器 / MCP']) {
+    if (!homeHtml.includes(title)) errors.push(`中文首页缺少技能：${title}`)
+  }
+  for (const image of [
+    '/images/skills/de-ai-writing.jpg',
+    '/images/skills/ai-ui-design.jpg',
+    '/images/skills/diagram-design.jpg',
+    '/images/skills/anatomy.jpg',
+    '/images/skills/cover_image_gen.jpg',
+    '/images/skills/custom_connector_setup.jpg'
+  ]) {
+    if (!homeHtml.includes(image)) errors.push(`中文首页缺少技能图 ${image}`)
+  }
+  if (!homeHtml.includes('用途') || !homeHtml.includes('适用场景') || !homeHtml.includes('分工')) {
+    errors.push('中文首页技能卡缺少用途、适用场景或分工')
+  }
+  if (!homeHtml.includes('id="projects"')) errors.push('中文首页丢失了 #projects')
+  if (!homeHtml.includes('href="skills/"') && !homeHtml.includes('href="/skills/')) {
+    errors.push('中文首页技能板块没有链到 /skills/')
+  }
 }
 
 // 4d. 审计点名的大图必须压到 150KB 以内；多图文章除首图外应懒加载
@@ -273,6 +296,52 @@ if (existsSync(enHome)) {
   if (!html.includes('ai/coding/muse-auto-deploy')) {
     errors.push('英文首页文章列表缺少 Muse 自动部署')
   }
+  if (!/<h2[^>]*>\s*Skills\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
+  if (!html.includes('Copy skill')) errors.push('英文首页缺少 Copy skill 按钮')
+  for (const title of ['De-AI Writing', 'AI Interface Design Rules', 'Diagram Design', 'Isometric Anatomy', 'Cover Image Generation', 'Custom Connectors']) {
+    if (!html.includes(title)) errors.push(`英文首页缺少技能：${title}`)
+  }
+  if (!html.includes('/images/skills/custom_connector_setup.jpg')) errors.push('英文首页缺少自定义连接器预览图')
+  if (!html.includes('>Use<') || !html.includes('Scenarios') || !html.includes('Division of work')) {
+    errors.push('英文首页技能卡缺少用途、适用场景或分工')
+  }
+}
+
+function distHasText(needle) {
+  const pending = [DIST]
+  while (pending.length) {
+    const dir = pending.pop()
+    for (const name of readdirSync(dir)) {
+      if (name.startsWith('.')) continue
+      const filePath = join(dir, name)
+      if (statSync(filePath).isDirectory()) {
+        pending.push(filePath)
+        continue
+      }
+      if (!/\.(html|js|mjs|json)$/.test(name)) continue
+      if (readFileSync(filePath, 'utf8').includes(needle)) return true
+    }
+  }
+  return false
+}
+if (existsSync(DIST) && !distHasText('永远读最新版')) {
+  errors.push('构建产物缺少可复制的去AI味写作文本')
+}
+if (existsSync(DIST) && !distHasText('密钥不进文件/日志')) {
+  errors.push('构建产物缺少可复制的自定义连接器文本')
+}
+const zhSkills = join(DIST, 'skills', 'index.html')
+const enSkills = join(DIST, 'en', 'skills', 'index.html')
+if (existsSync(zhSkills)) {
+  const zhSkillsHtml = readFileSync(zhSkills, 'utf8')
+  if (!zhSkillsHtml.includes('复制技能')) errors.push('中文技能页缺少复制技能按钮')
+  if (!zhSkillsHtml.includes('自定义连接器 / MCP')) errors.push('中文技能页缺少自定义连接器')
+  if (!zhSkillsHtml.includes('/images/skills/diagram-design.jpg')) errors.push('中文技能页缺少图解缩略图')
+}
+if (existsSync(enSkills)) {
+  const enSkillsHtml = readFileSync(enSkills, 'utf8')
+  if (!enSkillsHtml.includes('Copy skill')) errors.push('英文技能页缺少 Copy skill 按钮')
+  if (!enSkillsHtml.includes('Custom Connectors')) errors.push('英文技能页缺少 Custom Connectors')
 }
 
 const enClaude = join(DIST, 'en', 'ai', 'trends', 'claude-search-surge.html')

@@ -22,4 +22,10 @@ keywords: Pro's MangoFund, MangoFund, AI products, Tesla Q3 2026, Claude vs Open
     </div>
     <p class="home-more"><a href="/en/about">About Pro's MangoFund</a></p>
   </section>
+
+  <section class="home-section">
+    <h2>Skills</h2>
+    <SkillShowcase />
+    <p class="home-more"><a href="skills/">All skills</a></p>
+  </section>
 </div>
