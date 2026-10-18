@@ -115,6 +115,18 @@
 /en/investment/tesla/q3-earnings-preview/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/projects
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/projects/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /guestbook
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -146,6 +158,18 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /investment/us-stocks/ai-stage-invest-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/projects
+  Cache-Control: public, max-age=0, must-revalidate
+
+/projects/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/
   Cache-Control: public, max-age=0, must-revalidate
 
 /sponsor
