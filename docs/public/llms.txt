@@ -11,6 +11,13 @@
 - [思考](https://tsla2000.github.io/thinking)：财富、技术与社会
 - [关于](https://tsla2000.github.io/about)
 
+## 投资
+
+- [AI 越成功，投资者越需要保持清醒](https://tsla2000.github.io/investment/methodology/ai-invest-clear)：李录在 2026 年格雷厄姆—多德午餐会上把 AI 的技术前景与资本市场的定价逻辑分开：技术能走多远、企业能赚多少、价格计入多少，是三道不同的题目。（2026.10.18）
+- [特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么](https://tsla2000.github.io/investment/tesla/q3-earnings-preview)：Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。（2026.10.16）
+- [AI 进行到哪一步了？普通人如何投资美股](https://tsla2000.github.io/investment/us-stocks/ai-stage-invest-guide)：用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。（2026.10.06）
+- [Tesla 的长期价值究竟来自汽车吗？](https://tsla2000.github.io/investment/tesla/long-term-value)：把一家公司的价值拆成制造、软件与能源三层。（2026.09.24）
+
 ## 思考
 
 - [别急着移民：未来十年，如何设计自己的全球生活系统](https://tsla2000.github.io/thinking/life/global-living-system)：从身份、收入到资产、居住、医疗养老与家庭安排，建立一套能计算成本、能够调整、也允许退出的长期方案。（2026.10.18）
@@ -30,12 +37,6 @@
 - [AI 产业的下一阶段](https://tsla2000.github.io/ai/trends/next-stage)：市场真正定价的不是技术是否强大，而是价值能否被捕获。（2026.09.18）
 - [AI 编程的真正杠杆](https://tsla2000.github.io/ai/coding/ai-coding-leverage)：AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。（2026.08.30）
 
-## 投资
-
-- [特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么](https://tsla2000.github.io/investment/tesla/q3-earnings-preview)：Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。（2026.10.16）
-- [AI 进行到哪一步了？普通人如何投资美股](https://tsla2000.github.io/investment/us-stocks/ai-stage-invest-guide)：用"技术成熟度 × 商业兑现"两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。（2026.10.06）
-- [Tesla 的长期价值究竟来自汽车吗？](https://tsla2000.github.io/investment/tesla/long-term-value)：把一家公司的价值拆成制造、软件与能源三层。（2026.09.24）
-
 ## English
 
 - [Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher](https://tsla2000.github.io/en/ai/trends/claude-search-surge): Google Trends shows Claude at 94–100 versus OpenAI at 7–8. Why that is not a Claude vs ChatGPT user count, and what Opus 5.5 changed for developers. (2026.10.16)
@@ -45,7 +46,7 @@
 - [Cover Image Generation](https://tsla2000.github.io/en/skills/cover-image-gen): Turn a finished Chinese title into a 3D paper-craft clay cover. Three compositions, then a character-by-character check.
 - [Pro's MangoFund](https://tsla2000.github.io/en): English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
 - [Projects](https://tsla2000.github.io/en/projects): Products on this site. XMade is a Chrome extension for saving posts from X.
-- [Skills](https://tsla2000.github.io/en/skills): These are agent skills you can try.
+- [Skills Store](https://tsla2000.github.io/en/skills): Works with Claude Code, Codex, Cursor, Antigravity, and any Agent that can read SKILL.md.
 
 ## 订阅
 

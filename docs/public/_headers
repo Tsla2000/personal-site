@@ -148,6 +148,12 @@
 /investment/
   Cache-Control: public, max-age=0, must-revalidate
 
+/investment/methodology/ai-invest-clear
+  Cache-Control: public, max-age=0, must-revalidate
+
+/investment/methodology/ai-invest-clear/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /investment/tesla/long-term-value
   Cache-Control: public, max-age=0, must-revalidate
 

@@ -6,8 +6,11 @@ description: 按时间倒序的所有文章。
 # 文章归档
 
 <!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
-<h2>2026（16）</h2>
+<h2>2026（17）</h2>
 <div class="article-list">
+<a class="article-row" href="/investment/methodology/ai-invest-clear">
+  <time>2026.10.18</time><div><strong>AI 越成功，投资者越需要保持清醒</strong><small>投资 · 李录在 2026 年格雷厄姆—多德午餐会上把 AI 的技术前景与资本市场的定价逻辑分开：技术能走多远、企业能赚多少、价格计入多少，是三道不同的题目。</small></div>
+</a>
 <a class="article-row" href="/thinking/life/global-living-system">
   <time>2026.10.18</time><div><strong>别急着移民：未来十年，如何设计自己的全球生活系统</strong><small>思考 · 从身份、收入到资产、居住、医疗养老与家庭安排，建立一套能计算成本、能够调整、也允许退出的长期方案。</small></div>
 </a>
