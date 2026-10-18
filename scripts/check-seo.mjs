@@ -176,7 +176,7 @@ if (!existsSync(homeHtmlPath)) {
   if (!/class="[^"]*\btitle\b[^"]*"[^>]*>[\s\S]*PRO的茶里芒果/.test(homeHtml) && !/>PRO的茶里芒果</.test(homeHtml)) {
     errors.push('首页导航未显示站名')
   }
-  if (!/<h2[^>]*>\s*技能\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
+  if (!/<h2[^>]*>\s*技能商店\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
   if (/<h2[^>]*>\s*Thinking\s*<\/h2>/.test(homeHtml)) errors.push('中文首页仍保留 Thinking 板块')
   if (!homeHtml.includes('复制技能')) errors.push('中文首页缺少复制技能按钮')
   for (const title of ['去AI味写作', 'AI界面设计规范', '图解设计', '等轴测解剖图', '封面图生成', '自定义连接器 / MCP']) {
@@ -300,7 +300,7 @@ if (existsSync(enHome)) {
   if (!html.includes('ai/coding/muse-auto-deploy')) {
     errors.push('英文首页文章列表缺少 Muse 自动部署')
   }
-  if (!/<h2[^>]*>\s*Skills\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
+  if (!/<h2[^>]*>\s*Skills Store\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
   if (!html.includes('Copy skill')) errors.push('英文首页缺少 Copy skill 按钮')
   for (const title of ['De-AI Writing', 'AI Interface Design Rules', 'Diagram Design', 'Isometric Anatomy', 'Cover Image Generation', 'Custom Connectors']) {
     if (!html.includes(title)) errors.push(`英文首页缺少技能：${title}`)
