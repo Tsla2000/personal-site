@@ -79,5 +79,23 @@
     "zipFile": "ui-design-refs.zip",
     "promptPath": "/skills/sources/ui-design-refs/SKILL.md",
     "zipPath": "/skills/zips/ui-design-refs.zip"
+  },
+  {
+    "id": "haiwai-new-keyword-launch",
+    "dir": "haiwai-new-keyword-launch",
+    "promptName": "出海新词上站",
+    "zipSkillEntry": "haiwai-new-keyword-launch/SKILL.md",
+    "zipFile": "haiwai-new-keyword-launch.zip",
+    "promptPath": "/skills/sources/haiwai-new-keyword-launch/SKILL.md",
+    "zipPath": "/skills/zips/haiwai-new-keyword-launch.zip"
+  },
+  {
+    "id": "haiwai-monetize-convert",
+    "dir": "haiwai-monetize-convert",
+    "promptName": "出海变现转化",
+    "zipSkillEntry": "haiwai-monetize-convert/SKILL.md",
+    "zipFile": "haiwai-monetize-convert.zip",
+    "promptPath": "/skills/sources/haiwai-monetize-convert/SKILL.md",
+    "zipPath": "/skills/zips/haiwai-monetize-convert.zip"
   }
 ]

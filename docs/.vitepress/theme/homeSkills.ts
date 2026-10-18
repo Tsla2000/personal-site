@@ -33,7 +33,8 @@ export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
   { id: 'diagram', labelZh: '图解', labelEn: 'Diagram', skillIds: ['diagram-design'] },
   { id: 'anatomy', labelZh: '解剖', labelEn: 'Anatomy', skillIds: ['anatomy'] },
   { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
-  { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] }
+  { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] },
+  { id: 'haiwai', labelZh: '出海', labelEn: 'Overseas', skillIds: ['haiwai-new-keyword-launch', 'haiwai-monetize-convert'] }
 ]
 
 /** 只保留和类型筛选结果不同的场景。产品前端等于 UI，接入服务等于连接。 */
@@ -290,6 +291,34 @@ export const homeSkills: HomeSkill[] = [
     imageAltZh: 'UI设计参考清单封面：浅色桌面上的参考站拼贴与设计卡片',
     imageAltEn: 'Cover for UI Design Refs: a light desk collage of reference sites and design cards',
     ...skillFiles('ui-design-refs')
+  },
+  {
+    id: 'haiwai-new-keyword-launch',
+    nameZh: '出海新词上站',
+    nameEn: 'Overseas New-Keyword Launch',
+    pitchZh: 'Trends 词根法 + D0–D5 当天上站，抢 SEO/GEO 红利。',
+    pitchEn: 'Trends root words plus a D0–D5 same-day launch for the SEO/GEO window.',
+    ...skillType('haiwai'),
+    image: '/images/skills/haiwai-new-keyword-launch.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '出海新词上站封面：浏览器里的新词站，旁边是上升的搜索趋势图',
+    imageAltEn: 'Cover for Overseas New-Keyword Launch: a browser site beside a rising search-trend chart',
+    ...skillFiles('haiwai-new-keyword-launch')
+  },
+  {
+    id: 'haiwai-monetize-convert',
+    nameZh: '出海变现转化',
+    nameEn: 'Overseas Monetize & Convert',
+    pitchZh: '假生成、锚定定价、留存入口与 Stripe 埋点风控，提升付费转化。',
+    pitchEn: 'Fake generation, anchor pricing, retention hooks, and Stripe event risk controls to lift paid conversion.',
+    ...skillType('haiwai'),
+    image: '/images/skills/haiwai-monetize-convert.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '出海变现转化封面：定价卡片、转化漏斗和支付界面',
+    imageAltEn: 'Cover for Overseas Monetize & Convert: pricing cards, a conversion funnel, and a payment screen',
+    ...skillFiles('haiwai-monetize-convert')
   }
 ]
 
@@ -320,6 +349,8 @@ export type SkillSortId = (typeof SKILL_SORTS)[number]['id']
 const SKILL_POPULAR_IDS = [
   'cover_image_gen',
   'personal-site-build',
+  'haiwai-new-keyword-launch',
+  'haiwai-monetize-convert',
   'frontend-design',
   'ui-design-refs',
   'de-ai-writing',
