@@ -226,7 +226,7 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 .article-card-thumb {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2.35 / 1;
   object-fit: cover;
   background: var(--vp-c-bg-soft);
 }
