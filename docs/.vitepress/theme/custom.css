@@ -223,14 +223,14 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   transform: translateY(-2px);
 }
 
-/* 首页文章封面：完整显示原图，避免裁掉封面中的标题/文字。
-   容器保持统一比例；原图比例不同时以背景留白，不拉伸、不裁切。 */
+/* 首页文章封面：铺满统一比例的卡片，顶部对齐，优先裁掉底部内容。
+   适合宽屏封面；顶部标题可能被裁切的图片需单独检查。 */
 .article-card-thumb {
   display: block;
   width: 100%;
   aspect-ratio: 2.35 / 1;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center top;
   background: var(--vp-c-bg-soft);
 }
 
