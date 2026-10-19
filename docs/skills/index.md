@@ -11,6 +11,10 @@ pageClass: skill-browse
 
 **怎么用：** 按场景筛选技能 → 复制 SKILL.md 或下载 ZIP → 放进支持 Skills 的 Agent → 用自己的项目和目标启动。技能会提供流程、检查点与验收标准；具体执行结果仍需在你的环境中验证。
 
+## 从安装到实际使用
+
+- [Agent Skills 安装指南：如何在 Codex、Claude Code 等工具中使用 SKILL.md](../ai/workflows/agent-skills-installation-guide)：了解技能包结构、安装验证、常见触发问题和安全检查。
+
 ## 按任务查找实用工作流
 
 - [AI Coding 项目交付流程：从需求到可验收成果](../ai/workflows/ai-project-delivery-workflow)：需求澄清、分步实现、测试和交接。
