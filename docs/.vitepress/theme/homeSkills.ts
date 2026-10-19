@@ -27,15 +27,17 @@ export interface SkillFilterOption {
 }
 
 export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
-  { id: 'writing', labelZh: '写作', labelEn: 'Writing', skillIds: ['de-ai-writing'] },
+  { id: 'writing', labelZh: '写作', labelEn: 'Writing', skillIds: ['de-ai-writing', 'content-repurpose'] },
   { id: 'ui', labelZh: 'UI', labelEn: 'UI', skillIds: ['ai-ui-design', 'frontend-design', 'ui-design-refs'] },
-  { id: 'site-build', labelZh: '建站', labelEn: 'Site build', skillIds: ['personal-site-build'] },
+  { id: 'site-build', labelZh: '建站', labelEn: 'Site build', skillIds: ['personal-site-build', 'website-launch-check'] },
   { id: 'diagram', labelZh: '图解', labelEn: 'Diagram', skillIds: ['diagram-design'] },
   { id: 'anatomy', labelZh: '解剖', labelEn: 'Anatomy', skillIds: ['anatomy'] },
   { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
   { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] },
   { id: 'haiwai', labelZh: '出海', labelEn: 'Overseas', skillIds: ['haiwai-new-keyword-launch', 'haiwai-monetize-convert'] },
   { id: 'coding', labelZh: '开发', labelEn: 'Development', skillIds: ['ai-project-delivery'] },
+  { id: 'automation', labelZh: '自动化', labelEn: 'Automation', skillIds: ['browser-automation'] },
+  { id: 'analytics', labelZh: '数据分析', labelEn: 'Analytics', skillIds: ['data-analysis'] },
   { id: 'method', labelZh: '方法', labelEn: 'Method', skillIds: ['writing-skills', 'brainstorming', 'systematic-debugging', 'verification-before-completion', 'writing-plans'] }
 ]
 
@@ -45,7 +47,7 @@ export const SKILL_SCENE_FILTERS: readonly SkillFilterOption[] = [
     id: 'site',
     labelZh: '官网内容',
     labelEn: 'Site content',
-    skillIds: ['de-ai-writing', 'diagram-design', 'cover_image_gen', 'personal-site-build', 'frontend-design', 'ui-design-refs']
+    skillIds: ['de-ai-writing', 'content-repurpose', 'diagram-design', 'cover_image_gen', 'personal-site-build', 'website-launch-check', 'frontend-design', 'ui-design-refs']
   },
   {
     id: 'figures',
@@ -406,6 +408,62 @@ export const homeSkills: HomeSkill[] = [
     imageAltEn: 'Code and web interface illustration representing AI project implementation and verification',
     ...skillFiles('ai-project-delivery')
   },
+  {
+    id: 'website-launch-check',
+    nameZh: '网站上线验收',
+    nameEn: 'Website Launch QA',
+    pitchZh: '发布前逐项检查核心路径、移动端、SEO、分享卡与回滚方案。',
+    pitchEn: 'Verify core flows, mobile layout, SEO, share previews, and rollback before launch.',
+    ...skillType('site-build'),
+    image: '/images/skills/personal-site-build.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '网站上线验收：网页与发布检查清单',
+    imageAltEn: 'Website launch QA: a webpage and release checklist',
+    ...skillFiles('website-launch-check')
+  },
+  {
+    id: 'content-repurpose',
+    nameZh: '内容一稿多用',
+    nameEn: 'Content Repurposing',
+    pitchZh: '把一份原创素材改造成公众号、X、短帖和官网内容，保留事实与口吻。',
+    pitchEn: 'Adapt one source into posts, articles, and web copy without losing facts or voice.',
+    ...skillType('writing'),
+    image: '/images/skills/de-ai-writing.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '内容一稿多用：同一份稿件整理成不同平台内容',
+    imageAltEn: 'Content repurposing: one source adapted for multiple platforms',
+    ...skillFiles('content-repurpose')
+  },
+  {
+    id: 'browser-automation',
+    nameZh: '浏览器自动化流程',
+    nameEn: 'Browser Automation Workflow',
+    pitchZh: '把重复网页操作变成可验证、可恢复的流程，并为高风险动作保留确认。',
+    pitchEn: 'Turn repetitive web tasks into verifiable, recoverable workflows with safe checkpoints.',
+    ...skillType('automation'),
+    image: '/images/skills/custom_connector_setup.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '浏览器自动化：网页流程与任务步骤',
+    imageAltEn: 'Browser automation: a web workflow and task steps',
+    ...skillFiles('browser-automation')
+  },
+  {
+    id: 'data-analysis',
+    nameZh: '数据分析与决策',
+    nameEn: 'Data Analysis & Decisions',
+    pitchZh: '检查口径、拆解漏斗与分群，把数据结论转成下一步实验和动作。',
+    pitchEn: 'Validate definitions, analyze funnels and cohorts, and turn findings into next actions.',
+    ...skillType('analytics'),
+    image: '/images/skills/diagram-design.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '数据分析：指标图表与业务漏斗',
+    imageAltEn: 'Data analysis: metrics and a business funnel',
+    ...skillFiles('data-analysis')
+  },
 ]
 
 export function skillsForFilter(filterId: string): HomeSkill[] {
@@ -429,10 +487,17 @@ export const SKILL_SORTS = [
 export type SkillSortId = (typeof SKILL_SORTS)[number]['id']
 
 /**
- * 没有浏览量或下载量。热门是固定展示顺序：有详情页的封面图生成在前。
- * 这不是实时热度。
+ * 没有浏览量或下载量。此固定排序是编辑推荐，不代表真实热度或下载数据。
  */
 const SKILL_POPULAR_IDS = [
+  'ai-project-delivery',
+  'website-launch-check',
+  'haiwai-new-keyword-launch',
+  'frontend-design',
+  'content-repurpose',
+  'custom_connector_setup',
+  'browser-automation',
+  'data-analysis',
   'cover_image_gen',
   'personal-site-build',
   'haiwai-new-keyword-launch',
@@ -448,8 +513,7 @@ const SKILL_POPULAR_IDS = [
   'brainstorming',
   'systematic-debugging',
   'verification-before-completion',
-  'writing-plans',
-  'ai-project-delivery'
+  'writing-plans'
 ] as const
 
 function assertPopularOrder(): void {
@@ -468,9 +532,7 @@ assertPopularOrder()
 const popularRank = new Map<string, number>(SKILL_POPULAR_IDS.map((skillId, index) => [skillId, index]))
 
 /**
- * 推荐：目录数组的现有顺序，也是页面默认顺序。
- * 热门：SKILL_POPULAR_IDS。没有真实指标。
- * 最新：没有发布日期，按目录顺序倒序，后写入的技能靠前。
+ * 推荐与编辑推荐：优先展示 8 个有明确结果导向的工作流；最新：按目录录入顺序倒序。
  */
 export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): HomeSkill[] {
   if (sortId === SKILL_SORT_NEWEST) return [...skills].reverse()
@@ -481,31 +543,35 @@ export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): H
       return leftRank - rightRank
     })
   }
-  return [...skills]
+  return [...skills].sort((leftSkill, rightSkill) => {
+    const leftRank = popularRank.get(leftSkill.id) ?? Number.MAX_SAFE_INTEGER
+    const rightRank = popularRank.get(rightSkill.id) ?? Number.MAX_SAFE_INTEGER
+    return leftRank - rightRank
+  })
 }
 
-/** 首页技能商店固定展示的最新技能数量。目录页仍展示全部。 */
+/** 首页技能商店展示编辑优先级最高的技能数量。目录页仍展示全部。 */
 export const HOME_SKILL_SHOWCASE_LIMIT = 9
 
-/** 首页展示：按最新规则取前若干个，不写死技能 id。 */
+/** 首页展示：按编辑推荐顺序取前若干个。 */
 export function homeShowcaseSkills(
   skills: readonly HomeSkill[] = homeSkills,
   limit: number = HOME_SKILL_SHOWCASE_LIMIT
 ): HomeSkill[] {
   if (limit <= 0) return []
-  return sortSkills(skills, SKILL_SORT_NEWEST).slice(0, limit)
+  return sortSkills(skills, SKILL_SORT_RECOMMENDED).slice(0, limit)
 }
 
 function assertHomeShowcase(): void {
   const shown = homeShowcaseSkills()
-  const newest = sortSkills(homeSkills, SKILL_SORT_NEWEST)
+  const recommended = sortSkills(homeSkills, SKILL_SORT_RECOMMENDED)
   const expectedCount = Math.min(HOME_SKILL_SHOWCASE_LIMIT, homeSkills.length)
   if (shown.length !== expectedCount) {
     throw new Error(`首页应展示最新 ${expectedCount} 个技能，实际 ${shown.length} 个`)
   }
   for (let index = 0; index < shown.length; index += 1) {
-    if (shown[index]?.id !== newest[index]?.id) {
-      throw new Error('首页技能必须按最新顺序取前若干个')
+    if (shown[index]?.id !== recommended[index]?.id) {
+      throw new Error('首页技能必须按编辑推荐顺序取前若干个')
     }
   }
 }
