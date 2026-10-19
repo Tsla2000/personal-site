@@ -299,7 +299,7 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 /* ============ 归档页:Perplexity Discover 风格 ============ */
 .archive-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
   gap: 44px;
   align-items: start;
 }
