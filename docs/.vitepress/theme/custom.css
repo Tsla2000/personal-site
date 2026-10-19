@@ -198,16 +198,79 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   gap: 0;
 }
 
-.vp-doc a.article-row,
-.vp-doc a.article-row:hover {
-  display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
-  gap: 24px;
-  padding: 19px 0;
-  border-bottom: 1px solid var(--vp-c-divider);
+/* 首页最新文章：2x2 图文卡片；归档页继续使用紧凑列表 */
+.home-page .article-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 22px;
+}
+
+.vp-doc a.article-card,
+.vp-doc a.article-card:hover {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background: var(--vp-c-bg);
   text-decoration: none;
   color: inherit;
   font-weight: inherit;
+  transition: border-color .18s ease, transform .18s ease;
+}
+
+.vp-doc a.article-card:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: translateY(-2px);
+}
+
+.article-card-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--vp-c-bg-soft);
+}
+
+.article-card-placeholder {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.article-card-body {
+  padding: 15px 16px 18px;
+}
+
+.article-card time {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.article-card strong {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--vp-c-text-1);
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.article-card small {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 8px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.article-card:hover strong {
+  color: var(--vp-c-brand-1);
 }
 
 .article-row time {
@@ -578,9 +641,16 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   .home-hero {
     padding-bottom: 72px;
   }
+  .home-page .article-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
   .article-row {
     grid-template-columns: 1fr;
     gap: 5px;
+  }
+  .article-card-body {
+    padding: 13px 14px 15px;
   }
   .project-list,
   .skill-catalog {

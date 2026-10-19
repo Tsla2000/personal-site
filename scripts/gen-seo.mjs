@@ -231,6 +231,7 @@ for (const file of files) {
     title: fm.title,
     description: fm.description || '',
     category: fm.category || '',
+    image: fm.image || (readFileSync(file, 'utf8').match(/!\\[[^\\]]*\\]\\(([^)]+)\\)/)?.[1] || '',
     date: d,
     dateStr: fm.date.replace(/-/g, '.'),
     link: CANONICAL_URL + toUrlPath(file),
@@ -410,11 +411,16 @@ ${enLlmsSection}
 writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 
 // ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
-const latestRows = items.slice(0, 3).map((it) => {
-  const sub = it.category ? `${it.category} · ${it.description}` : it.description
-  return `      <a class="article-row" href="${it.urlPath}">
-        <time>${it.dateStr}</time><div><strong>${esc(it.title)}</strong><small>${esc(sub)}</small></div>
-      </a>`
+const latestRows = items.slice(0, 4).map((it) => {
+  const sub = it.category ? it.category + ' · ' + it.description : it.description
+  const image = it.image ? baseNoSlash + (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+  const thumb = image
+    ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
+    : '<div class="article-card-thumb article-card-placeholder"></div>'
+  return '      <a class="article-card" href="' + it.urlPath + '">' +
+    '\n        ' + thumb +
+    '\n        <div class="article-card-body"><time>' + it.dateStr + '</time><strong>' + esc(it.title) + '</strong><small>' + esc(sub) + '</small></div>' +
+    '\n      </a>'
 }).join('\n')
 const indexPath = join(DOCS_DIR, 'index.md')
 const indexSrc = readFileSync(indexPath, 'utf8')
