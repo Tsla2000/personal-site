@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, readFileSync, statSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -46,7 +46,11 @@ const MIN_ZIP_BYTES = {
   'brainstorming.zip': 2000,
   'systematic-debugging.zip': 2000,
   'verification-before-completion.zip': 2000,
-  'writing-plans.zip': 2000
+  'writing-plans.zip': 2000,
+  'website-launch-check.zip': 1500,
+  'content-repurpose.zip': 1500,
+  'browser-automation.zip': 1500,
+  'data-analysis.zip': 1500
 }
 
 const MINIMUM_PACKAGE_COUNT = 6
@@ -57,11 +61,16 @@ if (!Array.isArray(packages) || packages.length < MINIMUM_PACKAGE_COUNT || manif
   throw new Error(`技能包清单必须与 packages 等长，且至少 ${MINIMUM_PACKAGE_COUNT} 个，当前是 ${actualCount} 个`)
 }
 
+mkdirSync(ZIP_ROOT, { recursive: true })
+
 for (const item of manifest) {
   const skillPath = join(SOURCE_ROOT, item.dir, 'SKILL.md')
   const zipPath = join(ZIP_ROOT, item.zipFile)
   if (!existsSync(skillPath)) throw new Error(`缺少 ${skillPath}`)
-  if (!existsSync(zipPath)) throw new Error(`缺少 ${zipPath}`)
+  // New first-party skills can be packaged during build; existing reviewed ZIPs remain unchanged.
+  if (!existsSync(zipPath)) {
+    execFileSync('zip', ['-q', '-X', '-r', zipPath, item.dir], { cwd: SOURCE_ROOT })
+  }
   if (item.promptPath !== `/skills/sources/${item.dir}/SKILL.md`) {
     throw new Error(`${item.id} 的 promptPath 与目录不一致`)
   }
