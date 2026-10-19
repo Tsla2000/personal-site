@@ -231,7 +231,7 @@ for (const file of files) {
     title: fm.title,
     description: fm.description || '',
     category: fm.category || '',
-    image: fm.image || (readFileSync(file, 'utf8').match(/!\\[[^\\]]*\\]\\(([^)]+)\\)/)?.[1] || '',
+    image: fm.image || (readFileSync(file, 'utf8').match(/!\[[^\]]*\]\(([^)]+)\)/)?.[1] || '',
     date: d,
     dateStr: fm.date.replace(/-/g, '.'),
     link: CANONICAL_URL + toUrlPath(file),
