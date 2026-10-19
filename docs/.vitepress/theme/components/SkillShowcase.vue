@@ -17,6 +17,7 @@ import {
 } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
 import { useBarePath } from '../useLocale'
+import { trackEvent } from '../analytics'
 
 const barePath = useBarePath()
 const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
@@ -75,6 +76,13 @@ function imageAltFor(skill: HomeSkill): string {
 function hrefFor(skill: HomeSkill): string | null {
   const path = skillPagePath(skill, isEnglish.value, onCatalog.value)
   return path ? withBase(path) : null
+}
+
+function trackSkillDownload(skill: HomeSkill): void {
+  trackEvent('skill_download', {
+    skill_id: skill.id,
+    language: isEnglish.value ? 'en' : 'zh'
+  })
 }
 </script>
 
@@ -185,6 +193,7 @@ function hrefFor(skill: HomeSkill): string | null {
             :href="withBase(skill.zipPath)"
             :download="skill.zipFile"
             :aria-label="zipAriaLabel(titleFor(skill))"
+            @click="trackSkillDownload(skill)"
           >{{ zipLabel() }}</a>
         </div>
       </div>
