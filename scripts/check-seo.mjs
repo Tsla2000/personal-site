@@ -48,8 +48,7 @@ function getMetaAll(html, name) {
 
 /** 首页技能商店固定张数。目录页仍展示全部技能。 */
 const HOME_SKILL_CARD_LIMIT = 9
-/** 当前目录技能总数。新增技能时同步改这一处，首页仍只取最新 9 个。 */
-const CATALOG_SKILL_COUNT = 17
+/** 技能目录数量从渲染后的卡片与数量标签交叉校验。 */
 
 function skillTiles(html) {
   return html.match(/<article\b[^>]*\bskill-tile\b[^>]*>[\s\S]*?<\/article>/g) || []
@@ -63,21 +62,19 @@ function skillTileTitles(html) {
   })
 }
 
-function assertHomeShowsNewest(homeHtml, catalogHtml, label) {
+function assertHomeShowsRecommended(homeHtml, catalogHtml, label) {
   const homeTitles = skillTileTitles(homeHtml)
   const catalogTitles = skillTileTitles(catalogHtml)
   if (homeTitles.length !== HOME_SKILL_CARD_LIMIT) {
-    errors.push(`${label}首页应展示最新 ${HOME_SKILL_CARD_LIMIT} 个技能，实际 ${homeTitles.length} 个`)
+    errors.push(`${label}首页应展示 ${HOME_SKILL_CARD_LIMIT} 个推荐技能，实际 ${homeTitles.length} 个`)
   }
-  if (catalogTitles.length !== CATALOG_SKILL_COUNT) {
-    errors.push(`${label}技能目录应展示全部 ${CATALOG_SKILL_COUNT} 个技能，实际 ${catalogTitles.length} 个`)
+  const countMatch = catalogHtml.match(/class="skill-count"[^>]*>\s*(\d+)/)
+  if (!countMatch || Number(countMatch[1]) !== catalogTitles.length) {
+    errors.push(`${label}技能目录数量标签与卡片数量不一致：${catalogTitles.length} 张卡片`)
   }
-  const expected = [...catalogTitles].reverse().slice(0, HOME_SKILL_CARD_LIMIT)
+  const expected = catalogTitles.slice(0, HOME_SKILL_CARD_LIMIT)
   if (homeTitles.join('\n') !== expected.join('\n')) {
-    errors.push(`${label}首页技能不是目录倒序的最新 ${HOME_SKILL_CARD_LIMIT} 个：${homeTitles.join('、')}`)
-  }
-  for (const title of catalogTitles.slice(0, Math.max(0, catalogTitles.length - HOME_SKILL_CARD_LIMIT))) {
-    if (title && homeTitles.includes(title)) errors.push(`${label}首页不应展示较早技能：${title}`)
+    errors.push(`${label}首页技能不是目录推荐顺序的前 ${HOME_SKILL_CARD_LIMIT} 个：${homeTitles.join('、')}`)
   }
 }
 
@@ -431,8 +428,8 @@ for (const zipName of [
 }
 const zhSkills = join(DIST, 'skills', 'index.html')
 const enSkills = join(DIST, 'en', 'skills', 'index.html')
-const ZH_SKILL_LEAD = '适用于 Claude Code、Codex、Cursor、Antigravity，以及所有能读取 SKILL.md 的 Agent。'
-const EN_SKILL_LEAD = 'Works with Claude Code, Codex, Cursor, Antigravity, and any Agent that can read SKILL.md.'
+const ZH_SKILL_LEAD = '不是一堆泛用提示词，而是能直接交给 Agent 执行的工作流程。'
+const EN_SKILL_LEAD = 'Not a pile of generic prompts.'
 
 function headingText(html, level) {
   const match = html.match(new RegExp(`<h${level}\\b[^>]*>([\\s\\S]*?)<\\/h${level}>`, 'i'))
@@ -445,20 +442,19 @@ if (existsSync(zhSkills)) {
   const zhSkillTitle = (zhSkillsHtml.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
   if (!zhSkillTitle.startsWith('技能商店')) errors.push(`中文技能页 title 不是技能商店：${zhSkillTitle}`)
   if (headingText(zhSkillsHtml, 1) !== '技能商店') errors.push('中文技能页 H1 不是技能商店')
-  if (zhSkillsHtml.split(ZH_SKILL_LEAD).length - 1 < 2) errors.push('中文技能页说明不是约定文案')
+  if (!zhSkillsHtml.includes(ZH_SKILL_LEAD) || !zhSkillsHtml.includes('支持 Skills 的 Agent')) errors.push('中文技能页说明不是约定文案')
   if (zhSkillsHtml.includes('这些是可以直接试的 Agent 技能')) errors.push('中文技能页仍使用旧说明')
   if (!zhSkillsHtml.includes('skill-catalog-bar')) errors.push('中文技能页缺少数量与排序条')
-  if (!/class="skill-count"[^>]*>\s*17 个 Skills\s*</.test(zhSkillsHtml)) {
-    errors.push('中文技能页应显示全部 17 个 Skills')
+  if (!/class="skill-count"[^>]*>\s*\d+ 个 Skills\s*</.test(zhSkillsHtml)) {
+    errors.push('中文技能页缺少技能总数')
   }
   if (zhSkillsHtml.includes('skill-sort-select')) errors.push('中文技能页排序仍是下拉框')
   for (const sortLabel of ['推荐', '热门', '最新']) {
     if (!zhSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`中文技能页排序缺少 ${sortLabel}`)
   }
-  const recommendedWritingAt = zhSkillsHtml.indexOf('去AI味写作')
-  const recommendedConnectorAt = zhSkillsHtml.indexOf('自定义连接器 / MCP')
-  if (recommendedWritingAt < 0 || recommendedConnectorAt < recommendedWritingAt) {
-    errors.push('中文技能页默认顺序不是推荐顺序')
+  const zhPriority = ['AI 项目交付', '网站上线验收', '出海新词上站', '前端设计', '内容一稿多用', '自定义连接器 / MCP', '浏览器自动化流程', '数据分析与决策'].map((title) => zhSkillsHtml.indexOf(title))
+  if (zhPriority.some((position, index) => position < 0 || (index > 0 && position < zhPriority[index - 1]))) {
+    errors.push('中文技能页没有按八个结果导向方向优先排序')
   }
   if (!zhSkillsHtml.includes('复制技能')) errors.push('中文技能页缺少复制技能按钮')
   if (!zhSkillsHtml.includes('自定义连接器 / MCP')) errors.push('中文技能页缺少自定义连接器')
@@ -467,7 +463,7 @@ if (existsSync(zhSkills)) {
   if (!zhSkillsHtml.includes('下载 ZIP')) errors.push('中文技能页缺少下载 ZIP')
   if (!zhSkillsHtml.includes('/skills/zips/de-ai-writing.zip')) errors.push('中文技能页缺少去AI味写作 ZIP')
   if (!zhSkillsHtml.includes('skill-filters')) errors.push('中文技能页缺少分类筛选')
-  for (const text of ['全部', '类型', '写作', '图解', '场景', '官网内容', '插图', '建站', '方法']) {
+  for (const text of ['全部', '类型', '写作', '图解', '场景', '官网内容', '插图', '建站', '方法', '自动化', '数据分析']) {
     if (!zhSkillsHtml.includes(text)) errors.push(`中文技能页筛选缺少 ${text}`)
   }
   if (!zhSkillsHtml.includes('/skills/zips/personal-site-build.zip')) errors.push('中文技能页缺少个人网站搭建 ZIP')
@@ -480,20 +476,19 @@ if (existsSync(enSkills)) {
   const enSkillTitle = (enSkillsHtml.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
   if (!enSkillTitle.startsWith('Skills Store')) errors.push(`英文技能页 title 不是 Skills Store：${enSkillTitle}`)
   if (headingText(enSkillsHtml, 1) !== 'Skills Store') errors.push('英文技能页 H1 不是 Skills Store')
-  if (enSkillsHtml.split(EN_SKILL_LEAD).length - 1 < 2) errors.push('英文技能页说明不是约定文案')
+  if (!enSkillsHtml.includes(EN_SKILL_LEAD) || !enSkillsHtml.includes('Filter by scenario')) errors.push('英文技能页说明不是约定文案')
   if (enSkillsHtml.includes('These are agent skills you can try')) errors.push('英文技能页仍使用旧说明')
   if (!enSkillsHtml.includes('skill-catalog-bar')) errors.push('英文技能页缺少数量与排序条')
-  if (!/class="skill-count"[^>]*>\s*17 Skills\s*</.test(enSkillsHtml)) {
-    errors.push('英文技能页应显示全部 17 Skills')
+  if (!/class="skill-count"[^>]*>\s*\d+ Skills\s*</.test(enSkillsHtml)) {
+    errors.push('英文技能页缺少技能总数')
   }
   if (enSkillsHtml.includes('skill-sort-select')) errors.push('英文技能页排序仍是下拉框')
   for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
     if (!enSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`英文技能页排序缺少 ${sortLabel}`)
   }
-  const recommendedWritingAt = enSkillsHtml.indexOf('De-AI Writing')
-  const recommendedConnectorAt = enSkillsHtml.indexOf('Custom Connectors')
-  if (recommendedWritingAt < 0 || recommendedConnectorAt < recommendedWritingAt) {
-    errors.push('英文技能页默认顺序不是推荐顺序')
+  const enPriority = ['AI Project Delivery', 'Website Launch QA', 'Overseas New-Keyword Launch', 'Frontend Design', 'Content Repurposing', 'Custom Connectors', 'Browser Automation Workflow', 'Data Analysis &amp; Decisions'].map((title) => enSkillsHtml.indexOf(title))
+  if (enPriority.some((position, index) => position < 0 || (index > 0 && position < enPriority[index - 1]))) {
+    errors.push('英文技能页没有按八个结果导向方向优先排序')
   }
   if (!enSkillsHtml.includes('Copy skill')) errors.push('英文技能页缺少 Copy skill 按钮')
   if (!enSkillsHtml.includes('Custom Connectors')) errors.push('英文技能页缺少 Custom Connectors')
@@ -502,17 +497,17 @@ if (existsSync(enSkills)) {
   }
   if (!enSkillsHtml.includes('Download ZIP')) errors.push('英文技能页缺少 Download ZIP')
   if (!enSkillsHtml.includes('skill-filters')) errors.push('英文技能页缺少分类筛选')
-  for (const text of ['All', 'Type', 'Writing', 'Diagram', 'Scenario', 'Site content', 'Figures', 'Site build', 'Method']) {
+  for (const text of ['All', 'Type', 'Writing', 'Diagram', 'Scenario', 'Site content', 'Figures', 'Site build', 'Method', 'Automation', 'Analytics']) {
     if (!enSkillsHtml.includes(text)) errors.push(`英文技能页筛选缺少 ${text}`)
   }
   if (enSkillsHtml.includes('立即购买') || enSkillsHtml.includes('US$')) errors.push('英文技能页出现了付费文案')
 }
 
 if (existsSync(homeHtmlPath) && existsSync(zhSkills)) {
-  assertHomeShowsNewest(readFileSync(homeHtmlPath, 'utf8'), readFileSync(zhSkills, 'utf8'), '中文')
+  assertHomeShowsRecommended(readFileSync(homeHtmlPath, 'utf8'), readFileSync(zhSkills, 'utf8'), '中文')
 }
 if (existsSync(enHome) && existsSync(enSkills)) {
-  assertHomeShowsNewest(readFileSync(enHome, 'utf8'), readFileSync(enSkills, 'utf8'), '英文')
+  assertHomeShowsRecommended(readFileSync(enHome, 'utf8'), readFileSync(enSkills, 'utf8'), '英文')
 }
 
 const zhCover = join(DIST, 'skills', 'cover-image-gen.html')
