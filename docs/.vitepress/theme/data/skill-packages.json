@@ -142,5 +142,14 @@
     "zipFile": "writing-plans.zip",
     "promptPath": "/skills/sources/writing-plans/SKILL.md",
     "zipPath": "/skills/zips/writing-plans.zip"
+  },
+  {
+    "id": "ai-project-delivery",
+    "dir": "ai-project-delivery",
+    "promptName": "AI 项目交付",
+    "zipSkillEntry": "ai-project-delivery/SKILL.md",
+    "zipFile": "ai-project-delivery.zip",
+    "promptPath": "/skills/sources/ai-project-delivery/SKILL.md",
+    "zipPath": "/skills/zips/ai-project-delivery.zip"
   }
 ]
