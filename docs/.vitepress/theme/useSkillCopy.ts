@@ -2,6 +2,7 @@ import { onBeforeUnmount, ref } from 'vue'
 import { withBase } from 'vitepress'
 import { SKILL_COPY_FEEDBACK_MS, type HomeSkill } from './homeSkills'
 import { useIsEnglish } from './useLocale'
+import { trackEvent } from './analytics'
 
 const skillPromptCache = new Map<string, string>()
 
@@ -96,6 +97,11 @@ export function useSkillCopy() {
       ...feedbackBySkillId.value,
       [skill.id]: copied ? 'copied' : 'failed'
     }
+    trackEvent('skill_copy', {
+      skill_id: skill.id,
+      language: isEnglish.value ? 'en' : 'zh',
+      result: copied ? 'success' : 'failed'
+    })
     clearFeedbackLater(skill.id)
   }
 
