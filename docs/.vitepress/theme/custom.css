@@ -318,6 +318,11 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   margin-top: 12px;
 }
 
+/* Projects 页复用技能卡布局：描述允许换行（技能页是单行省略） */
+.project-list .skill-pitch {
+  white-space: normal;
+}
+
 /* Projects 板块的下载 CTA：胶囊按钮，明暗模式都用品牌色 */
 .vp-doc .project-item a.cta,
 .vp-doc .project-item a.cta:hover {
