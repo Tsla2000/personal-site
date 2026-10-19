@@ -21,7 +21,7 @@ const REQUIRED_PHRASES = {
   'ui-design-refs': ['name: UI设计参考清单', 'ui-catalog.md'],
   'haiwai-new-keyword-launch': ['name: 出海新词上站', 'Google Trends 词根法'],
   'haiwai-monetize-convert': ['name: 出海变现转化', '假生成'],
-  'ai-project-delivery': ['name: AI 项目交付', '可追踪、可验证'],
+  'ai-project-delivery': ['name: AI 项目交付', '可追踪的工程流程'],
   'writing-skills': ['改编自 obra/superpowers（MIT License），原作者 Jesse Vincent', 'name: 技能编写'],
   brainstorming: ['改编自 obra/superpowers（MIT License），原作者 Jesse Vincent', 'name: 头脑风暴'],
   'systematic-debugging': ['改编自 obra/superpowers（MIT License），原作者 Jesse Vincent', 'name: 系统化排查'],
