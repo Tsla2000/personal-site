@@ -729,7 +729,7 @@ if (existsSync(articlesJson)) {
 const archiveHtmlPath = join(DIST, 'archive.html')
 if (existsSync(archiveHtmlPath)) {
   const archiveHtml = readFileSync(archiveHtmlPath, 'utf8')
-  const archiveRows = archiveHtml.match(/<a class="archive-(headline|card)"[^>]*>/g) || []
+  const archiveRows = archiveHtml.match(/<a class="article-row"[^>]*>/g) || []
   if (archiveRows.some((row) => EN_HREF_RE.test(row))) {
     errors.push('中文归档收录了英文文章')
   }

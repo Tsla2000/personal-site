@@ -1,118 +1,63 @@
 ---
 title: 文章归档
 description: 按时间倒序的所有文章。
-pageClass: archive-browse
 ---
 
 # 文章归档
 
-<div class="archive-layout">
-<div class="archive-main">
-
 <!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
 <h2>2026（17）</h2>
-<a class="archive-headline" href="/investment/methodology/ai-invest-clear">
-  <div class="archive-headline-body"><span class="archive-chip">投资</span><strong>AI 越成功，投资者越需要保持清醒</strong><time>2026.10.18</time><p>李录在 2026 年格雷厄姆—多德午餐会上把 AI 的技术前景与资本市场的定价逻辑分开：技术能走多远、企业能赚多少、价格计入多少，是三道不同的题目。</p></div>
-  <img class="archive-headline-img" src="/images/ai-invest-clear/cover.jpg" alt="AI 越成功，投资者越需要保持清醒" loading="lazy" />
+<div class="article-list">
+<a class="article-row" href="/investment/methodology/ai-invest-clear">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.18</time><div class="article-row-body"><div class="article-row-head"><strong>AI 越成功，投资者越需要保持清醒</strong><time>2026.10.18</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/ai-invest-clear/cover.jpg" alt="AI 越成功，投资者越需要保持清醒" loading="lazy" /><small>投资 · 李录在 2026 年格雷厄姆—多德午餐会上把 AI 的技术前景与资本市场的定价逻辑分开：技术能走多远、企业能赚多少、价格计入多少，是三道不同的题目。</small></div></div>
 </a>
-<div class="archive-grid">
-<a class="archive-card" href="/thinking/life/global-living-system">
-  <img class="archive-card-img" src="/images/global-living/cover.jpg" alt="别急着移民：未来十年，如何设计自己的全球生活系统" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">思考</span><strong>别急着移民：未来十年，如何设计自己的全球生活系统</strong><p>从身份、收入到资产、居住、医疗养老与家庭安排，建立一套能计算成本、能够调整、也允许退出的长期方案。</p><time>2026.10.18</time></div>
+<a class="article-row" href="/thinking/life/global-living-system">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.18</time><div class="article-row-body"><div class="article-row-head"><strong>别急着移民：未来十年，如何设计自己的全球生活系统</strong><time>2026.10.18</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/global-living/cover.jpg" alt="别急着移民：未来十年，如何设计自己的全球生活系统" loading="lazy" /><small>思考 · 从身份、收入到资产、居住、医疗养老与家庭安排，建立一套能计算成本、能够调整、也允许退出的长期方案。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/trends/claude-search-surge">
-  <img class="archive-card-img" src="/images/claude-search-surge/fig01_gt_compare.png" alt="Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude</strong><p>Google Trends 上 Claude 的相对指数近三天达到 94–100，OpenAI 只有 7–8。数据怎么读、Opus 5/5.5 和 Fable 5.1 做对了什么，以及中文用户的使用门槛和替代方案。</p><time>2026.10.16</time></div>
+<a class="article-row" href="/ai/trends/claude-search-surge">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.16</time><div class="article-row-body"><div class="article-row-head"><strong>Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude</strong><time>2026.10.16</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/claude-search-surge/fig01_gt_compare.png" alt="Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude" loading="lazy" /><small>AI · Google Trends 上 Claude 的相对指数近三天达到 94–100，OpenAI 只有 7–8。数据怎么读、Opus 5/5.5 和 Fable 5.1 做对了什么，以及中文用户的使用门槛和替代方案。</small></div></div>
 </a>
-<a class="archive-card" href="/investment/tesla/q3-earnings-preview">
-  <img class="archive-card-img" src="/images/tesla-q3/cover.webp" alt="特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">投资</span><strong>特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么</strong><p>Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。</p><time>2026.10.16</time></div>
+<a class="article-row" href="/investment/tesla/q3-earnings-preview">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.16</time><div class="article-row-body"><div class="article-row-head"><strong>特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么</strong><time>2026.10.16</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/tesla-q3/cover.webp" alt="特斯拉 Q3 财报前瞻：会飞的 Roadster 之后，真正决定股价的是什么" loading="lazy" /><small>投资 · Roadster 是营销，不是营收。10 月 21 日财报更该盯 FSD/Robotaxi、HW3 拿不到 v15，以及交付与利润率。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/trends/anthropic-distillation-dispute">
-  <img class="archive-card-img" src="/images/distill/fig01_accusation_chain.png" alt="Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><p>报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</p><time>2026.10.15</time></div>
+<a class="article-row" href="/ai/trends/anthropic-distillation-dispute">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.15</time><div class="article-row-body"><div class="article-row-head"><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><time>2026.10.15</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/distill/fig01_accusation_chain.png" alt="Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了" loading="lazy" /><small>AI · 报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/agents/x-auto-ops">
-  <img class="archive-card-img" src="/images/x-ops/x-ops-cover.webp" alt="我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><p>把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</p><time>2026.10.13</time></div>
+<a class="article-row" href="/ai/agents/x-auto-ops">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.13</time><div class="article-row-body"><div class="article-row-head"><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><time>2026.10.13</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/x-ops/x-ops-cover.webp" alt="我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布" loading="lazy" /><small>AI · 把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/coding/twikoo-anonymous-comments">
-  <img class="archive-card-img" src="/images/twikoo-architecture.webp" alt="如何让 Muse 给个人网站接入留言板和评论功能" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>如何让 Muse 给个人网站接入留言板和评论功能</strong><p>给 VitePress 个人网站增加文章评论和独立留言板，记录使用 Muse 接入 Twikoo，以及配置 Vercel 和 MongoDB 时遇到的问题。</p><time>2026.10.13</time></div>
+<a class="article-row" href="/ai/coding/twikoo-anonymous-comments">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.13</time><div class="article-row-body"><div class="article-row-head"><strong>如何让 Muse 给个人网站接入留言板和评论功能</strong><time>2026.10.13</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/twikoo-architecture.webp" alt="如何让 Muse 给个人网站接入留言板和评论功能" loading="lazy" /><small>AI · 给 VitePress 个人网站增加文章评论和独立留言板，记录使用 Muse 接入 Twikoo，以及配置 Vercel 和 MongoDB 时遇到的问题。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/trends/rea-software-replicability">
-  <img class="archive-card-img" src="/images/rea/rea-cover.webp" alt="REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><p>AI 逆向工程工具正在拉低&quot;看懂一个软件&quot;的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？</p><time>2026.10.11</time></div>
+<a class="article-row" href="/ai/trends/rea-software-replicability">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.11</time><div class="article-row-body"><div class="article-row-head"><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><time>2026.10.11</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/rea/rea-cover.webp" alt="REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段" loading="lazy" /><small>AI · AI 逆向工程工具正在拉低&quot;看懂一个软件&quot;的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？</small></div></div>
 </a>
-<a class="archive-card" href="/ai/coding/muse-auto-deploy">
-  <img class="archive-card-img" src="/images/muse-deploy-actions.png" alt="我是如何用 Muse 自动化部署个人网站的" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>我是如何用 Muse 自动化部署个人网站的</strong><p>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</p><time>2026.10.06</time></div>
+<a class="article-row" href="/ai/coding/muse-auto-deploy">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.06</time><div class="article-row-body"><div class="article-row-head"><strong>我是如何用 Muse 自动化部署个人网站的</strong><time>2026.10.06</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/muse-deploy-actions.png" alt="我是如何用 Muse 自动化部署个人网站的" loading="lazy" /><small>AI · 从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div></div>
 </a>
-<a class="archive-card" href="/investment/us-stocks/ai-stage-invest-guide">
-  <img class="archive-card-img" src="/images/ai-guide-two-axes.png" alt="AI 进行到哪一步了？普通人如何投资美股" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">投资</span><strong>AI 进行到哪一步了？普通人如何投资美股</strong><p>用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</p><time>2026.10.06</time></div>
+<a class="article-row" href="/investment/us-stocks/ai-stage-invest-guide">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.06</time><div class="article-row-body"><div class="article-row-head"><strong>AI 进行到哪一步了？普通人如何投资美股</strong><time>2026.10.06</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/ai-guide-two-axes.png" alt="AI 进行到哪一步了？普通人如何投资美股" loading="lazy" /><small>投资 · 用&quot;技术成熟度 × 商业兑现&quot;两轴给 AI 进程定位：基础设施正在兑现，应用层开始分化。阶段不同，投资策略完全不同。</small></div></div>
 </a>
-<a class="archive-card" href="/thinking/society/ai-labor-capital">
-  <img class="archive-card-img" src="/images/labor-dilution.webp" alt="AI 技术终将造福每个人吗？" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">思考</span><strong>AI 技术终将造福每个人吗？</strong><p>AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</p><time>2026.10.06</time></div>
+<a class="article-row" href="/thinking/society/ai-labor-capital">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.06</time><div class="article-row-body"><div class="article-row-head"><strong>AI 技术终将造福每个人吗？</strong><time>2026.10.06</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/labor-dilution.webp" alt="AI 技术终将造福每个人吗？" loading="lazy" /><small>思考 · AI 真正摧毁的不是工作，而是劳动的稀缺性；资本的产权毫发无伤，但超额利润正在被夷平。</small></div></div>
 </a>
-<a class="archive-card" href="/thinking/first-principles/scarcity">
-  <img class="archive-card-img" src="/images/scarcity-four.png" alt="当智能可以无限复制，什么才是真正稀缺？" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">思考</span><strong>当智能可以无限复制，什么才是真正稀缺？</strong><p>当智能的边际成本不断下降，稀缺性会迁移到哪里？</p><time>2026.10.05</time></div>
+<a class="article-row" href="/thinking/first-principles/scarcity">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.05</time><div class="article-row-body"><div class="article-row-head"><strong>当智能可以无限复制，什么才是真正稀缺？</strong><time>2026.10.05</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/scarcity-four.png" alt="当智能可以无限复制，什么才是真正稀缺？" loading="lazy" /><small>思考 · 当智能的边际成本不断下降，稀缺性会迁移到哪里？</small></div></div>
 </a>
-<a class="archive-card" href="/ai/agents/agent-os">
-  <img class="archive-card-img" src="/images/agentos-compare.png" alt="AI Agent 会成为下一代操作系统吗？" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>AI Agent 会成为下一代操作系统吗？</strong><p>Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</p><time>2026.10.01</time></div>
+<a class="article-row" href="/ai/agents/agent-os">
+  <time class="article-row-date-keep" aria-hidden="true">2026.10.01</time><div class="article-row-body"><div class="article-row-head"><strong>AI Agent 会成为下一代操作系统吗？</strong><time>2026.10.01</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/agentos-compare.png" alt="AI Agent 会成为下一代操作系统吗？" loading="lazy" /><small>AI · Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</small></div></div>
 </a>
-<a class="archive-card" href="/investment/tesla/long-term-value">
-  <img class="archive-card-img" src="/images/tesla-three-layers.png" alt="Tesla 的长期价值究竟来自汽车吗？" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">投资</span><strong>Tesla 的长期价值究竟来自汽车吗？</strong><p>把一家公司的价值拆成制造、软件与能源三层。</p><time>2026.09.24</time></div>
+<a class="article-row" href="/investment/tesla/long-term-value">
+  <time class="article-row-date-keep" aria-hidden="true">2026.09.24</time><div class="article-row-body"><div class="article-row-head"><strong>Tesla 的长期价值究竟来自汽车吗？</strong><time>2026.09.24</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/tesla-three-layers.png" alt="Tesla 的长期价值究竟来自汽车吗？" loading="lazy" /><small>投资 · 把一家公司的价值拆成制造、软件与能源三层。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/trends/next-stage">
-  <img class="archive-card-img" src="/images/nextstage-three-shifts.png" alt="AI 产业的下一阶段" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>AI 产业的下一阶段</strong><p>市场真正定价的不是技术是否强大，而是价值能否被捕获。</p><time>2026.09.18</time></div>
+<a class="article-row" href="/ai/trends/next-stage">
+  <time class="article-row-date-keep" aria-hidden="true">2026.09.18</time><div class="article-row-body"><div class="article-row-head"><strong>AI 产业的下一阶段</strong><time>2026.09.18</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/nextstage-three-shifts.png" alt="AI 产业的下一阶段" loading="lazy" /><small>AI · 市场真正定价的不是技术是否强大，而是价值能否被捕获。</small></div></div>
 </a>
-<a class="archive-card" href="/thinking/wealth/first-principles">
-  <img class="archive-card-img" src="/images/wealth-option.webp" alt="财富的第一性原理是什么？" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">思考</span><strong>财富的第一性原理是什么？</strong><p>财富不是数字的堆积，而是对未来资源调度能力的储存。</p><time>2026.09.10</time></div>
+<a class="article-row" href="/thinking/wealth/first-principles">
+  <time class="article-row-date-keep" aria-hidden="true">2026.09.10</time><div class="article-row-body"><div class="article-row-head"><strong>财富的第一性原理是什么？</strong><time>2026.09.10</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/wealth-option.webp" alt="财富的第一性原理是什么？" loading="lazy" /><small>思考 · 财富不是数字的堆积，而是对未来资源调度能力的储存。</small></div></div>
 </a>
-<a class="archive-card" href="/ai/coding/ai-coding-leverage">
-  <img class="archive-card-img" src="/images/coding-leverage-lever.webp" alt="AI 编程的真正杠杆" loading="lazy" />
-  <div class="archive-card-body"><span class="archive-chip">AI</span><strong>AI 编程的真正杠杆</strong><p>AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。</p><time>2026.08.30</time></div>
+<a class="article-row" href="/ai/coding/ai-coding-leverage">
+  <time class="article-row-date-keep" aria-hidden="true">2026.08.30</time><div class="article-row-body"><div class="article-row-head"><strong>AI 编程的真正杠杆</strong><time>2026.08.30</time></div><div class="article-row-media"><img class="article-row-thumb" src="/images/coding-leverage-lever.webp" alt="AI 编程的真正杠杆" loading="lazy" /><small>AI · AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。</small></div></div>
 </a>
 </div>
 <!-- ARCHIVE-END -->
-
-</div>
-<aside class="archive-sidebar">
-  <section class="side-widget">
-    <h3>技能商店</h3>
-    <a class="side-skill" href="/skills/de-ai-writing">
-      <img src="/images/skills/de-ai-writing.jpg" alt="去AI味写作" loading="lazy" />
-      <span>去AI味写作</span>
-    </a>
-    <a class="side-skill" href="/skills/cover-image-gen">
-      <img src="/images/skills/cover_image_gen.jpg" alt="封面图生成" loading="lazy" />
-      <span>封面图生成</span>
-    </a>
-    <a class="side-skill" href="/skills/personal-site-build">
-      <img src="/images/skills/personal-site-build.jpg" alt="个人网站搭建" loading="lazy" />
-      <span>个人网站搭建</span>
-    </a>
-    <a class="side-more" href="/skills/">查看全部 21 个技能 →</a>
-  </section>
-  <section class="side-widget">
-    <h3>项目</h3>
-    <a class="side-project" href="/projects/">
-      <img src="/images/projects/xmade.jpg" alt="XMade" loading="lazy" />
-      <strong>XMade</strong>
-      <p>一键下载 X 推文里的视频、图片和长文。</p>
-    </a>
-  </section>
-  <section class="side-widget">
-    <h3>订阅更新</h3>
-    <p class="side-note">新文章会同步到 RSS，也欢迎收藏本站。</p>
-    <a class="side-more" href="/subscribe/">去订阅 →</a>
-  </section>
-</aside>
-</div>

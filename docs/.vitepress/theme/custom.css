@@ -274,9 +274,57 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   color: var(--vp-c-brand-1);
 }
 
+.vp-doc a.article-row,
+.vp-doc a.article-row:hover {
+  text-decoration: none;
+  color: inherit;
+  font-weight: inherit;
+}
+
 .article-row time {
   color: var(--vp-c-text-2);
   font-size: 14px;
+}
+
+.article-row-body {
+  min-width: 0;
+}
+
+/* 日期原位置留空占位,高度不变 */
+.article-row-date-keep {
+  visibility: hidden;
+}
+
+.article-row-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.article-row-head time {
+  white-space: nowrap;
+}
+
+.article-row-media {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+
+.article-row-thumb {
+  flex-shrink: 0;
+  width: 128px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+}
+
+.article-row .article-row-media small {
+  margin-top: 0;
 }
 
 .article-row strong {
@@ -294,260 +342,6 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 
 .article-row:hover strong {
   color: var(--vp-c-brand-1);
-}
-
-/* ============ 归档页:Perplexity Discover 风格 ============ */
-.archive-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-  gap: 44px;
-  align-items: start;
-}
-
-.archive-main {
-  min-width: 0;
-}
-
-.archive-main h2 {
-  margin-top: 36px;
-}
-
-.archive-main h2:first-of-type {
-  margin-top: 8px;
-}
-
-/* 头条大卡:左文右图 */
-.vp-doc a.archive-headline {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  font-weight: inherit;
-  padding: 4px 0 26px;
-}
-
-.archive-headline-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.archive-chip {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-soft, rgba(125, 125, 125, 0.14));
-  border-radius: 999px;
-  padding: 2px 10px;
-}
-
-.vp-doc .archive-headline strong {
-  display: block;
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: var(--vp-c-text-1);
-  margin: 10px 0 6px;
-}
-
-.vp-doc a.archive-headline:hover strong {
-  color: var(--vp-c-brand-1);
-}
-
-.archive-headline time {
-  font-size: 13px;
-  color: var(--vp-c-text-2);
-}
-
-.archive-headline p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--vp-c-text-2);
-  margin: 10px 0 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.archive-headline-img {
-  flex-shrink: 0;
-  width: 320px;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 14px;
-  background: var(--vp-c-bg-soft);
-}
-
-/* 三列卡片网格 */
-.archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  padding-bottom: 12px;
-}
-
-.vp-doc a.archive-card {
-  display: block;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--vp-c-bg);
-  text-decoration: none;
-  color: inherit;
-  font-weight: inherit;
-  transition: border-color 0.18s ease, transform 0.18s ease;
-}
-
-.vp-doc a.archive-card:hover {
-  border-color: var(--vp-c-brand-1);
-  transform: translateY(-2px);
-}
-
-.vp-doc a.archive-card:hover strong {
-  color: var(--vp-c-brand-1);
-}
-
-.archive-card-img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: center top;
-  background: var(--vp-c-bg-soft);
-}
-
-.archive-card-body {
-  padding: 14px 16px 16px;
-}
-
-.vp-doc .archive-card strong {
-  display: -webkit-box;
-  font-size: 15px;
-  font-weight: 650;
-  line-height: 1.5;
-  color: var(--vp-c-text-1);
-  margin: 8px 0 6px;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.archive-card p {
-  font-size: 13px;
-  line-height: 1.65;
-  color: var(--vp-c-text-2);
-  margin: 0 0 10px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.archive-card time {
-  font-size: 12px;
-  color: var(--vp-c-text-2);
-}
-
-.archive-img-placeholder {
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-/* 右侧边栏 */
-.archive-sidebar {
-  position: sticky;
-  top: 84px;
-  display: grid;
-  gap: 20px;
-  align-content: start;
-}
-
-.side-widget {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
-  background: var(--vp-c-bg);
-  padding: 18px;
-}
-
-.side-widget h3 {
-  font-size: 15px;
-  font-weight: 700;
-  margin: 0 0 14px;
-  color: var(--vp-c-text-1);
-}
-
-.vp-doc a.side-skill {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: inherit;
-  font-weight: inherit;
-  padding: 6px 0;
-}
-
-.vp-doc a.side-skill img {
-  width: 56px;
-  height: 36px;
-  object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-  background: var(--vp-c-bg-soft);
-}
-
-.vp-doc a.side-skill span {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-
-.vp-doc a.side-skill:hover span {
-  color: var(--vp-c-brand-1);
-}
-
-.vp-doc a.side-project {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  font-weight: inherit;
-}
-
-.vp-doc a.side-project img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 10px;
-  background: var(--vp-c-bg-soft);
-}
-
-.vp-doc .side-project strong {
-  display: block;
-  font-size: 15px;
-  margin: 10px 0 4px;
-  color: var(--vp-c-text-1);
-}
-
-.vp-doc a.side-project:hover strong {
-  color: var(--vp-c-brand-1);
-}
-
-.side-project p,
-.side-note {
-  font-size: 13px;
-  line-height: 1.65;
-  color: var(--vp-c-text-2);
-  margin: 0;
-}
-
-.vp-doc a.side-more {
-  display: inline-block;
-  margin-top: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--vp-c-brand-1);
-  text-decoration: none;
 }
 
 .project-list {
@@ -916,28 +710,6 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
     grid-template-columns: 1fr;
     gap: 5px;
   }
-  .archive-layout {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  .vp-doc a.archive-headline {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-  }
-  .archive-headline-img {
-    width: 100%;
-    order: -1;
-  }
-  .vp-doc .archive-headline strong {
-    font-size: 21px;
-  }
-  .archive-grid {
-    grid-template-columns: 1fr;
-  }
-  .archive-sidebar {
-    position: static;
-  }
   .article-card-body {
     padding: 13px 14px 15px;
   }
@@ -1029,28 +801,15 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 
 @media (min-width: 960px) {
   .Layout.skill-browse .VPDoc:not(.has-sidebar) .container,
-  .Layout.archive-browse .VPDoc:not(.has-sidebar) .container,
   .Layout:has(.home-page) .VPDoc:not(.has-sidebar) .container {
     max-width: 1160px;
   }
 
   .Layout.skill-browse .VPDoc:not(.has-sidebar) .content,
   .Layout.skill-browse .VPDoc.has-aside .content-container,
-  .Layout.archive-browse .VPDoc:not(.has-sidebar) .content,
-  .Layout.archive-browse .VPDoc.has-aside .content-container,
   .Layout:has(.home-page) .VPDoc:not(.has-sidebar) .content,
   .Layout:has(.home-page) .VPDoc.has-aside .content-container {
     max-width: 1080px;
-  }
-
-  /* 归档页单独加宽:左边文章流更宽敞 */
-  .Layout.archive-browse .VPDoc:not(.has-sidebar) .container {
-    max-width: 1280px;
-  }
-
-  .Layout.archive-browse .VPDoc:not(.has-sidebar) .content,
-  .Layout.archive-browse .VPDoc.has-aside .content-container {
-    max-width: 1200px;
   }
 
   .Layout:has(.home-page) .skill-catalog {
