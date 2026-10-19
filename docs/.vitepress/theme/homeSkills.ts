@@ -391,7 +391,7 @@ export const homeSkills: HomeSkill[] = [
     imageAltZh: '写计划封面：纸雕台阶拾级而上，顶端有旗帜',
     imageAltEn: 'Cover for Writing Plans: paper-craft steps climbing to a flag',
     ...skillFiles('writing-plans')
-  }
+  },
   {
     id: 'ai-project-delivery',
     nameZh: 'AI 项目交付',
