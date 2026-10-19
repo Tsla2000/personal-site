@@ -274,9 +274,41 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   color: var(--vp-c-brand-1);
 }
 
+.vp-doc a.article-row,
+.vp-doc a.article-row:hover {
+  text-decoration: none;
+  color: inherit;
+  font-weight: inherit;
+}
+
 .article-row time {
   color: var(--vp-c-text-2);
   font-size: 14px;
+}
+
+.article-row-body {
+  min-width: 0;
+}
+
+.article-row-media {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+
+.article-row-thumb {
+  flex-shrink: 0;
+  width: 128px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+}
+
+.article-row .article-row-media small {
+  margin-top: 0;
 }
 
 .article-row strong {

@@ -443,8 +443,12 @@ const archiveSections = [...byYear.entries()]
   .map(([year, list]) => {
     const rows = list.map((it) => {
       const sub = it.category ? `${it.category} · ${it.description}` : it.description
+      const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+      const thumb = image
+        ? '<img class="article-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
+        : '<div class="article-row-thumb article-row-placeholder"></div>'
       return `<a class="article-row" href="${it.urlPath}">
-  <time>${it.dateStr}</time><div><strong>${esc(it.title)}</strong><small>${esc(sub)}</small></div>
+  <time>${it.dateStr}</time><div class="article-row-body"><strong>${esc(it.title)}</strong><div class="article-row-media">${thumb}<small>${esc(sub)}</small></div></div>
 </a>`
     }).join('\n')
     return `<h2>${year}（${list.length}）</h2>
