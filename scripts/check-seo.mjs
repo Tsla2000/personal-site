@@ -452,9 +452,10 @@ if (existsSync(zhSkills)) {
   for (const sortLabel of ['推荐', '热门', '最新']) {
     if (!zhSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`中文技能页排序缺少 ${sortLabel}`)
   }
-  const zhPriority = ['AI 项目交付', '网站上线验收', '出海新词上站', '前端设计', '内容一稿多用', '自定义连接器 / MCP', '浏览器自动化流程', '数据分析与决策'].map((title) => zhSkillsHtml.indexOf(title))
-  if (zhPriority.some((position, index) => position < 0 || (index > 0 && position < zhPriority[index - 1]))) {
-    errors.push('中文技能页没有按八个结果导向方向优先排序')
+  const zhPriorityExpected = ['AI 项目交付', '网站上线验收', '出海新词上站', '前端设计', '内容一稿多用', '自定义连接器 / MCP', '浏览器自动化流程', '数据分析与决策']
+  const zhPriorityActual = skillTileTitles(zhSkillsHtml).slice(0, zhPriorityExpected.length)
+  if (zhPriorityActual.join('、') !== zhPriorityExpected.join('、')) {
+    errors.push(`中文技能页八个优先方向顺序异常：${zhPriorityActual.join('、')}`)
   }
   if (!zhSkillsHtml.includes('复制技能')) errors.push('中文技能页缺少复制技能按钮')
   if (!zhSkillsHtml.includes('自定义连接器 / MCP')) errors.push('中文技能页缺少自定义连接器')
@@ -486,9 +487,10 @@ if (existsSync(enSkills)) {
   for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
     if (!enSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`英文技能页排序缺少 ${sortLabel}`)
   }
-  const enPriority = ['AI Project Delivery', 'Website Launch QA', 'Overseas New-Keyword Launch', 'Frontend Design', 'Content Repurposing', 'Custom Connectors', 'Browser Automation Workflow', 'Data Analysis &amp; Decisions'].map((title) => enSkillsHtml.indexOf(title))
-  if (enPriority.some((position, index) => position < 0 || (index > 0 && position < enPriority[index - 1]))) {
-    errors.push('英文技能页没有按八个结果导向方向优先排序')
+  const enPriorityExpected = ['AI Project Delivery', 'Website Launch QA', 'Overseas New-Keyword Launch', 'Frontend Design', 'Content Repurposing', 'Custom Connectors & MCPs', 'Browser Automation Workflow', 'Data Analysis & Decisions']
+  const enPriorityActual = skillTileTitles(enSkillsHtml).slice(0, enPriorityExpected.length)
+  if (enPriorityActual.join('、') !== enPriorityExpected.join('、')) {
+    errors.push(`英文技能页八个优先方向顺序异常：${enPriorityActual.join('、')}`)
   }
   if (!enSkillsHtml.includes('Copy skill')) errors.push('英文技能页缺少 Copy skill 按钮')
   if (!enSkillsHtml.includes('Custom Connectors')) errors.push('英文技能页缺少 Custom Connectors')
