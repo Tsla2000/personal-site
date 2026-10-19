@@ -43,10 +43,30 @@
 - [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](https://tsla2000.github.io/en/investment/tesla/q3-earnings-preview): Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins. (2026.10.16)
 - [How to Automate a Personal Website Deploy with Muse](https://tsla2000.github.io/en/ai/coding/muse-auto-deploy): Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages. (2026.10.06)
 - [About Pro's MangoFund](https://tsla2000.github.io/en/about): Pro's MangoFund is a personal site of notes on AI, investing, products, and technology, with a short English selection and a longer Chinese archive.
+- [AI Interface Design Rules](https://tsla2000.github.io/en/skills/ai-ui-design): Interface rules for AI chat and agent front ends.
+- [AI Project Delivery](https://tsla2000.github.io/en/skills/ai-project-delivery): Make AI-assisted development traceable and verifiable, from requirements to testing.
+- [Brainstorming](https://tsla2000.github.io/en/skills/brainstorming): Before building, ask the right questions and pin down what you really want.
+- [Browser Automation Workflow](https://tsla2000.github.io/en/skills/browser-automation): Turn repetitive browser work into verifiable, recoverable workflows with safe checkpoints.
+- [Content Repurposing](https://tsla2000.github.io/en/skills/content-repurpose): Adapt one source into platform-specific content while preserving facts and voice.
 - [Cover Image Generation](https://tsla2000.github.io/en/skills/cover-image-gen): Turn a finished Chinese title into a 3D paper-craft clay cover. Three compositions, then a character-by-character check.
+- [Custom Connectors & MCPs](https://tsla2000.github.io/en/skills/custom-connectors-mcp): Connect third-party services with least privilege, clear tool schemas, error handling, and tests.
+- [Data Analysis & Decisions](https://tsla2000.github.io/en/skills/data-analysis): Validate data and metric definitions, analyze funnels and cohorts, and produce next-step experiments.
+- [De-AI Writing](https://tsla2000.github.io/en/skills/de-ai-writing): Write in your voice, or strip the machine tone from a draft.
+- [Diagram Design](https://tsla2000.github.io/en/skills/diagram-design): Forty-five static diagrams, each a self-contained HTML file.
+- [Frontend Design](https://tsla2000.github.io/en/skills/frontend-design): Build distinctive product interfaces with a clear visual direction, design tokens, and responsive checks.
+- [Isometric Anatomy](https://tsla2000.github.io/en/skills/anatomy): Draw a technical idea as an interactive isometric instrument.
+- [Overseas Monetize & Convert](https://tsla2000.github.io/en/skills/haiwai-monetize-convert): Fake generation, anchor pricing, retention hooks, and Stripe event risk controls to lift paid conversion.
+- [Overseas New-Keyword Launch](https://tsla2000.github.io/en/skills/overseas-new-keyword-launch): Turn a search hypothesis into a landing page and a post-launch SEO/GEO validation plan.
+- [Personal Site Builder](https://tsla2000.github.io/en/skills/personal-site-build): Feishu brief plus UI refs to build a personal or brand site from scratch.
 - [Pro's MangoFund](https://tsla2000.github.io/en): English notes from Pro's MangoFund on AI products, investing, and building software with AI coding agents.
 - [Projects](https://tsla2000.github.io/en/projects): Products on this site. XMade is a Chrome extension for saving posts from X.
 - [Skills Store](https://tsla2000.github.io/en/skills): Outcome-focused Agent Skills for AI coding, website launch QA, SEO/GEO, UI, content repurposing, MCP, browser automation, and data analysis.
+- [Systematic Debugging](https://tsla2000.github.io/en/skills/systematic-debugging): Debug in four phases: find the root cause before you fix.
+- [UI Design Refs](https://tsla2000.github.io/en/skills/ui-design-refs): Sixty-plus UI reference sites in eight buckets for agent-assisted builds.
+- [Verification Before Completion](https://tsla2000.github.io/en/skills/verification-before-completion): Evidence before claims: verify before you say done.
+- [Website Launch QA](https://tsla2000.github.io/en/skills/website-launch-check): Verify core flows, mobile layout, SEO, share previews, and rollback before launch.
+- [Writing Plans](https://tsla2000.github.io/en/skills/writing-plans): Write the plan first, then execute multi-step tasks.
+- [Writing Skills](https://tsla2000.github.io/en/skills/writing-skills): Turn a repeatable workflow into a skill an agent can use.
 
 ## 订阅
 

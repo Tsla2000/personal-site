@@ -121,16 +121,136 @@
 /en/projects/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/skills/ai-project-delivery
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/ai-project-delivery/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/ai-ui-design
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/ai-ui-design/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/anatomy
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/anatomy/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/brainstorming
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/brainstorming/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/browser-automation
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/browser-automation/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/content-repurpose
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/content-repurpose/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /en/skills/cover-image-gen
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/skills/cover-image-gen/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/skills/custom-connectors-mcp
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/custom-connectors-mcp/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/data-analysis
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/data-analysis/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/de-ai-writing
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/de-ai-writing/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/diagram-design
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/diagram-design/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/frontend-design
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/frontend-design/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/haiwai-monetize-convert
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/haiwai-monetize-convert/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /en/skills
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/skills/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/overseas-new-keyword-launch
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/overseas-new-keyword-launch/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/personal-site-build
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/personal-site-build/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/systematic-debugging
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/systematic-debugging/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/ui-design-refs
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/ui-design-refs/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/verification-before-completion
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/verification-before-completion/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/website-launch-check
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/website-launch-check/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/writing-plans
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/writing-plans/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/writing-skills
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/writing-skills/
   Cache-Control: public, max-age=0, must-revalidate
 
 /guestbook
@@ -178,16 +298,136 @@
 /projects/
   Cache-Control: public, max-age=0, must-revalidate
 
+/skills/ai-project-delivery
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/ai-project-delivery/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/ai-ui-design
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/ai-ui-design/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/anatomy
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/anatomy/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/brainstorming
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/brainstorming/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/browser-automation
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/browser-automation/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/content-repurpose
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/content-repurpose/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /skills/cover-image-gen
   Cache-Control: public, max-age=0, must-revalidate
 
 /skills/cover-image-gen/
   Cache-Control: public, max-age=0, must-revalidate
 
+/skills/custom-connectors-mcp
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/custom-connectors-mcp/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/data-analysis
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/data-analysis/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/de-ai-writing
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/de-ai-writing/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/diagram-design
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/diagram-design/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/frontend-design
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/frontend-design/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/haiwai-monetize-convert
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/haiwai-monetize-convert/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /skills
   Cache-Control: public, max-age=0, must-revalidate
 
 /skills/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/overseas-new-keyword-launch
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/overseas-new-keyword-launch/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/personal-site-build
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/personal-site-build/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/systematic-debugging
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/systematic-debugging/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/ui-design-refs
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/ui-design-refs/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/verification-before-completion
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/verification-before-completion/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/website-launch-check
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/website-launch-check/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/writing-plans
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/writing-plans/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/writing-skills
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/writing-skills/
   Cache-Control: public, max-age=0, must-revalidate
 
 /sponsor
