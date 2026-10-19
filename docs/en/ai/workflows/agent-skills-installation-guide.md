@@ -1,5 +1,5 @@
 ---
-title: Agent Skills Installation Guide: How to Use SKILL.md with Coding Agents
+title: "Agent Skills Installation Guide: How to Use SKILL.md with Coding Agents"
 description: Learn how to download, inspect, install, and verify Agent Skills across Codex, Claude Code, and other tools, including common discovery problems and safety checks.
 keywords: Agent Skills installation, SKILL.md, Codex Skills, Claude Code Skills, AI agent workflows
 aside: false
@@ -34,7 +34,7 @@ Not every skill needs scripts. A skill that provides a stable procedure, decisio
 
 ### 1. Download a skill bundle
 
-Choose a task-focused skill from the [Skills Store](/en/skills/). You can copy the `SKILL.md` or download the complete ZIP.
+Choose a task-focused skill from the [Skills Store](../../skills/). You can copy the `SKILL.md` or download the complete ZIP.
 
 If the skill includes `references/`, `scripts/`, or `assets/`, prefer the ZIP and preserve its directory structure. Copying only the main file may break links to templates or scripts.
 
@@ -95,7 +95,7 @@ Longer does not automatically mean more professional. A paid skill should earn i
 
 ## Start with the Skills Store
 
-Browse the [Skills Store](/en/skills/) and try a free skill on a low-risk task before applying it to a real project.
+Browse the [Skills Store](../../skills/) and try a free skill on a low-risk task before applying it to a real project.
 
 You can also read:
 
