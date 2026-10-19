@@ -12,7 +12,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
 # Projects
 
 <div class="project-list">
-  <article class="skill-tile">
+  <article class="project-tile">
     <a class="skill-thumb" :href="storeUrl" target="_blank" rel="noopener">
       <img :src="xmadeImg" alt="XMade: one-click download of posts, videos, and long articles from X" width="800" height="450" loading="eager" decoding="async" />
     </a>

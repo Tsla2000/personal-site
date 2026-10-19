@@ -4,6 +4,12 @@ description: AI、投资、产品，以及一些关于世界如何运行的思�
 aside: false
 ---
 
+<script setup>
+import { withBase } from 'vitepress'
+const xmadeImg = withBase('/images/projects/xmade.jpg')
+const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-downl/bgopfpaklpnjmjbngflljdnjnblhnbjm'
+</script>
+
 <!-- Latest 板块由构建脚本按当次部署目标自动生成。技能卡链到 /skills/，相对路径兼容 GitHub Pages 与 Cloudflare Pages。-->
 <div class="home-page">
   <section class="home-section">
@@ -40,11 +46,19 @@ aside: false
   <section class="home-section" id="projects">
     <h2>Projects</h2>
     <div class="project-list">
-      <div class="project-item">
-        <h3>XMade</h3>
-        <p>Chrome 扩展：一键下载 X 上的推文、视频和长文，整理好直接推送到微信公众号草稿。我自己每天在用的工具。</p>
-        <a class="cta" href="https://chromewebstore.google.com/detail/xmade-twitter-video-downl/bgopfpaklpnjmjbngflljdnjnblhnbjm" target="_blank" rel="noopener">去 Chrome 应用店安装 →</a>
-      </div>
+      <article class="project-tile">
+        <a class="skill-thumb" :href="storeUrl" target="_blank" rel="noopener">
+          <img :src="xmadeImg" alt="XMade：一键下载 X 上的推文、视频和长文" width="800" height="450" loading="lazy" decoding="async" />
+        </a>
+        <h3><a :href="storeUrl" target="_blank" rel="noopener">XMade</a></h3>
+        <p class="skill-pitch">Chrome 扩展：一键下载 X 上的推文、视频和长文，整理好直接推送到微信公众号草稿。我自己每天在用的工具。</p>
+        <div class="skill-foot">
+          <span class="skill-chip">Chrome 扩展</span>
+          <div class="skill-controls">
+            <a class="skill-zip" :href="storeUrl" target="_blank" rel="noopener">去 Chrome 应用店安装 →</a>
+          </div>
+        </div>
+      </article>
     </div>
     <p style="margin-top:12px;"><a href="projects/" style="font-size:14px;color:#1d9bf0;">查看全部项目 →</a></p>
   </section>

@@ -223,14 +223,11 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   transform: translateY(-2px);
 }
 
-/* 首页文章封面：铺满统一比例的卡片，顶部对齐，优先裁掉底部内容。
-   适合宽屏封面；顶部标题可能被裁切的图片需单独检查。 */
 .article-card-thumb {
   display: block;
   width: 100%;
   aspect-ratio: 2.35 / 1;
   object-fit: cover;
-  object-position: center top;
   background: var(--vp-c-bg-soft);
 }
 
@@ -502,11 +499,13 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   gap: 28px 20px;
 }
 
-.skill-tile {
+.skill-tile,
+.project-tile {
   min-width: 0;
 }
 
-.skill-tile h3 {
+.skill-tile h3,
+.project-tile h3 {
   margin: 12px 0 4px;
   font-size: 16px;
   font-weight: 650;
@@ -536,7 +535,9 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 .vp-doc a.skill-thumb,
 .vp-doc a.skill-thumb:hover,
 .vp-doc .skill-tile h3 a,
-.vp-doc .skill-tile h3 a:hover {
+.vp-doc .skill-tile h3 a:hover,
+.vp-doc .project-tile h3 a,
+.vp-doc .project-tile h3 a:hover {
   text-decoration: none;
   border-bottom: none;
   font-weight: 650;
@@ -550,11 +551,13 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   object-fit: cover;
 }
 
-.vp-doc .skill-tile h3 a {
+.vp-doc .skill-tile h3 a,
+.vp-doc .project-tile h3 a {
   color: var(--vp-c-text-1);
 }
 
-.vp-doc .skill-tile h3 a:hover {
+.vp-doc .skill-tile h3 a:hover,
+.vp-doc .project-tile h3 a:hover {
   color: var(--vp-c-brand-1);
 }
 
@@ -617,6 +620,7 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 .vp-doc a.skill-zip:focus-visible,
 .vp-doc a.skill-thumb:focus-visible,
 .vp-doc .skill-tile h3 a:focus-visible,
+.vp-doc .project-tile h3 a:focus-visible,
 .vp-doc a.skill-back:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 2px;
