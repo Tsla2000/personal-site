@@ -12,9 +12,10 @@ import UpdateBanner from './components/UpdateBanner.vue'
 import LangSwitch from './components/LangSwitch.vue'
 import './custom.css'
 
-// 技能卡片和详情依赖 homeSkills 大数据表，只在技能相关页面用到，异步拆包，不进全站公共 theme chunk
+// 技能卡片、详情和归档侧栏依赖 homeSkills 大数据表，只在技能相关页面用到，异步拆包，不进全站公共 theme chunk
 const SkillShowcase = defineAsyncComponent(() => import('./components/SkillShowcase.vue'))
 const SkillDetail = defineAsyncComponent(() => import('./components/SkillDetail.vue'))
+const ArchiveSidebar = defineAsyncComponent(() => import('./components/ArchiveSidebar.vue'))
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
 let audioCtx: AudioContext | null = null
@@ -216,6 +217,7 @@ export default {
     app.component('LangSwitch', LangSwitch)
     app.component('SkillShowcase', SkillShowcase)
     app.component('SkillDetail', SkillDetail)
+    app.component('ArchiveSidebar', ArchiveSidebar)
     // 订阅页 markdown 里直接用 <FollowButton />
     app.component('FollowButton', FollowButton)
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）

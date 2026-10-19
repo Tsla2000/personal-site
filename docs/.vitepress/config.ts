@@ -129,9 +129,15 @@ export default defineConfig({
       message: '每天做有价值的事情，人生永远要有 Plan B。',
       copyright: '© 2026 PRO的茶里芒果'
     },
-    outline: { level: [2, 3] },
+    outline: { label: '本页目录', level: [2, 3] },
+    docFooter: { prev: '上一篇', next: '下一篇' },
+    darkModeSwitchLabel: '外观',
     darkModeSwitchTitle: '切换到深色模式',
-    lightModeSwitchTitle: '切换到浅色模式'
+    lightModeSwitchTitle: '切换到浅色模式',
+    sidebarMenuLabel: '菜单',
+    returnToTopLabel: '回到顶部',
+    langMenuLabel: '语言',
+    skipToContentLabel: '跳到正文'
   },
 
   locales: {

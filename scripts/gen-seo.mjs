@@ -434,31 +434,38 @@ const updated = indexSrc.replace(
 )
 if (updated !== indexSrc) writeFileSync(indexPath, updated)
 
-// ---- 归档页:按年份分组,全部文章倒序,自动写入 docs/archive.md ----
-const byYear = new Map()
-for (const it of items) {
-  const y = it.date.getFullYear()
-  if (!byYear.has(y)) byYear.set(y, [])
-  byYear.get(y).push(it)
+// ---- 归档页:Discover 风格信息流,全部文章倒序,自动写入 docs/archive.md ----
+// 每 4 篇一组:第 1 篇是横跨整行的头条大卡,后 3 篇是三列小卡。
+// 分类筛选用 archive.md 里的 filter ref:v-show 控制显隐;头条位置按「全部」和「本分类」各算一份,
+// 标成 hero-all / hero-cat,CSS 按当前筛选取对应那份,筛选后版式仍是一大三小。
+const ARCHIVE_ALL = 'all'
+const catIndex = new Map()
+const archiveCards = items.map((it, i) => {
+  const cat = it.category || '未分类'
+  const ci = catIndex.get(cat) ?? 0
+  catIndex.set(cat, ci + 1)
+  const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+  // 首张头条在首屏,立即高优先级加载;其余懒加载
+  const loadAttrs = i === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
+  const media = image
+    ? `<img class="archive-card-img" src="${esc(image)}" alt="${esc(it.title)}" ${loadAttrs} decoding="async" />`
+    : '<div class="archive-card-img archive-card-placeholder"></div>'
+  const cls = ['archive-card', i % 4 === 0 ? 'hero-all' : '', ci % 4 === 0 ? 'hero-cat' : ''].filter(Boolean).join(' ')
+  const catLiteral = JSON.stringify(cat).replace(/"/g, "'")
+  return `<a class="${cls}" href="${it.urlPath}" data-cat="${esc(cat)}" v-show="filter === '${ARCHIVE_ALL}' || filter === ${catLiteral}">` +
+    `<div class="archive-card-media">${media}</div>` +
+    `<div class="archive-card-body"><strong>${esc(it.title)}</strong><p>${esc(it.description)}</p>` +
+    `<div class="archive-card-meta"><span class="archive-chip">${esc(cat)}</span><time datetime="${it.dateStr.replace(/\./g, '-')}">${it.dateStr}</time></div></div></a>`
+})
+const catCounts = [...catIndex.entries()].sort((a, b) => b[1] - a[1])
+const archiveTab = (id, label, count) => {
+  const lit = JSON.stringify(id).replace(/"/g, "'")
+  return `<button type="button" class="archive-tab" :aria-pressed="filter === ${lit}" @click="filter = ${lit}">${esc(label)}<span>${count}</span></button>`
 }
-const archiveSections = [...byYear.entries()]
-  .sort((a, b) => b[0] - a[0])
-  .map(([year, list]) => {
-    const rows = list.map((it) => {
-      const sub = it.category ? `${it.category} · ${it.description}` : it.description
-      const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
-      const thumb = image
-        ? '<img class="article-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
-        : '<div class="article-row-thumb article-row-placeholder"></div>'
-      return `<a class="article-row" href="${it.urlPath}">
-  <time class="article-row-date-keep" aria-hidden="true">${it.dateStr}</time><div class="article-row-body"><div class="article-row-head"><strong>${esc(it.title)}</strong><time>${it.dateStr}</time></div><div class="article-row-media">${thumb}<small>${esc(sub)}</small></div></div>
-</a>`
-    }).join('\n')
-    return `<h2>${year}（${list.length}）</h2>
-<div class="article-list">
-${rows}
-</div>`
-  }).join('\n')
+const archiveSections = `<div class="archive-tabs" role="group" aria-label="按分类筛选">` +
+  archiveTab(ARCHIVE_ALL, '全部', items.length) +
+  catCounts.map(([cat, n]) => archiveTab(cat, cat, n)).join('') +
+  `</div>\n<div class="archive-feed" :data-filter="filter === '${ARCHIVE_ALL}' ? 'all' : 'cat'">\n${archiveCards.join('\n')}\n</div>`
 const archivePath = join(DOCS_DIR, 'archive.md')
 const archiveSrc = readFileSync(archivePath, 'utf8')
 const archiveHtml = `<!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->\n${archiveSections}\n<!-- ARCHIVE-END -->`
