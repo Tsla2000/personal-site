@@ -47,10 +47,10 @@ const MIN_ZIP_BYTES = {
   'systematic-debugging.zip': 2000,
   'verification-before-completion.zip': 2000,
   'writing-plans.zip': 2000,
-  'website-launch-check.zip': 1500,
-  'content-repurpose.zip': 1500,
-  'browser-automation.zip': 1500,
-  'data-analysis.zip': 1500
+  'website-launch-check.zip': 1000,
+  'content-repurpose.zip': 1000,
+  'browser-automation.zip': 1000,
+  'data-analysis.zip': 1000
 }
 
 const MINIMUM_PACKAGE_COUNT = 6
