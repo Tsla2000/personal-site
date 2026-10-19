@@ -58,7 +58,7 @@ function skillTileTitles(html) {
   return skillTiles(html).map((tile) => {
     const heading = tile.match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i)
     if (!heading) return ''
-    return heading[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+    return heading[1].replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim()
   })
 }
 
