@@ -54,6 +54,51 @@
     "zipPath": "/skills/zips/custom-connector-setup.zip"
   },
   {
+    "id": "personal-site-build",
+    "dir": "personal-site-build",
+    "promptName": "个人网站搭建",
+    "zipSkillEntry": "personal-site-build/SKILL.md",
+    "zipFile": "personal-site-build.zip",
+    "promptPath": "/skills/sources/personal-site-build/SKILL.md",
+    "zipPath": "/skills/zips/personal-site-build.zip"
+  },
+  {
+    "id": "frontend-design",
+    "dir": "frontend-design",
+    "promptName": "frontend-design",
+    "zipSkillEntry": "frontend-design/SKILL.md",
+    "zipFile": "frontend-design.zip",
+    "promptPath": "/skills/sources/frontend-design/SKILL.md",
+    "zipPath": "/skills/zips/frontend-design.zip"
+  },
+  {
+    "id": "ui-design-refs",
+    "dir": "ui-design-refs",
+    "promptName": "UI设计参考清单",
+    "zipSkillEntry": "ui-design-refs/SKILL.md",
+    "zipFile": "ui-design-refs.zip",
+    "promptPath": "/skills/sources/ui-design-refs/SKILL.md",
+    "zipPath": "/skills/zips/ui-design-refs.zip"
+  },
+  {
+    "id": "haiwai-new-keyword-launch",
+    "dir": "haiwai-new-keyword-launch",
+    "promptName": "出海新词上站",
+    "zipSkillEntry": "haiwai-new-keyword-launch/SKILL.md",
+    "zipFile": "haiwai-new-keyword-launch.zip",
+    "promptPath": "/skills/sources/haiwai-new-keyword-launch/SKILL.md",
+    "zipPath": "/skills/zips/haiwai-new-keyword-launch.zip"
+  },
+  {
+    "id": "haiwai-monetize-convert",
+    "dir": "haiwai-monetize-convert",
+    "promptName": "出海变现转化",
+    "zipSkillEntry": "haiwai-monetize-convert/SKILL.md",
+    "zipFile": "haiwai-monetize-convert.zip",
+    "promptPath": "/skills/sources/haiwai-monetize-convert/SKILL.md",
+    "zipPath": "/skills/zips/haiwai-monetize-convert.zip"
+  },
+  {
     "id": "writing-skills",
     "dir": "writing-skills",
     "promptName": "技能编写",

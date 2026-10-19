@@ -16,6 +16,11 @@ const REQUIRED_PHRASES = {
   anatomy: ['Node.js 20.10+', 'name: anatomy'],
   cover_image_gen: ['quality=92', '黄底高亮', 'name: cover_image_gen'],
   custom_connector_setup: ['Never store a secret', 'name: custom_connector_setup'],
+  'personal-site-build': ['name: 个人网站搭建', '飞书'],
+  'frontend-design': ['name: frontend-design', 'LICENSE.txt'],
+  'ui-design-refs': ['name: UI设计参考清单', 'ui-catalog.md'],
+  'haiwai-new-keyword-launch': ['name: 出海新词上站', 'Google Trends 词根法'],
+  'haiwai-monetize-convert': ['name: 出海变现转化', '假生成'],
   'writing-skills': ['改编自 obra/superpowers（MIT License），原作者 Jesse Vincent', 'name: 技能编写'],
   brainstorming: ['改编自 obra/superpowers（MIT License），原作者 Jesse Vincent', 'name: 头脑风暴'],
   'systematic-debugging': ['改编自 obra/superpowers（MIT License），原作者 Jesse Vincent', 'name: 系统化排查'],
@@ -30,6 +35,11 @@ const MIN_ZIP_BYTES = {
   'anatomy.zip': 100000,
   'cover-image-gen.zip': 2000,
   'custom-connector-setup.zip': 20000,
+  'personal-site-build.zip': 6000,
+  'frontend-design.zip': 7000,
+  'ui-design-refs.zip': 4500,
+  'haiwai-new-keyword-launch.zip': 4000,
+  'haiwai-monetize-convert.zip': 4000,
   'writing-skills.zip': 2000,
   'brainstorming.zip': 2000,
   'systematic-debugging.zip': 2000,
@@ -37,9 +47,12 @@ const MIN_ZIP_BYTES = {
   'writing-plans.zip': 2000
 }
 
-const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'))
-if (!Array.isArray(manifest) || manifest.length !== 11) {
-  throw new Error('技能包清单必须正好包含 11 个技能')
+const MINIMUM_PACKAGE_COUNT = 6
+const packages = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'))
+const manifest = packages
+if (!Array.isArray(packages) || packages.length < MINIMUM_PACKAGE_COUNT || manifest.length !== packages.length) {
+  const actualCount = Array.isArray(packages) ? packages.length : 0
+  throw new Error(`技能包清单必须与 packages 等长，且至少 ${MINIMUM_PACKAGE_COUNT} 个，当前是 ${actualCount} 个`)
 }
 
 for (const item of manifest) {
