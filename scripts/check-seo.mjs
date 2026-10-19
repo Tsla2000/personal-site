@@ -620,7 +620,7 @@ if (existsSync(articlesJson)) {
 }
 if (existsSync(homeHtmlPath)) {
   const homeHtml = readFileSync(homeHtmlPath, 'utf8')
-  const articleRows = homeHtml.match(/<a class="article-row"[^>]*>/g) || []
+  const articleRows = homeHtml.match(/<a class="article-(?:row|card)"[^>]*>/g) || []
   if (articleRows.some((row) => EN_HREF_RE.test(row))) {
     errors.push('中文首页列表出现了英文 URL')
   }
