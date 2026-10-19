@@ -1,7 +1,6 @@
 ---
 title: AI Coding 项目交付流程：从需求到可验收成果
 description: 一套可复用的 AI Coding 项目交付清单，覆盖需求澄清、计划、实现、测试、代码审查和最终交付，帮助 AI 编程从“写出代码”走向“完成任务”。
-date: 2026-10-19
 keywords: AI Coding 项目交付, AI 编程工作流, AI 项目管理, 代码验收清单, Agent Skills
 aside: false
 ---
