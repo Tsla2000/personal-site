@@ -1,7 +1,6 @@
 ---
 title: "AI Coding Project Delivery: From Request to Verifiable Results"
 description: A practical AI coding workflow covering requirements, planning, implementation, tests, review, and handoff so an agent task ends with verifiable deliverables rather than generated code alone.
-date: 2026-10-19
 keywords: AI coding workflow, AI project delivery checklist, coding agent, software acceptance criteria, agent skills
 aside: false
 ---
