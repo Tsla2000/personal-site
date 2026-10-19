@@ -11,6 +11,10 @@ Not a pile of generic prompts. These are reusable workflows designed for agents 
 
 **How to use:** Filter by scenario → copy the SKILL.md or download the ZIP → add it to an agent that supports Skills → run it against your own project. Verify execution results in your environment.
 
+## Get started with Agent Skills
+
+- [Agent Skills installation guide](../ai/workflows/agent-skills-installation-guide): learn bundle structure, installation checks, discovery troubleshooting, and safety review.
+
 ## Practical workflows by task
 
 - [AI coding project delivery: from request to verifiable results](../ai/workflows/ai-project-delivery-workflow): clarify requirements, implement in steps, test, and hand off.
