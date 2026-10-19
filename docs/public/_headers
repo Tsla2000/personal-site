@@ -79,6 +79,30 @@
 /ai/trends/rea-software-replicability/
   Cache-Control: public, max-age=0, must-revalidate
 
+/ai/workflows/agent-skills-installation-guide
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/agent-skills-installation-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/ai-data-analysis-workflow
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/ai-data-analysis-workflow/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/ai-project-delivery-workflow
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/ai-project-delivery-workflow/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/website-launch-checklist
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/website-launch-checklist/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /archive
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -101,6 +125,30 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/ai/trends/claude-search-surge/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/agent-skills-installation-guide
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/agent-skills-installation-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/ai-data-analysis-workflow
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/ai-data-analysis-workflow/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/ai-project-delivery-workflow
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/ai-project-delivery-workflow/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/website-launch-checklist
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/website-launch-checklist/
   Cache-Control: public, max-age=0, must-revalidate
 
 /en

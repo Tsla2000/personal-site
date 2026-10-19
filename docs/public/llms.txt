@@ -43,6 +43,9 @@
 - [Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock](https://tsla2000.github.io/en/investment/tesla/q3-earnings-preview): Tesla Q3 2026 earnings preview: the Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins. (2026.10.16)
 - [How to Automate a Personal Website Deploy with Muse](https://tsla2000.github.io/en/ai/coding/muse-auto-deploy): Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages. (2026.10.06)
 - [About Pro's MangoFund](https://tsla2000.github.io/en/about): Pro's MangoFund is a personal site of notes on AI, investing, products, and technology, with a short English selection and a longer Chinese archive.
+- [Agent Skills Installation Guide: How to Use SKILL.md with Coding Agents](https://tsla2000.github.io/en/ai/workflows/agent-skills-installation-guide): Learn how to download, inspect, install, and verify Agent Skills across Codex, Claude Code, and other tools, including common discovery problems and safety checks.
+- [AI Coding Project Delivery: From Request to Verifiable Results](https://tsla2000.github.io/en/ai/workflows/ai-project-delivery-workflow): A practical AI coding workflow covering requirements, planning, implementation, tests, review, and handoff so an agent task ends with verifiable deliverables rather than generated code alone.
+- [AI Data Analysis Workflow: From Raw Data to Verifiable Decisions](https://tsla2000.github.io/en/ai/workflows/ai-data-analysis-workflow): A reliable AI-assisted data analysis workflow covering data quality, metric definitions, reproducible calculations, anomaly interpretation, uncertainty, and report handoff.
 - [AI Interface Design Rules](https://tsla2000.github.io/en/skills/ai-ui-design): Interface rules for AI chat and agent front ends.
 - [AI Project Delivery](https://tsla2000.github.io/en/skills/ai-project-delivery): Make AI-assisted development traceable and verifiable, from requirements to testing.
 - [Brainstorming](https://tsla2000.github.io/en/skills/brainstorming): Before building, ask the right questions and pin down what you really want.
@@ -64,6 +67,7 @@
 - [Systematic Debugging](https://tsla2000.github.io/en/skills/systematic-debugging): Debug in four phases: find the root cause before you fix.
 - [UI Design Refs](https://tsla2000.github.io/en/skills/ui-design-refs): Sixty-plus UI reference sites in eight buckets for agent-assisted builds.
 - [Verification Before Completion](https://tsla2000.github.io/en/skills/verification-before-completion): Evidence before claims: verify before you say done.
+- [Website Launch Checklist: QA, SEO, Mobile, Analytics, and Rollback](https://tsla2000.github.io/en/ai/workflows/website-launch-checklist): A practical pre-release checklist for websites covering core user journeys, broken links, mobile layouts, SEO metadata, social previews, analytics events, and rollback readiness.
 - [Website Launch QA](https://tsla2000.github.io/en/skills/website-launch-check): Verify core flows, mobile layout, SEO, share previews, and rollback before launch.
 - [Writing Plans](https://tsla2000.github.io/en/skills/writing-plans): Write the plan first, then execute multi-step tasks.
 - [Writing Skills](https://tsla2000.github.io/en/skills/writing-skills): Turn a repeatable workflow into a skill an agent can use.

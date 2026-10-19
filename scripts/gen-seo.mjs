@@ -448,7 +448,7 @@ const archiveSections = [...byYear.entries()]
         ? '<img class="article-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
         : '<div class="article-row-thumb article-row-placeholder"></div>'
       return `<a class="article-row" href="${it.urlPath}">
-  <time>${it.dateStr}</time><div class="article-row-body"><strong>${esc(it.title)}</strong><div class="article-row-media">${thumb}<small>${esc(sub)}</small></div></div>
+  <time class="article-row-date-keep" aria-hidden="true">${it.dateStr}</time><div class="article-row-body"><div class="article-row-head"><strong>${esc(it.title)}</strong><time>${it.dateStr}</time></div><div class="article-row-media">${thumb}<small>${esc(sub)}</small></div></div>
 </a>`
     }).join('\n')
     return `<h2>${year}（${list.length}）</h2>

@@ -290,6 +290,22 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   min-width: 0;
 }
 
+/* 日期原位置留空占位,高度不变 */
+.article-row-date-keep {
+  visibility: hidden;
+}
+
+.article-row-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.article-row-head time {
+  white-space: nowrap;
+}
+
 .article-row-media {
   display: flex;
   gap: 12px;
