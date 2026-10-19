@@ -775,7 +775,7 @@ const EN_POSTS = {
   }
 }
 
-function assertOg(file, html, { locale, alternate, titleIncludes, urlPath, urlExcludes, imagePath, descriptionPattern }) {
+function assertOg(file, html, { locale, alternate, titleIncludes, urlPath, urlExcludes, imagePath, twitterImagePath, descriptionPattern }) {
   if (getMeta(html, 'og:locale') !== locale) errors.push(`${file}: og:locale 不是 ${locale}`)
   if (alternate && !getMetaAll(html, 'og:locale:alternate').includes(alternate)) {
     errors.push(`${file}: 缺少 og:locale:alternate=${alternate}`)
@@ -792,6 +792,9 @@ function assertOg(file, html, { locale, alternate, titleIncludes, urlPath, urlEx
   if (getMeta(html, 'twitter:card') !== 'summary_large_image') errors.push(`${file}: twitter:card 不是 summary_large_image`)
   if (imagePath && !(getMeta(html, 'og:image') || '').includes(imagePath)) {
     errors.push(`${file}: og:image 未使用 ${imagePath}`)
+  }
+  if (twitterImagePath && !(getMeta(html, 'twitter:image') || '').includes(twitterImagePath)) {
+    errors.push(`${file}: twitter:image 未使用 ${twitterImagePath}`)
   }
 }
 
@@ -909,7 +912,8 @@ if (existsSync(enAbout)) {
     alternate: 'zh_CN',
     titleIncludes: "Pro's MangoFund",
     urlPath: '/en/about',
-    imagePath: '/images/social-card.png',
+    imagePath: '/images/social-card-square.png',
+    twitterImagePath: '/images/social-card.png',
     descriptionPattern: /Pro's MangoFund/
   })
   if (getMeta(html, 'og:type') !== 'website') errors.push('英文关于页 og:type 不是 website')
@@ -940,7 +944,8 @@ if (existsSync(zhAbout)) {
     titleIncludes: '关于',
     urlPath: '/about',
     urlExcludes: '/en/',
-    imagePath: '/images/social-card.png',
+    imagePath: '/images/social-card-square.png',
+    twitterImagePath: '/images/social-card.png',
     descriptionPattern: null
   })
 }
@@ -961,7 +966,8 @@ if (existsSync(enHome)) {
     alternate: 'zh_CN',
     titleIncludes: "Pro's MangoFund",
     urlPath: '/en',
-    imagePath: '/images/social-card.png',
+    imagePath: '/images/social-card-square.png',
+    twitterImagePath: '/images/social-card.png',
     descriptionPattern: /Pro's MangoFund/
   })
   if (!html.includes('>中<') || !html.includes('>EN<')) errors.push('英文首页语言切换标签不是 中/EN')

@@ -240,6 +240,8 @@ export default defineConfig({
     const imgPath = typeof fm.image === 'string' && fm.image ? fm.image : '/images/social-card.png'
     const imgUrl = `${SITE_URL}${baseNoSlash}${imgPath.startsWith('/') ? imgPath : '/' + imgPath}`
     const hasArticleCover = typeof fm.image === 'string' && fm.image.length > 0
+    // 默认封面再配一张正方形微信版：微信只读 og:image 且缩略图是小正方形，X 则优先读 twitter:image(1200x630)
+    const squareImgUrl = `${SITE_URL}${baseNoSlash}/images/social-card-square.png`
 
     const head: HeadConfig[] = [
       ['link', { rel: 'canonical', href: canonical }],
@@ -248,12 +250,13 @@ export default defineConfig({
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: desc }],
       ['meta', { property: 'og:url', content: canonical }],
-      ['meta', { property: 'og:image', content: imgUrl }],
+      ['meta', { property: 'og:image', content: hasArticleCover ? imgUrl : squareImgUrl }],
     ]
     // 尺寸只标在默认分享卡上。文章封面尺寸不固定，不写死 1200×630。
+    // 默认封面：og:image 用正方形微信版(800x800)，twitter:image 继续用宽版(1200x630)。
     if (!hasArticleCover) {
-      head.push(['meta', { property: 'og:image:width', content: '1200' }])
-      head.push(['meta', { property: 'og:image:height', content: '630' }])
+      head.push(['meta', { property: 'og:image:width', content: '800' }])
+      head.push(['meta', { property: 'og:image:height', content: '800' }])
     }
     head.push(
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
