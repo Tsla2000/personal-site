@@ -77,6 +77,36 @@ function pick(zh: string, en: string): string {
       </section>
     </div>
 
+    <section v-if="detail.exampleTitleZh" class="skill-example">
+      <h2>{{ pick('实操示例', 'Practical example') }}</h2>
+      <h3>{{ pick(detail.exampleTitleZh || '', detail.exampleTitleEn || '') }}</h3>
+      <div class="skill-example-grid">
+        <div>
+          <p class="skill-example-label">{{ pick('输入 / 任务', 'Input / task') }}</p>
+          <pre>{{ pick(detail.exampleInputZh || '', detail.exampleInputEn || '') }}</pre>
+        </div>
+        <div>
+          <p class="skill-example-label">{{ pick('可见的交付成果', 'Visible deliverable') }}</p>
+          <pre>{{ pick(detail.exampleOutputZh || '', detail.exampleOutputEn || '') }}</pre>
+        </div>
+      </div>
+      <div class="skill-example-bottom">
+        <div>
+          <h3>{{ pick('最终交付物', 'Deliverables') }}</h3>
+          <ul>
+            <li v-for="item in (isEnglish ? detail.artifactsEn || [] : detail.artifactsZh || [])" :key="item">{{ item }}</li>
+          </ul>
+        </div>
+        <div>
+          <h3>{{ pick('验收标准', 'Acceptance checks') }}</h3>
+          <ul>
+            <li v-for="item in (isEnglish ? detail.checksEn || [] : detail.checksZh || [])" :key="item">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+      <p class="skill-example-note">{{ pick('说明：示例用于展示技能的输入、输出和验收方式；除非明确注明，示例内容不代表已执行的真实客户项目或生产环境测试。', 'Note: examples demonstrate inputs, outputs, and acceptance criteria. Unless explicitly stated, they are not claims of real client work or production testing.') }}</p>
+    </section>
+
     <section class="skill-about">
       <h2>{{ pick('关于此 Skill', 'About this skill') }}</h2>
       <div class="skill-chat">
