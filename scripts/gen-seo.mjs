@@ -413,7 +413,7 @@ writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 // ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
 const latestRows = items.slice(0, 4).map((it) => {
   const sub = it.category ? it.category + ' · ' + it.description : it.description
-  const image = it.image ? baseNoSlash + (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+  const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
   const thumb = image
     ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
     : '<div class="article-card-thumb article-card-placeholder"></div>'
