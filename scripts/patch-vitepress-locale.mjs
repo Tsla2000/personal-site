@@ -3,8 +3,9 @@
 // 补上对 /${locale}/index.md 的判断，英文首页才会用 en locale。
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const ROOT = new URL('..', import.meta.url).pathname
+const ROOT = fileURLToPath(new URL('..', import.meta.url))
 const FILES = [
   join(ROOT, 'node_modules/vitepress/dist/client/shared.js')
 ]

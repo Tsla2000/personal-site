@@ -79,7 +79,7 @@ export default defineConfig({
   // sitemap 由 scripts/gen-seo.mjs 自行生成到 public/(VitePress 内置 sitemap 不拼接 base 路径,故不用它)
   themeConfig: {
     // 注意：logo 不要手拼 base 前缀，VitePress 会自动 withBase；手拼会导致镜像站路径双前缀。
-    logo: '/images/mango-logo.png',
+    logo: { src: '/images/mango-logo-nav.png', width: 18, height: 24 },
     siteTitle: SITE_TITLE,
     nav: [
       { text: '首页', link: '/' },

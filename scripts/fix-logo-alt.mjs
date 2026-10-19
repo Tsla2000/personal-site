@@ -4,8 +4,9 @@
 // 用法：node scripts/fix-logo-alt.mjs
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs'
 import { join, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const DIST = new URL('../docs/.vitepress/dist/', import.meta.url).pathname
+const DIST = fileURLToPath(new URL('../docs/.vitepress/dist/', import.meta.url))
 const ZH_ALT = 'PRO的茶里芒果'
 const EN_ALT = "Pro's MangoFund"
 

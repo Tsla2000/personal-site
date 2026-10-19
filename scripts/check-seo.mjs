@@ -3,8 +3,9 @@
 // 退出码：0=通过，1=有 P0/P1 级问题
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const DIST = new URL('../docs/.vitepress/dist/', import.meta.url).pathname
+const DIST = fileURLToPath(new URL('../docs/.vitepress/dist/', import.meta.url))
 const errors = []  // P0: 阻止发布
 const warnings = [] // P1: 需要关注
 

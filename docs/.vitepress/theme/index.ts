@@ -1,7 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import { useData, inBrowser } from 'vitepress'
 import type { EnhanceAppContext, Router } from 'vitepress'
-import { nextTick, h } from 'vue'
+import { nextTick, h, defineAsyncComponent } from 'vue'
 import type { App, Ref } from 'vue'
 import ShareBar from './components/ShareBar.vue'
 import ShareRail from './components/ShareRail.vue'
@@ -10,9 +10,11 @@ import UsefulButton from './components/UsefulButton.vue'
 import FollowButton from './components/FollowButton.vue'
 import UpdateBanner from './components/UpdateBanner.vue'
 import LangSwitch from './components/LangSwitch.vue'
-import SkillShowcase from './components/SkillShowcase.vue'
-import SkillDetail from './components/SkillDetail.vue'
 import './custom.css'
+
+// 技能卡片和详情依赖 homeSkills 大数据表，只在技能相关页面用到，异步拆包，不进全站公共 theme chunk
+const SkillShowcase = defineAsyncComponent(() => import('./components/SkillShowcase.vue'))
+const SkillDetail = defineAsyncComponent(() => import('./components/SkillDetail.vue'))
 
 // ---------- 哈苏式机械快门音效（Web Audio 合成）：反光板"咔" + 快门"嚓" ----------
 let audioCtx: AudioContext | null = null

@@ -14,12 +14,13 @@
 // 在 package.json 的 docs:build 中于 vitepress build 之前运行。
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
 
-const DOCS_DIR = new URL('../docs/', import.meta.url).pathname
+const DOCS_DIR = fileURLToPath(new URL('../docs/', import.meta.url))
 const PUBLIC_DIR = join(DOCS_DIR, 'public')
-const REPO_DIR = new URL('../', import.meta.url).pathname
-const CONTENT_DATES_PATH = new URL('./content-dates.json', import.meta.url).pathname
+const REPO_DIR = fileURLToPath(new URL('../', import.meta.url))
+const CONTENT_DATES_PATH = fileURLToPath(new URL('./content-dates.json', import.meta.url))
 // 图片文件名不带内容哈希,缓存 30 天;替换同名文件后最多一个月生效。
 const IMAGE_CACHE_SECONDS = 60 * 60 * 24 * 30
 // Vite 内容哈希资源可以缓存一年且 immutable。
