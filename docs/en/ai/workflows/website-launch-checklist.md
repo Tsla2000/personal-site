@@ -1,5 +1,5 @@
 ---
-title: Website Launch Checklist: QA, SEO, Mobile, Analytics, and Rollback
+title: "Website Launch Checklist: QA, SEO, Mobile, Analytics, and Rollback"
 description: A practical pre-release checklist for websites covering core user journeys, broken links, mobile layouts, SEO metadata, social previews, analytics events, and rollback readiness.
 date: 2026-10-19
 keywords: website launch checklist, website QA, technical SEO checklist, mobile testing, VitePress deployment
