@@ -35,6 +35,7 @@ export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
   { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
   { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] },
   { id: 'haiwai', labelZh: '出海', labelEn: 'Overseas', skillIds: ['haiwai-new-keyword-launch', 'haiwai-monetize-convert'] },
+  { id: 'coding', labelZh: '开发', labelEn: 'Development', skillIds: ['ai-project-delivery'] },
   { id: 'method', labelZh: '方法', labelEn: 'Method', skillIds: ['writing-skills', 'brainstorming', 'systematic-debugging', 'verification-before-completion', 'writing-plans'] }
 ]
 
@@ -391,6 +392,20 @@ export const homeSkills: HomeSkill[] = [
     imageAltEn: 'Cover for Writing Plans: paper-craft steps climbing to a flag',
     ...skillFiles('writing-plans')
   }
+  {
+    id: 'ai-project-delivery',
+    nameZh: 'AI 项目交付',
+    nameEn: 'AI Project Delivery',
+    pitchZh: '从需求澄清到测试验收，让 AI Coding 的交付过程可追踪、可验证。',
+    pitchEn: 'Make AI-assisted development traceable and verifiable, from requirements to testing.',
+    ...skillType('coding'),
+    image: '/images/skills/frontend-design.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '代码与网页界面示意图，代表 AI 项目的实现和验证过程',
+    imageAltEn: 'Code and web interface illustration representing AI project implementation and verification',
+    ...skillFiles('ai-project-delivery')
+  },
 ]
 
 export function skillsForFilter(filterId: string): HomeSkill[] {
@@ -433,7 +448,8 @@ const SKILL_POPULAR_IDS = [
   'brainstorming',
   'systematic-debugging',
   'verification-before-completion',
-  'writing-plans'
+  'writing-plans',
+  'ai-project-delivery'
 ] as const
 
 function assertPopularOrder(): void {

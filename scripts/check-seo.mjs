@@ -49,7 +49,7 @@ function getMetaAll(html, name) {
 /** 首页技能商店固定张数。目录页仍展示全部技能。 */
 const HOME_SKILL_CARD_LIMIT = 9
 /** 当前目录技能总数。新增技能时同步改这一处，首页仍只取最新 9 个。 */
-const CATALOG_SKILL_COUNT = 16
+const CATALOG_SKILL_COUNT = 17
 
 function skillTiles(html) {
   return html.match(/<article\b[^>]*\bskill-tile\b[^>]*>[\s\S]*?<\/article>/g) || []
@@ -406,7 +406,8 @@ const MIN_ZIP_BYTES = {
   'custom-connector-setup.zip': 20000,
   'personal-site-build.zip': 6000,
   'frontend-design.zip': 7000,
-  'ui-design-refs.zip': 4500
+  'ui-design-refs.zip': 4500,
+  'ai-project-delivery.zip': 4000
 }
 for (const zipName of [
   'de-ai-writing.zip',
@@ -415,6 +416,7 @@ for (const zipName of [
   'anatomy.zip',
   'cover-image-gen.zip',
   'custom-connector-setup.zip',
+  'ai-project-delivery.zip',
   'personal-site-build.zip',
   'frontend-design.zip',
   'ui-design-refs.zip'
@@ -446,8 +448,8 @@ if (existsSync(zhSkills)) {
   if (zhSkillsHtml.split(ZH_SKILL_LEAD).length - 1 < 2) errors.push('中文技能页说明不是约定文案')
   if (zhSkillsHtml.includes('这些是可以直接试的 Agent 技能')) errors.push('中文技能页仍使用旧说明')
   if (!zhSkillsHtml.includes('skill-catalog-bar')) errors.push('中文技能页缺少数量与排序条')
-  if (!/class="skill-count"[^>]*>\s*16 个 Skills\s*</.test(zhSkillsHtml)) {
-    errors.push('中文技能页应显示全部 16 个 Skills')
+  if (!/class="skill-count"[^>]*>\s*17 个 Skills\s*</.test(zhSkillsHtml)) {
+    errors.push('中文技能页应显示全部 17 个 Skills')
   }
   if (zhSkillsHtml.includes('skill-sort-select')) errors.push('中文技能页排序仍是下拉框')
   for (const sortLabel of ['推荐', '热门', '最新']) {
@@ -481,8 +483,8 @@ if (existsSync(enSkills)) {
   if (enSkillsHtml.split(EN_SKILL_LEAD).length - 1 < 2) errors.push('英文技能页说明不是约定文案')
   if (enSkillsHtml.includes('These are agent skills you can try')) errors.push('英文技能页仍使用旧说明')
   if (!enSkillsHtml.includes('skill-catalog-bar')) errors.push('英文技能页缺少数量与排序条')
-  if (!/class="skill-count"[^>]*>\s*16 Skills\s*</.test(enSkillsHtml)) {
-    errors.push('英文技能页应显示全部 16 Skills')
+  if (!/class="skill-count"[^>]*>\s*17 Skills\s*</.test(enSkillsHtml)) {
+    errors.push('英文技能页应显示全部 17 Skills')
   }
   if (enSkillsHtml.includes('skill-sort-select')) errors.push('英文技能页排序仍是下拉框')
   for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
