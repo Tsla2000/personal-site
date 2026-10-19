@@ -315,18 +315,18 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: read-only access to a task system",
   "exampleInputZh": "需求：让 Agent 按关键词查任务、读取详情和状态；不能创建、更新或删除任务。数据只允许在用户当前授权范围内返回。",
   "exampleInputEn": "Requirement: let an agent search tasks and read details/status, but not create, update, or delete them. Return data only within the user's authorized scope.",
-  exampleOutputZh: "工具定义（示意）
+  exampleOutputZh: `工具定义（示意）
     search_tasks(query, status?, limit?)
     get_task(task_id)
     list_statuses()
     权限：read-only
-    拒绝策略：写操作返回明确的 permission_denied；凭据只在服务端保存；日志不记录 token。",
-  "exampleOutputEn": "Tool contract (illustrative)
+    拒绝策略：写操作返回明确的 permission_denied；凭据只在服务端保存；日志不记录 token。`,
+  exampleOutputEn: `Tool contract (illustrative)
     search_tasks(query, status?, limit?)
     get_task(task_id)
     list_statuses()
     Scope: read-only
-    Policy: write operations return permission_denied; credentials remain server-side; logs never include tokens.",
+    Policy: write operations return permission_denied; credentials remain server-side; logs never include tokens.`,
   artifactsZh: [
     "MCP 工具 schema 与参数说明",
     "认证和最小权限矩阵",
@@ -430,18 +430,18 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: redesign a tool-product homepage",
   "exampleInputZh": "页面目标：让第一次访问的人在 5 秒内理解产品用途并找到试用入口。约束：保留现有路由与功能，不引入新 UI 框架。",
   "exampleInputEn": "Goal: help first-time visitors understand the product in five seconds and find the trial CTA. Constraints: keep existing routes and functionality; do not add a new UI framework.",
-  exampleOutputZh: "交付片段
+  exampleOutputZh: `交付片段
     设计方向：编辑部式、克制、强调内容层级
     令牌：背景 #F7F5F0；文字 #202124；强调色 #356859
     区块：Hero / 使用流程 / 示例结果 / FAQ / CTA
     响应式验收：1440px、768px、390px；检查导航折行、卡片宽度与按钮触控区
-    色值仅为演示提案，需与现有品牌系统协调后确认。",
-  "exampleOutputEn": "Deliverable excerpt
+    色值仅为演示提案，需与现有品牌系统协调后确认。`,
+  exampleOutputEn: `Deliverable excerpt
     Direction: restrained editorial layout with clear content hierarchy
     Tokens: background #F7F5F0; text #202124; accent #356859
     Sections: hero / workflow / sample result / FAQ / CTA
     Responsive checks: 1440px, 768px, 390px; inspect nav wrapping, card width, and CTA touch target
-    Colors are a demo proposal and should be reconciled with the existing brand system.",
+    Colors are a demo proposal and should be reconciled with the existing brand system.`,
   artifactsZh: [
     "设计方向与参考理由",
     "设计令牌表",
@@ -545,18 +545,18 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: validate whether an English tool query deserves a page",
   "exampleInputZh": "产品：把会议纪要整理成行动项的网页工具。目标：英语用户。问题：用户是在找模板、操作教程，还是在线工具？",
   "exampleInputEn": "Product: a web tool that turns meeting notes into action items. Audience: English-speaking users. Question: are searchers looking for a template, a how-to guide, or an online tool?",
-  exampleOutputZh: "交付草案
+  exampleOutputZh: `交付草案
     主词（待验证）：meeting notes to action items
     页面标题草案：Turn Meeting Notes into Clear Action Items
     页面模块：输入示例 / 处理步骤 / 输出样例 / 隐私说明 / FAQ
     上线后观察：收录状态、展示次数、点击率、工具启动率
-    注意：以上关键词与标题是演示假设，不代表已验证的搜索量或排名机会。",
-  "exampleOutputEn": "Draft deliverable
+    注意：以上关键词与标题是演示假设，不代表已验证的搜索量或排名机会。`,
+  exampleOutputEn: `Draft deliverable
     Candidate query (unverified): meeting notes to action items
     Title draft: Turn Meeting Notes into Clear Action Items
     Sections: input example / workflow / output sample / privacy / FAQ
     Monitor after launch: indexation, impressions, CTR, tool-start rate
-    Note: the query and title are illustrative hypotheses, not verified demand or ranking opportunities.",
+    Note: the query and title are illustrative hypotheses, not verified demand or ranking opportunities.`,
   artifactsZh: [
     "关键词与搜索意图表（附来源和日期）",
     "落地页大纲与标题草案",
@@ -730,16 +730,16 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: add filtering to an existing site",
   "exampleInputZh": "需求：目录页增加“类型”筛选；筛选后卡片数量、空状态与 URL 行为正确；不改变现有卡片样式。",
   "exampleInputEn": "Request: add a type filter to a catalog. Card counts, empty state, and URL behavior must remain correct without changing existing card styling.",
-  exampleOutputZh: "交付摘要
+  exampleOutputZh: `交付摘要
     - 变更：筛选状态、卡片过滤逻辑、空状态
     - 验收：全部 / 单一类型 / 无匹配结果
     - 自动检查：构建、类型检查、SEO 检查
-    - 待确认：真实移动端点击体验（若未在设备上验证）",
-  "exampleOutputEn": "Handoff summary
+    - 待确认：真实移动端点击体验（若未在设备上验证）`,
+  exampleOutputEn: `Handoff summary
     - Changes: filter state, card filtering, empty state
     - Checks: all items / one type / no matches
     - Automated: build, type checks, SEO checks
-    - Follow-up: real-device touch behavior if not tested on a device",
+    - Follow-up: real-device touch behavior if not tested on a device`,
   artifactsZh: [
     "需求与非目标清单",
     "按文件拆分的实现计划",
@@ -829,19 +829,19 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: pre-launch checks for a product landing page",
   "exampleInputZh": "环境：预览站。关键路径：打开首页 → 点击“开始使用” → 填写邮箱 → 提交。额外检查：手机宽度、404、分享图和站点地图。",
   "exampleInputEn": "Environment: preview site. Flow: open homepage → select Get Started → enter email → submit. Also check mobile width, 404, share image, and sitemap.",
-  exampleOutputZh: "验收表（示例格式）
+  exampleOutputZh: `验收表（示例格式）
     项目             状态       证据
     构建             通过       npm run build
     注册提交         未验证     当前无测试账号
     移动端菜单       失败       390px 宽度下遮挡 CTA
     分享预览图       通过       OG 图片 URL 可访问
-    结论：暂缓发布；先修复移动端遮挡，再补测注册流程。",
-  "exampleOutputEn": "Acceptance table (illustrative format)
+    结论：暂缓发布；先修复移动端遮挡，再补测注册流程。`,
+  exampleOutputEn: `Acceptance table (illustrative format)
     Build             PASS       npm run build
     Signup submit     UNVERIFIED No test account
     Mobile navigation FAIL       CTA obscured at 390px
     Share image       PASS       OG image URL is reachable
-    Decision: hold release; fix mobile overlap and test signup.",
+    Decision: hold release; fix mobile overlap and test signup.`,
   artifactsZh: [
     "发布阻断项 / 非阻断项列表",
     "关键路径验收表",
@@ -931,12 +931,12 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: turn one set of notes into three formats",
   "exampleInputZh": "原始观点：AI 能降低原型开发成本，但不能替代上线后的质量验证和用户反馈。没有统计数据，也没有可引用的研究。",
   "exampleInputEn": "Source claim: AI lowers prototype-development cost, but cannot replace post-launch quality checks and user feedback. No statistics or research quotes are provided.",
-  exampleOutputZh: "公众号开头：AI 让做出第一个版本更便宜了，但“做出来”不等于“有人愿意用”。真正的验证从上线后才开始。
+  exampleOutputZh: `公众号开头：AI 让做出第一个版本更便宜了，但“做出来”不等于“有人愿意用”。真正的验证从上线后才开始。
     X 短帖：AI 降低了原型成本，却没有取消产品验证。代码能运行，只能证明它暂时能运行；用户愿不愿意留下，是另一回事。
-    官网描述：了解如何把 AI 辅助开发接入需求拆解、测试验收与用户反馈流程。",
-  "exampleOutputEn": "WeChat opening: AI has made the first version cheaper to build, but 'built' does not mean 'wanted'. Real validation starts after launch.
+    官网描述：了解如何把 AI 辅助开发接入需求拆解、测试验收与用户反馈流程。`,
+  exampleOutputEn: `WeChat opening: AI has made the first version cheaper to build, but 'built' does not mean 'wanted'. Real validation starts after launch.
     X post: AI lowers prototype costs; it does not remove product validation. Working code proves it runs for now—not that users will stay.
-    SEO description: Learn how to connect AI-assisted development with requirements, testing, and user feedback.",
+    SEO description: Learn how to connect AI-assisted development with requirements, testing, and user feedback.`,
   artifactsZh: [
     "母稿摘要与事实边界",
     "公众号版本 / X 版本 / 官网描述",
@@ -1026,18 +1026,18 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: create drafts without publishing",
   "exampleInputZh": "输入 CSV：标题、正文摘要、目标栏目。目标：创建 5 条草稿；禁止点击“发布”；遇到重复标题时跳过并记录。",
   "exampleInputEn": "Input CSV: title, summary, destination category. Goal: create five drafts; never click Publish; skip and log duplicate titles.",
-  exampleOutputZh: "执行记录（格式示例）
+  exampleOutputZh: `执行记录（格式示例）
     01 草稿 A：已创建，列表中复核通过
     02 草稿 B：已存在，跳过
     03 草稿 C：失败，表单校验错误，停止自动重试
     人工确认：发布动作未执行
-    说明：这只是日志模板，不代表真实网页操作已执行。",
-  "exampleOutputEn": "Run log (format example)
+    说明：这只是日志模板，不代表真实网页操作已执行。`,
+  exampleOutputEn: `Run log (format example)
     01 Draft A: created and confirmed in list
     02 Draft B: already exists, skipped
     03 Draft C: failed validation; automatic retry stopped
     Human checkpoint: publishing not performed
-    This is a log template, not a claim that a real browser task ran.",
+    This is a log template, not a claim that a real browser task ran.`,
   artifactsZh: [
     "自动化步骤与状态机",
     "输入字段映射表",
@@ -1127,18 +1127,18 @@ export const homeSkills: HomeSkill[] = [
   "exampleTitleEn": "Example: diagnose a synthetic conversion funnel",
   "exampleInputZh": "合成样本：曝光 1,000；点击 120；激活 60；付费 9。假设每个阶段按同一批用户去重，真实项目必须先验证这一点。",
   "exampleInputEn": "Synthetic sample: 1,000 impressions; 120 clicks; 60 activations; 9 payments. Assume each stage is deduplicated by the same users; verify this in a real project.",
-  exampleOutputZh: "计算结果（合成数据）
+  exampleOutputZh: `计算结果（合成数据）
     曝光 → 点击：120 / 1,000 = 12%
     点击 → 激活：60 / 120 = 50%
     激活 → 付费：9 / 60 = 15%
     曝光 → 付费：9 / 1,000 = 0.9%
-    下一步：先拆分渠道和新老用户，再验证“点击到激活”是否存在可改善的体验问题。不能仅凭这组数据断言原因。",
-  "exampleOutputEn": "Calculated from synthetic data
+    下一步：先拆分渠道和新老用户，再验证“点击到激活”是否存在可改善的体验问题。不能仅凭这组数据断言原因。`,
+  exampleOutputEn: `Calculated from synthetic data
     Impression → click: 120 / 1,000 = 12%
     Click → activation: 60 / 120 = 50%
     Activation → payment: 9 / 60 = 15%
     Impression → payment: 9 / 1,000 = 0.9%
-    Next: segment by channel and new/returning users, then test whether the click-to-activation step has an experience issue. This data alone cannot establish cause.",
+    Next: segment by channel and new/returning users, then test whether the click-to-activation step has an experience issue. This data alone cannot establish cause.`,
   artifactsZh: [
     "数据口径与质量报告",
     "可复算的漏斗表",
