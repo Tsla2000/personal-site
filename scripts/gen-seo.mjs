@@ -438,22 +438,30 @@ for (const it of items) {
   if (!byYear.has(y)) byYear.set(y, [])
   byYear.get(y).push(it)
 }
+// 归档页:Perplexity Discover 风格 —— 每年首篇为头条大卡(左文右图),其余为三列卡片网格
+const archiveCardImg = (it, cls) => {
+  const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+  return image
+    ? `<img class="${cls}" src="${esc(image)}" alt="${esc(it.title)}" loading="lazy" />`
+    : `<div class="${cls} archive-img-placeholder"></div>`
+}
 const archiveSections = [...byYear.entries()]
   .sort((a, b) => b[0] - a[0])
   .map(([year, list]) => {
-    const rows = list.map((it) => {
-      const sub = it.category ? `${it.category} · ${it.description}` : it.description
-      const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
-      const thumb = image
-        ? '<img class="article-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
-        : '<div class="article-row-thumb article-row-placeholder"></div>'
-      return `<a class="article-row" href="${it.urlPath}">
-  <time class="article-row-date-keep" aria-hidden="true">${it.dateStr}</time><div class="article-row-body"><div class="article-row-head"><strong>${esc(it.title)}</strong><time>${it.dateStr}</time></div><div class="article-row-media">${thumb}<small>${esc(sub)}</small></div></div>
+    const [first, ...rest] = list
+    const chip = (it) => it.category ? `<span class="archive-chip">${esc(it.category)}</span>` : ''
+    const headline = `<a class="archive-headline" href="${first.urlPath}">
+  <div class="archive-headline-body">${chip(first)}<strong>${esc(first.title)}</strong><time>${first.dateStr}</time><p>${esc(first.description)}</p></div>
+  ${archiveCardImg(first, 'archive-headline-img')}
 </a>`
-    }).join('\n')
+    const cards = rest.map((it) => `<a class="archive-card" href="${it.urlPath}">
+  ${archiveCardImg(it, 'archive-card-img')}
+  <div class="archive-card-body">${chip(it)}<strong>${esc(it.title)}</strong><p>${esc(it.description)}</p><time>${it.dateStr}</time></div>
+</a>`).join('\n')
     return `<h2>${year}（${list.length}）</h2>
-<div class="article-list">
-${rows}
+${headline}
+<div class="archive-grid">
+${cards}
 </div>`
   }).join('\n')
 const archivePath = join(DOCS_DIR, 'archive.md')
