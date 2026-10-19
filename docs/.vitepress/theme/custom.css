@@ -228,6 +228,7 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   width: 100%;
   aspect-ratio: 2.35 / 1;
   object-fit: cover;
+  object-position: center top;
   background: var(--vp-c-bg-soft);
 }
 
