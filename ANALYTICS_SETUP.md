@@ -1,35 +1,36 @@
-# 访问统计接入说明
+# 网站流量与技能使用统计
 
-二选一即可,都不需要改文章内容。两个都是隐私友好的轻量统计,无 Cookie 横幅烦恼。
+当前网站已接入 Umami Cloud 脚本，统计域名应配置为正式域名 `promangofund.com`。脚本配置位于 `docs/.vitepress/config.ts`。如果 Umami 后台尚未将该域名添加到对应 Website，请先在 Umami 中确认。
 
-## 方案 A:Umami(推荐,有免费云版)
+## 当前记录的事件
 
-1. 打开 https://cloud.umami.is 注册账号(免费版够个人博客用)。
-2. 添加网站,域名填 `tsla2000.github.io`,拿到一串 **Website ID**。
-3. 打开 `docs/.vitepress/config.ts`,找到 `head` 数组里注释掉的 Umami 那行:
-   ```ts
-   // ['script', { defer: '', src: 'https://cloud.umami.is/script.js', 'data-website-id': '你的-UMAMI-WEBSITE-ID' }],
-   ```
-   把 `'你的-UMAMI-WEBSITE-ID'` 换成你的真实 ID,删掉行首的 `//`。
-4. 提交并推送,部署后访问 Umami 后台即能看到数据。
+除了 Umami 默认页面浏览，网站会记录以下产品事件：
 
-## 方案 B:Plausible
-
-1. 打开 https://plausible.io 注册(有 30 天试用,之后付费,约 $9/月起)。
-2. 添加网站,域名填 `tsla2000.github.io`。
-3. 打开 `docs/.vitepress/config.ts`,找到 `head` 数组里注释掉的 Plausible 那行:
-   ```ts
-   // ['script', { defer: '', 'data-domain': 'tsla2000.github.io', src: 'https://plausible.io/js/script.js' }],
-   ```
-   删掉行首的 `//` 即可(域名已预填好)。
-4. 提交并推送,部署后访问 Plausible 后台即能看到数据。
-
-## 对比
-
-| | Umami | Plausible |
+| 事件名 | 触发时机 | 用途 |
 |---|---|---|
-| 免费额度 | 云版免费(有事件量上限) | 30 天试用后付费 |
-| 自托管 | 可以(自己有服务器的话完全免费) | 可以(开源) |
-| 上手难度 | 低 | 低 |
+| `skill_copy` | 用户点击复制技能 | 观察不同技能的实际使用意向 |
+| `skill_download` | 用户点击下载 ZIP | 观察下载需求与语言差异 |
 
-个人博客建议先用 Umami 免费云版,零成本起步。
+事件属性只包含技能 ID、语言和复制成功/失败状态，不发送用户输入、剪贴板内容、文件内容、API 密钥或个人身份信息。分析脚本被拦截或加载失败时，复制和下载仍应正常工作。
+
+## 建议先观察哪些指标
+
+- **自然搜索点击与查询词：** 在 Google Search Console 中查看搜索需求和页面表现。
+- **技能页访问：** 识别能带来搜索流量的主题。
+- **复制率：** 复制事件数 / 对应技能页访问数。该值是方向性指标，需考虑重复操作。
+- **下载率：** ZIP 下载事件数 / 对应技能页访问数。
+- **语言和主题差异：** 判断中文与英文页面分别有哪些实际需求。
+
+不要只根据单日波动做决策。新页面需要时间被发现和收录；先建立基线，再按周观察趋势。
+
+## Umami 后台检查
+
+1. 打开 https://cloud.umami.is 并登录。
+2. 确认网站的域名设置为 `promangofund.com`，且 Website ID 与 `docs/.vitepress/config.ts` 中的脚本配置对应。
+3. 部署后打开技能目录，试用一次复制和一次 ZIP 下载。
+4. 在 Umami 的事件报告中确认出现 `skill_copy` 和 `skill_download`。
+5. 若没有事件，检查浏览器控制台、内容拦截器和 Umami 域名配置；不要为排查问题把用户内容发送给分析服务。
+
+## 隐私与数据边界
+
+这里只收集产品使用事件，不追踪用户输入内容，也不需要登录才能复制或下载。若将来增加账户、订单或在线执行，应重新评估隐私告知、数据保留周期、访问权限与用户删除请求。
