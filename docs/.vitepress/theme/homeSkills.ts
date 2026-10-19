@@ -17,16 +17,16 @@ export interface SkillDetailCopy {
   sampleEn: string
   stepsZh: string[]
   stepsEn: string[]
-  exampleTitleZh: string
-  exampleTitleEn: string
-  exampleInputZh: string
-  exampleInputEn: string
-  exampleOutputZh: string
-  exampleOutputEn: string
-  artifactsZh: string[]
-  artifactsEn: string[]
-  checksZh: string[]
-  checksEn: string[]
+  exampleTitleZh?: string
+  exampleTitleEn?: string
+  exampleInputZh?: string
+  exampleInputEn?: string
+  exampleOutputZh?: string
+  exampleOutputEn?: string
+  artifactsZh?: string[]
+  artifactsEn?: string[]
+  checksZh?: string[]
+  checksEn?: string[]
 }
 
 export interface SkillFilterOption {
