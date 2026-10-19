@@ -46,6 +46,41 @@ function getMetaAll(html, name) {
   return values
 }
 
+/** 首页技能商店固定张数。目录页仍展示全部技能。 */
+const HOME_SKILL_CARD_LIMIT = 9
+/** 当前目录技能总数。新增技能时同步改这一处，首页仍只取最新 9 个。 */
+const CATALOG_SKILL_COUNT = 11
+
+function skillTiles(html) {
+  return html.match(/<article\b[^>]*\bskill-tile\b[^>]*>[\s\S]*?<\/article>/g) || []
+}
+
+function skillTileTitles(html) {
+  return skillTiles(html).map((tile) => {
+    const heading = tile.match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i)
+    if (!heading) return ''
+    return heading[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  })
+}
+
+function assertHomeShowsNewest(homeHtml, catalogHtml, label) {
+  const homeTitles = skillTileTitles(homeHtml)
+  const catalogTitles = skillTileTitles(catalogHtml)
+  if (homeTitles.length !== HOME_SKILL_CARD_LIMIT) {
+    errors.push(`${label}首页应展示最新 ${HOME_SKILL_CARD_LIMIT} 个技能，实际 ${homeTitles.length} 个`)
+  }
+  if (catalogTitles.length !== CATALOG_SKILL_COUNT) {
+    errors.push(`${label}技能目录应展示全部 ${CATALOG_SKILL_COUNT} 个技能，实际 ${catalogTitles.length} 个`)
+  }
+  const expected = [...catalogTitles].reverse().slice(0, HOME_SKILL_CARD_LIMIT)
+  if (homeTitles.join('\n') !== expected.join('\n')) {
+    errors.push(`${label}首页技能不是目录倒序的最新 ${HOME_SKILL_CARD_LIMIT} 个：${homeTitles.join('、')}`)
+  }
+  for (const title of catalogTitles.slice(0, Math.max(0, catalogTitles.length - HOME_SKILL_CARD_LIMIT))) {
+    if (title && homeTitles.includes(title)) errors.push(`${label}首页不应展示较早技能：${title}`)
+  }
+}
+
 function readJsonLd(html, file) {
   const blocks = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)]
   const nodes = []
@@ -190,21 +225,8 @@ if (!existsSync(homeHtmlPath)) {
   if (!/<h2[^>]*>\s*技能商店\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
   if (/<h2[^>]*>\s*Thinking\s*<\/h2>/.test(homeHtml)) errors.push('中文首页仍保留 Thinking 板块')
   if (!homeHtml.includes('复制技能')) errors.push('中文首页缺少复制技能按钮')
-  for (const title of ['去AI味写作', 'AI界面设计规范', '图解设计', '等轴测解剖图', '封面图生成', '自定义连接器 / MCP', '个人网站搭建', '前端设计', 'UI设计参考清单']) {
-    if (!homeHtml.includes(title)) errors.push(`中文首页缺少技能：${title}`)
-  }
-  for (const image of [
-    '/images/skills/de-ai-writing.jpg',
-    '/images/skills/ai-ui-design.jpg',
-    '/images/skills/diagram-design.jpg',
-    '/images/skills/anatomy.jpg',
-    '/images/skills/cover_image_gen.jpg',
-    '/images/skills/custom_connector_setup.jpg',
-    '/images/skills/personal-site-build.jpg',
-    '/images/skills/frontend-design.jpg',
-    '/images/skills/ui-design-refs.jpg'
-  ]) {
-    if (!homeHtml.includes(image)) errors.push(`中文首页缺少技能图 ${image}`)
+  for (const tile of skillTiles(homeHtml)) {
+    if (!/\/images\/skills\/[^"]+/.test(tile)) errors.push('中文首页技能卡缺少封面图')
   }
   if (/<dt>\s*用途\s*<\/dt>/.test(homeHtml) || /<dt>\s*适用场景\s*<\/dt>/.test(homeHtml) || /<dt>\s*分工\s*<\/dt>/.test(homeHtml)) {
     errors.push('中文首页技能卡仍展示用途、适用场景、分工')
@@ -317,10 +339,9 @@ if (existsSync(enHome)) {
   }
   if (!/<h2[^>]*>\s*Skills Store\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
   if (!html.includes('Copy skill')) errors.push('英文首页缺少 Copy skill 按钮')
-  for (const title of ['De-AI Writing', 'AI Interface Design Rules', 'Diagram Design', 'Isometric Anatomy', 'Cover Image Generation', 'Custom Connectors', 'Personal Site Builder', 'Frontend Design', 'UI Design Refs']) {
-    if (!html.includes(title)) errors.push(`英文首页缺少技能：${title}`)
+  for (const tile of skillTiles(html)) {
+    if (!/\/images\/skills\/[^"]+/.test(tile)) errors.push('英文首页技能卡缺少封面图')
   }
-  if (!html.includes('/images/skills/custom_connector_setup.jpg')) errors.push('英文首页缺少自定义连接器预览图')
   if (/<dt>\s*Use\s*<\/dt>/.test(html) || /<dt>\s*Scenarios\s*<\/dt>/.test(html) || html.includes('Division of work')) {
     errors.push('英文首页技能卡仍展示 Use、Scenarios、Division of work')
   }
@@ -425,8 +446,8 @@ if (existsSync(zhSkills)) {
   if (zhSkillsHtml.split(ZH_SKILL_LEAD).length - 1 < 2) errors.push('中文技能页说明不是约定文案')
   if (zhSkillsHtml.includes('这些是可以直接试的 Agent 技能')) errors.push('中文技能页仍使用旧说明')
   if (!zhSkillsHtml.includes('skill-catalog-bar')) errors.push('中文技能页缺少数量与排序条')
-  if (!/class="skill-count"[^>]*>\s*\d+ 个 Skills\s*</.test(zhSkillsHtml)) {
-    errors.push('中文技能页缺少「N 个 Skills」')
+  if (!/class="skill-count"[^>]*>\s*11 个 Skills\s*</.test(zhSkillsHtml)) {
+    errors.push('中文技能页应显示全部 11 个 Skills')
   }
   if (zhSkillsHtml.includes('skill-sort-select')) errors.push('中文技能页排序仍是下拉框')
   for (const sortLabel of ['推荐', '热门', '最新']) {
@@ -460,8 +481,8 @@ if (existsSync(enSkills)) {
   if (enSkillsHtml.split(EN_SKILL_LEAD).length - 1 < 2) errors.push('英文技能页说明不是约定文案')
   if (enSkillsHtml.includes('These are agent skills you can try')) errors.push('英文技能页仍使用旧说明')
   if (!enSkillsHtml.includes('skill-catalog-bar')) errors.push('英文技能页缺少数量与排序条')
-  if (!/class="skill-count"[^>]*>\s*\d+ Skills?\s*</.test(enSkillsHtml)) {
-    errors.push('英文技能页缺少技能数量')
+  if (!/class="skill-count"[^>]*>\s*11 Skills\s*</.test(enSkillsHtml)) {
+    errors.push('英文技能页应显示全部 11 Skills')
   }
   if (enSkillsHtml.includes('skill-sort-select')) errors.push('英文技能页排序仍是下拉框')
   for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
@@ -483,6 +504,13 @@ if (existsSync(enSkills)) {
     if (!enSkillsHtml.includes(text)) errors.push(`英文技能页筛选缺少 ${text}`)
   }
   if (enSkillsHtml.includes('立即购买') || enSkillsHtml.includes('US$')) errors.push('英文技能页出现了付费文案')
+}
+
+if (existsSync(homeHtmlPath) && existsSync(zhSkills)) {
+  assertHomeShowsNewest(readFileSync(homeHtmlPath, 'utf8'), readFileSync(zhSkills, 'utf8'), '中文')
+}
+if (existsSync(enHome) && existsSync(enSkills)) {
+  assertHomeShowsNewest(readFileSync(enHome, 'utf8'), readFileSync(enSkills, 'utf8'), '英文')
 }
 
 const zhCover = join(DIST, 'skills', 'cover-image-gen.html')

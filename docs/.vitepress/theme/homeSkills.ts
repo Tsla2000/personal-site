@@ -392,6 +392,34 @@ export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): H
   return [...skills]
 }
 
+/** 首页技能商店固定展示的最新技能数量。目录页仍展示全部。 */
+export const HOME_SKILL_SHOWCASE_LIMIT = 9
+
+/** 首页展示：按最新规则取前若干个，不写死技能 id。 */
+export function homeShowcaseSkills(
+  skills: readonly HomeSkill[] = homeSkills,
+  limit: number = HOME_SKILL_SHOWCASE_LIMIT
+): HomeSkill[] {
+  if (limit <= 0) return []
+  return sortSkills(skills, SKILL_SORT_NEWEST).slice(0, limit)
+}
+
+function assertHomeShowcase(): void {
+  const shown = homeShowcaseSkills()
+  const newest = sortSkills(homeSkills, SKILL_SORT_NEWEST)
+  const expectedCount = Math.min(HOME_SKILL_SHOWCASE_LIMIT, homeSkills.length)
+  if (shown.length !== expectedCount) {
+    throw new Error(`首页应展示最新 ${expectedCount} 个技能，实际 ${shown.length} 个`)
+  }
+  for (let index = 0; index < shown.length; index += 1) {
+    if (shown[index]?.id !== newest[index]?.id) {
+      throw new Error('首页技能必须按最新顺序取前若干个')
+    }
+  }
+}
+
+assertHomeShowcase()
+
 export function findSkill(skillId: string): HomeSkill | undefined {
   return homeSkills.find((skill) => skill.id === skillId)
 }

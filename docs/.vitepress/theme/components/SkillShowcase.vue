@@ -7,6 +7,7 @@ import {
   SKILL_SORTS,
   SKILL_SORT_RECOMMENDED,
   SKILL_TYPE_FILTERS,
+  homeShowcaseSkills,
   skillsForFilter,
   skillPagePath,
   sortSkills,
@@ -29,7 +30,7 @@ const onCatalog = computed(() => {
 
 const visibleSkills = computed(() => {
   const filtered = skillsForFilter(onCatalog.value ? activeFilterId.value : SKILL_FILTER_ALL)
-  if (!onCatalog.value) return filtered
+  if (!onCatalog.value) return homeShowcaseSkills(filtered)
   return sortSkills(filtered, activeSortId.value)
 })
 
