@@ -28,13 +28,17 @@ export interface SkillFilterOption {
 
 export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
   { id: 'writing', labelZh: '写作', labelEn: 'Writing', skillIds: ['de-ai-writing'] },
-  { id: 'ui', labelZh: 'UI', labelEn: 'UI', skillIds: ['ai-ui-design', 'frontend-design', 'ui-design-refs'] },
-  { id: 'site-build', labelZh: '建站', labelEn: 'Site build', skillIds: ['personal-site-build'] },
+  { id: 'ui', labelZh: 'UI', labelEn: 'UI', skillIds: ['ai-ui-design'] },
   { id: 'diagram', labelZh: '图解', labelEn: 'Diagram', skillIds: ['diagram-design'] },
   { id: 'anatomy', labelZh: '解剖', labelEn: 'Anatomy', skillIds: ['anatomy'] },
   { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
   { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] },
-  { id: 'haiwai', labelZh: '出海', labelEn: 'Overseas', skillIds: ['haiwai-new-keyword-launch', 'haiwai-monetize-convert'] }
+  {
+    id: 'method',
+    labelZh: '方法',
+    labelEn: 'Method',
+    skillIds: ['writing-skills', 'brainstorming', 'systematic-debugging', 'verification-before-completion', 'writing-plans']
+  }
 ]
 
 /** 只保留和类型筛选结果不同的场景。产品前端等于 UI，接入服务等于连接。 */
@@ -43,7 +47,7 @@ export const SKILL_SCENE_FILTERS: readonly SkillFilterOption[] = [
     id: 'site',
     labelZh: '官网内容',
     labelEn: 'Site content',
-    skillIds: ['de-ai-writing', 'diagram-design', 'cover_image_gen', 'personal-site-build', 'frontend-design', 'ui-design-refs']
+    skillIds: ['de-ai-writing', 'diagram-design', 'cover_image_gen']
   },
   {
     id: 'figures',
@@ -251,74 +255,74 @@ export const homeSkills: HomeSkill[] = [
     ...skillFiles('custom_connector_setup')
   },
   {
-    id: 'personal-site-build',
-    nameZh: '个人网站搭建',
-    nameEn: 'Personal Site Builder',
-    pitchZh: '飞书底稿 + UI 参考站，从 0 搭个人/品牌站。',
-    pitchEn: 'Feishu brief plus UI refs to build a personal or brand site from scratch.',
-    ...skillType('site-build'),
-    image: '/images/skills/personal-site-build.jpg',
+    id: 'writing-skills',
+    nameZh: '技能编写',
+    nameEn: 'Writing Skills',
+    pitchZh: '把可复用的工作方法写成 Agent 能直接用的技能。',
+    pitchEn: 'Turn a repeatable workflow into a skill an agent can use.',
+    ...skillType('method'),
+    image: '/images/skills/writing-skills.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
-    imageAltZh: '个人网站搭建封面：浏览器里的个人站，旁边是飞书文档和参考站卡片',
-    imageAltEn: 'Cover for Personal Site Builder: a browser site beside a Feishu doc and reference cards',
-    ...skillFiles('personal-site-build')
+    imageAltZh: '技能编写封面：纸上写着技能编写四个字，旁边有齿轮和文档',
+    imageAltEn: 'Cover for Writing Skills: the Chinese title with gears and documents',
+    ...skillFiles('writing-skills')
   },
   {
-    id: 'frontend-design',
-    nameZh: '前端设计',
-    nameEn: 'Frontend Design',
-    pitchZh: 'Anthropic 官方前端设计 Skill，做出有辨识度、不像 AI 默认审美的页面。',
-    pitchEn: 'Anthropic’s frontend-design skill for distinctive UI that avoids generic AI looks.',
-    ...skillType('ui'),
-    image: '/images/skills/frontend-design.jpg',
+    id: 'brainstorming',
+    nameZh: '头脑风暴',
+    nameEn: 'Brainstorming',
+    pitchZh: '动手之前，先问对问题，把真正想要的东西聊清楚。',
+    pitchEn: 'Before building, ask the right questions and pin down what you really want.',
+    ...skillType('method'),
+    image: '/images/skills/brainstorming.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
-    imageAltZh: '前端设计封面：深色代码编辑器，旁边是一张暖色的独特网页',
-    imageAltEn: 'Cover for Frontend Design: a dark code editor beside a warm, distinctive webpage',
-    ...skillFiles('frontend-design')
+    imageAltZh: '头脑风暴封面：纸雕风格的对话气泡和灯泡',
+    imageAltEn: 'Cover for Brainstorming: paper-craft speech bubbles and a light bulb',
+    ...skillFiles('brainstorming')
   },
   {
-    id: 'ui-design-refs',
-    nameZh: 'UI设计参考清单',
-    nameEn: 'UI Design Refs',
-    pitchZh: '8 大类 60+ UI 参考站，按场景挑链接再交给 AI。',
-    pitchEn: 'Sixty-plus UI reference sites in eight buckets for agent-assisted builds.',
-    ...skillType('ui'),
-    image: '/images/skills/ui-design-refs.jpg',
+    id: 'systematic-debugging',
+    nameZh: '系统化排查',
+    nameEn: 'Systematic Debugging',
+    pitchZh: '按四阶段排查：先找根因，再动手修。',
+    pitchEn: 'Debug in four phases: find the root cause before you fix.',
+    ...skillType('method'),
+    image: '/images/skills/systematic-debugging.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
-    imageAltZh: 'UI设计参考清单封面：浅色桌面上的参考站拼贴与设计卡片',
-    imageAltEn: 'Cover for UI Design Refs: a light desk collage of reference sites and design cards',
-    ...skillFiles('ui-design-refs')
+    imageAltZh: '系统化排查封面：放大镜对准纸雕齿轮',
+    imageAltEn: 'Cover for Systematic Debugging: a magnifier over paper-craft gears',
+    ...skillFiles('systematic-debugging')
   },
   {
-    id: 'haiwai-new-keyword-launch',
-    nameZh: '出海新词上站',
-    nameEn: 'Overseas New-Keyword Launch',
-    pitchZh: 'Trends 词根法 + D0–D5 当天上站，抢 SEO/GEO 红利。',
-    pitchEn: 'Trends root words plus a D0–D5 same-day launch for the SEO/GEO window.',
-    ...skillType('haiwai'),
-    image: '/images/skills/haiwai-new-keyword-launch.jpg',
+    id: 'verification-before-completion',
+    nameZh: '交付前验证',
+    nameEn: 'Verification Before Completion',
+    pitchZh: '宣称完成之前，先拿出证据。',
+    pitchEn: 'Evidence before claims: verify before you say done.',
+    ...skillType('method'),
+    image: '/images/skills/verification-before-completion.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
-    imageAltZh: '出海新词上站封面：浏览器里的新词站，旁边是上升的搜索趋势图',
-    imageAltEn: 'Cover for Overseas New-Keyword Launch: a browser site beside a rising search-trend chart',
-    ...skillFiles('haiwai-new-keyword-launch')
+    imageAltZh: '交付前验证封面：纸雕对勾和检查清单',
+    imageAltEn: 'Cover for Verification Before Completion: a paper-craft checkmark and checklist',
+    ...skillFiles('verification-before-completion')
   },
   {
-    id: 'haiwai-monetize-convert',
-    nameZh: '出海变现转化',
-    nameEn: 'Overseas Monetize & Convert',
-    pitchZh: '假生成、锚定定价、留存入口与 Stripe 埋点风控，提升付费转化。',
-    pitchEn: 'Fake generation, anchor pricing, retention hooks, and Stripe event risk controls to lift paid conversion.',
-    ...skillType('haiwai'),
-    image: '/images/skills/haiwai-monetize-convert.jpg',
+    id: 'writing-plans',
+    nameZh: '写计划',
+    nameEn: 'Writing Plans',
+    pitchZh: '多步骤任务先写成计划，再动手执行。',
+    pitchEn: 'Write the plan first, then execute multi-step tasks.',
+    ...skillType('method'),
+    image: '/images/skills/writing-plans.jpg',
     imageWidth: SKILL_IMAGE_WIDTH,
     imageHeight: SKILL_IMAGE_HEIGHT,
-    imageAltZh: '出海变现转化封面：定价卡片、转化漏斗和支付界面',
-    imageAltEn: 'Cover for Overseas Monetize & Convert: pricing cards, a conversion funnel, and a payment screen',
-    ...skillFiles('haiwai-monetize-convert')
+    imageAltZh: '写计划封面：纸雕台阶拾级而上，顶端有旗帜',
+    imageAltEn: 'Cover for Writing Plans: paper-craft steps climbing to a flag',
+    ...skillFiles('writing-plans')
   }
 ]
 
@@ -348,16 +352,16 @@ export type SkillSortId = (typeof SKILL_SORTS)[number]['id']
  */
 const SKILL_POPULAR_IDS = [
   'cover_image_gen',
-  'personal-site-build',
-  'haiwai-new-keyword-launch',
-  'haiwai-monetize-convert',
-  'frontend-design',
-  'ui-design-refs',
   'de-ai-writing',
   'diagram-design',
   'ai-ui-design',
   'anatomy',
-  'custom_connector_setup'
+  'custom_connector_setup',
+  'writing-skills',
+  'brainstorming',
+  'systematic-debugging',
+  'verification-before-completion',
+  'writing-plans'
 ] as const
 
 function assertPopularOrder(): void {
@@ -391,34 +395,6 @@ export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): H
   }
   return [...skills]
 }
-
-/** 首页技能商店固定展示的最新技能数量。目录页仍展示全部。 */
-export const HOME_SKILL_SHOWCASE_LIMIT = 9
-
-/** 首页展示：按最新规则取前若干个，不写死技能 id。 */
-export function homeShowcaseSkills(
-  skills: readonly HomeSkill[] = homeSkills,
-  limit: number = HOME_SKILL_SHOWCASE_LIMIT
-): HomeSkill[] {
-  if (limit <= 0) return []
-  return sortSkills(skills, SKILL_SORT_NEWEST).slice(0, limit)
-}
-
-function assertHomeShowcase(): void {
-  const shown = homeShowcaseSkills()
-  const newest = sortSkills(homeSkills, SKILL_SORT_NEWEST)
-  const expectedCount = Math.min(HOME_SKILL_SHOWCASE_LIMIT, homeSkills.length)
-  if (shown.length !== expectedCount) {
-    throw new Error(`首页应展示最新 ${expectedCount} 个技能，实际 ${shown.length} 个`)
-  }
-  for (let index = 0; index < shown.length; index += 1) {
-    if (shown[index]?.id !== newest[index]?.id) {
-      throw new Error('首页技能必须按最新顺序取前若干个')
-    }
-  }
-}
-
-assertHomeShowcase()
 
 export function findSkill(skillId: string): HomeSkill | undefined {
   return homeSkills.find((skill) => skill.id === skillId)
