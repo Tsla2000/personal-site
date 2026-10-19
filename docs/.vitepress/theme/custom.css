@@ -1043,6 +1043,16 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
     max-width: 1080px;
   }
 
+  /* 归档页单独加宽:左边文章流更宽敞 */
+  .Layout.archive-browse .VPDoc:not(.has-sidebar) .container {
+    max-width: 1280px;
+  }
+
+  .Layout.archive-browse .VPDoc:not(.has-sidebar) .content,
+  .Layout.archive-browse .VPDoc.has-aside .content-container {
+    max-width: 1200px;
+  }
+
   .Layout:has(.home-page) .skill-catalog {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px 18px;
