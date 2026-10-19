@@ -412,11 +412,13 @@ ${enLlmsSection}
 writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 
 // ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
-const latestRows = items.slice(0, 4).map((it) => {
+const latestRows = items.slice(0, 4).map((it, i) => {
   const sub = it.category ? it.category + ' · ' + it.description : it.description
   const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+  // 前两张在首屏(LCP 候选),立即高优先级加载;其余懒加载
+  const loadAttrs = i < 2 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
   const thumb = image
-    ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" />'
+    ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" ' + loadAttrs + ' decoding="async" />'
     : '<div class="article-card-thumb article-card-placeholder"></div>'
   return '      <a class="article-card" href="' + it.urlPath + '">' +
     '\n        ' + thumb +
