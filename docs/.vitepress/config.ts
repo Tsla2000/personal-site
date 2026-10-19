@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig, type HeadConfig } from 'vitepress'
@@ -32,6 +32,31 @@ function configuredXHandle(handle: string): string | null {
 const xHandle = configuredXHandle(X_HANDLE)
 const xProfile = xHandle ? `https://x.com/${xHandle}` : ''
 const authorSameAs = [GITHUB_PROFILE, ...(xProfile ? [xProfile] : [])]
+
+/** 读构建期生成的 JSON；本地 dev 没跑 gen-seo 时文件可能不存在，返回兜底值 */
+function readJson<T>(path: string, fallback: T): T {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8')) as T
+  } catch {
+    return fallback
+  }
+}
+
+type LatestPost = { title: string; description: string; category: string; url: string; date: string; image: string }
+// gen-seo.mjs 写出的首页最新文章，用于首页 Blog 结构化数据
+const latestPosts = () => readJson<LatestPost[]>(join(DOCS_DIR, '.vitepress', 'latest-posts.json'), [])
+// gen-seo.mjs 维护的内容更新时间快照(key: docs/<relativePath>)，用作 dateModified
+const contentDates = readJson<Record<string, string>>(fileURLToPath(new URL('../../scripts/content-dates.json', import.meta.url)), {})
+
+// 面包屑里的栏目名(按路径第一段)
+const SECTION_NAMES: Record<string, { zh: string; en: string }> = {
+  ai: { zh: 'AI', en: 'AI' },
+  investment: { zh: '投资', en: 'Investing' },
+  thinking: { zh: '思考', en: 'Thinking' },
+  skills: { zh: '技能', en: 'Skills' },
+  projects: { zh: '项目', en: 'Projects' },
+  about: { zh: '关于', en: 'About' }
+}
 
 // 把 base 尾斜杠统一去掉,避免拼接出双斜杠
 const baseNoSlash = base.endsWith('/') && base.length > 1 ? base.slice(0, -1) : base === '/' ? '' : base
@@ -314,16 +339,42 @@ export default defineConfig({
       sameAs: authorSameAs
     }
     if (isHome) {
+      const websiteId = `${canonical}#website`
       schemas.push({
         '@context': 'https://schema.org',
         '@type': 'WebSite',
+        '@id': websiteId,
         name: siteTitle,
+        alternateName: isEn ? SITE_TITLE : EN_TITLE,
         url: canonical,
         description: desc,
         inLanguage: localeLang,
         author
       })
       schemas.push({ '@context': 'https://schema.org', ...author })
+      // 首页文章流：给搜索引擎和 AI 问答引擎一份带日期、栏目和摘要的最新文章清单
+      const posts = isEn ? [] : latestPosts()
+      if (posts.length > 0) {
+        schemas.push({
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: siteTitle,
+          url: canonical,
+          description: desc,
+          inLanguage: localeLang,
+          isPartOf: { '@id': websiteId },
+          author,
+          blogPost: posts.map((p) => ({
+            '@type': 'BlogPosting',
+            headline: p.title,
+            description: p.description,
+            url: p.url,
+            datePublished: p.date,
+            ...(p.category ? { articleSection: p.category } : {}),
+            ...(p.image ? { image: p.image } : {})
+          }))
+        })
+      }
     } else if (isAbout) {
       schemas.push({
         '@context': 'https://schema.org',
@@ -361,10 +412,39 @@ export default defineConfig({
         const d = new Date(fm.date)
         if (!Number.isNaN(d.getTime())) {
           article.datePublished = d.toISOString()
-          article.dateModified = d.toISOString()
+          // 优先 frontmatter updated，其次内容更新时间快照，都没有时退回发布日期
+          const updatedRaw = typeof fm.updated === 'string' && fm.updated ? fm.updated : contentDates[`docs/${pageData.relativePath}`]
+          const u = updatedRaw ? new Date(updatedRaw) : d
+          article.dateModified = (!Number.isNaN(u.getTime()) && u >= d ? u : d).toISOString()
         }
       }
+      if (typeof fm.category === 'string' && fm.category) article.articleSection = fm.category
+      const tags = Array.isArray(fm.tags) ? fm.tags.filter((t: unknown) => typeof t === 'string') : []
+      if (tags.length > 0) article.keywords = tags.join(', ')
+      article.isPartOf = { '@type': 'WebSite', name: siteTitle, url: `${CANONICAL_URL}${isEn ? '/en/' : '/'}` }
       schemas.push(article)
+
+      // 面包屑：首页 → 栏目 → 文章
+      const { slug } = localeSlug(pageData.relativePath)
+      const section = slug.split('/')[0]
+      const sectionName = SECTION_NAMES[section]
+      const crumbs: { name: string; item: string }[] = [
+        { name: siteTitle, item: `${CANONICAL_URL}${isEn ? '/en/' : '/'}` }
+      ]
+      if (sectionName && slug !== section && slug !== `${section}/index`) {
+        const sectionFile = markdownPath(`${section}/index`, isEn)
+        if (existsSync(join(DOCS_DIR, sectionFile))) {
+          crumbs.push({ name: isEn ? sectionName.en : sectionName.zh, item: `${CANONICAL_URL}${pagePath(sectionFile)}` })
+        }
+      }
+      crumbs.push({ name: title, item: canonical })
+      if (crumbs.length > 1) {
+        schemas.push({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.item }))
+        })
+      }
       const faqRaw = (fm as Record<string, unknown>).faq
       if (Array.isArray(faqRaw)) {
         const qa = faqRaw

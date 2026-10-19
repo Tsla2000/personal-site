@@ -154,7 +154,7 @@
 }
 
 .home-section {
-  padding: 22px 0 40px;
+  padding: 18px 0 28px;
 }
 .home-page > .home-section:first-child {
   padding-top: 15px;
@@ -173,7 +173,7 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 }
 
 .home-section h2 {
-  margin: 0 0 28px;
+  margin: 0 0 18px;
   font-size: 13px;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -196,12 +196,6 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 .article-list {
   display: grid;
   gap: 0;
-}
-
-/* 首页最新文章：2x2 图文卡片；归档页继续使用紧凑列表 */
-.home-page .article-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 22px;
 }
 
 .vp-doc a.article-card,
@@ -272,6 +266,197 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 
 .article-card:hover strong {
   color: var(--vp-c-brand-1);
+}
+
+/* ---- 首页最新文章：头条 + 2×2 小卡 + 三列标题列表，首屏尽量多露出文章 ---- */
+.home-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 20px;
+  margin-bottom: 16px;
+}
+
+.vp-doc .home-head h1 {
+  margin: 0;
+  color: var(--vp-c-text-1);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  line-height: 1.6;
+}
+
+.home-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vp-doc a.home-topic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 11px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: border-color .18s ease, color .18s ease;
+}
+
+.vp-doc a.home-topic span {
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+}
+
+.vp-doc a.home-topic:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.vp-doc a.home-topic.is-all {
+  padding-left: 4px;
+  border-color: transparent;
+  color: var(--vp-c-brand-1);
+}
+
+.home-page .latest-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.home-page .latest-grid .is-lead {
+  grid-column: 1 / -1;
+}
+
+.home-page .latest-grid .article-card:not(.is-lead) .article-card-thumb {
+  aspect-ratio: 16 / 9;
+}
+
+.home-page .latest-grid .article-card:not(.is-lead) .article-card-body {
+  padding: 10px 12px 12px;
+}
+
+.home-page .latest-grid .article-card:not(.is-lead) strong {
+  font-size: 15px;
+}
+
+.article-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.article-card-cat {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+.vp-doc .article-card .article-card-meta time {
+  display: inline;
+  margin: 0;
+}
+
+.latest-rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vp-doc .latest-rows li {
+  margin: 0;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc .latest-rows a {
+  display: block;
+  padding: 10px 0;
+  color: var(--vp-c-text-1);
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+.latest-row-meta {
+  display: block;
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.latest-row-title {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.vp-doc .latest-rows a:hover .latest-row-title {
+  color: var(--vp-c-brand-1);
+}
+
+@media (min-width: 960px) {
+  /* 头条占左侧两列两行，右侧 2×2 小卡，一屏内露出 5 篇带图文章 */
+  .home-page .latest-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .home-page .latest-grid .is-lead {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+  }
+  /* 头条图片撑满右侧两行小卡的高度，不留空白 */
+  .home-page .latest-grid .is-lead .article-card-thumb {
+    flex: 1 1 0;
+    min-height: 220px;
+    aspect-ratio: auto;
+  }
+  .home-page .latest-grid .is-lead .article-card-body {
+    padding: 14px 18px 16px;
+  }
+  .home-page .latest-grid .is-lead strong {
+    font-size: 20px;
+    line-height: 1.45;
+  }
+  .latest-rows {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  /* 手机：小卡改成左图右文的横排，减少滚动 */
+  .home-page .latest-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .vp-doc .home-page .latest-grid a.article-card:not(.is-lead) {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: center;
+  }
+  .home-page .latest-grid .article-card:not(.is-lead) .article-card-thumb {
+    height: 100%;
+    aspect-ratio: 4 / 3;
+  }
+  .latest-rows {
+    grid-template-columns: 1fr;
+  }
 }
 
 .project-list {
@@ -626,15 +811,12 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 }
 
 @media (max-width: 640px) {
+  /* 手机上 VPDoc 已有 24px 边距，首页不再叠加左右内边距 */
   .home-page {
-    padding: 16px 22px 20px;
+    padding: 0 0 20px;
   }
   .home-hero {
     padding-bottom: 72px;
-  }
-  .home-page .article-list {
-    grid-template-columns: 1fr;
-    gap: 20px;
   }
   .article-card-body {
     padding: 13px 14px 15px;

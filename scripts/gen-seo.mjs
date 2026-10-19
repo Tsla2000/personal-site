@@ -411,28 +411,71 @@ ${enLlmsSection}
 `
 writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 
-// ---- 首页 Latest:取最新 3 篇文章,自动写入 docs/index.md ----
-const latestRows = items.slice(0, 4).map((it, i) => {
-  const sub = it.category ? it.category + ' · ' + it.description : it.description
-  const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
-  // 前两张在首屏(LCP 候选),立即高优先级加载;其余懒加载
+// ---- 首页 Latest:头条 1 篇 + 图文小卡 4 篇 + 文字列表 6 篇,自动写入 docs/index.md ----
+// 首屏尽量多露出文章:桌面端头条占左半,右侧 2×2 小卡;下面是三列紧凑标题列表。
+const LATEST_LEAD = 1
+const LATEST_CARDS = 4
+const LATEST_ROWS = 6
+const TOPIC_LINKS = { AI: '/ai/', 投资: '/investment/', 思考: '/thinking/' }
+const imgPath = (it) => (it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : '')
+const isoDay = (it) => it.dateStr.replace(/\./g, '-')
+const latestCard = (it, i) => {
+  const lead = i < LATEST_LEAD
+  const image = imgPath(it)
+  // 头条和第一张小卡在首屏(LCP 候选),立即高优先级加载;其余懒加载
   const loadAttrs = i < 2 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
   const thumb = image
     ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" ' + loadAttrs + ' decoding="async" />'
     : '<div class="article-card-thumb article-card-placeholder"></div>'
-  return '      <a class="article-card" href="' + it.urlPath + '">' +
+  const meta = '<span class="article-card-meta">' + (it.category ? '<span class="article-card-cat">' + esc(it.category) + '</span>' : '') +
+    '<time datetime="' + isoDay(it) + '">' + it.dateStr + '</time></span>'
+  const desc = lead && it.description ? '<small>' + esc(it.description) + '</small>' : ''
+  return '      <a class="article-card' + (lead ? ' is-lead' : '') + '" href="' + it.urlPath + '">' +
     '\n        ' + thumb +
-    '\n        <div class="article-card-body"><time>' + it.dateStr + '</time><strong>' + esc(it.title) + '</strong><small>' + esc(sub) + '</small></div>' +
+    '\n        <div class="article-card-body">' + meta + '<strong>' + esc(it.title) + '</strong>' + desc + '</div>' +
     '\n      </a>'
-}).join('\n')
+}
+const latestCards = items.slice(0, LATEST_LEAD + LATEST_CARDS).map(latestCard).join('\n')
+const latestRows = items.slice(LATEST_LEAD + LATEST_CARDS, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS).map((it) =>
+  '      <li><a href="' + it.urlPath + '"><span class="latest-row-meta">' + (it.category ? esc(it.category) + ' · ' : '') +
+  '<time datetime="' + isoDay(it) + '">' + it.dateStr + '</time></span><span class="latest-row-title">' + esc(it.title) + '</span></a></li>'
+).join('\n')
+const topicCounts = new Map()
+for (const it of items) if (it.category) topicCounts.set(it.category, (topicCounts.get(it.category) ?? 0) + 1)
+const topicChips = [...topicCounts.entries()]
+  .filter(([cat]) => TOPIC_LINKS[cat])
+  .sort((a, b) => b[1] - a[1])
+  .map(([cat, n]) => '<a class="home-topic" href="' + baseNoSlash + TOPIC_LINKS[cat] + '">' + esc(cat) + '<span>' + n + '</span></a>')
+  .join('')
+const latestHtml = `<!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
+    <div class="home-head">
+      <h1>最新文章</h1>
+      <nav class="home-topics" aria-label="文章栏目">${topicChips}<a class="home-topic is-all" href="${baseNoSlash}/archive">全部 ${items.length} 篇 →</a></nav>
+    </div>
+    <div class="article-list latest-grid">
+${latestCards}
+    </div>
+    <ul class="latest-rows">
+${latestRows}
+    </ul>
+    <!-- LATEST-END -->`
 const indexPath = join(DOCS_DIR, 'index.md')
 const indexSrc = readFileSync(indexPath, 'utf8')
-const latestHtml = `<!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->\n    <div class="article-list">\n${latestRows}\n    </div>\n    <!-- LATEST-END -->`
 const updated = indexSrc.replace(
   /<!-- LATEST-START[\s\S]*?<!-- LATEST-END -->/,
   latestHtml
 )
 if (updated !== indexSrc) writeFileSync(indexPath, updated)
+
+// 首页 JSON-LD 用的最新文章清单(config.ts 的 transformHead 读取,生成 Blog.blogPost)
+writeFileSync(join(DOCS_DIR, '.vitepress', 'latest-posts.json'), JSON.stringify(items.slice(0, 12).map((it) => ({
+  title: it.title,
+  description: it.description,
+  category: it.category,
+  url: it.link,
+  date: it.date.toISOString(),
+  image: imgPath(it) ? CANONICAL_URL + imgPath(it) : ''
+}))))
 
 // ---- 归档页:Discover 风格信息流,全部文章倒序,自动写入 docs/archive.md ----
 // 每 4 篇一组:第 1 篇是横跨整行的头条大卡,后 3 篇是三列小卡。

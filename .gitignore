@@ -7,3 +7,4 @@ docs/public/sitemap.xml
 docs/public/robots.txt
 docs/public/feed.xml
 docs/public/llms.txt
+docs/.vitepress/latest-posts.json
