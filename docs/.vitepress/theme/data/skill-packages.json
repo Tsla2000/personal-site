@@ -151,5 +151,41 @@
     "zipFile": "ai-project-delivery.zip",
     "promptPath": "/skills/sources/ai-project-delivery/SKILL.md",
     "zipPath": "/skills/zips/ai-project-delivery.zip"
+  },
+  {
+    "id": "website-launch-check",
+    "dir": "website-launch-check",
+    "promptName": "网站上线验收",
+    "zipSkillEntry": "website-launch-check/SKILL.md",
+    "zipFile": "website-launch-check.zip",
+    "promptPath": "/skills/sources/website-launch-check/SKILL.md",
+    "zipPath": "/skills/zips/website-launch-check.zip"
+  },
+  {
+    "id": "content-repurpose",
+    "dir": "content-repurpose",
+    "promptName": "内容一稿多用",
+    "zipSkillEntry": "content-repurpose/SKILL.md",
+    "zipFile": "content-repurpose.zip",
+    "promptPath": "/skills/sources/content-repurpose/SKILL.md",
+    "zipPath": "/skills/zips/content-repurpose.zip"
+  },
+  {
+    "id": "browser-automation",
+    "dir": "browser-automation",
+    "promptName": "浏览器自动化流程",
+    "zipSkillEntry": "browser-automation/SKILL.md",
+    "zipFile": "browser-automation.zip",
+    "promptPath": "/skills/sources/browser-automation/SKILL.md",
+    "zipPath": "/skills/zips/browser-automation.zip"
+  },
+  {
+    "id": "data-analysis",
+    "dir": "data-analysis",
+    "promptName": "数据分析与决策",
+    "zipSkillEntry": "data-analysis/SKILL.md",
+    "zipFile": "data-analysis.zip",
+    "promptPath": "/skills/sources/data-analysis/SKILL.md",
+    "zipPath": "/skills/zips/data-analysis.zip"
   }
 ]
