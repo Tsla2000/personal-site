@@ -982,3 +982,57 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   }
 }
 
+
+.skill-example {
+  margin-top: 20px;
+  padding: 22px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  background: var(--vp-c-bg);
+}
+.vp-doc .skill-example h2 { margin-bottom: 8px; }
+.vp-doc .skill-example h3 { margin: 14px 0 8px; font-size: 15px; }
+.skill-example-grid,
+.skill-example-bottom {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+.skill-example-grid > div,
+.skill-example-bottom > div {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+.vp-doc .skill-example-label {
+  margin: 0 0 8px;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  font-weight: 700;
+}
+.vp-doc .skill-example pre {
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  color: var(--vp-c-text-1);
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.vp-doc .skill-example-bottom ul { margin: 0; padding-left: 1.15em; }
+.vp-doc .skill-example-note {
+  margin: 14px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 800px) {
+  .skill-example-grid,
+  .skill-example-bottom { grid-template-columns: 1fr; }
+  .skill-example { padding: 16px; }
+}
