@@ -412,7 +412,7 @@ ${enLlmsSection}
 writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 
 // ---- 首页 Latest:头条 1 篇 + 图文小卡 4 篇 + 文字列表 6 篇,自动写入 docs/index.md ----
-// 首屏尽量多露出文章:桌面端头条占左半,右侧 2×2 小卡;下面是三列紧凑标题列表。
+// 首屏尽量多露出文章:桌面端头条占左半,右侧 2×2 小卡;下面是三列紧凑列表。
 const LATEST_LEAD = 1
 const LATEST_CARDS = 4
 const LATEST_ROWS = 6
@@ -436,10 +436,16 @@ const latestCard = (it, i) => {
     '\n      </a>'
 }
 const latestCards = items.slice(0, LATEST_LEAD + LATEST_CARDS).map(latestCard).join('\n')
-const latestRows = items.slice(LATEST_LEAD + LATEST_CARDS, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS).map((it) =>
-  '      <li><a href="' + it.urlPath + '"><span class="latest-row-meta">' + (it.category ? esc(it.category) + ' · ' : '') +
-  '<time datetime="' + isoDay(it) + '">' + it.dateStr + '</time></span><span class="latest-row-title">' + esc(it.title) + '</span></a></li>'
-).join('\n')
+// 第二部分和 AI 栏目页同一种列表:标题 · 日期 / 缩略图 + 摘要 / 分隔线,做成紧凑版
+const latestRows = items.slice(LATEST_LEAD + LATEST_CARDS, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS).map((it) => {
+  const image = imgPath(it)
+  const thumb = image
+    ? '<img class="latest-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" decoding="async" />'
+    : '<span class="latest-row-thumb article-card-placeholder"></span>'
+  return '      <li><a href="' + it.urlPath + '"><span class="latest-row-head"><span class="latest-row-title">' + esc(it.title) + '</span>' +
+    '<span class="latest-row-date">· <time datetime="' + isoDay(it) + '">' + it.dateStr + '</time></span></span>' +
+    '<span class="latest-row-body">' + thumb + '<span class="latest-row-desc">' + esc(it.description) + '</span></span></a></li>'
+}).join('\n')
 const topicCounts = new Map()
 for (const it of items) if (it.category) topicCounts.set(it.category, (topicCounts.get(it.category) ?? 0) + 1)
 const topicChips = [...topicCounts.entries()]
