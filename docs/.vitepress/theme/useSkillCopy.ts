@@ -6,6 +6,27 @@ import { trackEvent } from './analytics'
 
 const skillPromptCache = new Map<string, string>()
 
+const RATED_KEY = 'pmf:rated-skills'
+
+function readRated(): string[] {
+  try {
+    const raw = JSON.parse(localStorage.getItem(RATED_KEY) || '[]')
+    return Array.isArray(raw) ? raw : []
+  } catch {
+    return []
+  }
+}
+
+/** 记录已反馈的技能，之后不再弹出反馈条 */
+export function markSkillRated(skillId: string): void {
+  try {
+    const rated = readRated()
+    if (!rated.includes(skillId)) localStorage.setItem(RATED_KEY, JSON.stringify([...rated, skillId]))
+  } catch {
+    /* 忽略 */
+  }
+}
+
 type CopyFeedback = '' | 'copied' | 'failed'
 
 /** 事件发生的位置，用来区分首页卡片、技能目录和详情页的转化 */
@@ -14,6 +35,7 @@ export type SkillActionSource = 'home' | 'catalog' | 'detail'
 export function useSkillCopy() {
   const isEnglish = useIsEnglish()
   const feedbackBySkillId = ref<Record<string, CopyFeedback>>({})
+  const ratingOpenBySkillId = ref<Record<string, boolean>>({})
   const resetTimerBySkillId = new Map<string, number>()
 
   function buttonLabel(skillId: string): string {
@@ -100,6 +122,9 @@ export function useSkillCopy() {
       ...feedbackBySkillId.value,
       [skill.id]: copied ? 'copied' : 'failed'
     }
+    if (copied && !readRated().includes(skill.id)) {
+      ratingOpenBySkillId.value = { ...ratingOpenBySkillId.value, [skill.id]: true }
+    }
     trackEvent('skill_copy', {
       skill_id: skill.id,
       language: isEnglish.value ? 'en' : 'zh',
@@ -107,6 +132,12 @@ export function useSkillCopy() {
       result: copied ? 'success' : 'failed'
     })
     clearFeedbackLater(skill.id)
+  }
+
+  function closeRating(skillId: string): void {
+    const next = { ...ratingOpenBySkillId.value }
+    delete next[skillId]
+    ratingOpenBySkillId.value = next
   }
 
   function trackDownload(skill: HomeSkill, source: SkillActionSource): void {
@@ -123,5 +154,5 @@ export function useSkillCopy() {
     resetTimerBySkillId.clear()
   })
 
-  return { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload }
+  return { isEnglish, ratingOpenBySkillId, closeRating, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload }
 }
