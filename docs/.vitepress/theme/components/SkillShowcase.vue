@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SkillRating from './SkillRating.vue'
 import { computed, ref } from 'vue'
 import { useRoute, withBase } from 'vitepress'
 import {
@@ -20,7 +19,7 @@ import { useSkillCopy, type SkillActionSource } from '../useSkillCopy'
 import { useBarePath } from '../useLocale'
 
 const barePath = useBarePath()
-const { isEnglish, ratingOpenBySkillId, closeRating, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
+const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
 const activeFilterId = ref(SKILL_FILTER_ALL)
 const activeSortId = ref<SkillSortId>(SKILL_SORT_RECOMMENDED)
 
@@ -192,12 +191,6 @@ const actionSource = computed<SkillActionSource>(() => (onCatalog.value ? 'catal
           >{{ zipLabel() }}</a>
         </div>
       </div>
-      <SkillRating
-        v-if="ratingOpenBySkillId[skill.id]"
-        :skill-id="skill.id"
-        :source="actionSource"
-        @done="closeRating"
-      />
     </article>
       </div>
     </div>

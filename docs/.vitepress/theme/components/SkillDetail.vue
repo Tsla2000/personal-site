@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SkillRating from './SkillRating.vue'
 import { computed, onMounted, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { findSkill } from '../homeSkills'
@@ -7,7 +6,7 @@ import { useSkillCopy } from '../useSkillCopy'
 import { trackEvent } from '../analytics'
 
 const props = defineProps<{ skillId: string }>()
-const { isEnglish, ratingOpenBySkillId, closeRating, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
+const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
 
 const skill = computed(() => findSkill(props.skillId))
 const detail = computed(() => skill.value?.detail)
@@ -82,12 +81,6 @@ watch(() => props.skillId, trackView)
           >{{ zipLabel() }}</a>
           <a class="skill-back" :href="listHref">{{ pick('返回技能列表', 'Back to skills') }}</a>
         </div>
-        <SkillRating
-          v-if="ratingOpenBySkillId[skill.id]"
-          :skill-id="skill.id"
-          source="detail"
-          @done="closeRating"
-        />
       </div>
     </div>
 
