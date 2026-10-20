@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute, withBase } from 'vitepress'
 import {
   SKILL_FILTER_ALL,
@@ -17,9 +17,11 @@ import {
 } from '../homeSkills'
 import { useSkillCopy, type SkillActionSource } from '../useSkillCopy'
 import { useBarePath } from '../useLocale'
+import { loadSkillHeat, skillHeat } from '../skillHeat'
 
 const barePath = useBarePath()
 const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
+onMounted(loadSkillHeat)
 const activeFilterId = ref(SKILL_FILTER_ALL)
 const activeSortId = ref<SkillSortId>(SKILL_SORT_RECOMMENDED)
 
@@ -30,8 +32,8 @@ const onCatalog = computed(() => {
 
 const visibleSkills = computed(() => {
   const filtered = skillsForFilter(onCatalog.value ? activeFilterId.value : SKILL_FILTER_ALL)
-  if (!onCatalog.value) return homeShowcaseSkills(filtered)
-  return sortSkills(filtered, activeSortId.value)
+  if (!onCatalog.value) return homeShowcaseSkills(filtered, undefined, skillHeat.value)
+  return sortSkills(filtered, activeSortId.value, skillHeat.value)
 })
 
 const skillCountText = computed(() => {

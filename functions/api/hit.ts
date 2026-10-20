@@ -1,5 +1,7 @@
 // 第一方统计 v2:页面埋点 POST {t,p,c,v,o,m}
-// t:'pv'|'ev'|'follow'|'unfollow'|'useful'|'bookmark'|'unbookmark'
+// t:'pv'|'ev'|'follow'|'unfollow'|'useful'|'bookmark'|'unbookmark'|'skill'
+// t='skill' 时 p 为 '<view|copy|download|like>:<技能id>',累计到 KV skill:<id> -> {view,copy,download,like},
+//   同一访客同一技能同一动作每天只计 1 次;汇总由 GET /api/skill-rank 提供(技能热度排行)
 // c:渠道(wechat/x/search/github/direct/other 或 utm_source 原值净化后)
 // m:投放位置 utm_medium(净化后,无则 'none'),分渠道记在 channels[ch].md 下
 // v:访客匿名 ID(localStorage 随机 ID,第一方,无个人信息)
@@ -14,7 +16,8 @@ interface Env {
   STATS_KV?: KVNamespace
 }
 
-const TYPES = new Set(['pv', 'ev', 'bookmark', 'unbookmark', 'useful', 'follow', 'unfollow'])
+const TYPES = new Set(['pv', 'ev', 'bookmark', 'unbookmark', 'useful', 'follow', 'unfollow', 'skill'])
+const SKILL_ACTIONS = new Set(['view', 'copy', 'download', 'like'])
 const ACT_TYPES = new Set(['bookmark', 'useful', 'follow'])
 
 function beijingDate(d: Date = new Date()): string {
@@ -41,6 +44,26 @@ function sanitizeVid(raw: unknown): string {
   return /^[a-zA-Z0-9-]{8,48}$/.test(raw) ? raw : ''
 }
 
+async function countSkill(kv: KVNamespace, p: string, vid: string): Promise<void> {
+  const [action, id] = p.split(':')
+  if (!SKILL_ACTIONS.has(action) || !/^[A-Za-z0-9_-]{1,60}$/.test(id || '')) return
+  if (vid) {
+    const dkey = `sd:${beijingDate()}:${vid}:${action}:${id}`
+    if (await kv.get(dkey)) return
+    await kv.put(dkey, '1', { expirationTtl: 3 * 86400 })
+  }
+  const key = `skill:${id}`
+  let cur: Record<string, number> = {}
+  try {
+    const raw = await kv.get(key)
+    if (raw) cur = JSON.parse(raw)
+  } catch {
+    cur = {}
+  }
+  cur[action] = (cur[action] || 0) + 1
+  await kv.put(key, JSON.stringify(cur))
+}
+
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const kv = context.env.STATS_KV
@@ -56,6 +79,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const t = typeof body.t === 'string' ? body.t : ''
     const p = typeof body.p === 'string' ? body.p.slice(0, 200) : ''
     if (!TYPES.has(t)) return new Response(null, { status: 204 })
+    if (t === 'skill') {
+      await countSkill(kv, p, sanitizeVid(body.v))
+      return new Response(null, { status: 204 })
+    }
     const ch = sanitizeChannel(body.c)
     const md = sanitizeTag(body.m, 'none')
     const vid = sanitizeVid(body.v)

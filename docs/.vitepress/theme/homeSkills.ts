@@ -1535,7 +1535,7 @@ export const SKILL_SORTS = [
 export type SkillSortId = (typeof SKILL_SORTS)[number]['id']
 
 /**
- * 没有浏览量或下载量。此固定排序是编辑推荐，不代表真实热度或下载数据。
+ * 编辑推荐的固定顺序，同时是热度数据不足（见 SKILL_HEAT_MIN_TOTAL）或接口不可用时的回退顺序。
  */
 const SKILL_POPULAR_IDS = [
   'ai-project-delivery',
@@ -1580,9 +1580,29 @@ const popularRank = new Map<string, number>(SKILL_POPULAR_IDS.map((skillId, inde
 /**
  * 推荐与编辑推荐：优先展示 8 个有明确结果导向的工作流；最新：按目录录入顺序倒序。
  */
-export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): HomeSkill[] {
+/** 热度数据太少时排行没有意义,累计总分达到该值才启用真实热度排序。 */
+export const SKILL_HEAT_MIN_TOTAL = 30
+
+export type SkillHeat = Readonly<Record<string, number>> | null | undefined
+
+function heatReady(heat: SkillHeat): heat is Readonly<Record<string, number>> {
+  if (!heat) return false
+  return Object.values(heat).reduce((sum, score) => sum + score, 0) >= SKILL_HEAT_MIN_TOTAL
+}
+
+/** 按热度分从高到低,同分按编辑推荐顺序。 */
+function sortByHeat(skills: readonly HomeSkill[], heat: Readonly<Record<string, number>>): HomeSkill[] {
+  return [...skills].sort((leftSkill, rightSkill) => {
+    const diff = (heat[rightSkill.id] ?? 0) - (heat[leftSkill.id] ?? 0)
+    if (diff !== 0) return diff
+    return (popularRank.get(leftSkill.id) ?? Number.MAX_SAFE_INTEGER) - (popularRank.get(rightSkill.id) ?? Number.MAX_SAFE_INTEGER)
+  })
+}
+
+export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId, heat?: SkillHeat): HomeSkill[] {
   if (sortId === SKILL_SORT_NEWEST) return [...skills].reverse()
   if (sortId === SKILL_SORT_POPULAR) {
+    if (heatReady(heat)) return sortByHeat(skills, heat)
     return [...skills].sort((leftSkill, rightSkill) => {
       const leftRank = popularRank.get(leftSkill.id) ?? Number.MAX_SAFE_INTEGER
       const rightRank = popularRank.get(rightSkill.id) ?? Number.MAX_SAFE_INTEGER
@@ -1599,12 +1619,14 @@ export function sortSkills(skills: readonly HomeSkill[], sortId: SkillSortId): H
 /** 首页技能商店展示编辑优先级最高的技能数量。目录页仍展示全部。 */
 export const HOME_SKILL_SHOWCASE_LIMIT = 9
 
-/** 首页展示：按编辑推荐顺序取前若干个。 */
+/** 首页展示：有足够热度数据时按真实热度取前若干个，否则按编辑推荐顺序。 */
 export function homeShowcaseSkills(
   skills: readonly HomeSkill[] = homeSkills,
-  limit: number = HOME_SKILL_SHOWCASE_LIMIT
+  limit: number = HOME_SKILL_SHOWCASE_LIMIT,
+  heat?: SkillHeat
 ): HomeSkill[] {
   if (limit <= 0) return []
+  if (heatReady(heat)) return sortByHeat(skills, heat).slice(0, limit)
   return sortSkills(skills, SKILL_SORT_RECOMMENDED).slice(0, limit)
 }
 
