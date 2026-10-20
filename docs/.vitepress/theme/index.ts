@@ -217,6 +217,7 @@ function setupStatsBeacon(router: Router): void {
   let vid = ''
   let owner = false
   let channel = 'direct'
+  let medium = 'none'
   try {
     const q = new URLSearchParams(window.location.search)
     if (q.get('pm_owner') === '1') window.localStorage.setItem('pm_owner', '1')
@@ -239,13 +240,25 @@ function setupStatsBeacon(router: Router): void {
     } else {
       channel = sess
     }
+    // 会话位置(utm_medium):与渠道同规则,新 UTM 到达时更新;无 medium 时记 'none'
+    const rawMedium = (q.get('utm_medium') || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]/g, '')
+      .slice(0, 20)
+    const sessMd = window.sessionStorage.getItem('pm_md')
+    if (q.get('utm_source') || q.get('utm_medium') || !sessMd) {
+      medium = rawMedium || 'none'
+      window.sessionStorage.setItem('pm_md', medium)
+    } else {
+      medium = sessMd
+    }
   } catch {
     /* 隐私模式等场景拿不到 storage 时降级为无 ID 计数 */
   }
   const beacon = (t: string, p = ''): void => {
     try {
       if (window.location.hostname !== 'promangofund.com') return
-      const payload: Record<string, unknown> = { t, p, c: channel, v: vid }
+      const payload: Record<string, unknown> = { t, p, c: channel, v: vid, m: medium }
       if (owner) payload.o = 1
       const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
       navigator.sendBeacon('/api/hit', blob)
