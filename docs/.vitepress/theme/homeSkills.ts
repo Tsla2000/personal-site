@@ -33,6 +33,7 @@ export const SKILL_TYPE_FILTERS: readonly SkillFilterOption[] = [
   { id: 'diagram', labelZh: '图解', labelEn: 'Diagram', skillIds: ['diagram-design'] },
   { id: 'anatomy', labelZh: '解剖', labelEn: 'Anatomy', skillIds: ['anatomy'] },
   { id: 'cover', labelZh: '封面', labelEn: 'Cover', skillIds: ['cover_image_gen'] },
+  { id: 'illustration', labelZh: '插图', labelEn: 'Illustration', skillIds: ['desk_watercolor'] },
   { id: 'connector', labelZh: '连接', labelEn: 'Connector', skillIds: ['custom_connector_setup'] },
   { id: 'haiwai', labelZh: '出海', labelEn: 'Overseas', skillIds: ['haiwai-new-keyword-launch', 'haiwai-monetize-convert'] },
   { id: 'coding', labelZh: '开发', labelEn: 'Development', skillIds: ['ai-project-delivery'] },
@@ -47,13 +48,13 @@ export const SKILL_SCENE_FILTERS: readonly SkillFilterOption[] = [
     id: 'site',
     labelZh: '官网内容',
     labelEn: 'Site content',
-    skillIds: ['de-ai-writing', 'content-repurpose', 'diagram-design', 'cover_image_gen', 'personal-site-build', 'website-launch-check', 'frontend-design', 'ui-design-refs']
+    skillIds: ['de-ai-writing', 'content-repurpose', 'diagram-design', 'cover_image_gen', 'desk_watercolor', 'personal-site-build', 'website-launch-check', 'frontend-design', 'ui-design-refs']
   },
   {
     id: 'figures',
     labelZh: '插图',
     labelEn: 'Figures',
-    skillIds: ['diagram-design', 'anatomy']
+    skillIds: ['diagram-design', 'anatomy', 'desk_watercolor']
   }
 ]
 
@@ -433,6 +434,73 @@ export const homeSkills: HomeSkill[] = [
         'Choose Copy skill, then paste the text into Grok Bot or Cursor.',
         'Use the line above for the title, the words highlighted on yellow, and where the cover will go.',
         'Check every character on the three compositions, then pick one.'
+      ]
+    }
+  },
+  {
+    id: 'desk_watercolor',
+    nameZh: '暖纸水彩插画',
+    nameEn: 'Warm Paper Watercolor',
+    pitchZh: '暖纸水彩手绘插画：水彩墨线、琥珀色调、单一橙色点缀。',
+    pitchEn: 'Warm paper watercolor illustrations: ink and wash, amber tones, one orange accent.',
+    ...skillType('illustration'),
+    image: '/images/skills/desk_watercolor.jpg',
+    imageWidth: SKILL_IMAGE_WIDTH,
+    imageHeight: SKILL_IMAGE_HEIGHT,
+    imageAltZh: '暖纸水彩插画示意：3D 纸雕黏土风，中文标题是暖纸水彩插画',
+    imageAltEn: 'Paper-craft clay card with the Chinese title 暖纸水彩插画',
+    ...skillFiles('desk_watercolor'),
+    detailSlug: 'skills/desk-watercolor',
+    detail: {
+      metaZh: 'desk_watercolor · 个人演示',
+      metaEn: 'desk_watercolor · personal demo',
+      leadZh: '暖纸水彩手绘风插画：水彩加墨线画在米色纸上，琥珀色调，全图只有一个橙色点缀。给文章、X 帖和网站配一张安静的手绘图，要写字时带短句手写字，逐字验过再交付。',
+      leadEn:
+        'Warm hand-drawn watercolor illustrations: ink and wash on cream paper, an amber palette, and exactly one orange accent. A quiet hand-drawn figure for articles, X posts, and the site, with short handwritten text when asked.',
+      gainsZh: [
+        '固定的暖纸水彩风：水彩墨线、米色纸纹、毛边',
+        '单一橙色点缀，视线落点明确',
+        '可带短句手写字，逐字验收后交付 JPG'
+      ],
+      gainsEn: [
+        'A locked warm-paper watercolor look: ink and wash, cream paper grain, deckled edges',
+        'One orange accent that carries the eye',
+        'Optional short handwritten text, checked character by character, delivered as JPG'
+      ],
+      fitZh: [
+        '公众号、网站文章要一张手绘风配图',
+        'X 帖想配一张安静的氛围图',
+        '图里要带一句手写短句或小标签'
+      ],
+      fitEn: [
+        'A WeChat or site article needs a hand-drawn figure',
+        'An X post wants a quiet, atmospheric image',
+        'The image needs one short handwritten line or label'
+      ],
+      unfitZh: [
+        '要带大标题的封面。用 cover_image_gen',
+        '要讲结构的静态图解。用 diagram-design',
+        '可交互的等轴测拆解。用 anatomy',
+        '照片级写实图。这套是手绘水彩'
+      ],
+      unfitEn: [
+        'You need a cover built around a big title. Use cover_image_gen',
+        'You need a structural diagram. Use diagram-design',
+        'You need an interactive isometric cutaway. Use anatomy',
+        'You need photorealism. This is hand-drawn watercolor'
+      ],
+      sampleZh: '用水彩风画一张文章配图：窗边书桌，摊开的笔记本上画着一条上升曲线，旁边一个芒果，纸上不要字。',
+      sampleEn:
+        'Draw an article figure in the watercolor style: a desk by a lattice window, an open notebook with a rising curve, one mango beside it, no text on the papers.',
+      stepsZh: [
+        '点「复制技能」，把整段技能文本交给 Agent。',
+        '说明场景、点缀物和光线；要写字时给出原文和落点。',
+        '收图后逐项验收：色调、点缀、纸纹毛边，带字的逐字对。'
+      ],
+      stepsEn: [
+        'Choose Copy skill, then hand the text to your agent.',
+        'Describe the scene, the accent object, and the light; give exact text and placement when you want words.',
+        'Check the result: palette, single accent, paper grain and edges, and every character when text was requested.'
       ]
     }
   },
@@ -1490,7 +1558,8 @@ const SKILL_POPULAR_IDS = [
   'brainstorming',
   'systematic-debugging',
   'verification-before-completion',
-  'writing-plans'
+  'writing-plans',
+  'desk_watercolor'
 ] as const
 
 function assertPopularOrder(): void {

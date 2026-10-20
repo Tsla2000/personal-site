@@ -187,5 +187,14 @@
     "zipFile": "data-analysis.zip",
     "promptPath": "/skills/sources/data-analysis/SKILL.md",
     "zipPath": "/skills/zips/data-analysis.zip"
+  },
+  {
+    "id": "desk_watercolor",
+    "dir": "desk_watercolor",
+    "promptName": "暖纸水彩插画",
+    "zipSkillEntry": "desk_watercolor/SKILL.md",
+    "zipFile": "desk_watercolor.zip",
+    "promptPath": "/skills/sources/desk_watercolor/SKILL.md",
+    "zipPath": "/skills/zips/desk_watercolor.zip"
   }
 ]

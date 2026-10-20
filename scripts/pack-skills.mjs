@@ -15,6 +15,7 @@ const REQUIRED_PHRASES = {
   'diagram-design': ['Forty-five visual types', 'name: diagram-design'],
   anatomy: ['Node.js 20.10+', 'name: anatomy'],
   cover_image_gen: ['quality=92', '黄底高亮', 'name: cover_image_gen'],
+  desk_watercolor: ['name: desk_watercolor'],
   custom_connector_setup: ['Never store a secret', 'name: custom_connector_setup'],
   'personal-site-build': ['name: 个人网站搭建', '飞书'],
   'frontend-design': ['name: frontend-design', 'LICENSE.txt'],
@@ -50,7 +51,8 @@ const MIN_ZIP_BYTES = {
   'website-launch-check.zip': 1000,
   'content-repurpose.zip': 1000,
   'browser-automation.zip': 1000,
-  'data-analysis.zip': 1000
+  'data-analysis.zip': 1000,
+  'desk_watercolor.zip': 1000
 }
 
 const MINIMUM_PACKAGE_COUNT = 6

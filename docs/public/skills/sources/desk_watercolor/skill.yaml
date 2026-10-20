@@ -1,0 +1,5 @@
+name: "desk_watercolor"
+title: "暖纸水彩插画"
+description: "生成暖纸水彩手绘风插画（水彩+墨线、米色纸纹、琥珀色调、单一橙色点缀），用于文章配图、X 配图和网站插图。用户要这种水彩书桌风图片时用。"
+category: "Work and knowledge"
+include_in_prompt: true

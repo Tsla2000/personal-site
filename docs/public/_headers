@@ -229,6 +229,12 @@
 /en/skills/de-ai-writing/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/skills/desk-watercolor
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/skills/desk-watercolor/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /en/skills/diagram-design
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -404,6 +410,12 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /skills/de-ai-writing/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/desk-watercolor
+  Cache-Control: public, max-age=0, must-revalidate
+
+/skills/desk-watercolor/
   Cache-Control: public, max-age=0, must-revalidate
 
 /skills/diagram-design
