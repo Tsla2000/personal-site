@@ -62,7 +62,10 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
   </section>
 
   <section class="home-section" id="projects">
-    <h2>项目</h2>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+      <h2>项目</h2>
+      <a href="projects/" style="font-size:14px;color:#1d9bf0;white-space:nowrap;">查看全部项目 →</a>
+    </div>
     <div class="project-list">
       <article class="project-tile">
         <a class="skill-thumb" :href="storeUrl" target="_blank" rel="noopener">
@@ -78,7 +81,6 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
         </div>
       </article>
     </div>
-    <p style="margin-top:12px;"><a href="projects/" style="font-size:14px;color:#1d9bf0;">查看全部项目 →</a></p>
   </section>
 
 </div>
