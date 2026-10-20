@@ -1,24 +1,44 @@
 ---
 title: AI
 description: 人类创造了AI，而AI也改变人类
+layout: page
+sidebar: false
+pageClass: archive-discover
 ---
 
-# AI
+<script setup>
+import { ref } from 'vue'
+// 子栏目筛选:'all' 或子目录名;卡片和标签的绑定由 scripts/gen-seo.mjs 生成
+const filter = ref('all')
+</script>
 
-<p class="category-intro">人类创造了AI，而AI也改变人类</p>
+<div class="archive-page">
+<header class="archive-header">
+<h1>AI</h1>
+<p>人类创造了AI，而AI也改变人类</p>
+</header>
+<div class="archive-layout is-single">
+<div class="archive-main">
 
-<!-- 注意:站内链接用相对路径,GitHub Pages(/personal-site/)和 Cloudflare Pages(/)双部署都可用。-->
-<div class="article-list">
-  <a class="article-row" href="workflows/agent-skills-installation-guide"><time>2026.10.19</time><div><strong>Agent Skills 安装指南：如何在 Codex、Claude Code 等工具中使用 SKILL.md</strong><small>从下载、检查到安装验证，解决技能无法识别和触发的问题。</small></div></a>
-  <a class="article-row" href="workflows/ai-project-delivery-workflow"><time>2026.10.19</time><div><strong>AI Coding 项目交付流程：从需求到可验收成果</strong><small>把需求澄清、计划、实现、测试和交接串成可复用的工作流。</small></div></a>
-  <a class="article-row" href="workflows/website-launch-checklist"><time>2026.10.19</time><div><strong>网站上线检查清单：部署前验证功能、SEO、移动端与回滚</strong><small>覆盖核心路径、搜索元信息、移动端体验、分析事件与回滚准备。</small></div></a>
-  <a class="article-row" href="workflows/ai-data-analysis-workflow"><time>2026.10.19</time><div><strong>AI 数据分析工作流：从原始数据到可复核的决策建议</strong><small>用可复现计算、明确口径和不确定性边界，把表格变成可检查的证据。</small></div></a>
-  <a class="article-row" href="trends/claude-search-surge"><time>2026.10.16</time><div><strong>Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude</strong><small>Google Trends 数据、Claude 5 系列模型与中文用户的替代方案</small></div></a>
-  <a class="article-row" href="trends/anthropic-distillation-dispute"><time>2026.10.15</time><div><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><small>报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</small></div></a>
-  <a class="article-row" href="agents/x-auto-ops"><time>2026.10.13</time><div><strong>我用 Muse 搭建了一套 X 账号自动化运营系统</strong><small>从选题、写作到发布：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</small></div></a>
-  <a class="article-row" href="trends/rea-software-replicability"><time>2026.10.11</time><div><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><small>当"看懂一个软件"的成本趋近于零，软件公司的竞争优势会转移到哪里？</small></div></a>
-  <a class="article-row" href="coding/muse-auto-deploy"><time>2026.10.06</time><div><strong>我是如何用 Muse 自动化部署个人网站的</strong><small>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</small></div></a>
-  <a class="article-row" href="agents/agent-os"><time>2026.10.01</time><div><strong>AI Agent 会成为下一代操作系统吗？</strong><small>Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</small></div></a>
-  <a class="article-row" href="trends/next-stage"><time>2026.09.18</time><div><strong>AI 产业的下一阶段</strong><small>市场真正定价的不是技术是否强大，而是价值能否被捕获。</small></div></a>
-  <a class="article-row" href="coding/ai-coding-leverage"><time>2026.08.30</time><div><strong>AI 编程的真正杠杆</strong><small>AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。</small></div></a>
+<!-- AI-FEED-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
+<div class="archive-tabs" role="group" aria-label="按分类筛选"><button type="button" class="archive-tab" :aria-pressed="filter === 'all'" @click="filter = 'all'">全部<span>13</span></button><button type="button" class="archive-tab" :aria-pressed="filter === 'trends'" @click="filter = 'trends'">趋势<span>4</span></button><button type="button" class="archive-tab" :aria-pressed="filter === 'agents'" @click="filter = 'agents'">Agent<span>2</span></button><button type="button" class="archive-tab" :aria-pressed="filter === 'coding'" @click="filter = 'coding'">Coding<span>3</span></button><button type="button" class="archive-tab" :aria-pressed="filter === 'workflows'" @click="filter = 'workflows'">工作流<span>4</span></button></div>
+<div class="archive-feed" :data-filter="filter === 'all' ? 'all' : 'cat'">
+<a class="archive-card hero-all hero-cat" href="/ai/workflows/agent-skills-installation-guide" data-cat="workflows" v-show="filter === 'all' || filter === 'workflows'"><div class="archive-card-media"><div class="archive-card-img archive-card-placeholder" aria-hidden="true"><span>工作流</span></div></div><div class="archive-card-body"><strong>Agent Skills 安装指南：如何在 Codex、Claude Code 等工具中使用 SKILL.md</strong><p>从下载 SKILL.md 到验证 Agent 是否正确调用，介绍 Agent Skills 的基本结构、安装思路、常见问题和安全检查，帮助新手把技能真正用起来。</p><div class="archive-card-meta"><span class="archive-chip">工作流</span><time datetime="2026-10-19">2026.10.19</time></div></div></a>
+<a class="archive-card" href="/ai/workflows/ai-data-analysis-workflow" data-cat="workflows" v-show="filter === 'all' || filter === 'workflows'"><div class="archive-card-media"><div class="archive-card-img archive-card-placeholder" aria-hidden="true"><span>工作流</span></div></div><div class="archive-card-body"><strong>AI 数据分析工作流：从原始数据到可复核的决策建议</strong><p>一套可靠的 AI 数据分析流程，覆盖数据质量检查、指标定义、可复现计算、异常解释、结论边界和报告交付。</p><div class="archive-card-meta"><span class="archive-chip">工作流</span><time datetime="2026-10-19">2026.10.19</time></div></div></a>
+<a class="archive-card" href="/ai/workflows/ai-project-delivery-workflow" data-cat="workflows" v-show="filter === 'all' || filter === 'workflows'"><div class="archive-card-media"><div class="archive-card-img archive-card-placeholder" aria-hidden="true"><span>工作流</span></div></div><div class="archive-card-body"><strong>AI Coding 项目交付流程：从需求到可验收成果</strong><p>一套可复用的 AI Coding 项目交付清单，覆盖需求澄清、计划、实现、测试、代码审查和最终交付，帮助 AI 编程从“写出代码”走向“完成任务”。</p><div class="archive-card-meta"><span class="archive-chip">工作流</span><time datetime="2026-10-19">2026.10.19</time></div></div></a>
+<a class="archive-card" href="/ai/workflows/website-launch-checklist" data-cat="workflows" v-show="filter === 'all' || filter === 'workflows'"><div class="archive-card-media"><div class="archive-card-img archive-card-placeholder" aria-hidden="true"><span>工作流</span></div></div><div class="archive-card-body"><strong>网站上线检查清单：部署前验证功能、SEO、移动端与回滚</strong><p>网站发布前的实用验收清单，覆盖关键页面、链接、移动端、性能、SEO 元信息、分享卡、分析事件和回滚方案。</p><div class="archive-card-meta"><span class="archive-chip">工作流</span><time datetime="2026-10-19">2026.10.19</time></div></div></a>
+<a class="archive-card hero-all hero-cat" href="/ai/trends/claude-search-surge" data-cat="trends" v-show="filter === 'all' || filter === 'trends'"><div class="archive-card-media"><img class="archive-card-img" src="/images/claude-search-surge/fig01_gt_compare.png" alt="Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude</strong><p>Google Trends 上 Claude 的相对指数近三天达到 94–100，OpenAI 只有 7–8。数据怎么读、Opus 5/5.5 和 Fable 5.1 做对了什么，以及中文用户的使用门槛和替代方案。</p><div class="archive-card-meta"><span class="archive-chip">趋势</span><time datetime="2026-10-16">2026.10.16</time></div></div></a>
+<a class="archive-card" href="/ai/trends/anthropic-distillation-dispute" data-cat="trends" v-show="filter === 'all' || filter === 'trends'"><div class="archive-card-media"><img class="archive-card-img" src="/images/distill/fig01_accusation_chain.png" alt="Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了</strong><p>报告强调，蒸馏攻击真正想要的是模型的思考过程，并称三层防御已将被盗取的模型推理信息量减少约 90%–99%。</p><div class="archive-card-meta"><span class="archive-chip">趋势</span><time datetime="2026-10-15">2026.10.15</time></div></div></a>
+<a class="archive-card hero-cat" href="/ai/agents/x-auto-ops" data-cat="agents" v-show="filter === 'all' || filter === 'agents'"><div class="archive-card-media"><img class="archive-card-img" src="/images/x-ops/x-ops-cover.webp" alt="我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布</strong><p>把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。</p><div class="archive-card-meta"><span class="archive-chip">Agent</span><time datetime="2026-10-13">2026.10.13</time></div></div></a>
+<a class="archive-card hero-cat" href="/ai/coding/twikoo-anonymous-comments" data-cat="coding" v-show="filter === 'all' || filter === 'coding'"><div class="archive-card-media"><img class="archive-card-img" src="/images/twikoo-architecture.webp" alt="如何让 Muse 给个人网站接入留言板和评论功能" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>如何让 Muse 给个人网站接入留言板和评论功能</strong><p>给 VitePress 个人网站增加文章评论和独立留言板，记录使用 Muse 接入 Twikoo，以及配置 Vercel 和 MongoDB 时遇到的问题。</p><div class="archive-card-meta"><span class="archive-chip">Coding</span><time datetime="2026-10-13">2026.10.13</time></div></div></a>
+<a class="archive-card hero-all" href="/ai/trends/rea-software-replicability" data-cat="trends" v-show="filter === 'all' || filter === 'trends'"><div class="archive-card-media"><img class="archive-card-img" src="/images/rea/rea-cover.webp" alt="REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段</strong><p>AI 逆向工程工具正在拉低&quot;看懂一个软件&quot;的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？</p><div class="archive-card-meta"><span class="archive-chip">趋势</span><time datetime="2026-10-11">2026.10.11</time></div></div></a>
+<a class="archive-card" href="/ai/coding/muse-auto-deploy" data-cat="coding" v-show="filter === 'all' || filter === 'coding'"><div class="archive-card-media"><img class="archive-card-img" src="/images/muse-deploy-actions.png" alt="我是如何用 Muse 自动化部署个人网站的" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>我是如何用 Muse 自动化部署个人网站的</strong><p>从改一行配置到上线，全程由 AI Agent 执行：VitePress + GitHub Pages + 一个能干活的 Agent，是个人网站的新三件套。</p><div class="archive-card-meta"><span class="archive-chip">Coding</span><time datetime="2026-10-06">2026.10.06</time></div></div></a>
+<a class="archive-card" href="/ai/agents/agent-os" data-cat="agents" v-show="filter === 'all' || filter === 'agents'"><div class="archive-card-media"><img class="archive-card-img" src="/images/agentos-compare.png" alt="AI Agent 会成为下一代操作系统吗？" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>AI Agent 会成为下一代操作系统吗？</strong><p>Agent 不只是更聪明的聊天窗口，它正在改变软件的组织方式。</p><div class="archive-card-meta"><span class="archive-chip">Agent</span><time datetime="2026-10-01">2026.10.01</time></div></div></a>
+<a class="archive-card" href="/ai/trends/next-stage" data-cat="trends" v-show="filter === 'all' || filter === 'trends'"><div class="archive-card-media"><img class="archive-card-img" src="/images/nextstage-three-shifts.png" alt="AI 产业的下一阶段" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>AI 产业的下一阶段</strong><p>市场真正定价的不是技术是否强大，而是价值能否被捕获。</p><div class="archive-card-meta"><span class="archive-chip">趋势</span><time datetime="2026-09-18">2026.09.18</time></div></div></a>
+<a class="archive-card hero-all" href="/ai/coding/ai-coding-leverage" data-cat="coding" v-show="filter === 'all' || filter === 'coding'"><div class="archive-card-media"><img class="archive-card-img" src="/images/coding-leverage-lever.webp" alt="AI 编程的真正杠杆" loading="lazy" decoding="async" /></div><div class="archive-card-body"><strong>AI 编程的真正杠杆</strong><p>AI 编程的价值不只是少写几行代码，而是降低试错和表达的成本。</p><div class="archive-card-meta"><span class="archive-chip">Coding</span><time datetime="2026-08-30">2026.08.30</time></div></div></a>
+</div>
+<!-- AI-FEED-END -->
+
+</div>
+</div>
 </div>

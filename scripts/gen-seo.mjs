@@ -482,41 +482,72 @@ writeFileSync(join(DOCS_DIR, '.vitepress', 'latest-posts.json'), JSON.stringify(
 // 分类筛选用 archive.md 里的 filter ref:v-show 控制显隐;头条位置按「全部」和「本分类」各算一份,
 // 标成 hero-all / hero-cat,CSS 按当前筛选取对应那份,筛选后版式仍是一大三小。
 const ARCHIVE_ALL = 'all'
-const catIndex = new Map()
-const archiveCards = items.map((it, i) => {
-  const cat = it.category || '未分类'
-  const ci = catIndex.get(cat) ?? 0
-  catIndex.set(cat, ci + 1)
-  const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
-  // 首张头条在首屏,立即高优先级加载;其余懒加载
-  const loadAttrs = i === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
-  const media = image
-    ? `<img class="archive-card-img" src="${esc(image)}" alt="${esc(it.title)}" ${loadAttrs} decoding="async" />`
-    : '<div class="archive-card-img archive-card-placeholder"></div>'
-  const cls = ['archive-card', i % 4 === 0 ? 'hero-all' : '', ci % 4 === 0 ? 'hero-cat' : ''].filter(Boolean).join(' ')
-  const catLiteral = JSON.stringify(cat).replace(/"/g, "'")
-  return `<a class="${cls}" href="${it.urlPath}" data-cat="${esc(cat)}" v-show="filter === '${ARCHIVE_ALL}' || filter === ${catLiteral}">` +
-    `<div class="archive-card-media">${media}</div>` +
-    `<div class="archive-card-body"><strong>${esc(it.title)}</strong><p>${esc(it.description)}</p>` +
-    `<div class="archive-card-meta"><span class="archive-chip">${esc(cat)}</span><time datetime="${it.dateStr.replace(/\./g, '-')}">${it.dateStr}</time></div></div></a>`
-})
-const catCounts = [...catIndex.entries()].sort((a, b) => b[1] - a[1])
-const archiveTab = (id, label, count) => {
-  const lit = JSON.stringify(id).replace(/"/g, "'")
-  return `<button type="button" class="archive-tab" :aria-pressed="filter === ${lit}" @click="filter = ${lit}">${esc(label)}<span>${count}</span></button>`
+// list 已按时间倒序;groupOf(it) 给出筛选分组名,tabs 的顺序为 [分组, 显示名];不传则按篇数排序、显示名即分组名
+function renderFeed(list, groupOf, tabs) {
+  const groupIndex = new Map()
+  const cards = list.map((it, i) => {
+    const group = groupOf(it)
+    const gi = groupIndex.get(group) ?? 0
+    groupIndex.set(group, gi + 1)
+    const image = it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : ''
+    // 首张头条在首屏,立即高优先级加载;其余懒加载
+    const loadAttrs = i === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
+    const label = tabs?.find(([g]) => g === group)?.[1] ?? group
+    const media = image
+      ? `<img class="archive-card-img" src="${esc(image)}" alt="${esc(it.title)}" ${loadAttrs} decoding="async" />`
+      : `<div class="archive-card-img archive-card-placeholder" aria-hidden="true"><span>${esc(label)}</span></div>`
+    const cls = ['archive-card', i % 4 === 0 ? 'hero-all' : '', gi % 4 === 0 ? 'hero-cat' : ''].filter(Boolean).join(' ')
+    const groupLiteral = JSON.stringify(group).replace(/"/g, "'")
+    return `<a class="${cls}" href="${it.urlPath}" data-cat="${esc(group)}" v-show="filter === '${ARCHIVE_ALL}' || filter === ${groupLiteral}">` +
+      `<div class="archive-card-media">${media}</div>` +
+      `<div class="archive-card-body"><strong>${esc(it.title)}</strong><p>${esc(it.description)}</p>` +
+      `<div class="archive-card-meta"><span class="archive-chip">${esc(label)}</span><time datetime="${it.dateStr.replace(/\./g, '-')}">${it.dateStr}</time></div></div></a>`
+  })
+  const tabList = (tabs ?? [...groupIndex.entries()].sort((a, b) => b[1] - a[1]).map(([g]) => [g, g]))
+    .filter(([g]) => groupIndex.has(g))
+  const tab = (id, label, count) => {
+    const lit = JSON.stringify(id).replace(/"/g, "'")
+    return `<button type="button" class="archive-tab" :aria-pressed="filter === ${lit}" @click="filter = ${lit}">${esc(label)}<span>${count}</span></button>`
+  }
+  return `<div class="archive-tabs" role="group" aria-label="按分类筛选">` +
+    tab(ARCHIVE_ALL, '全部', list.length) +
+    tabList.map(([g, label]) => tab(g, label, groupIndex.get(g))).join('') +
+    `</div>\n<div class="archive-feed" :data-filter="filter === '${ARCHIVE_ALL}' ? 'all' : 'cat'">\n${cards.join('\n')}\n</div>`
 }
-const archiveSections = `<div class="archive-tabs" role="group" aria-label="按分类筛选">` +
-  archiveTab(ARCHIVE_ALL, '全部', items.length) +
-  catCounts.map(([cat, n]) => archiveTab(cat, cat, n)).join('') +
-  `</div>\n<div class="archive-feed" :data-filter="filter === '${ARCHIVE_ALL}' ? 'all' : 'cat'">\n${archiveCards.join('\n')}\n</div>`
-const archivePath = join(DOCS_DIR, 'archive.md')
-const archiveSrc = readFileSync(archivePath, 'utf8')
-const archiveHtml = `<!-- ARCHIVE-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->\n${archiveSections}\n<!-- ARCHIVE-END -->`
-const archiveUpdated = archiveSrc.replace(
-  /<!-- ARCHIVE-START[\s\S]*?<!-- ARCHIVE-END -->/,
-  archiveHtml
-)
-if (archiveUpdated !== archiveSrc) writeFileSync(archivePath, archiveUpdated)
+
+function writeFeedBlock(mdPath, marker, html) {
+  const src = readFileSync(mdPath, 'utf8')
+  const block = `<!-- ${marker}-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->\n${html}\n<!-- ${marker}-END -->`
+  const updated = src.replace(new RegExp(`<!-- ${marker}-START[\\s\\S]*?<!-- ${marker}-END -->`), block)
+  if (updated !== src) writeFileSync(mdPath, updated)
+}
+
+writeFeedBlock(join(DOCS_DIR, 'archive.md'), 'ARCHIVE', renderFeed(items, (it) => it.category || '未分类'))
+
+// ---- AI 栏目页:同归档页版式(无侧栏),收 docs/ai/ 下全部中文页面,按子目录筛选 ----
+// workflows 等落地页没写 date,也不进 RSS/归档,这里用内容最后修改日期补上
+const AI_TABS = [['trends', '趋势'], ['agents', 'Agent'], ['coding', 'Coding'], ['workflows', '工作流'], ['products', '产品'], ['thinking', '思考']]
+const aiItems = []
+for (const file of files) {
+  const rel = relative(DOCS_DIR, file).split(sep).join('/')
+  if (!rel.startsWith('ai/') || rel === 'ai/index.md') continue
+  const fm = parseFrontmatter(file)
+  if (!fm || !fm.title || fm.draft === 'true' || fm.noindex === 'true') continue
+  const dateRaw = fm.date || String(contentLastmod(file, fm, gitDates, snapshotDates) || '').slice(0, 10)
+  const d = new Date(dateRaw)
+  if (!dateRaw || Number.isNaN(d.getTime())) continue
+  aiItems.push({
+    title: fm.title,
+    description: fm.description || '',
+    group: rel.split('/')[1],
+    image: fm.image || (readFileSync(file, 'utf8').match(/!\[[^\]]*\]\(([^)]+)\)/)?.[1] || ''),
+    date: d,
+    dateStr: dateRaw.replace(/-/g, '.'),
+    urlPath: baseNoSlash + toUrlPath(file)
+  })
+}
+aiItems.sort((a, b) => b.date - a.date)
+writeFeedBlock(join(DOCS_DIR, 'ai', 'index.md'), 'AI-FEED', renderFeed(aiItems, (it) => it.group, AI_TABS))
 
 // ---- articles.json:给「我的收藏」页用的文章清单(含更新时间) ----
 // updated 取 git 最后提交时间(frontmatter 写了 updated 则优先),收藏夹用它判断"有更新"

@@ -1231,6 +1231,10 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   margin-top: 24px;
 }
 
+.archive-layout.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .archive-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -1307,6 +1311,23 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   object-fit: cover;
   object-position: center top;
   transition: transform 0.35s ease;
+}
+
+/* 没有配图的页面:品牌色淡渐变占位 */
+.archive-card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(135deg, var(--vp-c-brand-soft), var(--vp-c-bg-soft));
+}
+
+.archive-card-placeholder span {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--vp-c-brand-1);
+  opacity: 0.85;
 }
 
 .archive-card:hover .archive-card-img {

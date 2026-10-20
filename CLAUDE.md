@@ -28,7 +28,7 @@ npx vitepress preview docs --port 4173                 # 预览构建产物；�
 1. `patch-vitepress-locale.mjs`：修补 VitePress 英文首页的语言判断。
 2. `pack-skills.mjs`：打包 `docs/public/skills` 下的技能 ZIP。
 3. `gen-seo.mjs`：生成 sitemap / robots / feed / llms.txt / `_headers` / articles.json，
-   并**重写** `docs/index.md` 的 LATEST 区块和 `docs/archive.md` 的 ARCHIVE 区块。
+   并**重写** `docs/index.md` 的 LATEST 区块、`docs/archive.md` 的 ARCHIVE 区块和 `docs/ai/index.md` 的 AI-FEED 区块。
 4. `vitepress build`，然后 `fix-logo-alt.mjs` 补 logo alt，`check-seo.mjs` 做 SEO 检查。
 
 ## 注意事项
@@ -39,4 +39,5 @@ npx vitepress preview docs --port 4173                 # 预览构建产物；�
 - 图片放 `docs/public/images/`，上传前压到 200KB 以内（宽度不超过 1600px）。
 - 技能数据在 `docs/.vitepress/theme/homeSkills.ts`，首页技能卡、技能页、归档页侧栏都读它。相关组件是异步加载的，不进全站公共包。
 - 归档页（`docs/archive.md`）用 `layout: page`，左 7 右 3；右侧栏是 `theme/components/ArchiveSidebar.vue`。
+- AI 栏目页（`docs/ai/index.md`）复用归档页版式（`archive-layout is-single`，无侧栏），收 `docs/ai/` 下所有页面，按子目录筛选；子目录显示名在 `gen-seo.mjs` 的 `AI_TABS`。
 - 主题入口 `docs/.vitepress/theme/index.ts`，全局样式 `theme/custom.css`，品牌色变量在文件开头。
