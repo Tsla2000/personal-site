@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SkillLike from './SkillLike.vue'
 import { computed, onMounted, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { findSkill } from '../homeSkills'
@@ -79,6 +80,7 @@ watch(() => props.skillId, trackView)
             :aria-label="zipAriaLabel(pick(skill.nameZh, skill.nameEn))"
             @click="trackDownload(skill, 'detail')"
           >{{ zipLabel() }}</a>
+          <SkillLike :skill-id="skill.id" />
           <a class="skill-back" :href="listHref">{{ pick('返回技能列表', 'Back to skills') }}</a>
         </div>
       </div>
