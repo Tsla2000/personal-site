@@ -384,7 +384,9 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   list-style: none;
 }
 
+/* 全站 ul 限宽 720px 是给正文用的,这里要和上面卡片同宽,三列各占三分之一 */
 .vp-doc ul.latest-rows {
+  max-width: none;
   margin: 14px 0 0;
   padding: 0;
   list-style: none;
