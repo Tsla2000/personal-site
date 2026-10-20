@@ -981,6 +981,10 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
     max-width: 1080px;
   }
 
+  .Layout.skill-browse .vp-doc h1 + p {
+    white-space: nowrap;
+  }
+
   .Layout:has(.home-page) .skill-catalog {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px 18px;
