@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { withBase } from 'vitepress'
 import { SKILL_COPY_FEEDBACK_MS, type HomeSkill } from './homeSkills'
 import { useIsEnglish } from './useLocale'
@@ -7,26 +7,6 @@ import { trackEvent } from './analytics'
 const skillPromptCache = new Map<string, string>()
 
 const RATED_KEY = 'pmf:rated-skills'
-const COPIED_KEY = 'pmf:copied-skills'
-/** 复制后隔多久才问「好用吗」：复制不等于用过，给用户留出试用时间 */
-const RATING_DELAY_MS = 30 * 60 * 1000
-
-function readCopied(): Record<string, number> {
-  try {
-    const raw = JSON.parse(localStorage.getItem(COPIED_KEY) || '{}')
-    return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {}
-  } catch {
-    return {}
-  }
-}
-
-function markSkillCopied(skillId: string): void {
-  try {
-    localStorage.setItem(COPIED_KEY, JSON.stringify({ ...readCopied(), [skillId]: Date.now() }))
-  } catch {
-    /* 忽略 */
-  }
-}
 
 function readRated(): string[] {
   try {
@@ -142,7 +122,9 @@ export function useSkillCopy() {
       ...feedbackBySkillId.value,
       [skill.id]: copied ? 'copied' : 'failed'
     }
-    if (copied) markSkillCopied(skill.id)
+    if (copied && !readRated().includes(skill.id)) {
+      ratingOpenBySkillId.value = { ...ratingOpenBySkillId.value, [skill.id]: true }
+    }
     trackEvent('skill_copy', {
       skill_id: skill.id,
       language: isEnglish.value ? 'en' : 'zh',
@@ -165,16 +147,6 @@ export function useSkillCopy() {
       source
     })
   }
-
-  // 只在回访时检查：复制满 30 分钟且还没反馈过的技能才出反馈条
-  onMounted(() => {
-    const rated = readRated()
-    const due: Record<string, boolean> = {}
-    for (const [id, at] of Object.entries(readCopied())) {
-      if (!rated.includes(id) && Date.now() - at >= RATING_DELAY_MS) due[id] = true
-    }
-    ratingOpenBySkillId.value = due
-  })
 
   onBeforeUnmount(() => {
     if (typeof window === 'undefined') return

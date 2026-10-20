@@ -57,7 +57,7 @@ function skip(): void {
 <template>
   <div class="skill-rating" role="group" :aria-label="isEnglish ? 'Skill feedback' : '技能反馈'">
     <template v-if="step === 'ask'">
-      <span class="skill-rating-q">{{ isEnglish ? 'Tried this skill — worth it?' : '上次复制的这个技能，好用吗？' }}</span>
+      <span class="skill-rating-q">{{ isEnglish ? 'Worth it?' : '用了觉得好？' }}</span>
       <button type="button" class="skill-rating-btn" :aria-label="isEnglish ? 'Helpful' : '有用'" @click="up">👍</button>
       <button type="button" class="skill-rating-btn" :aria-label="isEnglish ? 'Not helpful' : '没帮助'" @click="down">👎</button>
       <button type="button" class="skill-rating-skip" :aria-label="isEnglish ? 'Dismiss' : '关闭'" @click="skip">×</button>
