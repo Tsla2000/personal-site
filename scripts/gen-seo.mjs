@@ -482,8 +482,9 @@ writeFileSync(join(DOCS_DIR, '.vitepress', 'latest-posts.json'), JSON.stringify(
 // 分类筛选用 archive.md 里的 filter ref:v-show 控制显隐;头条位置按「全部」和「本分类」各算一份,
 // 标成 hero-all / hero-cat,CSS 按当前筛选取对应那份,筛选后版式仍是一大三小。
 const ARCHIVE_ALL = 'all'
-// list 已按时间倒序;groupOf(it) 给出筛选分组名,tabs 的顺序为 [分组, 显示名];不传则按篇数排序、显示名即分组名
-function renderFeed(list, groupOf, tabs) {
+// list 已按时间倒序;groupOf(it) 给出筛选分组名,tabs 的顺序为 [分组, 显示名];不传则按篇数排序、显示名即分组名。
+// style 'list':单列列表(标题 · 日期 / 缩略图 + 摘要 / 分隔线),否则是一大三小的卡片流
+function renderFeed(list, groupOf, tabs, style = 'cards') {
   const groupIndex = new Map()
   const cards = list.map((it, i) => {
     const group = groupOf(it)
@@ -498,10 +499,17 @@ function renderFeed(list, groupOf, tabs) {
       : `<div class="archive-card-img archive-card-placeholder" aria-hidden="true"><span>${esc(label)}</span></div>`
     const cls = ['archive-card', i % 4 === 0 ? 'hero-all' : '', gi % 4 === 0 ? 'hero-cat' : ''].filter(Boolean).join(' ')
     const groupLiteral = JSON.stringify(group).replace(/"/g, "'")
-    return `<a class="${cls}" href="${it.urlPath}" data-cat="${esc(group)}" v-show="filter === '${ARCHIVE_ALL}' || filter === ${groupLiteral}">` +
+    const show = `v-show="filter === '${ARCHIVE_ALL}' || filter === ${groupLiteral}"`
+    const time = `<time datetime="${it.dateStr.replace(/\./g, '-')}">${it.dateStr}</time>`
+    if (style === 'list') {
+      return `<a class="feed-row" href="${it.urlPath}" data-cat="${esc(group)}" ${show}>` +
+        `<div class="feed-row-head"><strong>${esc(it.title)}</strong><span class="feed-row-date"> · ${time}</span></div>` +
+        `<div class="feed-row-body"><div class="feed-row-thumb">${media}</div><p>${esc(it.description)}</p></div></a>`
+    }
+    return `<a class="${cls}" href="${it.urlPath}" data-cat="${esc(group)}" ${show}>` +
       `<div class="archive-card-media">${media}</div>` +
       `<div class="archive-card-body"><strong>${esc(it.title)}</strong><p>${esc(it.description)}</p>` +
-      `<div class="archive-card-meta"><span class="archive-chip">${esc(label)}</span><time datetime="${it.dateStr.replace(/\./g, '-')}">${it.dateStr}</time></div></div></a>`
+      `<div class="archive-card-meta"><span class="archive-chip">${esc(label)}</span>${time}</div></div></a>`
   })
   const tabList = (tabs ?? [...groupIndex.entries()].sort((a, b) => b[1] - a[1]).map(([g]) => [g, g]))
     .filter(([g]) => groupIndex.has(g))
@@ -509,10 +517,12 @@ function renderFeed(list, groupOf, tabs) {
     const lit = JSON.stringify(id).replace(/"/g, "'")
     return `<button type="button" class="archive-tab" :aria-pressed="filter === ${lit}" @click="filter = ${lit}">${esc(label)}<span>${count}</span></button>`
   }
-  return `<div class="archive-tabs" role="group" aria-label="按分类筛选">` +
+  const tabsHtml = `<div class="archive-tabs" role="group" aria-label="按分类筛选">` +
     tab(ARCHIVE_ALL, '全部', list.length) +
-    tabList.map(([g, label]) => tab(g, label, groupIndex.get(g))).join('') +
-    `</div>\n<div class="archive-feed" :data-filter="filter === '${ARCHIVE_ALL}' ? 'all' : 'cat'">\n${cards.join('\n')}\n</div>`
+    tabList.map(([g, label]) => tab(g, label, groupIndex.get(g))).join('') + '</div>'
+  if (style === 'list') return `${tabsHtml}\n<div class="feed-list">\n${cards.join('\n')}\n</div>`
+  return tabsHtml +
+    `\n<div class="archive-feed" :data-filter="filter === '${ARCHIVE_ALL}' ? 'all' : 'cat'">\n${cards.join('\n')}\n</div>`
 }
 
 function writeFeedBlock(mdPath, marker, html) {
@@ -547,7 +557,7 @@ for (const file of files) {
   })
 }
 aiItems.sort((a, b) => b.date - a.date)
-writeFeedBlock(join(DOCS_DIR, 'ai', 'index.md'), 'AI-FEED', renderFeed(aiItems, (it) => it.group, AI_TABS))
+writeFeedBlock(join(DOCS_DIR, 'ai', 'index.md'), 'AI-FEED', renderFeed(aiItems, (it) => it.group, AI_TABS, 'list'))
 
 // ---- articles.json:给「我的收藏」页用的文章清单(含更新时间) ----
 // updated 取 git 最后提交时间(frontmatter 写了 updated 则优先),收藏夹用它判断"有更新"

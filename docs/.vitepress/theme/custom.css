@@ -1427,6 +1427,80 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   padding-top: 16px;
 }
 
+/* 单列列表(AI 栏目页):标题 · 日期 / 缩略图 + 摘要 / 分隔线 */
+.feed-list {
+  max-width: 880px;
+}
+
+.feed-row {
+  display: block;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  color: inherit;
+}
+
+.feed-row:first-child {
+  padding-top: 4px;
+}
+
+.feed-row-head {
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.feed-row-head strong {
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+  transition: color 0.2s;
+}
+
+.feed-row:hover .feed-row-head strong {
+  color: var(--vp-c-brand-1);
+}
+
+.feed-row-date {
+  font-size: 14px;
+  color: var(--vp-c-text-3);
+  white-space: nowrap;
+}
+
+.feed-row-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-top: 14px;
+}
+
+.feed-row-thumb {
+  flex: 0 0 200px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--vp-c-bg-soft);
+}
+
+.feed-row-thumb .archive-card-placeholder span {
+  font-size: 16px;
+}
+
+.feed-row-body p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--vp-c-text-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .feed-row-head { font-size: 18px; }
+  .feed-row-body { gap: 14px; }
+  .feed-row-thumb { flex-basis: 120px; }
+  .feed-row-body p { font-size: 14px; -webkit-line-clamp: 3; }
+}
+
 /* 右侧栏 */
 .archive-side {
   display: flex;

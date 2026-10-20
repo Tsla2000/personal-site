@@ -39,5 +39,5 @@ npx vitepress preview docs --port 4173                 # 预览构建产物；�
 - 图片放 `docs/public/images/`，上传前压到 200KB 以内（宽度不超过 1600px）。
 - 技能数据在 `docs/.vitepress/theme/homeSkills.ts`，首页技能卡、技能页、归档页侧栏都读它。相关组件是异步加载的，不进全站公共包。
 - 归档页（`docs/archive.md`）用 `layout: page`，左 7 右 3；右侧栏是 `theme/components/ArchiveSidebar.vue`。
-- AI 栏目页（`docs/ai/index.md`）复用归档页版式（`archive-layout is-single`，无侧栏），收 `docs/ai/` 下所有页面，按子目录筛选；子目录显示名在 `gen-seo.mjs` 的 `AI_TABS`。
+- AI 栏目页（`docs/ai/index.md`）用单列列表（标题 · 日期 / 缩略图 + 摘要 / 分隔线，样式 `.feed-row`），无侧栏，收 `docs/ai/` 下所有页面，按子目录筛选；子目录显示名在 `gen-seo.mjs` 的 `AI_TABS`。
 - 主题入口 `docs/.vitepress/theme/index.ts`，全局样式 `theme/custom.css`，品牌色变量在文件开头。
