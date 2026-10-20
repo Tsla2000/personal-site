@@ -3,6 +3,7 @@ title: AI 数据分析工作流：从原始数据到可复核的决策建议
 description: 一套可靠的 AI 数据分析流程，覆盖数据质量检查、指标定义、可复现计算、异常解释、结论边界和报告交付。
 keywords: AI 数据分析, 数据分析工作流, CSV 分析, 数据质量检查, 决策报告
 aside: false
+image: /images/workflows/ai-data-analysis.jpg
 ---
 
 # AI 数据分析工作流：从原始数据到可复核的决策建议
