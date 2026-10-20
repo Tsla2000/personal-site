@@ -509,8 +509,9 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
     height: 100%;
     aspect-ratio: 4 / 3;
   }
+  /* 单列且跟大卡同宽;用 minmax(0,1fr),否则单行不换行的标题会把列撑出屏幕 */
   .latest-rows {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
