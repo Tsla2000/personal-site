@@ -3,3 +3,8 @@
 /googlea4e028c59d636e52.html /googlea4e028c59d636e52 200
 # 双域名双活:promangofund.com(主) + mangofund.pages.dev(保留,不做 301 跳转)。
 # 搜索引擎靠 canonical 收敛到主域名;回滚时把 SITE_URL/CANONICAL_URL 改回老域名即可。
+# 站外短链:自动带渠道 UTM。/wx 回首页,/wx/<站内路径> 回对应页面(微信文末兜底用)。
+/wx /?utm_source=wechat&utm_medium=short 302
+/wx/* /:splat?utm_source=wechat&utm_medium=short 302
+/x /?utm_source=x&utm_medium=short 302
+/x/* /:splat?utm_source=x&utm_medium=short 302
