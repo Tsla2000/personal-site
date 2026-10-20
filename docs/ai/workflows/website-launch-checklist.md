@@ -3,6 +3,7 @@ title: 网站上线检查清单：部署前验证功能、SEO、移动端与回�
 description: 网站发布前的实用验收清单，覆盖关键页面、链接、移动端、性能、SEO 元信息、分享卡、分析事件和回滚方案。
 keywords: 网站上线检查清单, 网站发布验收, SEO 检查, 移动端测试, VitePress 部署
 aside: false
+image: /images/workflows/website-launch-checklist.jpg
 ---
 
 # 网站上线检查清单：部署前验证功能、SEO、移动端与回滚

@@ -3,6 +3,7 @@ title: Agent Skills 安装指南：如何在 Codex、Claude Code 等工具中使
 description: 从下载 SKILL.md 到验证 Agent 是否正确调用，介绍 Agent Skills 的基本结构、安装思路、常见问题和安全检查，帮助新手把技能真正用起来。
 keywords: Agent Skills 安装, SKILL.md, Codex Skills, Claude Code Skills, AI Agent 技能
 aside: false
+image: /images/workflows/agent-skills-install.jpg
 ---
 
 # Agent Skills 安装指南：如何在 Codex、Claude Code 等工具中使用 SKILL.md
