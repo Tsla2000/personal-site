@@ -162,7 +162,10 @@
   padding: 18px 0 28px;
 }
 .home-page > .home-section:first-child {
-  padding-top: 15px;
+  padding-top: 0;
+}
+.home-page {
+  margin-top: -5px;
 }
 
 /* footer 上下留白收紧（默认 32px） */
