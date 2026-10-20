@@ -41,6 +41,32 @@
 
 样本很少时（单个技能周访问不到几十次）比例没有意义，先看绝对数和趋势。
 
+## 站内分渠道统计（v2）
+
+除 Umami 外，站内自建了一套轻量统计（`functions/api/hit.ts`、`functions/api/stats.ts`，前端埋点在 `docs/.vitepress/theme/index.ts`），日报按渠道拆分。
+
+| 指标 | 来源 | 口径 |
+|---|---|---|
+| 有效访问 | 站内自动 | 落地页停留 ≥10 秒且滚动 ≥25%，刷一下就走的不计 |
+| 激活用户 | 站内自动 | 点「觉得有用」/收藏/订阅，按访客去重 |
+| 留存 | 站内自动 | 匿名访客 ID + 首触渠道，回访记到首次来的渠道；样本够时给 7 日留存率 |
+| 曝光量 | 站外手工 | 公众号阅读数、X 浏览量、搜索展示，按周记台账 `ledger.csv` |
+| 付费用户 | 手工对账 | 按周核对实际赞助笔数；支付侧无法带渠道，只能用赞助页分渠道访问量做代理 |
+
+渠道取值：`wechat` / `x` / `search` / `github` / `direct` / `other`，或净化后的 `utm_source` 原值。
+
+### 站长排除
+
+在每个常用浏览器打开一次 `https://promangofund.com/?pm_owner=1`，之后该浏览器的访问全部不计数。`?pm_owner=0` 可取消。
+
+### 站外链接必须带 UTM
+
+- `utm_source`：`wechat` / `x` 等
+- `utm_medium`：链接位置（如文末、置顶）
+- `utm_campaign`：文章 slug
+
+例：`https://promangofund.com/?utm_source=wechat&utm_medium=footer&utm_campaign=my-post`。不带参数时微信内打开会归到「直接访问」，归因丢失。完整规范见 Muse 侧 `~/workspace/site-stats/channels.md`。
+
 ## Umami 后台检查
 
 1. 打开 https://cloud.umami.is 并登录。
