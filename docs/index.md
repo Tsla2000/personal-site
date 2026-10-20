@@ -54,9 +54,11 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
   </section>
 
   <section class="home-section">
-    <h2>技能商店</h2>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+      <h2>技能商店</h2>
+      <a href="skills/" style="font-size:14px;color:#1d9bf0;white-space:nowrap;">进入技能商店 →</a>
+    </div>
     <SkillShowcase />
-    <p style="margin-top:12px;"><a href="skills/" style="font-size:14px;color:#1d9bf0;">进入技能商店 →</a></p>
   </section>
 
   <section class="home-section" id="projects">
