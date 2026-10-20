@@ -61,6 +61,34 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       out[d] = { pv: 0, bookmark: 0, unbookmark: 0, useful: 0, paths: {} }
     }
   }
+  // 访客明细(留存计算用):&visitors=1 时附带全部访客记录的 {f:首访日,c:首触渠道,l:最近访问日}
+  // 不含访客 ID;个人站量级下全量枚举足够(上限 1000 条,超出截断并标注)
+  if (url.searchParams.get('visitors') === '1') {
+    const visitors: Array<{ f: string; c: string; l: string }> = []
+    try {
+      let cursor: string | undefined
+      for (let page = 0; page < 5 && visitors.length < 1000; page++) {
+        const listed = await kv.list({ prefix: 'v:', cursor, limit: 200 })
+        for (const k of listed.keys) {
+          if (visitors.length >= 1000) break
+          const raw = await kv.get(k.name)
+          if (!raw) continue
+          try {
+            const rec = JSON.parse(raw)
+            if (rec && rec.f && rec.l) visitors.push({ f: rec.f, c: rec.c || 'direct', l: rec.l })
+          } catch {
+            /* 跳过坏记录 */
+          }
+        }
+        if (listed.list_complete) break
+        cursor = listed.cursor
+      }
+    } catch {
+      /* 访客枚举失败不影响日计数返回 */
+    }
+    out['visitors'] = visitors
+    out['visitors_truncated'] = visitors.length >= 1000
+  }
   return new Response(JSON.stringify(out), {
     headers: { 'content-type': 'application/json' }
   })

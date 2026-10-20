@@ -180,16 +180,105 @@ function toggleAppearance(event: MouseEvent, app: App) {
   }
 }
 
-// 第一方统计埋点(Cloudflare Pages Function + KV,每日 cron 拉数出日报):
+// 第一方统计埋点 v2(Cloudflare Pages Function + KV,每日 cron 拉数出日报):
 // 只在主站 promangofund.com 发,GitHub Pages 镜像站跳过,避免重复计数。
+// 每条上报带渠道 c(UTM 优先,其次 referrer,站内跳转沿用会话渠道)和访客匿名 ID v
+// (localStorage 随机 ID,仅用于新访/回访与留存,不含任何个人信息)。
+// 有效访问 ev:单页停留 >=10 秒且滚动深度 >=25%,每页只报一次。
+// 站长排除:打开任意页带 ?pm_owner=1 后,本浏览器所有上报带 o=1,服务端不计数;
+// ?pm_owner=0 取消。解决站长自测污染数据。
 // sendBeacon 即发即忘,KV 未绑定前接口返回 204,不影响站点。
+function detectChannel(): string {
+  try {
+    const utm = new URLSearchParams(window.location.search).get('utm_source')
+    if (utm) {
+      const u = utm.toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 20)
+      if (u === 'wx' || u === 'wechat') return 'wechat'
+      if (u === 'twitter') return 'x'
+      if (u === 'google' || u === 'bing' || u === 'baidu') return 'search'
+      return u || 'direct'
+    }
+    const ref = document.referrer || ''
+    if (!ref) return 'direct'
+    const host = new URL(ref).hostname
+    if (host === window.location.hostname) return 'direct'
+    if (/google\.|bing\.com|baidu\.com|duckduckgo\.com|sogou\.com/.test(host)) return 'search'
+    if (/x\.com|twitter\.com|(^|\.)t\.co$/.test(host)) return 'x'
+    if (/weixin|wechat/.test(host)) return 'wechat'
+    if (/github\.com/.test(host)) return 'github'
+    return 'other'
+  } catch {
+    return 'direct'
+  }
+}
+
 function setupStatsBeacon(router: Router): void {
   if (!inBrowser) return
+  let vid = ''
+  let owner = false
+  let channel = 'direct'
+  try {
+    const q = new URLSearchParams(window.location.search)
+    if (q.get('pm_owner') === '1') window.localStorage.setItem('pm_owner', '1')
+    if (q.get('pm_owner') === '0') window.localStorage.removeItem('pm_owner')
+    owner = window.localStorage.getItem('pm_owner') === '1'
+    vid = window.localStorage.getItem('pm_vid') || ''
+    if (!vid) {
+      vid =
+        typeof crypto !== 'undefined' && 'randomUUID' in crypto
+          ? crypto.randomUUID()
+          : `v${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`
+      window.localStorage.setItem('pm_vid', vid)
+    }
+    // 会话渠道:落地页渠道为准,站内跳转不漂移;新 UTM 到达时更新
+    const detected = detectChannel()
+    const sess = window.sessionStorage.getItem('pm_ch')
+    if (q.get('utm_source') || !sess) {
+      channel = detected
+      window.sessionStorage.setItem('pm_ch', channel)
+    } else {
+      channel = sess
+    }
+  } catch {
+    /* 隐私模式等场景拿不到 storage 时降级为无 ID 计数 */
+  }
   const beacon = (t: string, p = ''): void => {
     try {
       if (window.location.hostname !== 'promangofund.com') return
-      const blob = new Blob([JSON.stringify({ t, p })], { type: 'application/json' })
+      const payload: Record<string, unknown> = { t, p, c: channel, v: vid }
+      if (owner) payload.o = 1
+      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
       navigator.sendBeacon('/api/hit', blob)
+    } catch {
+      /* 忽略 */
+    }
+  }
+  // 有效访问判定:停留 >=10s 且滚动 >=25%
+  let evTimer: number | undefined
+  let evScroll: (() => void) | undefined
+  const armEffective = (path: string): void => {
+    try {
+      if (evTimer) window.clearInterval(evTimer)
+      if (evScroll) window.removeEventListener('scroll', evScroll)
+      let maxDepth = 0
+      let fired = false
+      const start = Date.now()
+      evScroll = () => {
+        const doc = document.documentElement
+        const total = doc.scrollHeight - window.innerHeight
+        const depth = total > 0 ? Math.min(1, window.scrollY / total) : 1
+        if (depth > maxDepth) maxDepth = depth
+      }
+      window.addEventListener('scroll', evScroll, { passive: true })
+      evScroll()
+      evTimer = window.setInterval(() => {
+        if (fired) return
+        if (Date.now() - start >= 10000 && maxDepth >= 0.25) {
+          fired = true
+          beacon('ev', path)
+          if (evTimer) window.clearInterval(evTimer)
+        }
+      }, 1000)
     } catch {
       /* 忽略 */
     }
@@ -197,8 +286,10 @@ function setupStatsBeacon(router: Router): void {
   try {
     ;(window as unknown as { __statBeacon?: (t: string, p?: string) => void }).__statBeacon = beacon
     beacon('pv', window.location.pathname)
+    armEffective(window.location.pathname)
     router.onAfterRouteChanged(() => {
       beacon('pv', window.location.pathname)
+      armEffective(window.location.pathname)
     })
   } catch {
     /* 忽略 */
