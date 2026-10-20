@@ -65,7 +65,12 @@
 - `utm_medium`：链接位置（如文末、置顶）
 - `utm_campaign`：文章 slug
 
-例：`https://promangofund.com/?utm_source=wechat&utm_medium=footer&utm_campaign=my-post`。不带参数时微信内打开会归到「直接访问」，归因丢失。完整规范见 Muse 侧 `~/workspace/site-stats/channels.md`。
+例：`https://promangofund.com/?utm_source=wechat&utm_medium=footer&utm_campaign=my-post`。不带参数时微信内打开会归到「直接访问」，归因丢失。**更省事的做法：**
+
+- 生成页 `https://promangofund.com/utm`：选渠道和位置，粘贴文章链接，一键复制带参数的链接；`campaign` 留空时取文章 slug。页面已 noindex。
+- 短链（微信文末兜底）：`/wx/<站内路径>` 302 到 `<路径>?utm_source=wechat&utm_medium=short`，`/x/<站内路径>` 同理，只写 `/wx`、`/x` 回首页。短链不带 `utm_campaign`，只能分到渠道级。规则在 `docs/public/_redirects`。
+
+完整规范见 Muse 侧 `~/workspace/site-stats/channels.md`。
 
 ## Umami 后台检查
 
