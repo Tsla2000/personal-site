@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { findSkill } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
+import { trackEvent } from '../analytics'
 
 const props = defineProps<{ skillId: string }>()
-const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
+const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
 
 const skill = computed(() => findSkill(props.skillId))
 const detail = computed(() => skill.value?.detail)
@@ -14,6 +15,32 @@ const listHref = computed(() => withBase(isEnglish.value ? '/en/skills/' : '/ski
 function pick(zh: string, en: string): string {
   return isEnglish.value ? en : zh
 }
+
+const VIEWED_SKILLS_KEY = 'pmf:viewed-skills'
+
+/** 只在本机记录看过哪些技能，用于判断是否回访；不生成也不上报任何用户标识 */
+function markViewed(skillId: string): boolean {
+  try {
+    const viewed: string[] = JSON.parse(localStorage.getItem(VIEWED_SKILLS_KEY) || '[]')
+    if (viewed.includes(skillId)) return true
+    localStorage.setItem(VIEWED_SKILLS_KEY, JSON.stringify([...viewed, skillId]))
+  } catch {
+    /* 存储不可用时按首次访问处理 */
+  }
+  return false
+}
+
+function trackView(): void {
+  if (!skill.value) return
+  trackEvent('skill_view', {
+    skill_id: skill.value.id,
+    language: isEnglish.value ? 'en' : 'zh',
+    returning: markViewed(skill.value.id)
+  })
+}
+
+onMounted(trackView)
+watch(() => props.skillId, trackView)
 </script>
 
 <template>
@@ -41,7 +68,7 @@ function pick(zh: string, en: string): string {
             class="skill-copy is-primary"
             :class="{ 'is-copied': feedbackBySkillId[skill.id] === 'copied' }"
             :aria-label="buttonAriaLabel(skill, pick(skill.nameZh, skill.nameEn))"
-            @click="copySkill(skill)"
+            @click="copySkill(skill, 'detail')"
           >
             <span aria-live="polite">{{ buttonLabel(skill.id) }}</span>
           </button>
@@ -50,6 +77,7 @@ function pick(zh: string, en: string): string {
             :href="withBase(skill.zipPath)"
             :download="skill.zipFile"
             :aria-label="zipAriaLabel(pick(skill.nameZh, skill.nameEn))"
+            @click="trackDownload(skill, 'detail')"
           >{{ zipLabel() }}</a>
           <a class="skill-back" :href="listHref">{{ pick('返回技能列表', 'Back to skills') }}</a>
         </div>

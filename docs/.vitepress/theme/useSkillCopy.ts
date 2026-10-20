@@ -8,6 +8,9 @@ const skillPromptCache = new Map<string, string>()
 
 type CopyFeedback = '' | 'copied' | 'failed'
 
+/** 事件发生的位置，用来区分首页卡片、技能目录和详情页的转化 */
+export type SkillActionSource = 'home' | 'catalog' | 'detail'
+
 export function useSkillCopy() {
   const isEnglish = useIsEnglish()
   const feedbackBySkillId = ref<Record<string, CopyFeedback>>({})
@@ -86,7 +89,7 @@ export function useSkillCopy() {
     return text
   }
 
-  async function copySkill(skill: HomeSkill): Promise<void> {
+  async function copySkill(skill: HomeSkill, source: SkillActionSource): Promise<void> {
     let copied = false
     try {
       copied = await writeClipboard(await loadSkillPrompt(skill))
@@ -100,9 +103,18 @@ export function useSkillCopy() {
     trackEvent('skill_copy', {
       skill_id: skill.id,
       language: isEnglish.value ? 'en' : 'zh',
+      source,
       result: copied ? 'success' : 'failed'
     })
     clearFeedbackLater(skill.id)
+  }
+
+  function trackDownload(skill: HomeSkill, source: SkillActionSource): void {
+    trackEvent('skill_download', {
+      skill_id: skill.id,
+      language: isEnglish.value ? 'en' : 'zh',
+      source
+    })
   }
 
   onBeforeUnmount(() => {
@@ -111,5 +123,5 @@ export function useSkillCopy() {
     resetTimerBySkillId.clear()
   })
 
-  return { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill }
+  return { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload }
 }

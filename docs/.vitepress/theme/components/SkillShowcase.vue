@@ -15,12 +15,11 @@ import {
   type SkillFilterOption,
   type SkillSortId
 } from '../homeSkills'
-import { useSkillCopy } from '../useSkillCopy'
+import { useSkillCopy, type SkillActionSource } from '../useSkillCopy'
 import { useBarePath } from '../useLocale'
-import { trackEvent } from '../analytics'
 
 const barePath = useBarePath()
-const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill } = useSkillCopy()
+const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zipAriaLabel, copySkill, trackDownload } = useSkillCopy()
 const activeFilterId = ref(SKILL_FILTER_ALL)
 const activeSortId = ref<SkillSortId>(SKILL_SORT_RECOMMENDED)
 
@@ -78,12 +77,7 @@ function hrefFor(skill: HomeSkill): string | null {
   return path ? withBase(path) : null
 }
 
-function trackSkillDownload(skill: HomeSkill): void {
-  trackEvent('skill_download', {
-    skill_id: skill.id,
-    language: isEnglish.value ? 'en' : 'zh'
-  })
-}
+const actionSource = computed<SkillActionSource>(() => (onCatalog.value ? 'catalog' : 'home'))
 </script>
 
 <template>
@@ -184,7 +178,7 @@ function trackSkillDownload(skill: HomeSkill): void {
             class="skill-copy"
             :class="{ 'is-copied': feedbackBySkillId[skill.id] === 'copied' }"
             :aria-label="buttonAriaLabel(skill, titleFor(skill))"
-            @click="copySkill(skill)"
+            @click="copySkill(skill, actionSource)"
           >
             <span aria-live="polite">{{ buttonLabel(skill.id) }}</span>
           </button>
@@ -193,7 +187,7 @@ function trackSkillDownload(skill: HomeSkill): void {
             :href="withBase(skill.zipPath)"
             :download="skill.zipFile"
             :aria-label="zipAriaLabel(titleFor(skill))"
-            @click="trackSkillDownload(skill)"
+            @click="trackDownload(skill, actionSource)"
           >{{ zipLabel() }}</a>
         </div>
       </div>
