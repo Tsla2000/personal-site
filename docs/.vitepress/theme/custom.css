@@ -209,12 +209,11 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   text-decoration: none;
   color: inherit;
   font-weight: inherit;
-  transition: border-color .18s ease, transform .18s ease;
+  transition: border-color .18s ease;
 }
 
 .vp-doc a.article-card:hover {
   border-color: var(--vp-c-brand-1);
-  transform: translateY(-2px);
 }
 
 .article-card-thumb {
@@ -224,6 +223,11 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   object-fit: cover;
   object-position: center top;
   background: var(--vp-c-bg-soft);
+  transition: transform .35s ease;
+}
+
+.article-card:hover .article-card-thumb {
+  transform: scale(1.04);
 }
 
 .article-card-placeholder {
@@ -231,7 +235,9 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
 }
 
 .article-card-body {
+  position: relative; /* 盖住 hover 放大后溢出图片区的部分 */
   padding: 15px 16px 18px;
+  background: var(--vp-c-bg);
 }
 
 .article-card time {
