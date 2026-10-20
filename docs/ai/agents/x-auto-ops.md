@@ -1,5 +1,5 @@
 ---
-image: /images/x-ops/x-ops-cover.webp
+image: /images/x-ops/x-ops-cover-watercolor.jpg
 title: 我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布
 description: 把找选题、写文案、配图、发布、回评论拆成四层自动化流水线：规则文件 + 定时任务 + Agent 执行 + 状态管理，人只负责确认和验收。
 date: 2026-10-13
@@ -23,7 +23,7 @@ faq:
 
 <div class="article-cover">
 
-![X 账号自动化运营系统](/images/x-ops/x-ops-cover.webp)
+![X 账号自动化运营系统](/images/x-ops/x-ops-cover-watercolor.jpg)
 
 *图：X 账号自动化运营系统——Agent 生产，人确认，规则约束行为。*
 
