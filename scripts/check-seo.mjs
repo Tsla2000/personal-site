@@ -429,7 +429,6 @@ for (const zipName of [
 }
 const zhSkills = join(DIST, 'skills', 'index.html')
 const enSkills = join(DIST, 'en', 'skills', 'index.html')
-const ZH_SKILL_LEAD = '不是一堆泛用提示词，而是能直接交给 Agent 执行的工作流程。'
 const EN_SKILL_LEAD = 'Not a pile of generic prompts.'
 
 function headingText(html, level) {
@@ -443,7 +442,8 @@ if (existsSync(zhSkills)) {
   const zhSkillTitle = (zhSkillsHtml.match(/<title>([^<]+)<\/title>/) || [])[1] || ''
   if (!zhSkillTitle.startsWith('技能商店')) errors.push(`中文技能页 title 不是技能商店：${zhSkillTitle}`)
   if (headingText(zhSkillsHtml, 1) !== '技能商店') errors.push('中文技能页 H1 不是技能商店')
-  if (!zhSkillsHtml.includes(ZH_SKILL_LEAD) || !zhSkillsHtml.includes('支持 Skills 的 Agent')) errors.push('中文技能页说明不是约定文案')
+  if (!zhSkillsHtml.includes('支持 Skills 的 Agent')) errors.push('中文技能页说明不是约定文案')
+  if (zhSkillsHtml.includes('不是一堆泛用提示词')) errors.push('中文技能页仍包含已移除的导语')
   if (zhSkillsHtml.includes('这些是可以直接试的 Agent 技能')) errors.push('中文技能页仍使用旧说明')
   if (!zhSkillsHtml.includes('skill-catalog-bar')) errors.push('中文技能页缺少数量与排序条')
   if (!/class="skill-count"[^>]*>\s*\d+ 个 Skills\s*</.test(zhSkillsHtml)) {
