@@ -1281,13 +1281,15 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 .archive-feed {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px 22px;
+  gap: 28px 22px;
 }
 
 .archive-card {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--vp-c-divider);
   color: inherit;
 }
 
