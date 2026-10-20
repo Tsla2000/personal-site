@@ -198,9 +198,13 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   gap: 0;
 }
 
+.vp-doc a.article-card {
+  display: block;
+}
+
+/* display 不能放进带 :hover 的选择器：优先级会压过头条卡的 flex，导致悬停时布局变化 */
 .vp-doc a.article-card,
 .vp-doc a.article-card:hover {
-  display: block;
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
