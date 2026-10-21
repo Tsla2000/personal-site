@@ -1,7 +1,7 @@
 ---
 image: /images/claude-duet/cover.jpg
 title: Anthropic上线官方AI 管家App：Claude Duet ，这不就是一直我在用的Muse和GrokBot吗？
-description: Anthropic 发布主动型 AI 助理 Claude Duet：每天晨报、定时巡查、动手前先审批。与 Meta Muse、OpenAI Dots 放在一起对比，以及它和我用了几个月的自建助理的异同。
+description: Anthropic 发布主动型 AI 助理 Claude Duet：每天晨报、定时巡查、动手前先审批。与 Meta Muse、OpenAI Dots 放在一起对比，以及它和我用了一个月的自建助理的异同。
 keywords: Claude Duet, AI助理, AI管家, Anthropic, 主动型AI, Claude, OpenAI Dots, Meta Muse
 date: 2026-10-22
 category: AI
@@ -38,7 +38,7 @@ faq:
 
 这篇文章参考了 Anthropic 的官方发布帖、Duet 产品页，以及六家科技媒体的报道。我逐条交叉核对了相关信息。
 
-过去几个月，我一直在用 Muse 搭建的个人助理处理日常事务。读完 Duet 的发布资料，我发现一个有意思的现象：Anthropic 用来介绍 Duet 的四句话，几乎就是我这几个月的日常。
+过去一个月，我一直在用 Muse 搭建的个人助理处理日常事务。读完 Duet 的发布资料，我发现一个有意思的现象：Anthropic 用来介绍 Duet 的四句话，几乎就是我这一个月的日常。
 
 AI 开始从「等你提问」，转向「主动发现问题、准备行动，再等你拍板」。
 
@@ -102,7 +102,7 @@ Duet 有自己的云端虚拟机和独立浏览器。任务在云端运行，即
 
 任务完成后，或者执行到需要你决定的环节，它才会通知你。
 
-这套机制，我已经用了几个月。
+这套机制，我已经用了一个月。
 
 我的个人助理每天早上都会汇总主聊、各个旁聊中积压的事项，以及定时任务的运行情况。美股交易时段，它每小时检查一次我关注的几只股票；如果涨跌幅没有超过 5%，就不打扰我。
 
@@ -192,7 +192,7 @@ Duet 也不会直接读取你的密码。它沿用 Claude Managed Agents 的凭�
 
 我之所以对这份安全清单感到熟悉，是因为我也给自己的助理定了类似的规则：花钱先问，给真人发消息先问，删除内容先问，填写真实身份信息先问。
 
-这些规则不是一开始就设计好的，而是在几个月的实际使用中逐渐形成的。
+这些规则不是一开始就设计好的，而是在一个月的实际使用中逐渐形成的。
 
 现在，Anthropic 也把类似的约束写进了产品。
 

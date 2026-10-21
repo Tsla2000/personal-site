@@ -1,7 +1,7 @@
 ---
 image: /images/claude-duet/cover.jpg
 title: "Anthropic's Claude Duet Is an Official AI Butler App — Isn't That the Muse and GrokBot I've Been Using All Along?"
-description: "Anthropic's proactive AI assistant Claude Duet: a morning brief, scheduled check-ins, and approval before it acts. Compared side by side with Meta Muse and OpenAI Dots, and with the self-built assistant I have run for months."
+description: "Anthropic's proactive AI assistant Claude Duet: a morning brief, scheduled check-ins, and approval before it acts. Compared side by side with Meta Muse and OpenAI Dots, and with the self-built assistant I have run for a month."
 keywords: "Claude Duet, AI assistant, AI butler, Anthropic, proactive AI, Claude, OpenAI Dots, Meta Muse"
 date: 2026-10-22
 category: AI
@@ -38,7 +38,7 @@ For now, it is open only to Pro and Max subscribers in the US. You join a waitli
 
 This article is based on Anthropic's launch post, the Duet product page, and reporting from six tech outlets. I cross-checked the claims one by one.
 
-For the past few months, I have run a personal assistant built on Muse to handle everyday work. Reading the Duet launch materials, I noticed something interesting: the four lines Anthropic uses to introduce Duet are, almost exactly, my daily routine for the past few months.
+For the past month, I have run a personal assistant built on Muse to handle everyday work. Reading the Duet launch materials, I noticed something interesting: the four lines Anthropic uses to introduce Duet are, almost exactly, my daily routine for the past month.
 
 AI is shifting from "waiting for your question" to "spotting problems on its own, preparing to act, then waiting for your decision."
 
@@ -102,7 +102,7 @@ Duet has its own cloud virtual machine and a separate browser. Tasks run in the 
 
 It notifies you when a task finishes, or when it reaches a step that needs your decision.
 
-I have used this exact mechanism for months.
+I have used this exact mechanism for a month.
 
 Every morning, my personal assistant rolls up the open items across my main chat and side chats, plus the status of my scheduled jobs. During US market hours, it checks the handful of stocks I watch once an hour; if none has moved more than 5%, it does not disturb me.
 
@@ -190,7 +190,7 @@ Permission you can take back at any time is permission you can grant with confid
 
 The reason this safety list feels familiar is that I set similar rules for my own assistant: ask before spending money, ask before messaging a real person, ask before deleting anything, ask before filling in real identity information.
 
-These rules were not designed up front. They formed gradually, over months of actual use.
+These rules were not designed up front. They formed gradually, over a month of actual use.
 
 Now Anthropic has written similar constraints into its product.
 

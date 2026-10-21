@@ -27,7 +27,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     <div class="article-list latest-grid">
       <a class="article-card is-lead" href="/ai/products/claude-duet">
         <img class="article-card-thumb" src="/images/claude-duet/cover.jpg" alt="Anthropic上线官方AI 管家App：Claude Duet ，这不就是一直我在用的Muse和GrokBot吗？" loading="eager" fetchpriority="high" decoding="async" />
-        <div class="article-card-body"><span class="article-card-meta"><span class="article-card-cat">AI</span><time datetime="2026-10-22">2026.10.22</time></span><strong>Anthropic上线官方AI 管家App：Claude Duet ，这不就是一直我在用的Muse和GrokBot吗？</strong><small>Anthropic 发布主动型 AI 助理 Claude Duet：每天晨报、定时巡查、动手前先审批。与 Meta Muse、OpenAI Dots 放在一起对比，以及它和我用了几个月的自建助理的异同。</small></div>
+        <div class="article-card-body"><span class="article-card-meta"><span class="article-card-cat">AI</span><time datetime="2026-10-22">2026.10.22</time></span><strong>Anthropic上线官方AI 管家App：Claude Duet ，这不就是一直我在用的Muse和GrokBot吗？</strong><small>Anthropic 发布主动型 AI 助理 Claude Duet：每天晨报、定时巡查、动手前先审批。与 Meta Muse、OpenAI Dots 放在一起对比，以及它和我用了一个月的自建助理的异同。</small></div>
       </a>
       <a class="article-card" href="/ai/products/codex-usage-desktop-guide">
         <img class="article-card-thumb" src="/images/codex-usage/cover.jpg" alt="Codex Usage Desktop 使用指南：看清 Token 去向与剩余额度" loading="eager" fetchpriority="high" decoding="async" />
