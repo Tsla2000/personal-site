@@ -18,7 +18,7 @@ description: 朋友们的官网和项目，都是我认可、也推荐给你的�
   <article class="friend-card">
     <h3><a href="https://github.com/itvincent-git/codex-usage-desktop" target="_blank" rel="noopener">codex-usage-desktop ↗</a></h3>
     <p>开源的桌面应用，支持 macOS 和 Windows。本地优先，实时查看 Codex 额度、Token 统计和会话详情。</p>
-    <div class="friend-foot"><span class="skill-chip">GitHub 开源项目</span><span class="friend-host">github.com/itvincent-git</span></div>
+    <div class="friend-foot"><a class="skill-zip" href="/ai/products/codex-usage-desktop-guide">使用指南 →</a><span class="skill-chip">GitHub 开源项目</span><span class="friend-host">github.com/itvincent-git</span></div>
   </article>
 </div>
 

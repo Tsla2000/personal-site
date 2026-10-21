@@ -18,7 +18,7 @@ Websites and projects by friends. I like what they build, so I'm listing them he
   <article class="friend-card">
     <h3><a href="https://github.com/itvincent-git/codex-usage-desktop" target="_blank" rel="noopener">codex-usage-desktop ↗</a></h3>
     <p>An open-source desktop app for macOS and Windows. Local-first: live Codex quota, token analytics and session details.</p>
-    <div class="friend-foot"><span class="skill-chip">GitHub project</span><span class="friend-host">github.com/itvincent-git</span></div>
+    <div class="friend-foot"><a class="skill-zip" href="/en/ai/products/codex-usage-desktop-guide">Usage guide →</a><span class="skill-chip">GitHub project</span><span class="friend-host">github.com/itvincent-git</span></div>
   </article>
 </div>
 

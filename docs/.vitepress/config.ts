@@ -129,6 +129,7 @@ export default defineConfig({
         { text: 'AI', link: '/ai/' },
         { text: '趋势', items: [{ text: 'Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude', link: '/ai/trends/claude-search-surge' }, { text: 'Anthropic 点名智谱和月之暗面，AI 蒸馏之争升级了', link: '/ai/trends/anthropic-distillation-dispute' }, { text: 'REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段', link: '/ai/trends/rea-software-replicability' }, { text: 'AI 产业的下一阶段', link: '/ai/trends/next-stage' }] },
         { text: 'Agent', items: [{ text: '我用 Muse 搭建了一套 X 账号自动化运营系统', link: '/ai/agents/x-auto-ops' }, { text: 'AI Agent 会成为下一代操作系统吗？', link: '/ai/agents/agent-os' }] },
+        { text: '产品', items: [{ text: 'Codex Usage Desktop 使用指南：看清 Token 去向与剩余额度', link: '/ai/products/codex-usage-desktop-guide' }] },
         { text: 'Coding', items: [{ text: 'AI 编程的真正杠杆', link: '/ai/coding/ai-coding-leverage' }, { text: '我是如何用 Muse 自动化部署个人网站的', link: '/ai/coding/muse-auto-deploy' }] }
       ],
       '/investment/': [
@@ -211,6 +212,15 @@ export default defineConfig({
                 {
                   text: 'Claude vs OpenAI on Google Trends: Why Claude Search Interest Looks 13× Higher',
                   link: '/en/ai/trends/claude-search-surge'
+                }
+              ]
+            },
+            {
+              text: 'Products',
+              items: [
+                {
+                  text: 'Codex Usage Desktop Guide: See Where Your Codex Tokens and Quota Go',
+                  link: '/en/ai/products/codex-usage-desktop-guide'
                 }
               ]
             },
