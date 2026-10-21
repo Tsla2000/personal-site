@@ -9,4 +9,6 @@ noindex: true
 
 有什么想聊的、想问的，或者对网站的建议，都欢迎在这里留言。
 
+![微信搜一搜 PRO的茶里芒果](/images/wechat-search-banner.jpg)
+
 <Twikoo force />
