@@ -22,7 +22,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     </div>
     <div class="article-list latest-grid">
       <a class="article-card is-lead" href="/ai/products/codex-usage-desktop-guide">
-        <div class="article-card-thumb article-card-placeholder"></div>
+        <img class="article-card-thumb" src="/images/codex-usage/cover.jpg" alt="Codex Usage Desktop 使用指南：看清 Token 去向与剩余额度" loading="eager" fetchpriority="high" decoding="async" />
         <div class="article-card-body"><span class="article-card-meta"><span class="article-card-cat">AI</span><time datetime="2026-10-21">2026.10.21</time></span><strong>Codex Usage Desktop 使用指南：看清 Token 去向与剩余额度</strong><small>朋友开源的 Codex 用量桌面应用，本地读取会话日志，查看 Token、5 小时与周额度、项目与会话明细。附安装方式、使用步骤与隐私说明。</small></div>
       </a>
       <a class="article-card" href="/investment/methodology/ai-invest-clear">

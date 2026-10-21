@@ -55,6 +55,12 @@
 /ai/
   Cache-Control: public, max-age=0, must-revalidate
 
+/ai/products/codex-usage-desktop-guide
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/products/codex-usage-desktop-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /ai/trends/anthropic-distillation-dispute
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -121,6 +127,12 @@
 /en/ai/coding/muse-auto-deploy/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/ai/products/codex-usage-desktop-guide
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/products/codex-usage-desktop-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /en/ai/trends/claude-search-surge
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -149,6 +161,12 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/ai/workflows/website-launch-checklist/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/friends
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/friends/
   Cache-Control: public, max-age=0, must-revalidate
 
 /en
@@ -305,6 +323,12 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/skills/writing-skills/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/friends
+  Cache-Control: public, max-age=0, must-revalidate
+
+/friends/
   Cache-Control: public, max-age=0, must-revalidate
 
 /guestbook

@@ -6,6 +6,7 @@ date: 2026-10-21
 category: AI
 tags: [AI, Codex, tools, open source]
 draft: false
+image: /images/codex-usage/cover.jpg
 ---
 
 # Codex Usage Desktop Guide: See Where Your Codex Tokens and Quota Go

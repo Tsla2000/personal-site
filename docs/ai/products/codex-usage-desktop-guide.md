@@ -6,6 +6,7 @@ date: 2026-10-21
 category: AI
 tags: [AI, Codex, 工具, 开源]
 draft: false
+image: /images/codex-usage/cover.jpg
 ---
 
 # Codex Usage Desktop 使用指南：看清 Token 去向与剩余额度
