@@ -10,6 +10,7 @@ import UsefulButton from './components/UsefulButton.vue'
 import FollowButton from './components/FollowButton.vue'
 import UpdateBanner from './components/UpdateBanner.vue'
 import LangSwitch from './components/LangSwitch.vue'
+import WechatNav from './components/WechatNav.vue'
 import './custom.css'
 
 // 技能卡片、详情和归档侧栏依赖 homeSkills 大数据表，只在技能相关页面用到，异步拆包，不进全站公共 theme chunk
@@ -313,7 +314,8 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'layout-top': () => [h(UpdateBanner), h(ShareRail)],
-    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)]
+    'doc-footer-before': () => [h(UsefulButton), h(ShareBar), h(Twikoo)],
+    'nav-bar-content-after': () => h(WechatNav)
   }),
   enhanceApp({ app, router }: EnhanceAppContext) {
     // 留言板页 markdown 里直接用 <Twikoo />
