@@ -1,0 +1,157 @@
+import type { SkillDemoText } from './homeSkills'
+
+/**
+ * 真实运行案例：提示语 + 技能实际产出的文字，原样收录，不事后润色。
+ * 运行方式：按各技能 SKILL.md 的流程，由 Claude（Sonnet 5.5）在 2026-10-21 实际执行；
+ * 素材取自本站已公开发表的文章。
+ */
+export const SKILL_DEMOS: Record<string, SkillDemoText> = {
+  'content-repurpose': {
+    kind: 'text',
+    real: true,
+    capturedAt: '2026-10-21',
+    model: 'Claude Sonnet 5.5',
+    promptZh: [
+      '使用「内容一稿多用」技能。',
+      '素材：本站文章《Claude 搜索热度是 OpenAI 的 13 倍？开发者为什么都在用 Claude》全文。',
+      '任务：改写成适合 X 的短线程和适合邮件的两个版本。'
+    ].join('\n'),
+    promptEn: [
+      'Use the Content Repurpose skill.',
+      'Source: the full text of this site\'s article "Is Claude\'s search interest 13x OpenAI\'s? Why developers keep choosing Claude".',
+      'Task: rewrite it as a short X thread and as an email.'
+    ].join('\n'),
+    outputZh: [
+      '【母稿摘要】',
+      '问题：Claude 的搜索热度真是 OpenAI 的 13 倍吗？这组数据怎么读？',
+      '结论：Claude 一词的搜索关注度明显在高位，上升关联词几乎都指向 AI 产品；但这是相对指数，比的是公司名而不是产品名，不能推出用户数的倍数。',
+      '证据：Google Trends 全球，2026-10-16 拉取。近三天 Claude 为 94、95、100，OpenAI 为 8、7、7，DeepSeek 为 11、13、13。',
+      '必须保留的限制：相对指数；「Claude」也是常见人名，混有非 AI 搜索；基准测试数据均为厂商自测。',
+      '',
+      '【X 线程 · 面向关注 AI 动态的读者 · 4 条】',
+      '1/ 我在 Google Trends 拉了一组数据：全球范围，近三天 Claude 的相对指数是 94、95、100，OpenAI 是 8、7、7。粗算大约 13 倍。但这个数字不能直接拿来下结论。',
+      '2/ 先说三个限制：它是相对指数，不是搜索次数；比的是公司名 OpenAI，不是 ChatGPT；「Claude」还是个常见人名，指数里混着一部分和 AI 无关的搜索。',
+      '3/ 更稳妥的说法是：Claude 的搜索关注度明显在高位，而且上升关联词几乎都指向 AI 产品，比如 claude fable 5.1、claude opus 5。热度的主体确实来自 AI。',
+      '4/ 对中文用户来说，真正的门槛是地区限制，不是模型本身。我最推荐的做法是把提示词、工具调用和测试流程沉淀下来，做成模型无关的工作流。模型会一直换代，值钱的是工作流。',
+      '',
+      '【邮件版 · 面向订阅读者】',
+      '主题：别急着说「Claude 搜索是 OpenAI 的 13 倍」',
+      '',
+      '10 月 16 日我在 Google Trends 上拉了一组数据：近三天，Claude 的相对指数是 94 到 100，OpenAI 只有 7 到 8。这个对比这几天很容易被当成结论。',
+      '读这组数据要先注意三点：它是相对指数，不是搜索次数；比的是公司名，不是 ChatGPT；「Claude」也是个人名，里面有非 AI 的搜索。',
+      '更稳妥的结论是：Claude 的关注度在高位，而且上升词几乎都指向 AI 产品。',
+      '如果你想用 Claude，下一步先看地区限制；用不了的话，把工作流做成模型无关，比找渠道更稳。',
+      '全文：/ai/trends/claude-search-surge',
+      '',
+      '【需要作者确认】',
+      '1. 数据是 10 月 16 日拉取的，发出时是否仍写「近三天」。',
+      '2. X 第 4 条的「我最推荐」是否保留第一人称。',
+      '本次改写没有新增任何数据、引语或经历。'
+    ].join('\n'),
+    outputEn: [
+      '[Master summary]',
+      'Question: is Claude\'s search interest really 13x OpenAI\'s, and how should the data be read?',
+      'Conclusion: interest in the word "Claude" is clearly high and its rising related terms almost all point to AI products; but this is a relative index comparing a company name, not a product name, so it cannot be turned into a user-count multiple.',
+      'Evidence: Google Trends, worldwide, pulled on 2026-10-16. Over the last three days Claude was 94, 95, 100, OpenAI 8, 7, 7, DeepSeek 11, 13, 13.',
+      'Limits to keep: relative index; "Claude" is also a common personal name, so non-AI searches are mixed in; all benchmark figures are vendor-reported.',
+      '',
+      '[X thread · for readers who follow AI news · 4 posts]',
+      '1/ I pulled a set of Google Trends data: worldwide, over the last three days Claude\'s relative index is 94, 95, 100 and OpenAI\'s is 8, 7, 7. Roughly 13x. But this number cannot be used as a conclusion as it stands.',
+      '2/ Three limits first: it is a relative index, not search counts; it compares the company name OpenAI, not ChatGPT; and "Claude" is also a common personal name, so the index includes searches unrelated to AI.',
+      '3/ A safer reading: interest in Claude is clearly high, and its rising related terms almost all point to AI products, such as claude fable 5.1 and claude opus 5. The core of the heat really is AI.',
+      '4/ For Chinese-speaking users the real barrier is regional restriction, not the model. What I recommend most is to capture your prompts, tool calls and test flow and make the workflow model-agnostic. Models keep changing generation; the workflow is what holds value.',
+      '',
+      '[Email · for subscribers]',
+      'Subject: Hold off on "Claude searches are 13x OpenAI\'s"',
+      '',
+      'On October 16 I pulled a set of Google Trends data: over the last three days Claude\'s relative index was 94 to 100 while OpenAI\'s was only 7 to 8. That comparison is easy to mistake for a conclusion.',
+      'Note three things when reading it: it is a relative index, not search counts; it compares the company name, not ChatGPT; and "Claude" is also a personal name, so some searches are not about AI.',
+      'The safer conclusion is that interest in Claude is high and its rising terms almost all point to AI products.',
+      'If you want to use Claude, check regional availability first; if you cannot, making your workflow model-agnostic is steadier than hunting for channels.',
+      'Full article: /ai/trends/claude-search-surge',
+      '',
+      '[For the author to confirm]',
+      '1. The data was pulled on October 16; confirm whether to still say "last three days" at send time.',
+      '2. Keep the first person in "what I recommend most" in X post 4?',
+      'This rewrite adds no new data, quotes or experiences.'
+    ].join('\n'),
+    noteZh: '素材是本站已发表的文章，母稿、X 线程和邮件均由技能按流程实际生成；X 与邮件里的数字、限制和结论都能在原文里找到。',
+    noteEn: 'The source is an article already published on this site. The master summary, X thread and email were generated by following the skill; every figure, limit and conclusion can be found in the original. The run was in Chinese and the English here is a translation.'
+  },
+  'de-ai-writing': {
+    kind: 'text',
+    real: true,
+    capturedAt: '2026-10-21',
+    model: 'Claude Sonnet 5.5',
+    promptZh: [
+      '使用「去AI味写作」技能，场景：清理成稿。',
+      '风格档案语料：本站 4 篇已发表文章（《AI 编程的真正杠杆》《AI 产业的下一阶段》《我是如何用 Muse 自动化部署个人网站的》《Claude 搜索热度是 OpenAI 的 13 倍？》）。',
+      '',
+      '待清理成稿（为演示特意写成机器味的样稿）：',
+      '在当今快速发展的 AI 时代，搜索热度不仅是流量的体现，更是用户注意力的风向标。Claude 近期的搜索指数持续攀升，这不仅反映了模型能力的提升，更彰显了开发者对高效 agent 工具的迫切需求。值得注意的是，这一数据仅为相对指数，需要谨慎解读。总而言之，Claude 的热度背后，是技术与需求的双向奔赴。'
+    ].join('\n'),
+    promptEn: [
+      'Use the De-AI Writing skill, scene: clean a finished draft.',
+      'Style-profile corpus: 4 articles already published on this site ("The Real Leverage of AI Coding", "The Next Stage of the AI Industry", "How I Automate Deploying My Personal Site with Muse", "Is Claude\'s search interest 13x OpenAI\'s?").',
+      '',
+      'Draft to clean (a sample deliberately written in a machine tone for this demo):',
+      'In today\'s fast-moving AI era, search interest is not only a reflection of traffic but also a weathervane of user attention. Claude\'s recent search index keeps climbing, which not only reflects better model capability but also shows developers\' urgent need for efficient agent tools. It is worth noting that this figure is only a relative index and should be read with caution. In short, behind Claude\'s heat is a two-way meeting of technology and demand.'
+    ].join('\n'),
+    outputZh: [
+      '【风格档案 · 节选（统计来自 4 篇共约 3400 个汉字）】',
+      '- 一句一行：短文里 34 行全是单句成段；两篇长文里 110 行中有 84 行是单句成段（约 76%）。',
+      '- 逗号间的短单位平均 10 到 14 字，整句平均 19 到 36 字。',
+      '- 不用助词（呢 吧 啊 嘛 啦 哦 全为 0），不用破折号（0）。',
+      '- 先承认、再划边界：「这组数字很好看，但有三点要先说清楚。」「当然，自动化并不意味着完全不管。」',
+      '- 结论用一句话收：「更稳妥的说法是：……」',
+      '- 「我」用于动作和体会（我自己的体会也类似），「你」几乎不出现。',
+      '- 数据只说相对和边界：「这是相对值，别过度解读。」',
+      '',
+      '【清理后】',
+      'Claude 近期的搜索指数一直在涨。',
+      '这说明两件事：模型能力在提升，开发者也确实需要好用的 agent 工具。',
+      '但这是相对指数，要谨慎解读，别读得太满。',
+      '热度背后，是技术和需求在互相推动。',
+      '',
+      '【改动记录（只列命中项）】',
+      '1. 删「在当今快速发展的 AI 时代」：套话开头，档案里没有这类背景铺垫。',
+      '2. 「不仅……更是……」「不仅……更……」两处改成直接陈述：档案里没有否定式对仗。',
+      '3. 「持续攀升」「彰显」「迫切需求」改成「一直在涨」「说明」「确实需要」：换成档案里的平实动词。',
+      '4. 删「值得注意的是」，改用档案常见的转折「但」。',
+      '5. 删「总而言之」；「双向奔赴」改成「互相推动」。',
+      '6. 把一整段拆成四行，每行一句，符合档案的单句成段。',
+      '',
+      '【未改动】',
+      '观点（热度反映能力与需求）、「仅为相对指数，需要谨慎解读」的限定、四个意思的先后顺序。没有新增任何数字、姓名、日期或来源。'
+    ].join('\n'),
+    outputEn: [
+      '[Style profile · excerpt (statistics from 4 articles, about 3,400 Chinese characters)]',
+      '- One sentence per line: in the two short pieces all 34 lines are single-sentence paragraphs; in the two long ones 84 of 110 lines are (about 76%).',
+      '- Clause units between commas average 10 to 14 characters; whole sentences average 19 to 36.',
+      '- No sentence-final particles (all zero) and no em dashes (zero).',
+      '- Concede first, then set the boundary: "The numbers look good, but three things need saying first." "Of course, automation does not mean not paying attention at all."',
+      '- Conclusions closed in one sentence: "A safer way to put it is: ..."',
+      '- "I" is for actions and experience ("my own experience is similar"); "you" almost never appears.',
+      '- Data is framed as relative, with its limits: "This is a relative value, do not over-read it."',
+      '',
+      '[Cleaned]',
+      'Claude\'s recent search index has been rising.',
+      'That says two things: the model is getting better, and developers really do need good agent tools.',
+      'But this is a relative index, so read it with caution and do not over-read it.',
+      'Behind the heat, technology and demand are pushing each other.',
+      '',
+      '[Change log (rule hits only)]',
+      '1. Removed "In today\'s fast-moving AI era": filler opener, the profile has no scene-setting like it.',
+      '2. Two "not only ... but also ..." constructions turned into direct statements: the profile has no negation-parallel pattern.',
+      '3. "keeps climbing", "shows", "urgent need" changed to "has been rising", "says", "really do need": plain verbs from the profile.',
+      '4. Removed "It is worth noting that" and used the profile\'s usual turn "But".',
+      '5. Removed "In short"; "two-way meeting" changed to "pushing each other".',
+      '6. Split the single paragraph into four lines, one sentence each, matching the profile.',
+      '',
+      '[Untouched]',
+      'The view (heat reflects capability and demand), the hedge "only a relative index, read with caution", and the order of the four ideas. No numbers, names, dates or sources were added.'
+    ].join('\n'),
+    noteZh: '风格档案由本站 4 篇已发表文章提炼，统计为实际计数。待清理的成稿是为演示专门写成的机器味样稿，不是真实投稿；清理结果和改动记录为技能实际产出。第三方规则集在本次运行环境里不可用，所以这次只按档案和技能总规则清理。',
+    noteEn: 'The profile was distilled from 4 articles already published on this site, with real counts. The draft being cleaned is a sample written to sound machine-made for this demo, not a real submission; the cleaned text and change log are the skill\'s actual output. The third-party rule set was not available in the run environment, so only the profile and the skill\'s general rules were applied. The run was in Chinese and the English here is a translation.'
+  }
+}

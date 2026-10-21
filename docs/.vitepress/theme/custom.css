@@ -1251,6 +1251,7 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   overflow-wrap: anywhere;
 }
 .vp-doc .skill-example-bottom ul { margin: 0; padding-left: 1.15em; }
+.vp-doc .skill-demo-meta { margin: 0 0 8px; font-size: 13px; color: var(--vp-c-text-2); }
 .vp-doc .skill-example-note {
   margin: 14px 0 0;
   color: var(--vp-c-text-2);

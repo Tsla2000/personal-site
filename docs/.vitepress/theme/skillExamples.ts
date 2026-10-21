@@ -2,48 +2,6 @@ import type { SkillExampleCopy } from './homeSkills'
 
 /** 技能详情页「实操示例」的文案。示例为演示用的输入/输出，不代表真实客户项目。 */
 export const SKILL_EXAMPLES: Record<string, SkillExampleCopy> = {
-  'de-ai-writing': {
-    exampleTitleZh: '清理一段有机器味的成稿，只改命中规则的句子',
-    exampleTitleEn: 'Clean a machine-sounding draft, touching only rule hits',
-    exampleInputZh: [
-      '任务：用我的风格档案，清理下面这段成稿，不动观点和结构。',
-      '',
-      '原文：',
-      '在这个信息爆炸的时代，AI 搜索不仅是一种工具，更是一种全新的认知方式。',
-      '它改变了我们获取信息的路径，重塑了内容的价值。'
-    ].join('\n'),
-    exampleInputEn: [
-      'Task: using my style profile, clean the draft below without touching views or structure.',
-      '',
-      'Draft:',
-      'In this age of information overload, AI search is not just a tool but a whole new way of knowing.',
-      'It changes how we reach information and reshapes the value of content.'
-    ].join('\n'),
-    exampleOutputZh: [
-      '清理后：',
-      'AI 搜索这两年涨得很快。它先改的是找信息的路径：以前翻十个网页，现在先问一句。',
-      '',
-      '改动记录（只列命中项）：',
-      '1. 删「在这个信息爆炸的时代」：套话开头，命中规则',
-      '2. 「不仅……更是……」改成直接陈述：否定式对仗，命中规则',
-      '3. 「重塑了内容的价值」：无动词落点的金句，改成档案里常用的具体说法',
-      '未改动：观点（AI 搜索改变了找信息的方式）、两句的先后顺序'
-    ].join('\n'),
-    exampleOutputEn: [
-      'Cleaned:',
-      'AI search has grown fast in the past two years. The first thing it changed is the path to information: you used to open ten pages, now you ask once.',
-      '',
-      'Change log (rule hits only):',
-      '1. Removed "In this age of information overload": filler opener, rule hit',
-      '2. "not just ... but ..." turned into a direct statement: negation-parallel pattern, rule hit',
-      '3. "reshapes the value of content": a slogan with no concrete anchor, replaced by the plain wording the profile uses',
-      'Untouched: the view (AI search changed how people find information) and the order of the two sentences'
-    ].join('\n'),
-    artifactsZh: ['清理后的成稿', '逐条改动记录，标明命中的规则', '未改动项说明（观点、结构、限定词）'],
-    artifactsEn: ['The cleaned draft', 'A change log naming the rule behind each edit', 'A list of what was deliberately left alone (views, structure, hedges)'],
-    checksZh: ['没有新增姓名、数字、日期、引语或来源', '观点、结论和「可能 / 通常」这类限定词都还在', '每处改动都能对上一条规则或档案记录'],
-    checksEn: ['No new names, numbers, dates, quotes or sources added', 'Views, conclusions and hedges such as "maybe" and "usually" are all still there', 'Every edit maps to a rule or a profile entry']
-  },
   brainstorming: {
     exampleTitleZh: '一句话的需求，先聊清楚再动手',
     exampleTitleEn: 'A one-line request, clarified before any building',
@@ -627,34 +585,6 @@ export const SKILL_EXAMPLES: Record<string, SkillExampleCopy> = {
     artifactsEn: ['A delivery brief (goal, acceptance checks, scope, risks)', 'Code and test results', 'A delivery note: changes, verification, unverified items, rollback'],
     checksZh: ['没有顺手重写无关模块', '测试、构建结果都是真实运行得到的', '没有读取、输出或提交密钥'],
     checksEn: ['No unrelated modules were rewritten along the way', 'Test and build results come from real runs', 'No secrets were read, printed or committed']
-  },
-  'content-repurpose': {
-    exampleTitleZh: '一篇长文拆成多平台内容',
-    exampleTitleEn: 'Split one long article into several platform versions',
-    exampleInputZh: '这是我写的一篇 3000 字公众号文章，请改成适合 X 和邮件的版本。',
-    exampleInputEn: 'Here is my 3,000-word WeChat article. Turn it into versions for X and for email.',
-    exampleOutputZh: [
-      '1. 识别素材：记下核心论点、证据、案例、关键数字、可引用原句；缺口明确标出，不用常识补',
-      '2. 母稿：3–5 句说明要回答什么问题、最值得传播的结论、支撑证据、必须保留的限制',
-      '3. X 版本：一个清晰观点配一个可验证的理由；长线程按逻辑递进，不拆成空洞金句',
-      '4. 邮件版本：先说读者为什么现在需要知道，再说下一步是什么',
-      '5. 事实回查：所有数字、人名、日期、引语逐项对照原文',
-      '',
-      '交付：母稿摘要 + 两个可直接编辑的版本 + 每版的目标读者与字数 + 需要你确认的事实点'
-    ].join('\n'),
-    exampleOutputEn: [
-      '1. Identify the material: note the core claim, evidence, cases, key numbers and quotable lines; mark any gaps rather than filling them with common sense',
-      '2. Master summary: 3-5 sentences on the question answered, the most shareable conclusion, supporting evidence and the limits that must stay',
-      '3. X version: one clear view with one verifiable reason; threads advance logically instead of becoming empty one-liners',
-      '4. Email version: why the reader needs to know now, then what to do next',
-      '5. Fact check: every number, name, date and quote checked against the original',
-      '',
-      'Delivered: master summary + two editable versions + target reader and length per version + facts for you to confirm'
-    ].join('\n'),
-    artifactsZh: ['母稿摘要', 'X 版本和邮件版本', '待作者确认的事实与敏感点'],
-    artifactsEn: ['A master summary', 'The X and email versions', 'Facts and sensitive points for the author to confirm'],
-    checksZh: ['没有加入原文没有的经历、数据或业绩', '作者的立场和限定没有被改掉', '数字、人名、日期、引语都和原文一致'],
-    checksEn: ['No experiences, data or results that are absent from the original were added', 'The author\'s stance and hedges are intact', 'Numbers, names, dates and quotes match the original']
   },
   'browser-automation': {
     exampleTitleZh: '把重复的后台录入整理成可恢复的流程',

@@ -137,6 +137,22 @@ watch(() => props.skillId, trackView)
       <p class="skill-example-note">{{ pick('说明：示例用于展示技能的输入、输出和验收方式；除非明确注明，示例内容不代表已执行的真实客户项目或生产环境测试。', 'Note: examples demonstrate inputs, outputs, and acceptance criteria. Unless explicitly stated, they are not claims of real client work or production testing.') }}</p>
     </section>
 
+    <section v-if="detail.demo" class="skill-example skill-demo">
+      <h2>{{ pick(detail.demo.real ? '真实运行案例' : '效果示意', detail.demo.real ? 'Real run' : 'Illustrative output') }}</h2>
+      <p class="skill-demo-meta">{{ detail.demo.model }} · {{ detail.demo.capturedAt }}</p>
+      <div class="skill-example-grid">
+        <div>
+          <p class="skill-example-label">{{ pick('提示语', 'Prompt') }}</p>
+          <pre>{{ pick(detail.demo.promptZh, detail.demo.promptEn) }}</pre>
+        </div>
+        <div>
+          <p class="skill-example-label">{{ pick('技能的实际产出', 'Actual output') }}</p>
+          <pre>{{ pick(detail.demo.outputZh, detail.demo.outputEn) }}</pre>
+        </div>
+      </div>
+      <p class="skill-example-note">{{ pick(detail.demo.noteZh, detail.demo.noteEn) }}</p>
+    </section>
+
     <section class="skill-about">
       <h2>{{ pick('关于此 Skill', 'About this skill') }}</h2>
       <div class="skill-chat">
