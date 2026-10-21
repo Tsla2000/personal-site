@@ -1,8 +1,25 @@
 import skillPackages from './data/skill-packages.json'
+import { SKILL_EXAMPLES } from './skillExamples'
 
 export const SKILL_COPY_FEEDBACK_MS = 1600
 
-export interface SkillDetailCopy {
+/** 详情页「实操示例」字段，全部可选；没填的技能不显示该区块 */
+export interface SkillExampleCopy {
+  exampleTitleZh: string
+  exampleTitleEn: string
+  exampleInputZh: string
+  exampleInputEn: string
+  exampleOutputZh: string
+  exampleOutputEn: string
+  /** 最终交付物 */
+  artifactsZh: string[]
+  artifactsEn: string[]
+  /** 验收标准 */
+  checksZh: string[]
+  checksEn: string[]
+}
+
+export interface SkillDetailCopy extends Partial<SkillExampleCopy> {
   metaZh: string
   metaEn: string
   leadZh: string
@@ -1645,6 +1662,12 @@ function assertHomeShowcase(): void {
 }
 
 assertHomeShowcase()
+
+for (const [skillId, example] of Object.entries(SKILL_EXAMPLES)) {
+  const skill = homeSkills.find((item) => item.id === skillId)
+  if (!skill?.detail) throw new Error(`示例对应的技能不存在或没有详情: ${skillId}`)
+  Object.assign(skill.detail, example)
+}
 
 export function findSkill(skillId: string): HomeSkill | undefined {
   return homeSkills.find((skill) => skill.id === skillId)
