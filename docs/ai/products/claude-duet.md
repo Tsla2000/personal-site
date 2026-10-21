@@ -1,6 +1,6 @@
 ---
 image: /images/claude-duet/cover.jpg
-title: Anthropic上线官方AI 管家App：Claude Duet ，这不就是我用了几个月的Muse和GrokBot吗？
+title: Anthropic上线官方AI 管家App：Claude Duet ，这不就是一直我在用的Muse和GrokBot吗？
 description: Anthropic 发布主动型 AI 助理 Claude Duet：每天晨报、定时巡查、动手前先审批。与 Meta Muse、OpenAI Dots 放在一起对比，以及它和我用了几个月的自建助理的异同。
 keywords: Claude Duet, AI助理, AI管家, Anthropic, 主动型AI, Claude, OpenAI Dots, Meta Muse
 date: 2026-10-22
@@ -20,7 +20,7 @@ faq:
     a: 目前没有明确的中国大陆开放时间。可以先整理日常任务、巡查触发条件和审批规则，明确哪些事适合交给 AI、哪些必须自己决定，为使用主动助理做准备。
 ---
 
-# Anthropic上线官方AI 管家App：Claude Duet ，这不就是我用了几个月的Muse和GrokBot吗？
+# Anthropic上线官方AI 管家App：Claude Duet ，这不就是一直我在用的Muse和GrokBot吗？
 
 <div class="meta-line">2026.10.22 · AI · 阅读约 15 分钟</div>
 
