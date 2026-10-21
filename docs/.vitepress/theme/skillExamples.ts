@@ -2,42 +2,6 @@ import type { SkillExampleCopy } from './homeSkills'
 
 /** 技能详情页「实操示例」的文案。示例为演示用的输入/输出，不代表真实客户项目。 */
 export const SKILL_EXAMPLES: Record<string, SkillExampleCopy> = {
-  brainstorming: {
-    exampleTitleZh: '一句话的需求，先聊清楚再动手',
-    exampleTitleEn: 'A one-line request, clarified before any building',
-    exampleInputZh: '我想做一个记账的小工具。',
-    exampleInputEn: 'I want to build a small expense tracker.',
-    exampleOutputZh: [
-      'Agent 的第一条回复（只有两件事）：',
-      '',
-      '如果你不想回答问题、想让我直接开干，说一声就行。',
-      '你上一次想记一笔账、却没有顺手的地方记，是在什么场景下？',
-      '',
-      '用户回答后，Agent 每条消息只问一个问题，逐步弄清：',
-      '- 谁来用、多久记一次、记完要看什么',
-      '- 平台和工具哪些你想自己定，哪些交给我',
-      '- 做到什么程度算「够了」',
-      '',
-      '收尾：一份书面设计，写明目标、范围、你的决定和我替你做的决定（单独标注）。'
-    ].join('\n'),
-    exampleOutputEn: [
-      "The agent's first reply (only two things):",
-      '',
-      "If you'd rather skip the questions and have me start building, just say so.",
-      'Think of the last time you wanted to log an expense and had nowhere handy to do it. What was going on?',
-      '',
-      'After the answer, the agent asks one question per message and works out:',
-      '- who uses it, how often, and what they want to see afterwards',
-      '- which tools and platforms you want to choose and which you leave to me',
-      '- what "good enough" looks like',
-      '',
-      'It ends with a written design: goal, scope, your decisions, and the decisions made for you (marked separately).'
-    ].join('\n'),
-    artifactsZh: ['一份书面设计（目标、范围、取舍）', '「你的决定」与「我替你做的决定」分开列出', '可以直接交给「写计划」的输入'],
-    artifactsEn: ['A written design (goal, scope, trade-offs)', 'Your decisions and the agent\'s decisions listed separately', 'Input ready to hand to Writing Plans'],
-    checksZh: ['第一句话给了跳过的出口，并且只问一个开放问题', '每条消息以一个问题结尾，没有挂一串示例答案', '没有把自己的选择写成「你同意过的」'],
-    checksEn: ['The first message offers a way to skip and asks a single open question', 'Every message ends with one question, with no list of sample answers', "The agent's own choices are never written up as things you agreed to"]
-  },
   'systematic-debugging': {
     exampleTitleZh: '线上构建突然失败：先找根因，不「改一行试试」',
     exampleTitleEn: 'A sudden build failure: root cause first, no "just try one line"',
@@ -467,40 +431,6 @@ export const SKILL_EXAMPLES: Record<string, SkillExampleCopy> = {
     artifactsEn: ['A build brief: chosen links, what to borrow, assets not to copy', 'Licence and stack compatibility notes for each candidate'],
     checksZh: ['每个品类的链接不超过 3 个', '简报里写明了授权风险', '没有把参考站的品牌资产列为要用的素材'],
     checksEn: ['No more than 3 links per category', 'Licence risks are stated in the brief', 'No reference site\'s brand assets are listed as material to use']
-  },
-  'haiwai-monetize-convert': {
-    exampleTitleZh: '出海站有了流量，决定怎么变现',
-    exampleTitleEn: 'An overseas site is getting traffic; decide how to monetise it',
-    exampleInputZh: '我的新词站每天有一些自然流量，已经上了登录，但还没接支付。下一步怎么走？',
-    exampleInputEn: 'My new-keyword site gets some organic traffic a day and has login, but no payment yet. What next?',
-    exampleOutputZh: [
-      '先确认阶段：已有登录、无支付；变现形态要订阅、积分包还是两者；GA4 与后台订单表是否打通；是否接了行为观测工具。',
-      '',
-      '建议顺序',
-      '1. 支付前：首页保留可点的生成入口（假生成也行），先把停留拉长',
-      '2. 定价：高价一次性积分包做锚点，主推限时促销月订',
-      '3. 套餐文案：先照抄一个竞品站，再按数据改；有订单没人付款就先改价值主张文案',
-      '4. 埋点：让 GA4 与支付事件对齐，对账用后台订单表',
-      '5. 风控：开 Stripe Radar；年付大单单独记账，不算稳定 MRR',
-      '',
-      '案例里的金额只能当参考，不是你的目标指标。'
-    ].join('\n'),
-    exampleOutputEn: [
-      'Confirm the stage first: login but no payment; subscription, credit packs or both; whether GA4 and the order table are connected; whether behaviour tools are installed.',
-      '',
-      'Suggested order',
-      '1. Before payment: keep a clickable generate entry on the homepage (a fake generation is fine) to lengthen time on site',
-      '2. Pricing: a high-priced one-off credit pack as the anchor, with a limited-time monthly subscription as the main offer',
-      '3. Plan copy: copy a competitor first, then adjust with data; if orders exist but nobody pays, change the value proposition copy first',
-      '4. Tracking: align GA4 with payment events and reconcile against the order table',
-      '5. Risk: turn on Stripe Radar; book large annual deals separately, not as stable MRR',
-      '',
-      'Figures in the case study are only for reference, not your target metrics.'
-    ].join('\n'),
-    artifactsZh: ['按阶段排好的变现行动清单', '定价与套餐文案草案', '埋点与对账检查表'],
-    artifactsEn: ['A stage-ordered monetisation action list', 'Draft pricing and plan copy', 'A tracking and reconciliation checklist'],
-    checksZh: ['没有把案例金额写成你的承诺指标', '年付大单没有被算进稳定月收入', '支付事件与分析事件能对上'],
-    checksEn: ['Case-study figures are not written up as your promised targets', 'Large annual deals are not counted as stable monthly revenue', 'Payment events can be matched to analytics events']
   },
   'writing-skills': {
     exampleTitleZh: '把一套验证过的排查流程写成可复用的技能',
