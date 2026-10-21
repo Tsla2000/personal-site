@@ -113,10 +113,11 @@ export default defineConfig({
       { text: '项目', link: '/projects/', activeMatch: '^/projects/' },
       {
         text: '关于',
-        activeMatch: '^/(thinking|investment|subscribe|guestbook)(/|$)',
+        activeMatch: '^/(thinking|investment|friends|subscribe|guestbook)(/|$)',
         items: [
           { text: '思考', link: '/thinking/' },
           { text: '投资', link: '/investment/' },
+          { text: '友链', link: '/friends/' },
           { text: '订阅', link: '/subscribe/' },
           { text: '留言板', link: '/guestbook/' }
         ]
@@ -187,7 +188,7 @@ export default defineConfig({
           { text: 'Projects', link: '/en/projects/', activeMatch: '^/en/projects/' },
           {
             text: 'About',
-            activeMatch: '^(/thinking|/en/investment|/subscribe|/guestbook)',
+            activeMatch: '^(/thinking|/en/investment|/en/friends|/subscribe|/guestbook)',
             items: [
               { text: 'Thinking', link: '/thinking/' },
               {
@@ -195,6 +196,7 @@ export default defineConfig({
                 link: '/en/investment/tesla/q3-earnings-preview',
                 activeMatch: '^/en/investment/'
               },
+              { text: 'Friends', link: '/en/friends/' },
               { text: 'Subscribe', link: '/subscribe/' },
               { text: 'Guestbook', link: '/guestbook/' }
             ]
