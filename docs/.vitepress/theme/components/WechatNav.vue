@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { withBase } from 'vitepress'
 
 const open = ref(false)
 const banner = withBase('/images/wechat-search-banner-v.jpg')
+
+// 给导航栏的 GitHub / X 图标挂悬停提示，账号取自链接本身
+onMounted(() => {
+  document.querySelectorAll<HTMLAnchorElement>('.VPSocialLinks .VPSocialLink').forEach((a) => {
+    const m = a.href.match(/^https?:\/\/(?:www\.)?(github\.com|x\.com|twitter\.com)\/([^/?#]+)/i)
+    if (!m) return
+    a.dataset.tip = /github/i.test(m[1]) ? `GitHub：${m[2]}` : `X：@${m[2]}`
+  })
+})
 </script>
 
 <template>
@@ -69,5 +78,37 @@ const banner = withBase('/images/wechat-search-banner-v.jpg')
   height: auto;
   border-radius: 14px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+<style>
+.VPSocialLinks .VPSocialLink[data-tip] {
+  position: relative;
+}
+.VPSocialLinks .VPSocialLink[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--vp-c-bg-elv, #fff);
+  color: var(--vp-c-text-1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(4px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  pointer-events: none;
+  z-index: 100;
+}
+.VPSocialLinks .VPSocialLink[data-tip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%);
 }
 </style>
