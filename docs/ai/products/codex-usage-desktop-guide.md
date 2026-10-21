@@ -17,6 +17,9 @@ image: /images/codex-usage/cover.jpg
 
 本文根据项目 [README](https://github.com/itvincent-git/codex-usage-desktop/blob/main/README_zh.md) 整理，方便先看明白它能做什么、怎么装、怎么用。细节以官方仓库为准。
 
+![Codex Usage Desktop 总览看板：预估成本、Token 构成、缓存命中率，以及 5 小时和周额度剩余](/images/codex-usage/dashboard-overview.jpg)
+*图为官网示意数据。*
+
 ## 它能解决什么问题
 
 - 5 小时额度、周额度还剩多少，什么时候重置
@@ -45,12 +48,16 @@ image: /images/codex-usage/cover.jpg
 
 额度信息还能显示在 macOS 菜单栏或 Windows 系统托盘，不用一直开着看板。实时额度使用本机已有的 Codex 登录状态，所以要先在 CLI 登录。
 
+![用量追踪与额度监控：Token 统计、趋势，以及 5 小时和周额度剩余与重置倒计时](/images/codex-usage/usage-and-quota.jpg)
+
 ### 拆解 Token 消耗
 
 可以按项目、模型、日期、月份、会话来拆分用量。
 
 - **项目视图**：并排对比各项目的每日趋势，查看非缓存输入、缓存输入、输出和预估成本，点进去还能搜索按日期分组的会话。
 - **模型视图**：估算每个模型对 5 小时额度和周额度的消耗，包括每百万 Token 的消耗。这个估算来自只用了单一模型的会话快照，同时进行的会话可能影响归属结果。
+
+![项目用量明细：各项目的每日趋势、Token 构成与预估成本](/images/codex-usage/project-usage.jpg)
 
 ### 会话详情
 
@@ -63,6 +70,8 @@ image: /images/codex-usage/cover.jpg
 - 会话回放时间线
 
 既能看到 Codex 做了什么，也能看到这些工作花了多少用量。
+
+![成本分析与会话分析：按项目拆解预估成本，按会话查看 Token 和额度消耗](/images/codex-usage/cost-and-sessions.jpg)
 
 ### 额度重置记录
 

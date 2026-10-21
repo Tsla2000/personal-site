@@ -17,6 +17,9 @@ If you use Codex every day, you will eventually ask: how much of my 5-hour quota
 
 This guide is adapted from the project's [README](https://github.com/itvincent-git/codex-usage-desktop/blob/main/README.md). Treat the official repository as the source of truth.
 
+![Codex Usage Desktop overview dashboard: estimated cost, token breakdown, cache hit rate, and remaining 5-hour and weekly quota](/images/codex-usage/dashboard-overview.jpg)
+*Sample data from the official site.*
+
 ## What it answers
 
 - How much 5-hour and weekly quota is left, and when it resets
@@ -45,12 +48,16 @@ Know your remaining quota before you hit the limit:
 
 Quota can also sit in the macOS menu bar or Windows system tray, so you don't need to keep the dashboard open. Live quota uses your existing local Codex login, so sign in to the CLI first.
 
+![Usage tracking and quota monitoring: token stats, trends, and remaining 5-hour and weekly quota with reset countdown](/images/codex-usage/usage-and-quota.jpg)
+
 ### Break down token usage
 
 Split usage by project, model, day, month or session.
 
 - **Projects**: compare daily trends side by side, see uncached input, cached input, output and estimated cost, then drill into date-grouped sessions.
 - **Models**: see estimated 5-hour and weekly quota use per model, including per million tokens. The estimate comes from sessions that used a single model, and concurrent sessions can skew attribution.
+
+![Project usage detail: daily trends, token breakdown and estimated cost per project](/images/codex-usage/project-usage.jpg)
 
 ### Session details
 
@@ -63,6 +70,8 @@ Search sessions by title, project and model. Open one to see:
 - A replay timeline
 
 You see both what Codex did and how much usage it cost.
+
+![Cost analysis and session analysis: estimated cost by project, token and quota use per session](/images/codex-usage/cost-and-sessions.jpg)
 
 ### Quota reset history
 
