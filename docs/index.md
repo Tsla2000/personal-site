@@ -15,10 +15,9 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
 
 <!-- Latest 板块由构建脚本按当次部署目标自动生成。技能卡链到 /skills/，相对路径兼容 GitHub Pages 与 Cloudflare Pages。-->
 <div class="home-page">
-  <div class="home-latest-layout">
-    <aside class="home-side-rail">
-      <img class="home-wechat-banner" :src="wechatBannerV" alt="微信搜一搜 PRO的茶里芒果" loading="lazy" />
-    </aside>
+  <aside class="home-side-rail">
+    <img class="home-wechat-banner" :src="wechatBannerV" alt="微信搜一搜 PRO的茶里芒果" loading="lazy" />
+  </aside>
   <section class="home-section home-latest">
 <!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自动生成,勿手工改 -->
     <div class="home-head">
@@ -57,7 +56,6 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     </ul>
     <!-- LATEST-END -->
   </section>
-  </div>
 
   <section class="home-section">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">

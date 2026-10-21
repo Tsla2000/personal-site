@@ -1938,26 +1938,22 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   }
 }
 
-/* 首页最新文章左侧微信横幅栏 */
-.home-latest-layout {
-  display: flex;
-  gap: 28px;
-  align-items: flex-start;
-}
+/* 首页左侧悬浮微信横幅：落在 1060 内容区左边的空白带里，不占内容宽度；
+   视口不够宽（<1450px）时隐藏，绝不挤压正文 */
 .home-side-rail {
-  flex-shrink: 0;
-  width: 252px;
-  position: sticky;
-  top: 84px;
+  position: fixed;
+  top: 96px;
+  left: calc(50% - 718px);
+  width: 168px;
+  z-index: 10;
 }
 .home-wechat-banner {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(60, 45, 20, 0.14);
 }
-.home-latest-layout .home-latest { flex: 1; min-width: 0; }
-@media (max-width: 860px) {
-  .home-latest-layout { flex-direction: column; }
-  .home-side-rail { position: static; width: 240px; }
+@media (max-width: 1449px) {
+  .home-side-rail { display: none; }
 }
