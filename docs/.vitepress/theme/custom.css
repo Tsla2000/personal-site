@@ -1937,3 +1937,27 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* 首页最新文章左侧微信横幅栏 */
+.home-latest-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+.home-side-rail {
+  flex-shrink: 0;
+  width: 252px;
+  position: sticky;
+  top: 84px;
+}
+.home-wechat-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+.home-latest-layout .home-latest { flex: 1; min-width: 0; }
+@media (max-width: 860px) {
+  .home-latest-layout { flex-direction: column; }
+  .home-side-rail { position: static; width: 240px; }
+}
