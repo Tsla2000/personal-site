@@ -28,7 +28,7 @@ npx vitepress preview docs --port 4173                 # 预览构建产物；�
 1. `patch-vitepress-locale.mjs`：修补 VitePress 英文首页的语言判断。
 2. `pack-skills.mjs`：打包 `docs/public/skills` 下的技能 ZIP。
 3. `gen-seo.mjs`：生成 sitemap / robots / feed / llms.txt / `_headers` / articles.json，
-   并**重写** `docs/index.md` 的 LATEST 区块、`docs/archive.md` 的 ARCHIVE 区块和 `docs/ai/index.md` 的 AI-FEED 区块。
+   并**重写** `docs/index.md` 的 LATEST 区块、`docs/archive.md` 的 ARCHIVE 区块和 `docs/ai/`、`docs/thinking/`、`docs/investment/` 三个栏目页 index.md 的 *-FEED 区块。
 4. `vitepress build`，然后 `fix-logo-alt.mjs` 补 logo alt，`check-seo.mjs` 做 SEO 检查。
 
 ## 注意事项

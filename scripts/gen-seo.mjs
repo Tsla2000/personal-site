@@ -543,27 +543,35 @@ writeFeedBlock(join(DOCS_DIR, 'archive.md'), 'ARCHIVE', renderFeed(items, (it) =
 // ---- AI 栏目页:同归档页版式(无侧栏),收 docs/ai/ 下全部中文页面,按子目录筛选 ----
 // workflows 等落地页没写 date,也不进 RSS/归档,这里用内容最后修改日期补上
 const AI_TABS = [['trends', '趋势'], ['agents', 'Agent'], ['coding', 'Coding'], ['workflows', '工作流'], ['products', '产品'], ['thinking', '思考']]
-const aiItems = []
-for (const file of files) {
-  const rel = relative(DOCS_DIR, file).split(sep).join('/')
-  if (!rel.startsWith('ai/') || rel === 'ai/index.md') continue
-  const fm = parseFrontmatter(file)
-  if (!fm || !fm.title || fm.draft === 'true' || fm.noindex === 'true') continue
-  const dateRaw = fm.date || String(contentLastmod(file, fm, gitDates, snapshotDates) || '').slice(0, 10)
-  const d = new Date(dateRaw)
-  if (!dateRaw || Number.isNaN(d.getTime())) continue
-  aiItems.push({
-    title: fm.title,
-    description: fm.description || '',
-    group: rel.split('/')[1],
-    image: fm.image || (readFileSync(file, 'utf8').match(/!\[[^\]]*\]\(([^)]+)\)/)?.[1] || ''),
-    date: d,
-    dateStr: dateRaw.replace(/-/g, '.'),
-    urlPath: baseNoSlash + toUrlPath(file)
-  })
+// 栏目页共用:收 docs/<栏目>/ 下全部中文页面,按子目录筛选
+function collectSectionItems(section) {
+  const out = []
+  for (const file of files) {
+    const rel = relative(DOCS_DIR, file).split(sep).join('/')
+    if (!rel.startsWith(`${section}/`) || rel === `${section}/index.md`) continue
+    const fm = parseFrontmatter(file)
+    if (!fm || !fm.title || fm.draft === 'true' || fm.noindex === 'true') continue
+    const dateRaw = fm.date || String(contentLastmod(file, fm, gitDates, snapshotDates) || '').slice(0, 10)
+    const d = new Date(dateRaw)
+    if (!dateRaw || Number.isNaN(d.getTime())) continue
+    out.push({
+      title: fm.title,
+      description: fm.description || '',
+      group: rel.split('/')[1],
+      image: fm.image || (readFileSync(file, 'utf8').match(/!\[[^\]]*\]\(([^)]+)\)/)?.[1] || ''),
+      date: d,
+      dateStr: dateRaw.replace(/-/g, '.'),
+      urlPath: baseNoSlash + toUrlPath(file)
+    })
+  }
+  return out.sort((a, b) => b.date - a.date)
 }
-aiItems.sort((a, b) => b.date - a.date)
-writeFeedBlock(join(DOCS_DIR, 'ai', 'index.md'), 'AI-FEED', renderFeed(aiItems, (it) => it.group, AI_TABS, 'list'))
+writeFeedBlock(join(DOCS_DIR, 'ai', 'index.md'), 'AI-FEED', renderFeed(collectSectionItems('ai'), (it) => it.group, AI_TABS, 'list'))
+
+const THINKING_TABS = [['society', '社会'], ['first-principles', '第一性原理'], ['wealth', '财富'], ['technology', '技术'], ['life', '生活']]
+const INVESTMENT_TABS = [['tesla', 'Tesla'], ['us-stocks', '美股'], ['ai-infrastructure', 'AI 基础设施'], ['asset-allocation', '资产配置'], ['methodology', '方法论']]
+writeFeedBlock(join(DOCS_DIR, 'thinking', 'index.md'), 'THINKING-FEED', renderFeed(collectSectionItems('thinking'), (it) => it.group, THINKING_TABS, 'list'))
+writeFeedBlock(join(DOCS_DIR, 'investment', 'index.md'), 'INVESTMENT-FEED', renderFeed(collectSectionItems('investment'), (it) => it.group, INVESTMENT_TABS, 'list'))
 
 // ---- articles.json:给「我的收藏」页用的文章清单(含更新时间) ----
 // updated 取 git 最后提交时间(frontmatter 写了 updated 则优先),收藏夹用它判断"有更新"
