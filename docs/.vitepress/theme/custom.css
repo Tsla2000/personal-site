@@ -1493,6 +1493,11 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   max-width: 880px;
 }
 
+.feed-row,
+.vp-doc a.feed-row {
+  text-decoration: none;
+}
+
 .feed-row {
   display: block;
   padding: 24px 0;
