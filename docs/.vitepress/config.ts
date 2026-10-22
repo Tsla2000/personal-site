@@ -149,7 +149,7 @@ export default defineConfig({
     },
     search: { provider: 'local' },
     socialLinks: [
-      { icon: 'github', link: GITHUB_REPO },
+      { icon: 'github', link: GITHUB_PROFILE },
       ...(xProfile ? [{ icon: 'x' as const, link: xProfile }] : [])
     ],
     footer: {
