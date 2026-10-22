@@ -49,7 +49,7 @@ Agent 收到任务，不代表任务已经完成。
 
 ## 从修改代码到网站上线
 
-这个网站使用 VitePress 构建，文章用 Markdown 编写，代码保存在 GitHub 仓库 Tsla2000/personal-site 中。
+这个网站使用 VitePress 构建，文章用 Markdown 编写，代码保存在 GitHub 仓库 mangofund/personal-site 中。
 
 发布流程很简单：
 

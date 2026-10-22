@@ -6,7 +6,7 @@ import { defineConfig, type HeadConfig } from 'vitepress'
 const base = process.env.BASE_PATH ?? '/'
 // 部署目标域名:Cloudflare Pages 构建时通过环境变量 SITE_URL 传入(如 https://xxx.pages.dev);缺省为 GitHub Pages 地址
 // 容错:没写 https:// 时自动补上,避免 canonical 写出裸域名
-const _rawSiteUrl = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
+const _rawSiteUrl = (process.env.SITE_URL ?? 'https://mangofund.github.io').replace(/\/$/, '')
 const SITE_URL = /^https?:\/\//i.test(_rawSiteUrl) ? _rawSiteUrl : `https://${_rawSiteUrl}`
 // 规范域名:搜索引擎认定的主域名。GitHub Pages 镜像构建时通过 CANONICAL_URL 传入新域名,
 // 使旧站每页 canonical/og:url 指向新站对应页面(去 base 前缀);缺省=本站地址
@@ -17,8 +17,8 @@ const SITE_DESC = 'AI、投资、产品，以及一些关于世界如何运行�
 const EN_TITLE = "Pro's MangoFund"
 const EN_DESC = 'Notes on AI products, side hustles, investing, and digital products.'
 const DOCS_DIR = fileURLToPath(new URL('..', import.meta.url))
-const GITHUB_PROFILE = 'https://github.com/tsla2000'
-const GITHUB_REPO = 'https://github.com/tsla2000/personal-site'
+const GITHUB_PROFILE = 'https://github.com/mangofund'
+const GITHUB_REPO = 'https://github.com/mangofund/personal-site'
 // 站长 X 用户名，不要带 @。填 TODO 或留空时不输出 X 图标和 twitter 账号 meta。
 const X_HANDLE = 'PRO_AI_99T'
 
@@ -517,6 +517,6 @@ export default defineConfig({
     // ---- 访问统计(Umami 已启用,见 ANALYTICS_SETUP.md) ----
     ['script', { defer: '', src: 'https://cloud.umami.is/script.js', 'data-website-id': '9be496a4-8003-46ab-9f02-de2fa19abab4' }],
     // Plausible(备用,未启用):
-    // ['script', { defer: '', 'data-domain': 'tsla2000.github.io', src: 'https://plausible.io/js/script.js' }]
+    // ['script', { defer: '', 'data-domain': 'mangofund.github.io', src: 'https://plausible.io/js/script.js' }]
   ]
 })

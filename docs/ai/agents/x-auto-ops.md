@@ -14,7 +14,7 @@ faq:
   - q: 完全不需要人工干预吗？
     a: 需要。人才是最终拍板的人：选题方向、文案终审、突发情况处理都由人决定，Agent 负责执行层面的重复劳动。
   - q: 有没有现成的 Skill 可以直接复用这套方法？
-    a: 有。x-ops-automation（https://github.com/Tsla2000/agent-skills）把本文的四层架构、写作规范、发布检查清单和风控规则打包成了免费的 Agent Skill，装到 Claude Code、Codex 或 Cursor 里直接用。
+    a: 有。x-ops-automation（https://github.com/mangofund/agent-skills）把本文的四层架构、写作规范、发布检查清单和风控规则打包成了免费的 Agent Skill，装到 Claude Code、Codex 或 Cursor 里直接用。
 ---
 
 # 我用 Muse 搭建了一套 X 账号自动化运营系统：从选题、写作到发布
@@ -544,7 +544,7 @@ AI Agent 的优势，在于它可以反复执行明确的流程，并把规则�
 
 上面讲的是方法论。看完如果你想直接上手，不用从零抄规则——我把整套系统的规则、检查清单、定时任务配置和踩坑记录打包成了一个 Agent Skill，免费开源：
 
-https://github.com/Tsla2000/agent-skills
+https://github.com/mangofund/agent-skills
 
 ### 这是什么
 
@@ -556,7 +556,7 @@ https://github.com/Tsla2000/agent-skills
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/Tsla2000/agent-skills.git
+git clone https://github.com/mangofund/agent-skills.git
 
 # 2. 复制到 Agent 的 skills 目录（以 Claude Code 为例）
 cp -r agent-skills/x-ops-automation ~/.claude/skills/

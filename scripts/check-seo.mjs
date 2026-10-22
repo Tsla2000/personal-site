@@ -138,7 +138,7 @@ for (const p of pages) {
 
 // 3. canonical 存在且格式正确（本地构建用默认域名，线上用环境变量）
 // 允许的域名：环境变量 CANONICAL_URL 或默认的 github.io（本地构建）
-const allowedDomains = ['https://promangofund.com', 'https://tsla2000.github.io', 'https://mangofund.pages.dev']
+const allowedDomains = ['https://promangofund.com', 'https://mangofund.github.io', 'https://mangofund.pages.dev']
 for (const p of pages) {
   if (p.includes('google')) continue
   const html = readFileSync(p, 'utf8')

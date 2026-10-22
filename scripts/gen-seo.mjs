@@ -9,7 +9,7 @@
 //   - docs/public/articles.json (给「我的收藏」页:文章 key/title/date/updated,updated 取 git 最后提交时间)
 //   - 重写 docs/index.md 的 LATEST 板块(站内链接带 base 前缀)
 // 部署目标由环境变量决定:BASE_PATH(默认 '/';GitHub Pages 构建时传 '/personal-site/'),
-// SITE_URL(默认 https://tsla2000.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev),
+// SITE_URL(默认 https://mangofund.github.io;Cloudflare Pages 构建时传 https://xxx.pages.dev),
 // CANONICAL_URL(默认=SITE_URL 去 base;GitHub Pages 镜像构建时传新域名,使 canonical/sitemap 指向新站)。
 // 在 package.json 的 docs:build 中于 vitepress build 之前运行。
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
@@ -25,7 +25,7 @@ const CONTENT_DATES_PATH = fileURLToPath(new URL('./content-dates.json', import.
 const IMAGE_CACHE_SECONDS = 60 * 60 * 24 * 30
 // Vite 内容哈希资源可以缓存一年且 immutable。
 const HASHED_ASSET_CACHE_SECONDS = 60 * 60 * 24 * 365
-const _rawDomain = (process.env.SITE_URL ?? 'https://tsla2000.github.io').replace(/\/$/, '')
+const _rawDomain = (process.env.SITE_URL ?? 'https://mangofund.github.io').replace(/\/$/, '')
 // 容错:没写 https:// 时自动补上,避免 canonical 写出裸域名
 const SITE_DOMAIN = /^https?:\/\//i.test(_rawDomain) ? _rawDomain : `https://${_rawDomain}`
 const BASE_PATH = process.env.BASE_PATH ?? '/'

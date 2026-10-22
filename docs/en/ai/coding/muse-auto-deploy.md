@@ -40,7 +40,7 @@ Muse is the AI agent on this job. It took the maintenance, and the growth work a
 
 ## From a file change to a live URL
 
-The site is VitePress. Posts are Markdown. The code lives in the GitHub repository Tsla2000/personal-site.
+The site is VitePress. Posts are Markdown. The code lives in the GitHub repository mangofund/personal-site.
 
 Publishing is three steps:
 
@@ -142,7 +142,7 @@ The site deploys on its own now.
 
 The next thing I want to measure is growth. If the agent keeps publishing, reading the numbers, and tuning the site, does that produce a change I can actually count?
 
-**Sources:** the deploy recorded in the GitHub repository Tsla2000/personal-site; GitHub's 2023 Copilot experiment on a JavaScript task (about 55.8% faster).
+**Sources:** the deploy recorded in the GitHub repository mangofund/personal-site; GitHub's 2023 Copilot experiment on a JavaScript task (about 55.8% faster).
 
 This is a personal note, not investment advice.
 
