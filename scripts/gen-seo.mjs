@@ -411,49 +411,77 @@ ${enLlmsSection}
 `
 writeFileSync(join(PUBLIC_DIR, 'llms.txt'), llms)
 
-// ---- 首页 Latest:头条 1 篇 + 图文小卡 4 篇 + 文字列表 6 篇,自动写入 docs/index.md ----
-// 首屏尽量多露出文章:桌面端头条占左半,右侧 2×2 小卡;下面是三列紧凑列表。
-const LATEST_LEAD = 1
+// ---- 首页 Latest:横幅轮播 3 篇 + 图文小卡 4 篇 + 文字列表 6 篇,自动写入 docs/index.md ----
+// 首屏尽量多露出文章:轮播占整行(横幅图 + 下方随轮播同步切换的标题摘要),下面 2×2 小卡,再下面是紧凑列表。
+const LATEST_CAROUSEL = 3
 const LATEST_CARDS = 4
 const LATEST_ROWS = 6
 const TOPIC_LINKS = { AI: '/ai/', 投资: '/investment/', 思考: '/thinking/' }
 const imgPath = (it) => (it.image ? (it.image.startsWith('/') ? it.image : '/' + it.image) : '')
 const isoDay = (it) => it.dateStr.replace(/\./g, '-')
-const latestCard = (it, i) => {
-  const lead = i < LATEST_LEAD
+const metaHtml = (it) => '<span class="article-card-meta">' + (it.category ? '<span class="article-card-cat">' + esc(it.category) + '</span>' : '') +
+  '<time datetime="' + isoDay(it) + '">' + it.dateStr + '</time></span>'
+const latestCard = (it) => {
   const image = imgPath(it)
-  // 头条和第一张小卡在首屏(LCP 候选),立即高优先级加载;其余懒加载
-  const loadAttrs = i < 2 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
   const thumb = image
-    ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" ' + loadAttrs + ' decoding="async" />'
+    ? '<img class="article-card-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" decoding="async" />'
     : '<div class="article-card-thumb article-card-placeholder"></div>'
-  const meta = '<span class="article-card-meta">' + (it.category ? '<span class="article-card-cat">' + esc(it.category) + '</span>' : '') +
-    '<time datetime="' + isoDay(it) + '">' + it.dateStr + '</time></span>'
-  const desc = lead && it.description ? '<small>' + esc(it.description) + '</small>' : ''
-  return '      <a class="article-card' + (lead ? ' is-lead' : '') + '" href="' + it.urlPath + '">' +
+  return '      <a class="article-card" href="' + it.urlPath + '">' +
     '\n        ' + thumb +
-    '\n        <div class="article-card-body">' + meta + '<strong>' + esc(it.title) + '</strong>' + desc + '</div>' +
+    '\n        <div class="article-card-body">' + metaHtml(it) + '<strong>' + esc(it.title) + '</strong></div>' +
     '\n      </a>'
 }
-// 置顶必读:check-seo 要求这些文章常驻首页图文卡区(头条+小卡);
-// 被新文章挤出卡区时,与卡区最后一张交换位置;完全不在最新列表时顶替最后一行
+const carouselSlide = (it, i) => {
+  const image = imgPath(it)
+  // 第一张在首屏(LCP 候选),立即高优先级加载;其余懒加载
+  const loadAttrs = i === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
+  const media = image
+    ? '<img class="hc-img" src="' + esc(image) + '" alt="' + esc(it.title) + '" ' + loadAttrs + ' decoding="async" />'
+    : '<div class="hc-img article-card-placeholder"></div>'
+  return '        <a class="hc-slide' + (i === 0 ? ' is-active' : '') + '" href="' + it.urlPath + '">' + media + '</a>'
+}
+const carouselPanel = (it, i) => {
+  const desc = it.description ? '<small>' + esc(it.description) + '</small>' : ''
+  return '        <a class="hc-panel' + (i === 0 ? ' is-active' : '') + '" href="' + it.urlPath + '">' +
+    '\n          ' + metaHtml(it) +
+    '\n          <strong>' + esc(it.title) + '</strong>' + desc +
+    '\n        </a>'
+}
+// 置顶必读:check-seo 要求这些文章常驻首页图文卡区(小卡,轮播区不算);
+// 不在卡区时与卡区最后一张交换位置;完全不在最新列表时顶替卡区最后一张
 const PINNED_LATEST = ['/ai/trends/claude-search-surge']
-const latestItems = items.slice(0, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS)
+const latestItems = items.slice(0, LATEST_CAROUSEL + LATEST_CARDS + LATEST_ROWS)
+const CARD_ZONE_END = LATEST_CAROUSEL + LATEST_CARDS - 1
 for (const path of PINNED_LATEST) {
   const idx = latestItems.findIndex((it) => it.urlPath === path)
-  if (idx >= LATEST_LEAD + LATEST_CARDS) {
-    const swapAt = LATEST_LEAD + LATEST_CARDS - 1
-    const tmp = latestItems[swapAt]
-    latestItems[swapAt] = latestItems[idx]
+  if (idx === CARD_ZONE_END) continue
+  if (idx >= 0) {
+    const tmp = latestItems[CARD_ZONE_END]
+    latestItems[CARD_ZONE_END] = latestItems[idx]
     latestItems[idx] = tmp
-  } else if (idx === -1) {
+  } else {
     const pinned = items.find((it) => it.urlPath === path)
-    if (pinned) latestItems[latestItems.length - 1] = pinned
+    if (pinned) latestItems[CARD_ZONE_END] = pinned
   }
 }
-const latestCards = latestItems.slice(0, LATEST_LEAD + LATEST_CARDS).map(latestCard).join('\n')
+const carouselItems = latestItems.slice(0, LATEST_CAROUSEL)
+const carouselSlides = carouselItems.map(carouselSlide).join('\n')
+const carouselPanels = carouselItems.map(carouselPanel).join('\n')
+const carouselDots = carouselItems.map((_, i) => '<button class="hc-dot' + (i === 0 ? ' is-active' : '') + '" type="button" aria-label="第 ' + (i + 1) + ' 篇"></button>').join('')
+const carouselHtml = `    <div class="home-carousel" data-carousel>
+      <div class="hc-stage">
+${carouselSlides}
+        <button class="hc-arrow hc-prev" type="button" aria-label="上一篇">‹</button>
+        <button class="hc-arrow hc-next" type="button" aria-label="下一篇">›</button>
+        <div class="hc-dots">${carouselDots}</div>
+      </div>
+      <div class="hc-panels">
+${carouselPanels}
+      </div>
+    </div>`
+const latestCards = latestItems.slice(LATEST_CAROUSEL, LATEST_CAROUSEL + LATEST_CARDS).map(latestCard).join('\n')
 // 第二部分和 AI 栏目页同一种列表:标题 · 日期 / 缩略图 + 摘要 / 分隔线,做成紧凑版
-const latestRows = latestItems.slice(LATEST_LEAD + LATEST_CARDS, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS).map((it) => {
+const latestRows = latestItems.slice(LATEST_CAROUSEL + LATEST_CARDS, LATEST_CAROUSEL + LATEST_CARDS + LATEST_ROWS).map((it) => {
   const image = imgPath(it)
   const thumb = image
     ? '<img class="latest-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" decoding="async" />'
@@ -474,6 +502,7 @@ const latestHtml = `<!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自
       <h1>最新文章</h1>
       <nav class="home-topics" aria-label="文章栏目">${topicChips}<a class="home-topic is-all" href="${baseNoSlash}/archive">全部 ${items.length} 篇 →</a></nav>
     </div>
+${carouselHtml}
     <div class="article-list latest-grid">
 ${latestCards}
     </div>
