@@ -32,6 +32,8 @@ faq:
 
 </div>
 
+原文：[Anthropic 官方发布帖](https://x.com/claudeai/status/2112984664256241837) · [Claude Duet 产品页](https://claude.com/product/claude-duet)
+
 到目前为止我还没用上 Claude Duet。
 
 目前，它只向美国区的 Pro 和 Max 订阅用户开放，需要加入 waitlist 排队，获得资格后会收到邮件通知。
