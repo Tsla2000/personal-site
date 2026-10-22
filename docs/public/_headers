@@ -55,6 +55,12 @@
 /ai/
   Cache-Control: public, max-age=0, must-revalidate
 
+/ai/products/bing-wallpaper-for-mac
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/products/bing-wallpaper-for-mac/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /ai/products/claude-duet
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -131,6 +137,12 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/ai/coding/muse-auto-deploy/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/products/bing-wallpaper-for-mac
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/products/bing-wallpaper-for-mac/
   Cache-Control: public, max-age=0, must-revalidate
 
 /en/ai/products/claude-duet

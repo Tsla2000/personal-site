@@ -435,9 +435,25 @@ const latestCard = (it, i) => {
     '\n        <div class="article-card-body">' + meta + '<strong>' + esc(it.title) + '</strong>' + desc + '</div>' +
     '\n      </a>'
 }
-const latestCards = items.slice(0, LATEST_LEAD + LATEST_CARDS).map(latestCard).join('\n')
+// 置顶必读:check-seo 要求这些文章常驻首页图文卡区(头条+小卡);
+// 被新文章挤出卡区时,与卡区最后一张交换位置;完全不在最新列表时顶替最后一行
+const PINNED_LATEST = ['/ai/trends/claude-search-surge']
+const latestItems = items.slice(0, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS)
+for (const path of PINNED_LATEST) {
+  const idx = latestItems.findIndex((it) => it.urlPath === path)
+  if (idx >= LATEST_LEAD + LATEST_CARDS) {
+    const swapAt = LATEST_LEAD + LATEST_CARDS - 1
+    const tmp = latestItems[swapAt]
+    latestItems[swapAt] = latestItems[idx]
+    latestItems[idx] = tmp
+  } else if (idx === -1) {
+    const pinned = items.find((it) => it.urlPath === path)
+    if (pinned) latestItems[latestItems.length - 1] = pinned
+  }
+}
+const latestCards = latestItems.slice(0, LATEST_LEAD + LATEST_CARDS).map(latestCard).join('\n')
 // 第二部分和 AI 栏目页同一种列表:标题 · 日期 / 缩略图 + 摘要 / 分隔线,做成紧凑版
-const latestRows = items.slice(LATEST_LEAD + LATEST_CARDS, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS).map((it) => {
+const latestRows = latestItems.slice(LATEST_LEAD + LATEST_CARDS, LATEST_LEAD + LATEST_CARDS + LATEST_ROWS).map((it) => {
   const image = imgPath(it)
   const thumb = image
     ? '<img class="latest-row-thumb" src="' + esc(image) + '" alt="' + esc(it.title) + '" loading="lazy" decoding="async" />'
