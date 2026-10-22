@@ -20,7 +20,7 @@ import time
 import requests
 
 API = "https://api.weixin.qq.com"
-SITE_URL = "https://tsla2000.github.io/personal-site"
+SITE_URL = "https://promangofund.com"
 
 # ---------- WeChat inline styles (the MP backend strips <style> tags) ----------
 ST = {
@@ -194,6 +194,9 @@ def main():
     if rel.startswith("docs/"):
         rel = rel[len("docs/"):]
     page_path = "/" + re.sub(r"\.md$", "", rel)
+    # 「阅读原文」带 UTM，公众号读者点进来才能归因（规范见 ANALYTICS_SETUP.md）
+    utm_campaign = page_path.rsplit("/", 1)[-1]
+    source_url = f"{SITE_URL}{page_path}?utm_source=wechat&utm_medium=readmore&utm_campaign={utm_campaign}"
 
     token = get_token(appid, secret)
 
@@ -240,7 +243,7 @@ def main():
             "author": "PRO的茶里芒果",
             "digest": digest,
             "content": html,
-            "content_source_url": SITE_URL + page_path,
+            "content_source_url": source_url,
             "thumb_media_id": thumb_media_id,
             "need_open_comment": 1,
             "only_fans_can_comment": 0,
