@@ -1493,11 +1493,6 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   max-width: 880px;
 }
 
-.feed-row,
-.vp-doc a.feed-row {
-  text-decoration: none;
-}
-
 .feed-row {
   display: block;
   padding: 24px 0;
@@ -1944,22 +1939,3 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   }
 }
 
-/* 首页左侧悬浮微信横幅：落在 1060 内容区左边的空白带里，不占内容宽度；
-   视口不够宽（<1450px）时隐藏，绝不挤压正文 */
-.home-side-rail {
-  position: fixed;
-  top: 96px;
-  left: calc(50% - 718px);
-  width: 168px;
-  z-index: 10;
-}
-.home-wechat-banner {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 14px;
-  box-shadow: 0 6px 24px rgba(60, 45, 20, 0.14);
-}
-@media (max-width: 1449px) {
-  .home-side-rail { display: none; }
-}
