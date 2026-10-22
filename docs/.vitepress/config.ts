@@ -18,7 +18,6 @@ const EN_TITLE = "Pro's MangoFund"
 const EN_DESC = 'Notes on AI products, side hustles, investing, and digital products.'
 const DOCS_DIR = fileURLToPath(new URL('..', import.meta.url))
 const GITHUB_PROFILE = 'https://github.com/mangofund'
-const GITHUB_REPO = 'https://github.com/mangofund/personal-site'
 // 站长 X 用户名，不要带 @。填 TODO 或留空时不输出 X 图标和 twitter 账号 meta。
 const X_HANDLE = 'PRO_AI_99T'
 
