@@ -150,13 +150,9 @@ for (const p of pages) {
   }
 }
 
-// 4. 检查 sitemap.xml 存在，并覆盖实际可访问的页面（含原先被 draft/noindex 排除的）
+// 4. 检查 sitemap.xml 存在，并覆盖实际可访问的页面（noindex 页已按 2026-10-23 用户决定移出 sitemap，不再必查）
 const REQUIRED_SITEMAP_PATHS = [
-  '/ai/coding/muse-seo-automation',
-  '/subscribe',
-  '/guestbook',
-  '/sponsor',
-  '/about/timeline'
+  '/ai/coding/muse-seo-automation'
 ]
 const sitemap = join(DIST, 'sitemap.xml')
 if (!existsSync(sitemap)) {
@@ -279,7 +275,7 @@ if (existsSync(sitemap)) {
   if (!/<loc>[^<]*\/en\/investment\/tesla\/q3-earnings-preview<\/loc>/.test(sm)) {
     errors.push('sitemap 缺少 /en/investment/tesla/q3-earnings-preview')
   }
-  if (!/<loc>[^<]*\/en<\/loc>/.test(sm)) errors.push('sitemap 缺少 /en')
+  if (!/<loc>[^<]*\/en\/<\/loc>/.test(sm)) errors.push('sitemap 缺少 /en/')
 }
 function hreflangTag(html, lang) {
   const tags = html.match(/<link\b[^>]*>/gi) || []
@@ -879,8 +875,8 @@ const zhAbout = join(DIST, 'about', 'index.html')
 if (!existsSync(enAbout)) errors.push('缺少英文关于页 /en/about')
 if (existsSync(sitemap)) {
   const sm = readFileSync(sitemap, 'utf8')
-  if (!/<loc>[^<]*\/en\/about<\/loc>/.test(sm)) errors.push('sitemap 缺少 /en/about')
-  if (!/<loc>[^<]*\/about<\/loc>/.test(sm)) errors.push('sitemap 缺少 /about')
+  if (!/<loc>[^<]*\/en\/about\/<\/loc>/.test(sm)) errors.push('sitemap 缺少 /en/about/')
+  if (!/<loc>[^<]*\/about\/<\/loc>/.test(sm)) errors.push('sitemap 缺少 /about/')
 }
 if (existsSync(enAbout)) {
   const html = readFileSync(enAbout, 'utf8')

@@ -64,7 +64,9 @@ const baseNoSlash = base.endsWith('/') && base.length > 1 ? base.slice(0, -1) : 
 function pagePath(relativePath: string): string {
   let p = relativePath.replace(/\.md$/, '')
   if (p === 'index') return '/'
-  if (p.endsWith('/index')) p = p.slice(0, -'/index'.length)
+  // 目录首页的真实 URL 带尾斜杠（Cloudflare Pages 对无斜杠版 308 跳斜杠版）；
+  // canonical/hreflang 必须与之一致，否则与重定向形成死循环被 Google 判备用网页。
+  if (p.endsWith('/index')) return '/' + p.slice(0, -'/index'.length) + '/'
   return '/' + p
 }
 

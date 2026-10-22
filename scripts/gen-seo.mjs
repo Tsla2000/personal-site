@@ -72,7 +72,8 @@ function toUrlPath(file) {
   let rel = relative(DOCS_DIR, file).split(sep).join('/')
   rel = rel.replace(/\.md$/, '')
   if (rel === 'index') return '/'
-  if (rel.endsWith('/index')) rel = rel.slice(0, -'/index'.length)
+  // 目录首页真实 URL 带尾斜杠，与 config.ts pagePath() 保持一致（防 canonical 死循环）
+  if (rel.endsWith('/index')) return '/' + rel.slice(0, -'/index'.length) + '/'
   return '/' + rel
 }
 
@@ -198,11 +199,11 @@ try {
   writeFileSync(CONTENT_DATES_PATH, snapshotOut)
 }
 
-// ---- sitemap.xml:全部会构建出来的真实页面 ----
-// 不再按 draft/noindex 剔除。这些 URL 已经在线上可访问(导航或正文链到它们),
-// 旧逻辑把它们排除后,搜索引擎看到的 sitemap 和实际页面不一致。
-// noindex 仍由页面自己的 meta 决定是否收录;RSS 继续只收正式文章。
+// ---- sitemap.xml:全部会构建出来的真实页面,noindex 页除外 ----
+// 2026-10-23 用户拍板:noindex 页移出 sitemap(Google 指引:noindex URL 不应进 sitemap)。
+// 页面本身照常构建、可访问,只是不主动提交给搜索引擎;RSS 继续只收正式文章。
 const sitemapUrls = files
+  .filter((f) => parseFrontmatter(f)?.noindex !== 'true')
   .map((f) => {
     const fm = parseFrontmatter(f)
     const loc = CANONICAL_URL + toUrlPath(f)
@@ -283,7 +284,9 @@ function pushCache(pattern, value) {
 const seenHeaderPaths = new Set()
 for (const file of files) {
   const path = toUrlPath(file)
-  const variants = path === '/' ? ['/'] : [path, `${path}/`]
+  // toUrlPath 对目录首页已带尾斜杠，先归一化再生成「无斜杠/带斜杠」两版，避免出现 /about//
+  const base = path === '/' ? '/' : path.replace(/\/$/, '')
+  const variants = path === '/' ? ['/'] : [base, `${base}/`]
   for (const variant of variants) {
     if (seenHeaderPaths.has(variant)) continue
     seenHeaderPaths.add(variant)
