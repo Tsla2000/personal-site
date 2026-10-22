@@ -502,8 +502,8 @@ const latestHtml = `<!-- LATEST-START:以下由 scripts/gen-seo.mjs 构建时自
       <h1>最新文章</h1>
       <nav class="home-topics" aria-label="文章栏目">${topicChips}<a class="home-topic is-all" href="${baseNoSlash}/archive">全部 ${items.length} 篇 →</a></nav>
     </div>
-${carouselHtml}
     <div class="article-list latest-grid">
+${carouselHtml}
 ${latestCards}
     </div>
     <ul class="latest-rows">

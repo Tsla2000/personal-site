@@ -50,6 +50,7 @@ onUnmounted(() => { if (hcStop) hcStop() })
       <h1>最新文章</h1>
       <nav class="home-topics" aria-label="文章栏目"><a class="home-topic" href="/ai/">AI<span>12</span></a><a class="home-topic" href="/investment/">投资<span>4</span></a><a class="home-topic" href="/thinking/">思考<span>4</span></a><a class="home-topic is-all" href="/archive">全部 20 篇 →</a></nav>
     </div>
+    <div class="article-list latest-grid">
     <div class="home-carousel" data-carousel>
       <div class="hc-stage">
         <a class="hc-slide is-active" href="/ai/products/bing-wallpaper-for-mac"><img class="hc-img" src="/images/bing-wallpaper/cover.jpg" alt="必应每日壁纸 for Mac：用 REA 逆向 Windows 官方版，复刻到 macOS 的开源应用" loading="eager" fetchpriority="high" decoding="async" /></a>
@@ -74,7 +75,6 @@ onUnmounted(() => { if (hcStop) hcStop() })
         </a>
       </div>
     </div>
-    <div class="article-list latest-grid">
       <a class="article-card" href="/investment/methodology/ai-invest-clear">
         <img class="article-card-thumb" src="/images/ai-invest-clear/cover.jpg" alt="AI 越成功，投资者越需要保持清醒" loading="lazy" decoding="async" />
         <div class="article-card-body"><span class="article-card-meta"><span class="article-card-cat">投资</span><time datetime="2026-10-18">2026.10.18</time></span><strong>AI 越成功，投资者越需要保持清醒</strong></div>
