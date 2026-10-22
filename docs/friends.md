@@ -22,4 +22,19 @@ description: 朋友们的官网和项目，都是我认可、也推荐给你的�
   </article>
 </div>
 
+## 必应每日壁纸 for Mac
+
+<div class="friend-list">
+  <article class="friend-card">
+    <h3><a href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">必应每日壁纸官网 ↗</a></h3>
+    <p>每日一张，自动换上你的桌面。菜单栏里的小应用，支持 12 个市场和主题按天轮换，图片只留在本地，没有账号，没有遥测。</p>
+    <div class="friend-foot"><span class="skill-chip">官网</span><span class="friend-host">fairzy.github.io</span></div>
+  </article>
+  <article class="friend-card">
+    <h3><a href="https://github.com/fairzy/bingwallpaper-for-mac" target="_blank" rel="noopener">bingwallpaper-for-mac ↗</a></h3>
+    <p>MIT 开源，Swift 原生。用 REA 逆向 Windows 官方版 1.1.469.0 的行为复刻到 macOS，官方版里的遥测和远程配置一个都没搬。</p>
+    <div class="friend-foot"><a class="skill-zip" href="/ai/products/bing-wallpaper-for-mac">介绍文章 →</a><span class="skill-chip">GitHub 开源项目</span><span class="friend-host">github.com/fairzy</span></div>
+  </article>
+</div>
+
 想互换友链？去[留言板](/guestbook)告诉我你的网站地址。

@@ -32,6 +32,8 @@ faq:
 
 </div>
 
+Original: [Anthropic's launch post](https://x.com/claudeai/status/2112984664256241837) · [Claude Duet product page](https://claude.com/product/claude-duet)
+
 I have not used Claude Duet yet.
 
 For now, it is open only to Pro and Max subscribers in the US. You join a waitlist, and when your turn comes, you get an email.

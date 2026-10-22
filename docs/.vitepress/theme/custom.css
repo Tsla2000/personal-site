@@ -342,6 +342,136 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   color: var(--vp-c-brand-1);
 }
 
+/* ---- 首页头条轮播:3 篇横幅自动滚动,下方标题摘要同步切换 ---- */
+.home-carousel {
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background: var(--vp-c-bg);
+}
+
+.hc-stage {
+  position: relative;
+  aspect-ratio: 2.35 / 1;
+  background: var(--vp-c-bg-soft);
+}
+
+.hc-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+
+.hc-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hc-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hc-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 16, 8, .42);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background .15s ease;
+}
+
+.hc-arrow:hover { background: rgba(20, 16, 8, .65); }
+.hc-prev { left: 10px; }
+.hc-next { right: 10px; }
+
+.hc-dots {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+}
+
+.hc-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .55);
+  box-shadow: 0 0 0 1px rgba(20, 16, 8, .18);
+  cursor: pointer;
+}
+
+.hc-dot.is-active { background: #fff; }
+
+.hc-panels { padding: 15px 16px 18px; }
+
+.vp-doc a.hc-panel {
+  display: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.vp-doc a.hc-panel.is-active {
+  display: block;
+  animation: hc-fade .45s ease;
+}
+
+@keyframes hc-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.hc-panel strong {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--vp-c-text-1);
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.hc-panel:hover strong { color: var(--vp-c-brand-1); }
+
+.hc-panel small {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 8px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@media (max-width: 640px) {
+  .hc-stage { aspect-ratio: 16 / 10; }
+  .hc-arrow { width: 30px; height: 30px; font-size: 17px; }
+}
+
 .home-page .latest-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
@@ -1944,22 +2074,3 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   }
 }
 
-/* 首页左侧悬浮微信横幅：落在 1060 内容区左边的空白带里，不占内容宽度；
-   视口不够宽（<1450px）时隐藏，绝不挤压正文 */
-.home-side-rail {
-  position: fixed;
-  top: 96px;
-  left: calc(50% - 718px);
-  width: 168px;
-  z-index: 10;
-}
-.home-wechat-banner {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 14px;
-  box-shadow: 0 6px 24px rgba(60, 45, 20, 0.14);
-}
-@media (max-width: 1449px) {
-  .home-side-rail { display: none; }
-}
