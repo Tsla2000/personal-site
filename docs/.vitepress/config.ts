@@ -28,8 +28,9 @@ function configuredXHandle(handle: string): string | null {
   return trimmed
 }
 
-const GA_MEASUREMENT_ID = (process.env.GA_MEASUREMENT_ID ?? '').trim()
-const ADSENSE_CLIENT = (process.env.ADSENSE_CLIENT ?? '').trim()
+// 默认值为站长账号 ID（页面源码里本就公开可见），环境变量可覆盖；设为空字符串即可关闭
+const GA_MEASUREMENT_ID = (process.env.GA_MEASUREMENT_ID ?? 'G-59PPF02MZT').trim()
+const ADSENSE_CLIENT = (process.env.ADSENSE_CLIENT ?? 'ca-pub-4963054235083860').trim()
 const xHandle = configuredXHandle(X_HANDLE)
 const xProfile = xHandle ? `https://x.com/${xHandle}` : ''
 const authorSameAs = [GITHUB_PROFILE, ...(xProfile ? [xProfile] : [])]
