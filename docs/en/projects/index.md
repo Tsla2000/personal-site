@@ -17,7 +17,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     <a class="skill-thumb" :href="storeUrl" target="_blank" rel="noopener">
       <img :src="xmadeImg" alt="XMade: one-click download of posts, videos, and long articles from X" width="800" height="450" loading="eager" decoding="async" />
     </a>
-    <h3><a :href="storeUrl" target="_blank" rel="noopener">XMade</a></h3>
+    <h2 class="skill-title"><a :href="storeUrl" target="_blank" rel="noopener">XMade</a></h2>
     <p class="skill-pitch">A Chrome extension that downloads posts, videos, and long articles from X, then sends them to WeChat Official Account drafts. It is a tool I use every day.</p>
     <div class="skill-foot">
       <span class="skill-chip">Chrome Extension</span>
@@ -30,7 +30,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     <a class="skill-thumb" href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">
       <img :src="bingImg" alt="Bing Wallpaper for Mac: the Bing daily photo as your desktop, automatically" width="800" height="450" loading="lazy" decoding="async" />
     </a>
-    <h3><a href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">Bing Wallpaper for Mac</a></h3>
+    <h2 class="skill-title"><a href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">Bing Wallpaper for Mac</a></h2>
     <p class="skill-pitch">An open-source app: the behavior of the official Windows Bing Wallpaper, reverse-engineered with REA and rebuilt natively in Swift for macOS. Lives in the menu bar and sets the Bing daily photo as your desktop every day. MIT, free.</p>
     <div class="skill-foot">
       <span class="skill-chip">macOS app · Open source</span>

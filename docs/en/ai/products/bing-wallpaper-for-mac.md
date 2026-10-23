@@ -1,7 +1,7 @@
 ---
 image: /images/bing-wallpaper/cover.jpg
 title: "Bing Wallpaper for Mac: An Open-Source Port Reverse-Engineered from the Official Windows App with REA"
-description: "Microsoft's Bing Wallpaper is Windows-only. fairzy reverse-engineered the official app's behavior (v1.1.469.0) with REA and rebuilt it natively in Swift for macOS: a menu-bar app that checks every 30 minutes, 12 markets, daily theme rotation. MIT licensed and free."
+description: "Bing Wallpaper is Windows-only. fairzy used REA to study the official app and rebuilt it natively for macOS in Swift: a free MIT menu-bar app with 12 markets."
 keywords: "Bing Wallpaper, Mac wallpaper, daily wallpaper, macOS, open source, REA, reverse engineering"
 date: 2026-10-22
 category: AI

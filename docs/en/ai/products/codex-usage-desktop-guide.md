@@ -1,6 +1,6 @@
 ---
 title: "Codex Usage Desktop Guide: See Where Your Codex Tokens and Quota Go"
-description: "A friend's open-source desktop app that reads local Codex logs to show tokens, 5-hour and weekly quota, projects and sessions. Install options, setup steps and privacy notes."
+description: "An open-source desktop app that reads local Codex logs to show tokens, 5-hour and weekly quota, and per-project usage. Install options, setup and privacy notes."
 keywords: "Codex usage, Codex quota, Codex token tracker, Codex Usage Desktop, Codex quota reset"
 date: 2026-10-21
 category: AI

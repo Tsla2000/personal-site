@@ -1,7 +1,7 @@
 ---
 image: /images/claude-duet/cover.jpg
 title: "Anthropic's Claude Duet Is an Official AI Butler App — Isn't That the Muse and GrokBot I've Been Using All Along?"
-description: "Anthropic's proactive AI assistant Claude Duet: a morning brief, scheduled check-ins, and approval before it acts. Compared side by side with Meta Muse and OpenAI Dots, and with the self-built assistant I have run for a month."
+description: "Anthropic's proactive AI assistant Claude Duet: morning brief, scheduled check-ins, approval before acting. Compared with Meta Muse, OpenAI Dots and my own setup."
 keywords: "Claude Duet, AI assistant, AI butler, Anthropic, proactive AI, Claude, OpenAI Dots, Meta Muse"
 date: 2026-10-22
 category: AI

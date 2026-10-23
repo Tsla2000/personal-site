@@ -1,6 +1,6 @@
 ---
 title: "Agent Skills Installation Guide: How to Use SKILL.md with Coding Agents"
-description: Learn how to download, inspect, install, and verify Agent Skills across Codex, Claude Code, and other tools, including common discovery problems and safety checks.
+description: "How to download, inspect, install, and verify Agent Skills in Codex, Claude Code, and other tools, with fixes for common discovery problems and safety checks."
 keywords: Agent Skills installation, SKILL.md, Codex Skills, Claude Code Skills, AI agent workflows
 aside: false
 ---
