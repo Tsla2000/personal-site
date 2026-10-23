@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, withBase } from 'vitepress'
 import {
   SKILL_FILTER_ALL,
@@ -80,10 +80,48 @@ function hrefFor(skill: HomeSkill): string | null {
 }
 
 const actionSource = computed<SkillActionSource>(() => (onCatalog.value ? 'catalog' : 'home'))
+
+/** 技能卡视频：进入视野自动静音循环播放，滚出暂停；系统要求减少动态时不自动播 */
+const showcaseRoot = ref<HTMLElement | null>(null)
+let thumbObserver: IntersectionObserver | null = null
+
+function setupThumbAutoplay(): void {
+  thumbObserver?.disconnect()
+  thumbObserver = null
+  const root = showcaseRoot.value
+  if (!root) return
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  const videos = root.querySelectorAll<HTMLVideoElement>('video.skill-thumb-video')
+  if (videos.length === 0) return
+  thumbObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const v = entry.target as HTMLVideoElement
+        if (entry.isIntersecting) {
+          v.play().catch(() => {})
+        } else {
+          v.pause()
+        }
+      })
+    },
+    { threshold: 0.2 }
+  )
+  videos.forEach((v) => thumbObserver!.observe(v))
+}
+
+onMounted(() => {
+  void nextTick(setupThumbAutoplay)
+})
+watch(visibleSkills, () => {
+  void nextTick(setupThumbAutoplay)
+})
+onUnmounted(() => {
+  thumbObserver?.disconnect()
+})
 </script>
 
 <template>
-  <div :class="{ 'skill-browse-layout': onCatalog }">
+  <div ref="showcaseRoot" :class="{ 'skill-browse-layout': onCatalog }">
     <nav v-if="onCatalog" class="skill-filters" :aria-label="isEnglish ? 'Filter skills' : '筛选技能'">
       <div class="skill-filter-group">
         <p class="skill-filter-label">{{ isEnglish ? 'Type' : '类型' }}</p>
@@ -148,7 +186,20 @@ const actionSource = computed<SkillActionSource>(() => (onCatalog.value ? 'catal
     </p>
     <article v-for="(skill, index) in visibleSkills" :id="skill.id" :key="skill.id" class="skill-tile">
       <a v-if="hrefFor(skill)" class="skill-thumb" :href="hrefFor(skill) || undefined">
+        <video
+          v-if="skill.video"
+          class="skill-thumb-video"
+          :src="withBase(skill.video)"
+          :poster="withBase(skill.image)"
+          :width="skill.imageWidth"
+          :height="skill.imageHeight"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        />
         <img
+          v-else
           :src="withBase(skill.image)"
           :alt="imageAltFor(skill)"
           :width="skill.imageWidth"
@@ -158,7 +209,20 @@ const actionSource = computed<SkillActionSource>(() => (onCatalog.value ? 'catal
         />
       </a>
       <div v-else class="skill-thumb">
+        <video
+          v-if="skill.video"
+          class="skill-thumb-video"
+          :src="withBase(skill.video)"
+          :poster="withBase(skill.image)"
+          :width="skill.imageWidth"
+          :height="skill.imageHeight"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        />
         <img
+          v-else
           :src="withBase(skill.image)"
           :alt="imageAltFor(skill)"
           :width="skill.imageWidth"

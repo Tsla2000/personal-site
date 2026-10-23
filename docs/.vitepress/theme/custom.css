@@ -2128,3 +2128,13 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 .md-video-wrap {
   position: relative;
 }
+
+/* 技能卡视频：与卡图同尺寸，纯展示不拦截卡片点击 */
+.skill-thumb video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  pointer-events: none;
+}
