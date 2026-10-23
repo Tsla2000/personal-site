@@ -218,7 +218,8 @@ if (!existsSync(homeHtmlPath)) {
   }
   if (!/<h2[^>]*>\s*技能商店\s*<\/h2>/.test(homeHtml)) errors.push('中文首页缺少技能板块')
   if (/<h2[^>]*>\s*Thinking\s*<\/h2>/.test(homeHtml)) errors.push('中文首页仍保留 Thinking 板块')
-  if (!homeHtml.includes('复制技能')) errors.push('中文首页缺少复制技能按钮')
+  if (!homeHtml.includes('点击查看详情')) errors.push('中文首页缺少点击查看详情')
+  if (homeHtml.includes('复制技能')) errors.push('中文首页不应出现复制技能按钮（已改点击查看详情）')
   for (const tile of skillTiles(homeHtml)) {
     if (!/\/images\/skills\/[^"]+/.test(tile)) errors.push('中文首页技能卡缺少封面图')
   }
@@ -226,8 +227,8 @@ if (!existsSync(homeHtmlPath)) {
     errors.push('中文首页技能卡仍展示用途、适用场景、分工')
   }
   if (homeHtml.includes('限时免费') || homeHtml.includes('Free for now')) errors.push('中文首页仍出现限时免费')
-  if (!homeHtml.includes('下载 ZIP')) errors.push('中文首页缺少下载 ZIP')
-  if (!homeHtml.includes('/skills/zips/')) errors.push('中文首页缺少技能 ZIP 下载')
+  if (homeHtml.includes('下载 ZIP')) errors.push('中文首页不应出现下载 ZIP（已改点击查看详情）')
+  if (homeHtml.includes('/skills/zips/')) errors.push('中文首页不应出现技能 ZIP 下载（已改点击查看详情）')
   if (homeHtml.includes('skill-filters')) errors.push('中文首页不应出现技能分类筛选')
   if (homeHtml.includes('skill-catalog-bar')) errors.push('中文首页不应出现技能排序条')
   if (!homeHtml.includes('id="projects"')) errors.push('中文首页丢失了 #projects')
@@ -332,7 +333,8 @@ if (existsSync(enHome)) {
     errors.push('英文首页文章列表缺少 Muse 自动部署')
   }
   if (!/<h2[^>]*>\s*Skills Store\s*<\/h2>/.test(html)) errors.push('英文首页缺少 Skills 板块')
-  if (!html.includes('Copy skill')) errors.push('英文首页缺少 Copy skill 按钮')
+  if (!html.includes('Click for details')) errors.push('英文首页缺少 Click for details')
+  if (html.includes('Copy skill')) errors.push('英文首页不应出现 Copy skill 按钮（已改 Click for details）')
   for (const tile of skillTiles(html)) {
     if (!/\/images\/skills\/[^"]+/.test(tile)) errors.push('英文首页技能卡缺少封面图')
   }
@@ -342,8 +344,8 @@ if (existsSync(enHome)) {
   if (html.includes('Free for now') || html.includes('限时免费') || /free for a limited time/i.test(html)) {
     errors.push('英文首页仍出现 Free for now')
   }
-  if (!html.includes('Download ZIP')) errors.push('英文首页缺少 Download ZIP')
-  if (!html.includes('/skills/zips/')) errors.push('英文首页缺少技能 ZIP 下载')
+  if (html.includes('Download ZIP')) errors.push('英文首页不应出现 Download ZIP（已改 Click for details）')
+  if (html.includes('/skills/zips/')) errors.push('英文首页不应出现技能 ZIP 下载（已改 Click for details）')
   if (html.includes('skill-filters')) errors.push('英文首页不应出现技能分类筛选')
   if (html.includes('skill-catalog-bar')) errors.push('英文首页不应出现技能排序条')
 }
@@ -449,7 +451,7 @@ if (existsSync(zhSkills)) {
   for (const sortLabel of ['推荐', '热门', '最新']) {
     if (!zhSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`中文技能页排序缺少 ${sortLabel}`)
   }
-  const zhPriorityExpected = ['AI 项目交付', '网站上线验收', '出海新词上站', '前端设计', '内容一稿多用', '自定义连接器 / MCP', '浏览器自动化流程', '数据分析与决策']
+  const zhPriorityExpected = ['AI 项目交付', '网站上线验收', '出海新词上站', '前端设计', '内容一稿多用', '个人网站搭建', '浏览器自动化流程', '数据分析与决策']
   const zhPriorityActual = skillTileTitles(zhSkillsHtml).slice(0, zhPriorityExpected.length)
   if (zhPriorityActual.join('、') !== zhPriorityExpected.join('、')) {
     errors.push(`中文技能页八个优先方向顺序异常：${zhPriorityActual.join('、')}`)
@@ -484,7 +486,7 @@ if (existsSync(enSkills)) {
   for (const sortLabel of ['Recommended', 'Popular', 'Newest']) {
     if (!enSkillsHtml.includes(`>${sortLabel}</button>`)) errors.push(`英文技能页排序缺少 ${sortLabel}`)
   }
-  const enPriorityExpected = ['AI Project Delivery', 'Website Launch QA', 'Overseas New-Keyword Launch', 'Frontend Design', 'Content Repurposing', 'Custom Connectors & MCPs', 'Browser Automation Workflow', 'Data Analysis & Decisions']
+  const enPriorityExpected = ['AI Project Delivery', 'Website Launch QA', 'Overseas New-Keyword Launch', 'Frontend Design', 'Content Repurposing', 'Personal Site Builder', 'Browser Automation Workflow', 'Data Analysis & Decisions']
   const enPriorityActual = skillTileTitles(enSkillsHtml).slice(0, enPriorityExpected.length)
   if (enPriorityActual.join('、') !== enPriorityExpected.join('、')) {
     errors.push(`英文技能页八个优先方向顺序异常：${enPriorityActual.join('、')}`)
