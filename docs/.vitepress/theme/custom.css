@@ -2138,3 +2138,23 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   object-fit: cover;
   pointer-events: none;
 }
+
+/* 首页技能卡的详情入口：与下载 ZIP 同款描边胶囊 */
+.vp-doc a.skill-detail-link {
+  display: inline-block;
+  margin: 0;
+  padding: 5px 12px;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.vp-doc a.skill-detail-link:hover {
+  background: var(--vp-c-brand-1);
+  color: #fff;
+}

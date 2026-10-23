@@ -238,7 +238,12 @@ onUnmounted(() => {
       <p class="skill-pitch">{{ pitchFor(skill) }}</p>
       <div class="skill-foot">
         <span class="skill-chip">{{ chipFor(skill) }}</span>
-        <div class="skill-controls">
+        <a
+          v-if="!onCatalog && hrefFor(skill)"
+          class="skill-detail-link"
+          :href="hrefFor(skill) || undefined"
+        >{{ isEnglish ? 'View details →' : '查看技能详情 →' }}</a>
+        <div v-else class="skill-controls">
           <button
             type="button"
             class="skill-copy"
