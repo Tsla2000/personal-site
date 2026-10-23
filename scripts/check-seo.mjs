@@ -517,9 +517,10 @@ if (!existsSync(zhCover)) errors.push('缺少中文封面图生成详情页')
 if (!existsSync(enCover)) errors.push('缺少英文封面图生成详情页')
 if (existsSync(zhCover)) {
   const html = readFileSync(zhCover, 'utf8')
-  for (const text of ['复制技能', '下载 ZIP', '你将获得', '>适合<', '>不适合<', '关于此 Skill', '返回技能列表', 'Grok Bot', '黄底高亮']) {
+  for (const text of ['复制技能', '下载 ZIP', '你将获得', '>适合<', '>不适合<', '返回技能列表', '黄底高亮']) {
     if (!html.includes(text)) errors.push(`中文封面详情缺少 ${text}`)
   }
+  if (html.includes('关于此 Skill')) errors.push('中文封面详情仍保留关于此 Skill 模块')
   if (html.includes('限时免费') || html.includes('Free for now')) errors.push('中文封面详情仍出现限时免费')
   if (!html.includes('/skills/zips/cover-image-gen.zip')) errors.push('中文封面详情缺少 ZIP')
   if (!html.includes('/images/skills/cover_image_gen.jpg')) errors.push('中文封面详情缺少预览图')
@@ -530,9 +531,10 @@ if (existsSync(zhCover)) {
 }
 if (existsSync(enCover)) {
   const html = readFileSync(enCover, 'utf8')
-  for (const text of ['Copy skill', 'Download ZIP', 'What you get', '>Good for<', '>Not a fit<', 'About this skill', 'Back to skills', 'Grok Bot']) {
+  for (const text of ['Copy skill', 'Download ZIP', 'What you get', '>Good for<', '>Not a fit<', 'Back to skills']) {
     if (!html.includes(text)) errors.push(`英文封面详情缺少 ${text}`)
   }
+  if (html.includes('About this skill')) errors.push('英文封面详情仍保留 About this skill 模块')
   if (html.includes('Free for now') || /free for a limited time/i.test(html)) errors.push('英文封面详情仍出现 Free for now')
   if (!html.includes('/skills/zips/cover-image-gen.zip')) errors.push('英文封面详情缺少 ZIP')
   if (!html.includes('/images/skills/cover_image_gen.jpg')) errors.push('英文封面详情缺少预览图')

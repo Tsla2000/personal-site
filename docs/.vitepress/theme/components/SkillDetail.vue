@@ -204,16 +204,5 @@ watch(() => props.skillId, trackView)
       <p class="skill-example-note">{{ pick(detail.demo.noteZh, detail.demo.noteEn) }}</p>
     </section>
 
-    <section class="skill-about">
-      <h2>{{ pick('关于此 Skill', 'About this skill') }}</h2>
-      <div class="skill-chat">
-        <span class="skill-chat-label">{{ pick('你说', 'You') }}</span>
-        <p>{{ pick(detail.sampleZh, detail.sampleEn) }}</p>
-      </div>
-      <h3>{{ pick('怎么用', 'How to use') }}</h3>
-      <ol>
-        <li v-for="step in (isEnglish ? detail.stepsEn : detail.stepsZh)" :key="step">{{ step }}</li>
-      </ol>
-    </section>
   </div>
 </template>
