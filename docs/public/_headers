@@ -121,6 +121,12 @@
 /ai/workflows/my-ai-skills-part-1/
   Cache-Control: public, max-age=0, must-revalidate
 
+/ai/workflows/my-ai-skills-part-2
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ai/workflows/my-ai-skills-part-2/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /ai/workflows/website-launch-checklist
   Cache-Control: public, max-age=0, must-revalidate
 
