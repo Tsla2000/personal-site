@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SkillLike from './SkillLike.vue'
-import { computed, onMounted, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { findSkill } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
@@ -11,6 +11,13 @@ const { isEnglish, feedbackBySkillId, buttonLabel, buttonAriaLabel, zipLabel, zi
 
 const skill = computed(() => findSkill(props.skillId))
 const detail = computed(() => skill.value?.detail)
+
+const heroVideo = ref<HTMLVideoElement | null>(null)
+const heroPlaying = ref(false)
+function playHero(): void {
+  heroVideo.value?.play()
+}
+watch(() => props.skillId, () => { heroPlaying.value = false })
 const listHref = computed(() => withBase(isEnglish.value ? '/en/skills/' : '/skills/'))
 
 function pick(zh: string, en: string): string {
@@ -48,15 +55,28 @@ watch(() => props.skillId, trackView)
   <div v-if="skill && detail" class="skill-detail">
     <div class="skill-hero">
       <div class="skill-thumb skill-hero-preview">
-        <video
-          v-if="skill.video"
-          :src="withBase(skill.video)"
-          :poster="withBase(skill.image)"
-          controls
-          preload="metadata"
-          playsinline
-          style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000"
-        />
+        <template v-if="skill.video">
+          <video
+            ref="heroVideo"
+            :src="withBase(skill.video)"
+            :poster="withBase(skill.image)"
+            controls
+            preload="metadata"
+            playsinline
+            style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000"
+            @play="heroPlaying = true"
+            @pause="heroPlaying = false"
+          />
+          <button
+            v-if="!heroPlaying"
+            type="button"
+            class="video-play-btn"
+            :aria-label="pick('播放演示视频', 'Play demo video')"
+            @click="playHero"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          </button>
+        </template>
         <img
           v-else
           :src="withBase(skill.image)"

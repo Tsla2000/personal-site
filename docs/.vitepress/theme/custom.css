@@ -2094,3 +2094,32 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   }
 }
 
+
+/* 技能详情页演示视频的大播放按钮：居中悬浮，播放后隐藏、暂停时再现 */
+.video-play-btn {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(245, 158, 11, 0.93);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.video-play-btn:hover {
+  transform: scale(1.07);
+  background: rgba(245, 158, 11, 1);
+}
+.video-play-btn svg {
+  width: 42px;
+  height: 42px;
+  fill: #fff;
+  margin-left: 5px;
+}
