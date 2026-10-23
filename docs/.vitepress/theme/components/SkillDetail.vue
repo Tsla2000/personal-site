@@ -23,9 +23,14 @@ function playHero(): void {
 function tryAutoplay(): void {
   const v = heroVideo.value
   if (!v) return
+  // autoplay 可能在水合前已起播、play 事件无人接：直接按播放器真实状态同步按钮显隐
+  const sync = () => {
+    heroPlaying.value = !v.paused && !v.ended
+  }
+  sync()
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   v.muted = true
-  v.play().catch(() => {})
+  v.play().then(sync).catch(sync)
 }
 onMounted(tryAutoplay)
 watch(() => props.skillId, () => {
