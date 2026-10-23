@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SkillLike from './SkillLike.vue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { findSkill } from '../homeSkills'
 import { useSkillCopy } from '../useSkillCopy'
@@ -15,9 +15,23 @@ const detail = computed(() => skill.value?.detail)
 const heroVideo = ref<HTMLVideoElement | null>(null)
 const heroPlaying = ref(false)
 function playHero(): void {
+  if (heroVideo.value) heroVideo.value.muted = false
   heroVideo.value?.play()
 }
-watch(() => props.skillId, () => { heroPlaying.value = false })
+
+/** 进入详情页自动播放：浏览器只允许静音自动播，声音由用户点音量键开启；系统要求减少动态时不自动播 */
+function tryAutoplay(): void {
+  const v = heroVideo.value
+  if (!v) return
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  v.muted = true
+  v.play().catch(() => {})
+}
+onMounted(tryAutoplay)
+watch(() => props.skillId, () => {
+  heroPlaying.value = false
+  void nextTick(tryAutoplay)
+})
 const listHref = computed(() => withBase(isEnglish.value ? '/en/skills/' : '/skills/'))
 
 function pick(zh: string, en: string): string {
@@ -61,6 +75,8 @@ watch(() => props.skillId, trackView)
             :src="withBase(skill.video)"
             :poster="withBase(skill.image)"
             controls
+            autoplay
+            muted
             preload="metadata"
             playsinline
             style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000"
