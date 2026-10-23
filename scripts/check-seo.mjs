@@ -192,6 +192,9 @@ if (!existsSync(headersFile)) {
   if (!headers.includes('must-revalidate')) {
     errors.push('_headers 未让 HTML 重新验证')
   }
+  for (const h of ['X-Content-Type-Options: nosniff', 'Referrer-Policy:', 'X-Frame-Options:']) {
+    if (!headers.includes(h)) errors.push(`_headers 缺少安全头 ${h}`)
+  }
 }
 
 // 4c. 首页不再渲染站名+定位的 hero；站名和定位仍留在 title / description / 导航
@@ -314,6 +317,7 @@ if (existsSync(zhTesla)) {
 }
 if (existsSync(enHome)) {
   const html = readFileSync(enHome, 'utf8')
+  if ((html.match(/<h1\b/g) || []).length !== 1) errors.push('英文首页应恰好有一个 H1')
   if (!/<html[^>]*\blang="en"/.test(html)) errors.push('英文首页 html lang 不是 en')
   if (getMeta(html, 'og:locale') !== 'en_US') errors.push('英文首页 og:locale 不是 en_US')
   if (!html.includes("Pro's MangoFund")) errors.push('英文首页未出现 Pro\'s MangoFund')
