@@ -2158,3 +2158,5 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   background: var(--vp-c-brand-1);
   color: #fff;
 }
+
+/* 2026-10-23 redeploy trigger: 上批三提交部署未生效，重新触发 */
