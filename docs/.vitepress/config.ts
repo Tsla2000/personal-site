@@ -191,7 +191,7 @@ export default defineConfig({
     ],
     footer: {
       message: '每天做有价值的事情，人生永远要有 Plan B。',
-      copyright: '© 2026 PRO的茶里芒果'
+      copyright: '© 2026 PRO的茶里芒果 · <a href="/privacy">隐私政策</a>'
     },
     outline: { label: '本页目录', level: [2, 3] },
     docFooter: { prev: '上一篇', next: '下一篇' },
