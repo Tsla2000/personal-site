@@ -242,7 +242,7 @@ onUnmounted(() => {
           v-if="!onCatalog && hrefFor(skill)"
           class="skill-detail-link"
           :href="hrefFor(skill) || undefined"
-        >{{ isEnglish ? 'View details →' : '查看技能详情 →' }}</a>
+        >{{ isEnglish ? 'Click for details' : '点击查看详情' }}</a>
         <div v-else class="skill-controls">
           <button
             type="button"
