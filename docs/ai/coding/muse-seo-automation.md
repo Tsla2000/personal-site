@@ -1,6 +1,6 @@
 ---
 title: 如果你想让 Muse 自动优化个人网站的 SEO
-description: 最实用的方式不是让它一次性"帮网站做 SEO"，而是让它先检查整个网站，再按问题清单逐项修改，最后验证修改有没有生效。
+description: 最实用的方式不是让它一次性“帮网站做 SEO”，而是让它先检查整个网站，再按问题清单逐项修改，最后验证修改有没有生效。
 date: 2026-10-13
 category: AI
 tags: [Coding, AI Agent, SEO, 博客]

@@ -1,7 +1,7 @@
 ---
 image: /images/rea/rea-cover.webp
 title: REA 逆向一切 App：互联网即将进入「软件可复制性」的新阶段
-description: AI 逆向工程工具正在拉低"看懂一个软件"的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？
+description: AI 逆向工程工具正在拉低“看懂一个软件”的成本。当功能越来越容易复制，软件公司的竞争优势会转移到哪里？
 date: 2026-10-11
 category: AI
 tags: [AI, REA, 软件, Agent]
