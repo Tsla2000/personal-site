@@ -180,8 +180,13 @@ footer.VPDocFooter:not(:has(.edit-info, .prev-next)) {
   display: none;
 }
 
-.home-section h2 {
+.home-section h2,
+.vp-doc .home-section > h1 {
   margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  line-height: 1.4;
+  font-weight: 600;
   font-size: 13px;
   letter-spacing: .14em;
   text-transform: uppercase;

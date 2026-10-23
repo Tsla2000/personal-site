@@ -281,6 +281,16 @@ const headerBlocks = [
 function pushCache(pattern, value) {
   headerBlocks.push(`${pattern}\n  Cache-Control: ${value}\n`)
 }
+// 安全响应头（参考 claude-seo 的技术审计清单）。与 Cache-Control 是不同的头，/* 不会和缓存规则叠加。
+// 不设 CSP：站内注入 GA4 / AdSense，贸然收紧会拦截脚本。
+headerBlocks.push([
+  '/*',
+  '  X-Content-Type-Options: nosniff',
+  '  X-Frame-Options: SAMEORIGIN',
+  '  Referrer-Policy: strict-origin-when-cross-origin',
+  '  Permissions-Policy: camera=(), microphone=(), geolocation=()',
+  ''
+].join('\n'))
 const seenHeaderPaths = new Set()
 for (const file of files) {
   const path = toUrlPath(file)
@@ -341,6 +351,19 @@ User-agent: GPTBot
 Allow: /
 
 User-agent: ClaudeBot
+Allow: /
+
+# --- 苹果与谷歌：搜索抓取允许；Extended 是训练/Apple Intelligence 的独立开关，不影响搜索收录 ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: ${CANONICAL_URL}/sitemap.xml
