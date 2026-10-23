@@ -2123,3 +2123,8 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
   fill: #fff;
   margin-left: 5px;
 }
+
+/* 文章内嵌视频的按钮包裹层（主题 JS 自动套上） */
+.md-video-wrap {
+  position: relative;
+}

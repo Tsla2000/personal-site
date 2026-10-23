@@ -310,6 +310,66 @@ function setupStatsBeacon(router: Router): void {
   }
 }
 
+// ---------- 文章内嵌视频：统一加居中大播放按钮（与技能详情页同款 .video-play-btn） ----------
+function enhanceArticleVideos(): void {
+  document.querySelectorAll<HTMLVideoElement>('.vp-doc video').forEach((video) => {
+    // 技能详情页头图视频由 SkillDetail 组件自带按钮；已增强过的跳过
+    if (video.closest('.skill-thumb') || video.closest('.md-video-wrap')) return
+    const wrap = document.createElement('div')
+    wrap.className = 'md-video-wrap'
+    video.parentNode?.insertBefore(wrap, video)
+    wrap.appendChild(video)
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'video-play-btn'
+    btn.setAttribute('aria-label', '播放视频')
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>'
+    wrap.appendChild(btn)
+    const sync = () => {
+      btn.style.display = video.paused || video.ended ? 'flex' : 'none'
+    }
+    video.addEventListener('play', sync)
+    video.addEventListener('pause', sync)
+    video.addEventListener('ended', sync)
+    btn.addEventListener('click', () => {
+      void video.play()
+    })
+    sync()
+  })
+}
+
+function setupVideoPlayButtons(router: Router): void {
+  if (!inBrowser) return
+  let queued = false
+  const schedule = () => {
+    if (queued) return
+    queued = true
+    requestAnimationFrame(() => {
+      queued = false
+      try {
+        enhanceArticleVideos()
+      } catch {
+        /* 忽略 */
+      }
+    })
+  }
+  schedule()
+  window.addEventListener('load', schedule)
+  // 路由切换后新文章的视频也要增强；包裹已有回调（统计 beacon），不覆盖它
+  const prev = router.onAfterRouteChanged
+  router.onAfterRouteChanged = (to?: string) => {
+    prev?.(to)
+    window.setTimeout(schedule, 60)
+  }
+  // 水合后 DOM 才出现的视频靠观察器兜底
+  const startObserver = () => {
+    const mo = new MutationObserver(schedule)
+    mo.observe(document.body, { childList: true, subtree: true })
+  }
+  if (document.body) startObserver()
+  else document.addEventListener('DOMContentLoaded', startObserver)
+}
+
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
@@ -329,5 +389,6 @@ export default {
     // 覆盖主题默认的明暗切换（VPSwitchAppearance 通过 inject('toggle-appearance') 调用）
     app.provide('toggle-appearance', (event: MouseEvent) => toggleAppearance(event, app))
     setupStatsBeacon(router)
+    setupVideoPlayButtons(router)
   }
 }
