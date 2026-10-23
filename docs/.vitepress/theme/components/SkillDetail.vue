@@ -48,7 +48,17 @@ watch(() => props.skillId, trackView)
   <div v-if="skill && detail" class="skill-detail">
     <div class="skill-hero">
       <div class="skill-thumb skill-hero-preview">
+        <video
+          v-if="skill.video"
+          :src="withBase(skill.video)"
+          :poster="withBase(skill.image)"
+          controls
+          preload="metadata"
+          playsinline
+          style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000"
+        />
         <img
+          v-else
           :src="withBase(skill.image)"
           :alt="pick(skill.imageAltZh, skill.imageAltEn)"
           :width="skill.imageWidth"
