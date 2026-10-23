@@ -28,6 +28,8 @@ function configuredXHandle(handle: string): string | null {
   return trimmed
 }
 
+const GA_MEASUREMENT_ID = (process.env.GA_MEASUREMENT_ID ?? '').trim()
+const ADSENSE_CLIENT = (process.env.ADSENSE_CLIENT ?? '').trim()
 const xHandle = configuredXHandle(X_HANDLE)
 const xProfile = xHandle ? `https://x.com/${xHandle}` : ''
 const authorSameAs = [GITHUB_PROFILE, ...(xProfile ? [xProfile] : [])]
@@ -573,5 +575,15 @@ export default defineConfig({
     ['script', { defer: '', src: 'https://cloud.umami.is/script.js', 'data-website-id': '9be496a4-8003-46ab-9f02-de2fa19abab4' }],
     // Plausible(备用,未启用):
     // ['script', { defer: '', 'data-domain': 'mangofund.github.io', src: 'https://plausible.io/js/script.js' }]
+
+    // ---- Google Analytics 4 / AdSense(可选,由构建环境变量开启;未设置时不输出任何 Google 脚本) ----
+    // Cloudflare Pages 构建变量:GA_MEASUREMENT_ID=G-XXXXXXX,ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX
+    ...(/^G-[A-Z0-9]+$/.test(GA_MEASUREMENT_ID) ? [
+      ['script', { async: '', src: `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}` }],
+      ['script', {}, `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GA_MEASUREMENT_ID}');`]
+    ] as HeadConfig[] : []),
+    ...(/^ca-pub-\d+$/.test(ADSENSE_CLIENT) ? [
+      ['script', { async: '', src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`, crossorigin: 'anonymous' }]
+    ] as HeadConfig[] : [])
   ]
 })
