@@ -17,7 +17,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     <a class="skill-thumb" :href="storeUrl" target="_blank" rel="noopener">
       <img :src="xmadeImg" alt="XMade：一键下载 X 上的推文、视频和长文" width="800" height="450" loading="eager" decoding="async" />
     </a>
-    <h3><a :href="storeUrl" target="_blank" rel="noopener">XMade</a></h3>
+    <h2 class="skill-title"><a :href="storeUrl" target="_blank" rel="noopener">XMade</a></h2>
     <p class="skill-pitch">Chrome 扩展：一键下载 X 上的推文、视频和长文，整理好直接推送到微信公众号草稿。我自己每天在用的工具。</p>
     <div class="skill-foot">
       <span class="skill-chip">Chrome 扩展</span>
@@ -30,7 +30,7 @@ const storeUrl = 'https://chromewebstore.google.com/detail/xmade-twitter-video-d
     <a class="skill-thumb" href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">
       <img :src="bingImg" alt="必应每日壁纸 for Mac：每天自动把必应每日图片设成桌面" width="800" height="450" loading="lazy" decoding="async" />
     </a>
-    <h3><a href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">必应每日壁纸 for Mac</a></h3>
+    <h2 class="skill-title"><a href="https://fairzy.github.io/bingwallpaper-for-mac/" target="_blank" rel="noopener">必应每日壁纸 for Mac</a></h2>
     <p class="skill-pitch">开源应用：用 REA 逆向 Windows 官方必应壁纸的行为，在 macOS 上用 Swift 原生复刻。只占菜单栏，每天自动换上必应每日图片，MIT 开源，免费。</p>
     <div class="skill-foot">
       <span class="skill-chip">macOS 应用 · 开源</span>

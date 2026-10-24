@@ -467,6 +467,12 @@ export default defineConfig({
           article.dateModified = (!Number.isNaN(u.getTime()) && u >= d ? u : d).toISOString()
         }
       }
+      // 没有 frontmatter date 的页面（如工作流指南）不进 feed，但仍给搜索/AI 引擎一个更新时间
+      if (!article.dateModified) {
+        const snap = contentDates[`docs/${pageData.relativePath}`]
+        const sd = snap ? new Date(snap) : null
+        if (sd && !Number.isNaN(sd.getTime())) article.dateModified = sd.toISOString()
+      }
       if (typeof fm.category === 'string' && fm.category) article.articleSection = fm.category
       const tags = Array.isArray(fm.tags) ? fm.tags.filter((t: unknown) => typeof t === 'string') : []
       if (tags.length > 0) article.keywords = tags.join(', ')

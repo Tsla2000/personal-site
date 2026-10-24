@@ -1,6 +1,6 @@
 ---
 title: "AI Data Analysis Workflow: From Raw Data to Verifiable Decisions"
-description: A reliable AI-assisted data analysis workflow covering data quality, metric definitions, reproducible calculations, anomaly interpretation, uncertainty, and report handoff.
+description: "A reliable AI-assisted data analysis workflow: data quality, metric definitions, reproducible calculations, anomaly interpretation, and report handoff."
 keywords: AI data analysis, data analysis workflow, CSV analysis, data quality checks, decision report
 aside: false
 ---

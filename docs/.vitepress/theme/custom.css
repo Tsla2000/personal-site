@@ -1104,6 +1104,7 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 .article-cover { margin: 26px 0 10px; }
 .article-cover img {
   width: 100%;
+  height: auto;
   border-radius: 14px;
   border: 1px solid var(--vp-c-divider);
 }
@@ -2165,3 +2166,32 @@ html.dark button.VPSwitch.VPSwitchAppearance .check { transform: none; }
 }
 
 /* 2026-10-23 redeploy trigger: 上批三提交部署未生效，重新触发 */
+
+/* 构建后给正文裸图补了 width/height（scripts/fix-img-dims.mjs），按比例缩放；带 class 的图由各自样式管 */
+.vp-doc img[width][height]:not([class]) {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 目录页/项目页：卡片标题用 h2（H1 → H2，不跳级），外观与首页的 h3 卡片标题一致 */
+.vp-doc .skill-tile h2.skill-title,
+.vp-doc .project-tile h2.skill-title {
+  margin: 12px 0 4px;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+.vp-doc .skill-tile h2.skill-title a,
+.vp-doc .project-tile h2.skill-title a {
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  border-bottom: none;
+  font-weight: 650;
+}
+.vp-doc .skill-tile h2.skill-title a:hover,
+.vp-doc .project-tile h2.skill-title a:hover {
+  color: var(--vp-c-brand-1);
+}

@@ -231,10 +231,10 @@ onUnmounted(() => {
           decoding="async"
         />
       </div>
-      <h3>
+      <component :is="onCatalog ? 'h2' : 'h3'" class="skill-title">
         <a v-if="hrefFor(skill)" :href="hrefFor(skill) || undefined">{{ titleFor(skill) }}</a>
         <span v-else>{{ titleFor(skill) }}</span>
-      </h3>
+      </component>
       <p class="skill-pitch">{{ pitchFor(skill) }}</p>
       <div class="skill-foot">
         <span class="skill-chip">{{ chipFor(skill) }}</span>
