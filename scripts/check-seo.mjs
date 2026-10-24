@@ -177,6 +177,19 @@ if (!existsSync(sitemap)) {
   }
 }
 
+// 4a. 可见日期与 Article 结构化数据的 datePublished 必须是同一天（GEO：结构化日期要和页面可见日期一致）
+for (const p of walk(DIST)) {
+  const html = readFileSync(p, 'utf8')
+  const visible = html.match(/class="meta-line">\s*(\d{4})\.(\d{2})\.(\d{2})/)
+  const ld = html.match(/"@type":"Article"[^]*?"datePublished":"(\d{4}-\d{2}-\d{2})/)
+  if (!ld) continue
+  if (!visible) {
+    errors.push(`${p}: 有 datePublished 但页面没有可见日期（.meta-line）`)
+  } else if (`${visible[1]}-${visible[2]}-${visible[3]}` !== ld[1]) {
+    errors.push(`${p}: 可见日期 ${visible[0].slice(-10)} 与 datePublished ${ld[1]} 不一致`)
+  }
+}
+
 // 4b. Cloudflare Pages 缓存头：哈希资源 immutable，图片长缓存，HTML 重新验证
 const headersFile = join(DIST, '_headers')
 if (!existsSync(headersFile)) {

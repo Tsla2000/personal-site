@@ -11,6 +11,8 @@ image: /images/codex-usage/cover.jpg
 
 # Codex Usage Desktop Guide: See Where Your Codex Tokens and Quota Go
 
+<div class="meta-line">2026.10.21 · AI · 5 min read</div>
+
 If you use Codex every day, you will eventually ask: how much of my 5-hour quota is left, when does it reset, and which project burns the most tokens?
 
 [Codex Usage Desktop](https://codex-usage.itvincent.net/) is an open-source desktop app by my friend itvincent that answers exactly that. It reads the Codex session logs already on your computer and turns them into a local dashboard. No API key, no account, and your logs are never uploaded.
