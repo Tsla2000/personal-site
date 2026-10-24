@@ -303,6 +303,22 @@ export default defineConfig({
     }
   },
 
+  // 文章页可见「更新于」：只在更新日晚于发布日时显示，日期取 frontmatter updated，其次内容更新时间快照。
+  // 与 JSON-LD 的 dateModified 同源，避免页面可见日期和结构化数据对不上。
+  transformHtml(code, _id, { pageData }) {
+    const fm = pageData.frontmatter ?? {}
+    if (typeof fm.date !== 'string' || !fm.date) return
+    const raw = typeof fm.updated === 'string' && fm.updated ? fm.updated : contentDates[`docs/${pageData.relativePath}`]
+    const day = raw ? String(raw).slice(0, 10) : ''
+    const published = fm.date.slice(0, 10)
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || day <= published) return
+    const label = pageData.relativePath.startsWith('en/') ? 'Updated' : '更新于'
+    return code.replace(
+      /(class="meta-line">\s*\d{4}\.\d{2}\.\d{2})/,
+      `$1 · <time datetime="${day}">${label} ${day.replace(/-/g, '.')}</time>`
+    )
+  },
+
   // 每页自动输出 canonical + Open Graph / Twitter Card,取值来自该页 frontmatter
   transformHead({ pageData }) {
     const fm = pageData.frontmatter ?? {}
