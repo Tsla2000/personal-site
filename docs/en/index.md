@@ -20,7 +20,7 @@ aside: false
       <a class="feed-row" href="/en/investment/tesla/q3-earnings-preview"><div class="feed-row-head"><strong>Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock</strong><span class="feed-row-date"> · <time datetime="2026-10-16">2026.10.16</time></span></div><div class="feed-row-body"><div class="feed-row-thumb"><img class="archive-card-img" src="/images/tesla-q3/cover.webp" alt="Tesla Q3 2026 Earnings Preview: What Actually Moves the Stock" loading="lazy" decoding="async" /></div><p>The Oct. 21 report matters more than the flying Roadster. Watch FSD, the HW3 v15 cutoff, deliveries, and margins.</p></div></a>
       <a class="feed-row" href="/en/ai/coding/muse-auto-deploy"><div class="feed-row-head"><strong>How to Automate a Personal Website Deploy with Muse</strong><span class="feed-row-date"> · <time datetime="2026-10-06">2026.10.06</time></span></div><div class="feed-row-body"><div class="feed-row-thumb"><img class="archive-card-img" src="/images/muse-deploy-actions.png" alt="How to Automate a Personal Website Deploy with Muse" loading="lazy" decoding="async" /></div><p>Automate a personal website deploy with an AI coding agent. Muse fixed VitePress SEO, ran the build, and committed; GitHub Actions published to GitHub Pages.</p></div></a>
     </div>
-    <p class="home-more"><a href="/en/about">About Pro's MangoFund</a></p>
+    <p class="home-more"><a href="/en/about/">About Pro's MangoFund</a></p>
   </section>
 
   <section class="home-section">
