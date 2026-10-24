@@ -199,6 +199,12 @@
 /en/ai/workflows/ai-project-delivery-workflow/
   Cache-Control: public, max-age=0, must-revalidate
 
+/en/ai/workflows/ai-rap-video-generator-guide
+  Cache-Control: public, max-age=0, must-revalidate
+
+/en/ai/workflows/ai-rap-video-generator-guide/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /en/ai/workflows/website-launch-checklist
   Cache-Control: public, max-age=0, must-revalidate
 
