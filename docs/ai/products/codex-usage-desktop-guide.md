@@ -11,6 +11,8 @@ image: /images/codex-usage/cover.jpg
 
 # Codex Usage Desktop 使用指南：看清 Token 去向与剩余额度
 
+<div class="meta-line">2026.10.21 · AI · 阅读约 3 分钟</div>
+
 每天用 Codex，迟早会遇到这几个问题：5 小时额度还剩多少，什么时候重置，哪个项目最烧 Token。
 
 [Codex Usage Desktop](https://codex-usage.itvincent.net/zh/) 是我朋友 itvincent 做的开源桌面应用，专门回答这些问题。它直接读取电脑上已有的 Codex 会话日志，整理成一个本地看板。不需要 API Key，不需要注册账号，也不上传日志。
