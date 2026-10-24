@@ -183,6 +183,12 @@ for (const p of walk(DIST)) {
   const visible = html.match(/class="meta-line">\s*(\d{4})\.(\d{2})\.(\d{2})/)
   const ld = html.match(/"@type":"Article"[^]*?"datePublished":"(\d{4}-\d{2}-\d{2})/)
   if (!ld) continue
+  const dm = html.match(/"@type":"Article"[^]*?"dateModified":"(\d{4}-\d{2}-\d{2})/)
+  const shown = html.match(/<time datetime="(\d{4}-\d{2}-\d{2})">(?:更新于|Updated) /)
+  if (shown && ld && shown[1] <= ld[1]) errors.push(`${p}: 「更新于」${shown[1]} 不晚于发布日 ${ld[1]}`)
+  if (shown && dm && Math.abs(Date.parse(shown[1]) - Date.parse(dm[1])) > 86400000) {
+    errors.push(`${p}: 「更新于」${shown[1]} 与 dateModified ${dm[1]} 相差超过一天`)
+  }
   if (!visible) {
     errors.push(`${p}: 有 datePublished 但页面没有可见日期（.meta-line）`)
   } else if (`${visible[1]}-${visible[2]}-${visible[3]}` !== ld[1]) {
