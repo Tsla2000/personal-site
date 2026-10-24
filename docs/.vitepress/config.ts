@@ -269,6 +269,15 @@ export default defineConfig({
                   link: '/en/ai/coding/muse-auto-deploy'
                 }
               ]
+            },
+            {
+              text: 'Workflows',
+              items: [
+                {
+                  text: 'How to Make an AI Rap Video: Tools, Workflow, and Pitfalls',
+                  link: '/en/ai/workflows/ai-rap-video-generator-guide'
+                }
+              ]
             }
           ],
           '/en/investment/': [
